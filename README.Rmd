@@ -1,0 +1,66 @@
+---
+title: "RAdelaide 2025"
+author: |
+  | Dr Stevie Pederson
+  | Black Ochre Data Labs
+  | Indigenous Genomics Group
+  | Telethon Kids Institute
+date: "July 8-10, 2025"
+output: github_document
+---
+
+```{r, echo=FALSE}
+getTiming <- function(f, by = 1, digits = -1){
+  if (!file.exists(f)) return(NULL)
+  # by estimates how many minutes/slide
+  ln <- readLines(here::here(f))
+  n <- sum(grepl("^#{2} ", ln))
+  paste0(round(n * by, digits), "min")
+}
+```
+
+## Course Details
+
+This will be a three day course to enable researchers to develop their capabilities using the language `R`.
+Beginners are welcome and intermediate users will also gain a great deal from attending.
+
+Data for the workshop is available as a zip file [here](data.zip)
+
+## Provisional Course Outline
+
+| Day 1 | Topic | Notes | Estimated Duration <br>(approx) |
+|:----- |:----- |:----- |:-------- |
+| 9:00  | Welcome To Country |     | 15min    |
+|   | Installation Help  |     | 15min    |
+|  | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 1.2)`|
+|  | Spreadsheet-Like Data   | [Data Import](import.html) | `r getTiming("import_slides.qmd", 1.2)`|
+| 10:30 | *Morning Tea* | | |
+| 11:00 | Spreadsheet-Like Data (continued) | | |
+| | Exploring & Manipulating Data | [Data Exploration](exploring.html) | `r getTiming("exploring_slides.qmd", 1)` |
+| 12:30 | *Lunch* | | |
+| 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |
+|  | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd")` |
+| 3:00  | *Afternoon Tea* | | |
+| 3:30  | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) | `r getTiming("tidyr_slides.qmd")` |
+| 4:00 | Challenges and Bring Your Own Data  | [Day1](day1.html) | |
+
+
+| Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
+|:----- |:----- |:----- |:-------- |
+| 9:00 | Day 1 Challenges | [Day1](day1.html) | 30min|
+| 9:30 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | 15min |
+| 9:45 | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) | `r getTiming("tidyr_slides.qmd")` |
+| 10:30 | *Morning Tea* | | |
+| 11:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | `r getTiming("data_types_slides.qmd", 1.2)` |
+| 12:30 | *Lunch* | | |
+| 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
+| 3:00  | *Afternoon Tea* | | |
+| 3:30 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
+
+
+
+| Day 3 | Topic | Notes | Estimated Duration <br>(approx) |
+|:----- |:----- |:----- |:-------- |
+| 9:00 | Questions & Comments | [Questions From The Floor](day3.html) | 15min |
+| 9:15 | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 0.9)` |
+
