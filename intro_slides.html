@@ -456,21 +456,6 @@ Dr Stevie Pederson
 <!-- . . . -->
 <!-- - PhD (2008-2018) was a Bayesian Model for Transcript-Level Analysis -->
 <!--     + MCMC Engine written in C & R (No R Studio. No `Rcpp`) -->
-<aside class="notes">
-<ul>
-<li>Best week ever: NAIDOC week, NB Awareness Week + R coding</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </div>
 </section>
 <section id="who-am-i-1" class="slide level2">
@@ -508,7 +493,7 @@ Dr Stevie Pederson
 <ul>
 <li>Toilets are back near the lifts</li>
 <li>Catering will be across the lawn in Merantau</li>
-<li>This is considered a wet lab <span class="math inline">\(\implies\)</span> <em>no drinks</em></li>
+<li>Room is considered a wet lab <span class="math inline">\(\implies\)</span> <em>no drinks</em></li>
 </ul>
 </div>
 <aside class="notes">
@@ -616,7 +601,7 @@ Dr Stevie Pederson
 <li>Can handle extremely large datasets<br>
 </li>
 <li>Packages explicitly designed for complex analysis</li>
-<li>Huge user base of biological researchers</li>
+<li>Huge user base <span class="math inline">\(\implies\)</span> internet resources</li>
 <li>(Can be) very fast</li>
 </ul></li>
 <li>Very easy to <em>dynamically interact</em> with large datasets
@@ -638,22 +623,39 @@ Dr Stevie Pederson
           display:block!important;
       }</style></aside>
 </section>
-<section id="why-use-r-1" class="slide level2">
-<h2>Why use R?</h2>
+<section id="how-do-we-use-r" class="slide level2">
+<h2>How do we use R?</h2>
+<ul>
+<li>Never use drop-down menus or buttons <span class="math inline">\(\implies\)</span> type every command
+<ul>
+<li>Complex processes are often implemented as ‘simple’ functions</li>
+</ul></li>
+<li>Considered a <em>high-level</em> language
+<ul>
+<li>Usually easy to read and understand</li>
+<li>Some trade-off in speed</li>
+</ul></li>
+</ul>
+<div class="fragment">
 <ul>
 <li><strong>Reproducible Research!!!</strong>
 <ul>
 <li>Keep records (i.e.&nbsp;scripts) of every step of every analysis</li>
-<li>Transparent methods</li>
-<li>Integration with version control such as <code>git</code></li>
+<li>Transparent methods for reviewers</li>
 </ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
 <li>Avoids common Excel pitfalls <span class="fragment">(almost) never modify files on disk!</span></li>
 </ul>
+</div>
 <div class="fragment">
 <p>Experience is the best teacher <span class="math inline">\(\implies\)</span> please practice your skills</p>
 <aside class="notes">
 <ul>
 <li>Discuss column sorting with Simon although I believe it’s improved</li>
+<li>Mention paper claiming GLMs, but absolutely did not fit GLMs</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -681,12 +683,14 @@ Dr Stevie Pederson
 <h2>What is R?</h2>
 <ul>
 <li>Derivative of <code>S</code> <span class="citation" data-cites="Chambers1977-ry">(Bell Labs, <a href="#/references" role="doc-biblioref" onclick="">Chambers 1977</a>)</span></li>
-<li><code>R</code> first appeared in 1993
+<li><code>R</code> began to appear in 1996 <span class="citation" data-cites="Ihaka1996-zi">(<a href="#/references" role="doc-biblioref" onclick="">Ihaka and Gentleman 1996</a>)</span>
 <ul>
 <li><strong>R</strong>oss Ihaka and <strong>R</strong>obert Gentleman (U of Auckland)</li>
 <li>Disentangled some proprietary <code>S</code> code <span class="math inline">\(\implies\)</span> <em>open-source</em></li>
-<li><code>S</code> ceased development in early 2000s (Chambers retired in 2005)</li>
-<li>Now estimated &gt;2 million users</li>
+</ul></li>
+<li>First official release (v1.0.0) in Feb 2000
+<ul>
+<li>Now estimated &gt;2 million users (2012)</li>
 <li>Nice history article <a href="https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf">here</a> <span class="citation" data-cites="Chambers2020-tc">(<a href="#/references" role="doc-biblioref" onclick="">Chambers 2020</a>)</span></li>
 </ul></li>
 </ul>
@@ -694,6 +698,7 @@ Dr Stevie Pederson
 <ul>
 <li>Ross Ihaka is of NZ Maori descent</li>
 <li>Last commercial release of S-Plus in 2007</li>
+<li>I first found R in 2002, which was v1.4</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -717,7 +722,7 @@ Dr Stevie Pederson
 <li>No corporate ownership <span class="math inline">\(\implies\)</span> free software</li>
 <li>Code is managed by the community of users</li>
 </ul></li>
-<li><code>R</code> is formally run by a volunteer committee (<strong>R Core</strong>)
+<li><code>R</code> is formally run by volunteers <span class="math inline">\(\implies\)</span> <strong>R Core</strong>
 <ul>
 <li>Mostly academics</li>
 <li>John Chambers is <em>still</em> a member</li>
@@ -738,6 +743,7 @@ Dr Stevie Pederson
 <aside class="notes">
 <ul>
 <li>Being open source creates headaches for University &amp; Business IT departments</li>
+<li>There are identified security risks</li>
 <li>No guarantees of being virus free. Has inherent security flaws particularly using R data files (which are often part of packages)</li>
 <li>The community self-regulates</li>
 <li>Release Names are references to Peanuts cartoons</li>
@@ -1014,16 +1020,30 @@ Dr Stevie Pederson
 <li>If so, how should we do that?</li>
 </ul></li>
 </ul>
+</section>
+<section id="recording-our-r-history" class="slide level2">
+<h2>Recording Our R History</h2>
+<ul>
+<li>Try using your up and down arrow keys in the <code>R Console</code></li>
+<li>This will scroll through the history of commands you’ve entered
+<ul>
+<li>Can re-execute or modify any of these</li>
+</ul></li>
+<li>Saved in a file called <code>.Rhistory</code> in your working directory</li>
+</ul>
 <div class="fragment">
 <ul>
-<li>A common strategy is to record our code as an <em>R Script</em></li>
+<li>A common strategy is to record our code as an <em>R Script</em> as we write it
+<ul>
+<li>Just a plain text file with a record of our commands</li>
+</ul></li>
 <li><code>R Studio</code> makes that easy &amp; convenient</li>
 <li>Many people now use RMarkdown to combine analysis, results and figures</li>
 </ul>
 </div>
 </section></section>
 <section>
-<section id="r-studio" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="75% 30%">
+<section id="r-studio" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="assets/RStudio_icon.png" data-background-size="25%" data-background-opacity="0.5" data-background-position="50% 50%">
 <h1>R Studio</h1>
 
 </section>
@@ -1059,39 +1079,7 @@ Dr Stevie Pederson
 </ul>
 </div>
 </section>
-<section id="what-is-rstudio" class="slide level2">
-<h2>What is RStudio</h2>
-<ul>
-<li>RStudio is product of a <strong>for profit</strong> company (Posit)
-<ul>
-<li>RStudio (Desktop) is free</li>
-<li>RStudio Server has annual licence fee of $’000s</li>
-</ul></li>
-<li>Posit employs many of the best &amp; brightest package developers
-<ul>
-<li>e.g.&nbsp;<code>tidyverse</code>, <code>bookdown</code>, <code>reticulate</code>, <code>roxygen2</code> etc.</li>
-<li>The CEO (JJ Allaire) is still an active developer</li>
-</ul></li>
-<li>Other IDEs also exist (e.g.&nbsp;emacs, VSCode, Cursror, Positron)</li>
-</ul>
-<aside class="notes">
-<ul>
-<li>I remember being at the launch of RStudio (Coventry, 2011). It was a room full of R programmers thinking “holy crap, this changes everything”</li>
-<li>RStudio/Posit is a corporation whilst R is an academic-led volunteer community. So far relatively good relationship</li>
-<li>Heard JJ Allaire present some of his latest work a few weeks ago</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
+
 <section id="some-very-helpful-features-of-rstudio" class="slide level2">
 <h2>Some very helpful features of <code>RStudio</code></h2>
 <ul>
@@ -1107,6 +1095,11 @@ Dr Stevie Pederson
 <li>markdown, <span class="math inline">\(\LaTeX\)</span>, bash, python, C++, git etc.</li>
 </ul></li>
 <li>Numerous add-ons to simplify larger tasks</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Posit is now developing Positron to better enable a variety of languages</li>
 </ul>
 </div>
 </section>
@@ -1182,24 +1175,21 @@ Dr Stevie Pederson
 <h2>RStudio</h2>
 
 <img data-src="assets/RStudio.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><p>This is the basic layout we often work with</p>
-</section>
-<section id="the-script-window" class="slide level2">
-<h2>The Script Window</h2>
-<ul>
-<li>This is just a text editor.</li>
-<li>We enter our commands here but they are <em>not executed</em></li>
-<li>Forms a record of <strong>everything</strong> we’ve done
-<ul>
-<li>Can repeat our analysis exactly</li>
-</ul></li>
-<li>We’ll return here later <span class="fragment fade-in"><span class="math inline">\(\implies\)</span> but first a quick tour</span></li>
-</ul>
+<aside class="notes">
+<p>We’ll come back to the script window in the next section</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-r-console-5" class="slide level2">
-<h2>The R Console</h2>
-
-<img data-src="assets/RStudio.png" class="quarto-figure quarto-figure-center r-stretch" width="900"></section>
-<section id="the-r-console-6" class="slide level2">
 <h2>The R Console</h2>
 <ul>
 <li>This is the R Console <em>within</em> the RStudio IDE</li>
@@ -1207,22 +1197,15 @@ Dr Stevie Pederson
 </ul>
 <div class="fragment">
 <ul>
-<li>In the same grouping we also have <strong>Terminal</strong>
+<li>In the same pane we also have two other tabs
 <ul>
-<li>An approximation of a <code>bash</code> terminal (or PowerShell for Windows)</li>
-</ul></li>
-</ul>
-</div>
-<div class="fragment">
-<ul>
-<li><strong>Background Jobs</strong> shows progress when compiling RMarkdown &amp; Quarto
-<ul>
-<li>Not super relevant</li>
+<li><strong>Terminal</strong>: An approximation of a <code>bash</code> terminal (or PowerShell for Windows)</li>
+<li><strong>Background Jobs</strong> shows progress when compiling RMarkdown &amp; Quarto <br>Not super relevant</li>
 </ul></li>
 </ul>
 </div>
 </section>
-<section id="the-r-console-7" class="slide level2">
+<section id="the-r-console-6" class="slide level2">
 <h2>The R Console</h2>
 <p>As well as performing simple calculations:</p>
 <ul>
@@ -1310,7 +1293,7 @@ Dr Stevie Pederson
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> ?sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>This will take you to the <code>Help</code> pane for the <code>sqrt()</code> function
+<li>This will take you to the <code>Help</code> Tab for the <code>sqrt()</code> function
 <ul>
 <li>Contents may look confusing at this point but will become clearer</li>
 </ul></li>
@@ -1379,8 +1362,8 @@ Dr Stevie Pederson
 <section id="the-plots-pane" class="slide level2">
 <h2>The <strong>Plots</strong> Pane</h2>
 <ul>
-<li>We’ve already seen the <strong>Files</strong> pane</li>
-<li>Plots appear in the <strong>Plots</strong> pane</li>
+<li>We’ve already seen the <strong>Files</strong> Tab</li>
+<li>Plots appear in the <strong>Plots</strong> Tab</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1389,7 +1372,7 @@ Dr Stevie Pederson
 <section id="other-panes" class="slide level2">
 <h2>Other Panes</h2>
 <ul>
-<li>The <strong>Packages</strong> Pane is <em>a bad idea</em>
+<li>The <strong>Packages</strong> Tab is <em>a bad idea</em>
 <ul>
 <li>Can be disabled by popular request (I always do)</li>
 <li>Temptation to click is strong</li>
@@ -1398,7 +1381,7 @@ Dr Stevie Pederson
 </ul>
 <div class="fragment">
 <ul>
-<li><strong>Viewer</strong> Pane is used when compiling HTML documents from RMarkdown</li>
+<li><strong>Viewer</strong> Tab is used when compiling HTML documents from RMarkdown</li>
 </ul>
 </div>
 <div class="fragment">
@@ -1418,6 +1401,14 @@ Dr Stevie Pederson
 <li><code>Ctrl + 3</code> places focus on the Help Tab</li>
 </ul>
 </section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+<ul>
+<li>RStudio brings together multiple features for easy coding</li>
+<li>Can easily access Help, Plots, Scripts etc</li>
+<li>Integrated Development Environment (IDE)</li>
+</ul>
+</section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 <div class="quarto-auto-generated-content">
@@ -1432,6 +1423,9 @@ Chambers, John M. 1977. <em>Computational Methods for Data Analysis</em>. New Yo
 </div>
 <div id="ref-Chambers2020-tc" class="csl-entry" role="listitem">
 ———. 2020. <span>“S, r, and Data Science.”</span> <em>Proc. ACM Program. Lang.</em> 4 (HOPL): 1–17.
+</div>
+<div id="ref-Ihaka1996-zi" class="csl-entry" role="listitem">
+Ihaka, Ross, and Robert Gentleman. 1996. <span>“<span>R</span>: A Language for Data Analysis and Graphics.”</span> <em>J. Comput. Graph. Stat.</em> 5 (3): 299–314.
 </div>
 </div>
 </section></section>
