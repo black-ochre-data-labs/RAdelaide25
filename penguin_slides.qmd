@@ -1,0 +1,447 @@
+---
+title: "Introducing Data In R"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    code-tools: true
+    logo: assets/bodl_logo_white_background.jpg
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: penguins.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, 
+  fig.align = "center"
+)
+```
+
+
+## Introducing The Penguins
+
+- Let's look at a common data structure in `R`
+- A data type know as a `tibble`
+    + Will explore structure later in the course
+    + A `tibble` is a specific type of data frame
+
+. . .
+
+- We'll be looking at the "Palmer Penguins" dataset
+    + Taken from https://allisonhorst.github.io/palmerpenguins/index.html
+    + 3 species of penguins from the Palmer Archipelago, Antarctica
+
+![](https://allisonhorst.github.io/palmerpenguins/logo.png){.absolute bottom=320 right=120 width='250px'}
+
+## Starting An R Script
+
+- Best practice is to ALWAYS record your code
+- Today we'll use an R script
+    + Is a plain text file
+    + Is a combination of code and comments
+    + The filename should end with `.R`
+    
+. . .
+    
+- Nothing we enter in the script is executed <br>$\implies$ **until we intentionally execute the code**
+
+## Starting An R Script
+
+- At the top of your file `DataExploration.R` type the following
+
+```{r}
+# Load the palmerpenguins package
+library(palmerpenguins)
+```
+
+. . .
+
+- The `#` symbol indicates a comment
+    + Comments are ignored by R and nothing is executed
+    + They are used to explain code to humans
+    
+. . .
+
+- We write code for two primary reasons
+    1. To be executed by R, and
+    2. To be read  and understood by humans (usually us in a few months)
+
+## Executing Code
+
+- So far, no code has been executed from this script
+- Check your **Environment** Tab to see if there are any objects
+    + If there is an object (most likely `x`) $\implies$ click the broom icon 
+    + This will clear any existing objects from the environment
+    
+
+![](assets/broom.png){.absolute width='50px' right=200 bottom=450}
+
+. . .
+
+*How do we execute code from our script?*
+
+## Executing Code
+
+- We can execute code in a few ways
+
+1. Place the cursor on the line of code `library(palmerpenguins)` 
+2. Use the keyboard shortcut `Ctrl + Enter` (Windows/Linux) or `Cmd + Enter` (Mac)
+
+. . .
+
+3. Alternatively, you can click the `Run` button in the top right of the script editor
+
+## What have we done so far?
+
+- We have simply loaded the `palmerpenguins` package
+    + We called the function `library()`
+    + This loads all the functions and the data in a requested package
+    + The package name appears **inside** the parentheses `()`
+    + Very similar to calling `sqrt(5)` as we saw earlier
+    
+. . .    
+
+- For python users is equivalent to `import palmerpenguins`
+
+## The `penguins` dataset
+
+- The `palmerpenguins` package contains a dataset called `penguins`
+    + Add the comment and code below, then execute
+    + Typing an object's name will 'print' it into the console
+
+```{r}
+#| output-location: fragment
+# Let's look at the penguins dataset
+penguins
+```
+
+::: {.notes}
+- Maybe get people to click on the Global Environment Tab  
+:::
+
+
+## The `penguins` dataset
+
+- The `penguins` dataset is a `tibble`
+- The number of rows and columns is shown at the top (`344 x 8`)
+    + Printed as a comment
+    
+. . .
+    
+- Next is the column names:
+    + `r pander::pander(colnames(penguins))`
+    + The last two columns may just be listed at the bottom
+    + Is a function of screen width, font size etc
+    
+::: {.notes}
+- Check to see if all columns have printed for everyone
+:::    
+
+
+## The `penguins` dataset
+
+- Underneath each column name is the *data type*
+    + Will explore data types in more detail
+    + Each column has the same type of data
+    + `<fct>` means 'factor' $\implies$ a categorical variable
+    + `<dbl>` means 'double' $\implies$ a numeric variable
+    + `<int>` means 'integer' $\implies$ a whole number
+    
+. . .
+
+- Final lines show how many more rows & columns there are
+- Notice there are no rownames, just row numbers
+
+## An Alternative Way to View Penguins
+
+```{r}
+#| output: false
+#| eval: false
+# We can also use the View() function
+View(penguins)
+```
+
+. . .
+
+- I personally prefer seeing things printed in the console
+    + Summarises the data
+    + Describes the column types
+- Leaving `View()` in a simple script is OK for exploration
+    + Unhelpful when running long scripts
+
+## Exploring Penguins
+
+- A common initial data exploration task is to get a summary of the data
+
+```{r}
+# The column names are:
+colnames(penguins)
+```
+
+A classic move is to then copy the column names after the code, then comment
+
+1. Highlight the output in the console
+2. Copy & paste into the script
+3. Make a comment by adding a `#` at the start of each line
+
+. . .
+
+- Comments can be toggled on/off across multiple lines using:
+    + `Ctrl + Shift + C` (Windows/Linux) or `Cmd + Shift + C` (Mac)
+
+## Calling Functions
+
+- Notice that we placed the object inside the parentheses `()` after the function
+
+. . . 
+
+- Let's continue checking the object
+
+```{r}
+#| output: false
+# Find out how big the dataset is
+nrow(penguins)
+ncol(penguins)
+dim(penguins)
+```
+
+. . .
+
+- Can you figure out what each of these functions does?
+- The same summary information printed when we called the object by name
+
+## Calling Functions
+
+- Let's look at the top and bottom of the dataset
+
+```{r}
+#| output: false
+# What does the top of the dataset look like?
+head(penguins)
+
+# What does the bottom of the dataset look like?
+tail(penguins)
+```
+
+. . .
+
+- These functions print 6 rows by default
+- We can change this $\implies$ let's check the help page
+    + In the console type `?head` (We don't need a record of this)
+    
+##
+
+::: {style="font-size: 90%;"}
+
+### Return the First or Last Parts of an Object
+
+**Description**
+
+Returns the first or last parts of a vector, matrix, array, table, data frame or function. 
+Since `head()` and `tail()` are generic functions, they have been extended to other classes, including "ts" from stats.
+
+**Usage**
+```
+head(x, ...)
+## Default S3 method:
+head(x, n = 6L, ...)
+## S3 method for class 'matrix'
+head(x, n = 6L, ...) # is exported as head.matrix()
+## NB: The methods for 'data.frame' and 'array'  are identical to the 'matrix' one
+
+blah blah blah ...
+```
+
+**Arguments**
+
+`x` an object
+
+`n` an integer vector of length up to dim(x) (or 1, for non-dimensioned objects). Blah blah blah
+
+:::
+
+## Function Arguments
+
+- This is telling as that the function `head()` ( and also `tail()`) can take two arguments
+- The first is an object `x`
+    + We often call argument that can be anything `x`
+- The second is an argument named `n`
+    + That `n` is followed by `= 6L` tells us `n` has a default value (i.e. the integer `6`)
+    + This is why 6 rows were always printed
+    
+. . .
+
+    
+```{r}
+#| output: false
+# Print the first 10 rows by setting n = 10
+head(penguins, n = 10)
+
+# Repeat for the bottom 10 rows
+tail(penguins, n = 10)
+```
+
+## Function Arguments
+
+
+```{r}
+#| output: false
+# Arguments can be named explicitly
+head(x = penguins, n = 10)
+
+# If passed in order, we don't need to name them
+head(penguins, 10)
+
+# If naming explicitly, the order doesn't matter
+# This is very useful when there are multiple arguments
+head(n = 10, x = penguins)
+```
+
+::: {.notes}
+- This is a relatively trivial function $\implies$ we'll be much more interesting soon
+:::
+
+# The package<br>`dplyr` {background-color="#3d3d40" background-image=https://dplyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
+## Exploring Penguins with `dplyr`
+
+- The `dplyr` package provides multiple functions for data exploration and manipulation
+- Let's load the package
+    + I personally load all packages at the start of a script
+    + Add this underneath the `library(palmerpenguins)` line
+
+```{r}
+library(dplyr) # Load the package `dplyr`
+```
+
+. . .
+
+- We'll use these functions to explore the `penguins` dataset
+- Then we can modify the dataset
+
+## Exploring Penguins with `dplyr`
+
+```{r}
+## The `glimpse()` function is provided by dplyr
+## Can be very helpful with large column numbers
+glimpse(penguins)
+```
+
+. . .
+
+- So far we haven't actually saved any objects (using `<-`)
+- Functions `head()`, `tail()`, and `glimpse()` are all printing to the console
+
+## Sorting Penguins
+
+- `dplyr` provides some Excel-like functions:
+    + `arrange()` will sort the data
+    + `filter()` will filter the data
+    
+```{r}
+#| output: false
+# Sort the penguins by body mass in increasing order
+arrange(penguins, body_mass_g)
+
+# Sort the penguins by body mass in decreasing order
+arrange(penguins, desc(body_mass_g))
+```
+
+. . .
+
+<br>
+
+```{r}
+#| output: false
+# Sort multiple columns in the order passed to the function
+arrange(penguins, species, body_mass_g)
+```
+
+## Filtering Penguins
+
+Filtering relies on *logical tests*
+
+. . .
+
+| Symbol | Description |
+|:------ |:----------- |
+| `==`   | Is Equal To |
+| `>` / `<` | Is Greater/Less Than |
+| `>=` / `<=` | Is Greater/Less Than or Equal To |
+| `!=`  | Is Not Equal To |
+
+## Filtering Penguins
+
+```{r}
+#| output: false
+## Subset the data to those from the Island of Dream
+filter(penguins, island == "Dream")
+
+## Subset the data to those NOT from the Island of Dream
+filter(penguins, island != "Dream")
+
+## Subset the penguins to those lighter than 4000g
+filter(penguins, body_mass_g < 4000)
+
+## Find the penguins from Dream that are heavier than 4000g
+filter(penguins, island == "Dream", body_mass_g > 4000)
+```
+
+
+## Slicing Penguins
+
+- `filter()` returns the rows that match a given criteria
+- `slice()` can be used to return specific rows by position
+
+```{r}
+#| output: false
+## Slice out the first 10 rows of the penguins dataset
+slice(penguins, 1:10)
+
+## Now slice out the 101st to 110th rows
+slice(penguins, 101:110)
+```
+
+
+

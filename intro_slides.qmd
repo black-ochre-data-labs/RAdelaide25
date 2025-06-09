@@ -604,7 +604,7 @@ knitr::include_graphics("assets/RProject.png")
 ## Create An Empty R Script
 
 1. `File` > `New File` > `R Script`
-2. Save As `DataImport.R`
+2. Save As `DataExploration.R`
 
 ## RStudio
 
