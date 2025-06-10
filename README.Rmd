@@ -33,9 +33,9 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 9:00  | Welcome To Country |     | 15min    |
 |   | Installation Help  |     | 15min    |
 |  | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 1.2)`|
-|  | Spreadsheet-Like Data   | [Data Import](penguins.html) | `r getTiming("penguin_slides.qmd", 1.2)`|
+|  | Exploring Spreadsheet-Like Data   | [Exploring Penguins](penguins.html) | `r getTiming("penguin_slides.qmd", 1.2)`|
 | 10:30 | *Morning Tea* | | |
-| 11:00 | Spreadsheet-Like Data (continued) | | |
+| 11:00 | Exploring Spreadsheet-Like Data (continued) | | |
 | | Exploring & Manipulating Data | [Data Exploration](exploring.html) | `r getTiming("exploring_slides.qmd", 1)` |
 | 12:30 | *Lunch* | | |
 | 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |

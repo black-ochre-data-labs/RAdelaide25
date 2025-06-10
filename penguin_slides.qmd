@@ -219,16 +219,37 @@ View(penguins)
 colnames(penguins)
 ```
 
-A classic move is to then copy the column names after the code, then comment
+Copy the column names after the code, then comment
+
+::: {.columns}
+
+::: {.column width="55%"}
 
 1. Highlight the output in the console
 2. Copy & paste into the script
-3. Make a comment by adding a `#` at the start of each line
+3. Make a comment by adding `#` at the start of each line
 
-. . .
+:::
+
+::: {.column width="45%"}
+
+::: {.fragment}
+
+::: {.callout-tip collapse="true"}
+
+## Commenting Multiple Lines
 
 - Comments can be toggled on/off across multiple lines using:
-    + `Ctrl + Shift + C` (Windows/Linux) or `Cmd + Shift + C` (Mac)
+    + `Ctrl + Shift + C` (Win/Linux)
+    + `Cmd + Shift + C` (Mac)
+    
+:::
+
+:::
+
+:::
+
+:::
 
 ## Calling Functions
 
@@ -272,7 +293,7 @@ tail(penguins)
     
 ##
 
-::: {style="font-size: 90%;"}
+::: {style="font-size: 85%;"}
 
 ### Return the First or Last Parts of an Object
 
@@ -307,10 +328,14 @@ blah blah blah ...
 - The first is an object `x`
     + We often call argument that can be anything `x`
 - The second is an argument named `n`
-    + That `n` is followed by `= 6L` tells us `n` has a default value (i.e. the integer `6`)
+    + That `n` is followed by `= 6L` tells us `n` has a default value
     + This is why 6 rows were always printed
     
-. . .
+::: {.notes}
+- The `L` after 6 is shorthand to force the value to be an integer
+:::
+
+## Function Arguments
 
     
 ```{r}
@@ -322,8 +347,9 @@ head(penguins, n = 10)
 tail(penguins, n = 10)
 ```
 
-## Function Arguments
+. . .
 
+<br>
 
 ```{r}
 #| output: false
@@ -340,6 +366,7 @@ head(n = 10, x = penguins)
 
 ::: {.notes}
 - This is a relatively trivial function $\implies$ we'll be much more interesting soon
+- Also link to `?extraChIPs::plotSplitDonut`
 :::
 
 # The package<br>`dplyr` {background-color="#3d3d40" background-image=https://dplyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
@@ -359,6 +386,11 @@ library(dplyr) # Load the package `dplyr`
 
 - We'll use these functions to explore the `penguins` dataset
 - Then we can modify the dataset
+
+::: {.notes}
+- `dplyr` was written initially by Hadley Wickham
+- He's originally from NZ so he knows how to spell things correctly
+:::
 
 ## Exploring Penguins with `dplyr`
 
@@ -410,6 +442,7 @@ Filtering relies on *logical tests*
 | `>` / `<` | Is Greater/Less Than |
 | `>=` / `<=` | Is Greater/Less Than or Equal To |
 | `!=`  | Is Not Equal To |
+| `is.na()` | Is Missing Value |
 
 ## Filtering Penguins
 
@@ -431,8 +464,8 @@ filter(penguins, island == "Dream", body_mass_g > 4000)
 
 ## Slicing Penguins
 
-- `filter()` returns the rows that match a given criteria
-- `slice()` can be used to return specific rows by position
+- `filter()` returns the rows that *match a given criteria*
+- `slice()` can be used to return rows *by position*
 
 ```{r}
 #| output: false
@@ -443,5 +476,284 @@ slice(penguins, 1:10)
 slice(penguins, 101:110)
 ```
 
+## A Brief Diversion
 
+- In the two previous examples we used a sequence of consecutive values
+
+```{r}
+1:10
+101:110
+```
+
+. . .
+
+<br>
+
+- We refer to one or more values in `R` as a **vector**
+    + These are *integer* vectors
+
+## A Brief Diversion
+
+- In `R` we can form a vector by combining values with the function `c()`
+
+```{r}
+c(1, 3, 5, 7, 9)
+```
+
+. . .
+
+<br>
+
+```{r}
+#| output: false
+# Return the first few odd numbered rows using a vector of positions
+slice(penguins, c(1, 3, 5, 7, 9))
+```
+
+. . .
+
+<br>
+
+```{r}
+#| output: false
+# Rows can be returned in any order
+slice(penguins, c(3, 7, 5, 1))
+```
+
+## Selecting Penguins
+
+- `filter()` and `slice()` can be used to return rows
+- `select()` can be used to return columns
+
+```{r}
+#| output: false
+# Columns can be 'selected' by passing the required column names
+select(penguins, species, island, body_mass_g)
+```
+
+. . . 
+
+<br>
+
+```{r}
+#| output: false
+# Columns can also be selected by position using a vector
+select(penguins, c(1, 2, 6))
+```
+
+
+. . .
+
+::: {.callout-note collapse="true"}
+## Using Names Or Position
+
+1. Do the above lines give the same result?
+2. Would either one be preferable?
+:::
+
+## Helper Functions
+
+- `dplyr` provides some helper functions to make selecting columns easier
+- `starts_with()`, `ends_with()` and `contains()`, are very useful!
+- `everything()` is also surprisingly useful
+- `any_of()` and `all_of()` are a bit more advanced
+
+. . .
+
+```{r}
+#| output: false
+# Select all columns that start with "bill", after the species and island columns
+select(penguins, species, island, starts_with("bill"))
+
+# Select all length-related columns, after the species and island columns
+select(penguins, species, island, contains("length"))
+```
+
+## Helper Functions and 
+
+
+```{r}
+#| output: false
+# Place all metadata first, followed by measured values
+# This line shows how useful 'everything()' can be
+select(penguins, species, island, sex, year, everything())
+```
+
+. . .
+
+- To remove a column, we preface the selection with `-`
+
+```{r}
+#| output: false
+# Remove all columns that end with 'mm'
+select(penguins, -ends_with("mm"))
+```
+
+
+## Relocate
+
+```{r}
+#| output: false
+# Relocate is a newer addition and can also be used to reorder columns
+# The arguments .before and .after can be used to specify where to place columns
+# Here we're moving columns with an underscore to after the year column
+relocate(penguins, contains("_"), .after = year)
+
+# This time, we're moving the sex and year columns to 'before' the bill columns
+relocate(penguins, sex, year, .before = starts_with("bill"))
+```
+
+## Modifying Columns With `mutate()`
+
+- So far, we've only subset our data using various methods
+- `mutate()` is used to modify existing columns or create new ones
+
+```{r}
+#| output: false
+# Create a column called `body_mass_kg` that is the body mass in kg
+mutate(penguins, body_mass_kg = body_mass_g / 1000)
+```
+
+
+## Exercises
+
+::: {style="font-size: 90%;"}
+
+1. Use `filter()` to find all female penguins
+2. Use `filter()` to find all female penguins with a flipper length greater than 215mm
+3. Use `filter()` to find all penguins where `sex` is missing (`NA`)
+4. Sort the dataset by bill_length in descending order
+5. Use `select()` to return the species, island, and year columns
+6. Repeat the above trying an alternative approach to your first answer
+7. Place the `year` column after `island` and remove the `sex` column
+8. Create the column `bill_ratio` by dividing `bill_length_mm` by `bill_depth_mm`
+
+:::
+
+# Summarising The Dataset {background-color="#3d3d40"}
+
+## Obtaining Summaries
+
+- `dplyr` also provides functions to summarise data
+    + `count()` and `summarise()` are the most common
+    + We can tell these functions which columns to summarise by
+    
+```{r}
+#| output: false
+# Count the number of penguins by species
+count(penguins, species)
+
+# Count the number of penguins by species and island
+count(penguins, species, island)
+
+# If we change the order of the columns, we get a different order
+count(penguins, island, species)
+
+# The argument `sort = TRUE` will sort the results
+count(penguins, species, island, sort = TRUE)
+```
+
+## Obtaining Summaries
+
+- More nuanced summaries can be obtained using `summarise()`
+    + We now pass the grouping variable to the argument `.by`
+    + The summary column should also be given a name
+
+
+```{r}
+#| output: false
+# Find the mean weight of each species
+summarise(penguins, mean_weight = mean(body_mass_g), .by = species)
+```
+
+. . .
+
+- This is the first time those missing values have caused us grief
+    + The argument `na.rm = TRUE` will tell `mean()` to ignore `NA` values
+    
+```{r}
+#| output: false
+# Ignore the missing values when calculating the mean
+summarise(penguins, mean_weight = mean(body_mass_g, na.rm = TRUE), .by = species)
+```
+
+## Obtaining Summaries
+
+- We can also summarise using multiple columns
+
+```{r}
+#| output: false
+# Summarise by both species and year
+summarise(
+  penguins, mean_weight = mean(body_mass_g, na.rm = TRUE), .by = c(species, year)
+)
+```
+
+::: {.callout-note collapse="true"}
+- The code is split across multiple lines just to fit on the slide
+:::
+
+## Obtaining Summaries
+
+- We could split across multiple lines for greater readability
+
+```{r}
+#| output: false
+# Summarise by both species and year
+summarise(
+  penguins, 
+  mean_weight = mean(body_mass_g, na.rm = TRUE), 
+  .by = c(species, year)
+)
+```
+
+## Obtaining Summaries
+
+- This strategy can help when creating multiple summary columns
+- Instead of using `count()` we can call `n()` as part of `summarise()`
+
+```{r}
+#| output: false
+# Summarise by both species and year, counting the number of penguins
+summarise(
+  penguins, 
+  mean_weight = mean(body_mass_g, na.rm = TRUE), 
+  total = n(),
+  .by = c(species, year)
+)
+```
+
+## Grouping Arguments
+
+- The recent addition of `.by` has beefed up some earlier functions
+
+```{r}
+#| output: false
+# Grab the first 5 rows of each species
+slice(penguins, 1:5, .by = species)
+```
+
+. . .
+
+- Some newer extensions of `slice()` are also useful for summarising data
+    + `slice_min()`, `slice_max()`
+- Confusingly, `.by` has become `by` here
+    + The argument `n = 1` says return only one penguin per species
+    
+```{r}
+#| output: false
+# Return the heaviest penguin from each species
+slice_max(penguins, body_mass_g, n = 1, by = species)
+```
+
+## Conclusion
+
+- All functions so far have enabled exploration
+- Have never over-written our original dataset
+- Have never created a new object
+
+. . .
+
+- Already a huge amount to remember!
+- We'll be doing more exercises soon
 

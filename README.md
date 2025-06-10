@@ -22,9 +22,9 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 9:00 | Welcome To Country |  | 15min |
 |  | Installation Help |  | 15min |
 |  | Introducing R & RStudio | [Introduction](intro.html) | 50min |
-|  | Spreadsheet-Like Data | [Data Import](penguins.html) | 40min |
+|  | Exploring Spreadsheet-Like Data | [Data Import](penguins.html) | 60min |
 | 10:30 | *Morning Tea* |  |  |
-| 11:00 | Spreadsheet-Like Data (continued) |  |  |
+| 11:00 | Exploring Spreadsheet-Like Data (continued) |  |  |
 |  | Exploring & Manipulating Data | [Data Exploration](exploring.html) |  |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) |  |
