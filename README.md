@@ -25,7 +25,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 |  | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | 60min |
 | 10:30 | *Morning Tea* |  |  |
 | 11:00 | Exploring Spreadsheet-Like Data (continued) |  |  |
-|  | Exploring & Manipulating Data | [Data Exploration](exploring.html) |  |
+|  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 20min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) |  |
 |  | Using `stringr` to Modify Text | [Working With Text](text.html) |  |

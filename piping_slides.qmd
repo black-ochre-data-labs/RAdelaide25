@@ -27,7 +27,7 @@ format:
     show-slide-number: all
   html:
     css: [bodl.scss, extra.css]
-    output-file: penguins.html
+    output-file: piping.html
     embed-resources: true
     toc: true
     toc-depth: 1
@@ -141,3 +141,95 @@ Functions are executed in order from the inside-most function to the outer-most.
 
 Can become very messy if calling 10 functions in a row
 :::
+
+## The Pipe Operator
+
+- R v.4.1 introduced the (base) *pipe operator*: `|>`
+- Exactly like sticking a pipe or a hose on the output of one function then placing the pipe as the input of the next 
+
+. . .
+
+- This allows us to pass the output of one function to the next
+    + Can chain together multiple functions
+    + No need to create intermediate objects
+    + No need to wrap the output of one function inside another
+    
+. . . 
+
+- The output of the first function is passed to the next
+    + By default, it will be the *first* argument
+    
+## The Pipe Operator
+
+```{r}
+#| output-location: fragment
+# This is conventionally how we've used filter
+filter(penguins, species == "Adelie") 
+```
+
+## The Pipe Operator
+
+```{r}
+#| output-location: fragment
+# Here, we're passing the object to filter using |>
+penguins |> filter(species == "Adelie")
+```
+
+::: {.fragment}
+- Calling an object by name simply returns the complete object
+:::
+
+## The Pipe Operator
+
+```{r}
+# Filter the object, then pass the filtered object to arrange using the pipe
+penguins |> filter(species == "Adelie") |> arrange(body_mass_g)
+```
+
+## Forming a Chain Across Multiple Lines
+
+- A common practice is to spread these chains across multiple lines
+- We can comment anywhere we please
+
+```{r}
+#| output: false
+penguins |> 
+  filter(species == "Adelie") |> # First filter the species
+  arrange(body_mass_g) # Now sort by body mass
+```
+
+. . .
+
+- Makes long chains much easier to read
+- Can easily comment out a line when building/testing code
+
+
+## A Longer Example
+
+- Let's find the heaviest 5 Adelie penguins
+
+```{r}
+#| output: false
+penguins |> 
+  filter(species == "Adelie") |> # First filter the species
+  arrange(desc(body_mass_g)) |> # Now sort by body mass, descending
+  slice_head(n = 5) # Take the first 5 rows
+```
+
+## Some Challenges To Solve
+
+1. Find the lightest 5 Gentoo penguins
+    + Return the weights in `kg` instead of `g`
+2. Find the mean bill length for male penguins
+    + Sort your answer in descending order
+3. Find how many penguins were measured per year on each island
+    + Sort your answer by island, then by year
+    
+# Manipulating Tibbles with <br>`tidyr` {background-color="#3d3d40" background-image=https://tidyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
+## The Package `tidyr`
+
+### TODO
+- Pivoting tables longer/wider
+- Unite & separate columns
+- Maybe use complete
