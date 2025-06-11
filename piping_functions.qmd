@@ -1,0 +1,143 @@
+---
+title: "Using Functions in Series"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format:
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    code-tools: true
+    logo: assets/bodl_logo_white_background.jpg
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+  html:
+    css: [bodl.scss, extra.css]
+    output-file: penguins.html
+    embed-resources: true
+    toc: true
+    toc-depth: 1
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) {
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE,
+  fig.align = "center"
+)
+library(palmerpenguins)
+library(dplyr)
+```
+
+## Motivation
+
+- We've seen a bunch of ways to explore our data
+- Only using one function at a time
+
+. . .
+
+- Perhaps we might like to subset (i.e. filter) our data, then sort it
+- How do we do that?
+
+
+::: {.notes}
+- Should we stick with DataExploration.R?
+:::
+
+## The Ugly (Old-School) Way
+
+- Let's say we only want information on the Adelie penguins
+- Then we want to sort this by body_mass
+
+```{r}
+#| output: false
+## First we can subset the dataset
+filter(penguins, species == "Adelie")
+```
+
+. . .
+
+How do we then pass this to the `arrange()` function?
+
+. . . 
+
+1. We could save this as a new object and then call `arrange()` on that object
+2. We could place the output of `filter()` inside `arrange()`
+
+## The Ugly (Old-School) Way
+
+
+```{r}
+#| output: false
+# Let's create an object first: 'adelie_penguins'
+adelie_penguins <- filter(penguins, species == "Adelie")
+
+# Now we can pass this to `arrange()`
+arrange(adelie_penguins, body_mass_g)
+```
+
+. . .
+
+::: {.callout-note collapse="true"}
+## Is this any good?
+
+A complete analysis would lead to a workspace with multiple, similar objects, e.g.
+`adelie_penguins`, `penguins_2007`, `torgerson_penguins`, etc.
+
+This can become very messy and confusing
+:::
+
+
+## Another Ugly (Old-School) Way
+
+```{r}
+#| output: false
+# This time, we can wrap the output of one function inside the other
+arrange(
+  filter(penguins, species == "Adelie"), 
+  body_mass_g
+)
+```
+
+. . .
+
+- We have first filtered our dataset $\implies$ becomes the `tibble` to be sorted
+
+::: {.callout-note collapse="true"}
+## Is this any good?
+
+Functions are executed in order from the inside-most function to the outer-most. First the filtering is done, and then this is passed to `arrange()`
+
+Can become very messy if calling 10 functions in a row
+:::

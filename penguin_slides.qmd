@@ -1,5 +1,5 @@
 ---
-title: "Introducing Data In R"
+title: "Exploring Data In R"
 subtitle: "RAdelaide 2025"
 author: "Dr Stevie Pederson"
 institute: |
@@ -74,6 +74,21 @@ knitr::opts_chunk$set(
 
 ![](https://allisonhorst.github.io/palmerpenguins/logo.png){.absolute bottom=320 right=120 width='250px'}
 
+## Exploring The Penguins
+
+- We won't be creating any objects in this section
+- Learning how to explore a dataset using `dplyr`
+    + For organising data 
+    + For creating summary tables
+    + To prepare for creating plots & figures
+
+. . .
+
+- We'll cover a huge amount of ground
+    + Hopefully the exercises & challenges help
+
+
+
 ## Starting An R Script
 
 - Best practice is to ALWAYS record your code
@@ -146,6 +161,8 @@ library(palmerpenguins)
 
 ## The `penguins` dataset
 
+::: {style="font-size: 95%;"}
+
 - The `palmerpenguins` package contains a dataset called `penguins`
     + Add the comment and code below, then execute
     + Typing an object's name will 'print' it into the console
@@ -155,6 +172,8 @@ library(palmerpenguins)
 # Let's look at the penguins dataset
 penguins
 ```
+
+:::
 
 ::: {.notes}
 - Maybe get people to click on the Global Environment Tab  
@@ -569,7 +588,7 @@ select(penguins, species, island, starts_with("bill"))
 select(penguins, species, island, contains("length"))
 ```
 
-## Helper Functions and 
+## Helper Functions 
 
 
 ```{r}
@@ -594,7 +613,7 @@ select(penguins, -ends_with("mm"))
 
 ```{r}
 #| output: false
-# Relocate is a newer addition and can also be used to reorder columns
+# Relocate is a newer addition to dplyr and can also be used to reorder columns
 # The arguments .before and .after can be used to specify where to place columns
 # Here we're moving columns with an underscore to after the year column
 relocate(penguins, contains("_"), .after = year)
@@ -751,6 +770,9 @@ slice_max(penguins, body_mass_g, n = 1, by = species)
 - All functions so far have enabled exploration
 - Have never over-written our original dataset
 - Have never created a new object
+- Real world applications:
+    + Preparing for plotting or regression
+    + Summarising data for tables
 
 . . .
 

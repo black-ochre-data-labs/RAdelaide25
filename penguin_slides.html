@@ -430,6 +430,26 @@ Dr Stevie Pederson
 <p><img data-src="https://allisonhorst.github.io/palmerpenguins/logo.png" class="absolute" style="bottom: 320px; right: 120px; width: 250px; "></p>
 </div>
 </section>
+<section id="exploring-the-penguins" class="slide level2">
+<h2>Exploring The Penguins</h2>
+<ul>
+<li>We won’t be creating any objects in this section</li>
+<li>Learning how to explore a dataset using <code>dplyr</code>
+<ul>
+<li>For organising data</li>
+<li>For creating summary tables</li>
+<li>To prepare for creating plots &amp; figures</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>We’ll cover a huge amount of ground
+<ul>
+<li>Hopefully the exercises &amp; challenges help</li>
+</ul></li>
+</ul>
+</div>
+</section>
 <section id="starting-an-r-script" class="slide level2">
 <h2>Starting An R Script</h2>
 <ul>
@@ -524,6 +544,7 @@ Dr Stevie Pederson
 </section>
 <section id="the-penguins-dataset" class="slide level2">
 <h2>The <code>penguins</code> dataset</h2>
+<div style="font-size: 95%;">
 <ul>
 <li>The <code>palmerpenguins</code> package contains a dataset called <code>penguins</code>
 <ul>
@@ -552,6 +573,7 @@ Dr Stevie Pederson
 10 Adelie  Torgersen           42            20.2               190        4250
 # ℹ 334 more rows
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
 </div>
 </div>
 <aside class="notes">
@@ -1088,8 +1110,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 </div>
 </section>
-<section id="helper-functions-and" class="slide level2">
-<h2>Helper Functions and</h2>
+<section id="helper-functions-1" class="slide level2">
+<h2>Helper Functions</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Place all metadata first, followed by measured values</span></span>
 <span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># This line shows how useful 'everything()' can be</span></span>
@@ -1108,7 +1130,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <section id="relocate" class="slide level2">
 <h2>Relocate</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Relocate is a newer addition and can also be used to reorder columns</span></span>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Relocate is a newer addition to dplyr and can also be used to reorder columns</span></span>
 <span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The arguments .before and .after can be used to specify where to place columns</span></span>
 <span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we're moving columns with an underscore to after the year column</span></span>
 <span id="cb32-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">relocate</span>(penguins, <span class="fu">contains</span>(<span class="st">"_"</span>), <span class="at">.after =</span> year)</span>
@@ -1286,6 +1308,11 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>All functions so far have enabled exploration</li>
 <li>Have never over-written our original dataset</li>
 <li>Have never created a new object</li>
+<li>Real world applications:
+<ul>
+<li>Preparing for plotting or regression</li>
+<li>Summarising data for tables</li>
+</ul></li>
 </ul>
 <div class="fragment">
 <ul>
