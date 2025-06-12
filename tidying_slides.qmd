@@ -1,0 +1,150 @@
+---
+title: "Reshaping And Tidying Data"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format:
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    code-tools: true
+    logo: assets/bodl_logo_white_background.jpg
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+  html:
+    css: [bodl.scss, extra.css]
+    output-file: tidying.html
+    embed-resources: true
+    toc: true
+    toc-depth: 1
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) {
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE,
+  fig.align = "center"
+)
+library(palmerpenguins)
+library(dplyr)
+library(tidyr)
+```
+
+## Motivation
+
+- In Excel many people use pivot tables
+- Sometimes we need similar structure in R
+- Data from plotting and data for tables may require different 'shapes'
+
+. . .
+
+- Often we refer to data as being in *long* form or in *wide* form
+- In wide form our response variable will be spread across multiple columns
+- In long form, the response variable is in a single column
+
+## The package `tidyr`
+
+- We'll look at some key functions from `tidyr`
+- `pivot_longer()` and `pivot_wider()`
+- `separate()` and `unite()`
+
+. . .
+
+- Add `library(tidyr)` to the beginning of the script
+
+. . .
+
+- `penguins` has each measurement in long form
+    + But has multiple columns of measurement
+    
+## From Long To Wide
+
+- We'll first create some summaries by sex
+
+```{r}
+penguins |>
+  filter(
+    !is.na(sex) # Exclude those where sex is missing
+  ) |> 
+  count(species, sex)
+```
+
+
+## From Long To Wide
+
+- Let's try and create separate columns for male & female penguins
+- This is where `pivot_wider()` can be helpful
+
+```{r}
+penguins |>
+  filter(
+    !is.na(sex) # Exclude those where sex is missing
+  ) |> 
+  count(species, sex) |>
+  pivot_wider(
+    names_from = sex, values_from = n
+  )
+```
+
+
+```{r}
+penguins |>
+  filter(
+    !is.na(sex) # Exclude those where sex is missing
+  ) |> 
+  count(species, year, sex) |>
+  pivot_wider(
+    names_from = c(sex, year), values_from = n
+  )
+```
+
+
+## From Wide To Long
+
+```{r}
+penguins |>
+  pivot_longer(
+    cols = ends_with("mm"),
+    names_to = "measurement",
+    values_to = "mm"
+  ) |>
+  filter(!is.na(mm)) |>
+  summarise(
+    mean_mm = mean(mm), .by = c(year, measurement)
+  ) |>
+  pivot_wider(names_from = year, values_from = mean_mm)
+```
+
+
+

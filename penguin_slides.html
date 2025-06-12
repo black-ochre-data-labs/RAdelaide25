@@ -974,6 +974,11 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </tbody>
 </table>
 </div>
+<div class="fragment">
+<ul>
+<li>In most languages, <code>!</code> is interpreted as <strong>NOT</strong></li>
+</ul>
+</div>
 </section>
 <section id="filtering-penguins-1" class="slide level2">
 <h2>Filtering Penguins</h2>
@@ -1127,8 +1132,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </div>
 </div>
 </section>
-<section id="relocate" class="slide level2">
-<h2>Relocate</h2>
+<section id="relocating-penguins" class="slide level2">
+<h2>Relocating Penguins</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Relocate is a newer addition to dplyr and can also be used to reorder columns</span></span>
 <span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The arguments .before and .after can be used to specify where to place columns</span></span>
@@ -1139,6 +1144,25 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <span id="cb32-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">relocate</span>(penguins, sex, year, <span class="at">.before =</span> <span class="fu">starts_with</span>(<span class="st">"bill"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="renaming-penguins" class="slide level2">
+<h2>Renaming Penguins</h2>
+<ul>
+<li>When we call select, we can rename columns on the fly</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Rename the island column as 'location', leaving the order unchanged</span></span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, <span class="at">location =</span> island, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Alternatively, we can just use <code>rename()</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Or just rename the individual column</span></span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rename</span>(penguins, <span class="at">location =</span> island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
 <section id="modifying-columns-with-mutate" class="slide level2">
 <h2>Modifying Columns With <code>mutate()</code></h2>
 <ul>
@@ -1146,8 +1170,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li><code>mutate()</code> is used to modify existing columns or create new ones</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a column called `body_mass_kg` that is the body mass in kg</span></span>
-<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">body_mass_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a column called `body_mass_kg` that is the body mass in kg</span></span>
+<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">body_mass_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercises" class="slide level2">
@@ -1180,17 +1204,17 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of penguins by species</span></span>
-<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species)</span>
-<span id="cb34-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of penguins by species and island</span></span>
-<span id="cb34-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species, island)</span>
-<span id="cb34-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># If we change the order of the columns, we get a different order</span></span>
-<span id="cb34-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, island, species)</span>
-<span id="cb34-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument `sort = TRUE` will sort the results</span></span>
-<span id="cb34-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species, island, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of penguins by species</span></span>
+<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species)</span>
+<span id="cb36-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of penguins by species and island</span></span>
+<span id="cb36-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species, island)</span>
+<span id="cb36-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># If we change the order of the columns, we get a different order</span></span>
+<span id="cb36-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, island, species)</span>
+<span id="cb36-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument `sort = TRUE` will sort the results</span></span>
+<span id="cb36-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species, island, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="obtaining-summaries-1" class="slide level2">
@@ -1203,8 +1227,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the mean weight of each species</span></span>
-<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g), <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the mean weight of each species</span></span>
+<span id="cb37-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g), <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1214,8 +1238,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignore the missing values when calculating the mean</span></span>
-<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignore the missing values when calculating the mean</span></span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1225,10 +1249,10 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>We can also summarise using multiple columns</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year</span></span>
-<span id="cb37-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
-<span id="cb37-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
-<span id="cb37-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year</span></span>
+<span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
+<span id="cb39-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
+<span id="cb39-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1252,12 +1276,12 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>We could split across multiple lines for greater readability</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year</span></span>
-<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
-<span id="cb38-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, </span>
-<span id="cb38-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb38-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
-<span id="cb38-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year</span></span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
+<span id="cb40-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, </span>
+<span id="cb40-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb40-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
+<span id="cb40-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="obtaining-summaries-4" class="slide level2">
@@ -1267,13 +1291,13 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>Instead of using <code>count()</code> we can call <code>n()</code> as part of <code>summarise()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year, counting the number of penguins</span></span>
-<span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
-<span id="cb39-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, </span>
-<span id="cb39-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb39-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">total =</span> <span class="fu">n</span>(),</span>
-<span id="cb39-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
-<span id="cb39-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year, counting the number of penguins</span></span>
+<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
+<span id="cb41-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, </span>
+<span id="cb41-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb41-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">total =</span> <span class="fu">n</span>(),</span>
+<span id="cb41-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
+<span id="cb41-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="grouping-arguments" class="slide level2">
@@ -1282,8 +1306,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>The recent addition of <code>.by</code> has beefed up some earlier functions</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab the first 5 rows of each species</span></span>
-<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab the first 5 rows of each species</span></span>
+<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1297,8 +1321,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the heaviest penguin from each species</span></span>
-<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_max</span>(penguins, body_mass_g, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the heaviest penguin from each species</span></span>
+<span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_max</span>(penguins, body_mass_g, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>

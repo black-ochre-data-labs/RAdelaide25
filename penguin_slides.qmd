@@ -463,6 +463,12 @@ Filtering relies on *logical tests*
 | `!=`  | Is Not Equal To |
 | `is.na()` | Is Missing Value |
 
+
+. . .
+
+- In most languages, `!` is interpreted as **NOT**
+
+
 ## Filtering Penguins
 
 ```{r}
@@ -609,7 +615,7 @@ select(penguins, -ends_with("mm"))
 ```
 
 
-## Relocate
+## Relocating Penguins
 
 ```{r}
 #| output: false
@@ -621,6 +627,29 @@ relocate(penguins, contains("_"), .after = year)
 # This time, we're moving the sex and year columns to 'before' the bill columns
 relocate(penguins, sex, year, .before = starts_with("bill"))
 ```
+
+
+## Renaming Penguins
+
+- When we call select, we can rename columns on the fly
+
+```{r}
+#| output: false
+## Rename the island column as 'location', leaving the order unchanged
+select(penguins, species, location = island, everything())
+```
+
+. . .
+
+- Alternatively, we can just use `rename()`
+
+```{r}
+#| output: false
+## Or just rename the individual column
+rename(penguins, location = island)
+```
+
+
 
 ## Modifying Columns With `mutate()`
 
