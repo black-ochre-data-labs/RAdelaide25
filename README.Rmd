@@ -36,12 +36,12 @@ Data for the workshop is available as a zip file [here](data.zip)
 |  | Exploring Spreadsheet-Like Data   | [Exploring Penguins](penguins.html) | `r getTiming("penguin_slides.qmd", 1.2)`|
 | 10:30 | *Morning Tea* | | |
 | 11:00 | Exploring Spreadsheet-Like Data (continued) | | |
-| | Building Chains Of Code | [Piping Functions](piping_functions.html) | `r getTiming("piping_slides.qmd", 1)` |
+| | Building Chains Of Code | [Piping Functions](piping_functions.html) | `r getTiming("piping_slides.qmd", 1.5)` |
+| | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | `r getTiming("tidying_slides.qmd", 1.2)` |
 | 12:30 | *Lunch* | | |
 | 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |
-|  | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd")` |
+|  | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd", 1.2)` |
 | 3:00  | *Afternoon Tea* | | |
-| 3:30  | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) | `r getTiming("tidyr_slides.qmd")` |
 | 4:00 | Challenges and Bring Your Own Data  | [Day1](day1.html) | |
 
 

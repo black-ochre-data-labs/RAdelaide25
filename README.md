@@ -26,11 +26,11 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 10:30 | *Morning Tea* |  |  |
 | 11:00 | Exploring Spreadsheet-Like Data (continued) |  |  |
 |  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 20min |
+|  | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 10min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) |  |
 |  | Using `stringr` to Modify Text | [Working With Text](text.html) |  |
 | 3:00 | *Afternoon Tea* |  |  |
-| 3:30 | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) |  |
 | 4:00 | Challenges and Bring Your Own Data | [Day1](day1.html) |  |
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |

@@ -93,6 +93,7 @@ library(tidyr)
 - We'll first create some summaries by sex
 
 ```{r}
+#| output: false
 penguins |>
   filter(
     !is.na(sex) # Exclude those where sex is missing
@@ -107,24 +108,32 @@ penguins |>
 - This is where `pivot_wider()` can be helpful
 
 ```{r}
+#| output: false
 penguins |>
   filter(
     !is.na(sex) # Exclude those where sex is missing
   ) |> 
   count(species, sex) |>
   pivot_wider(
+    # Specify the column we wish to take the new names from
+    # And the column with the values
     names_from = sex, values_from = n
   )
 ```
 
 
+## From Long To Wide
+
 ```{r}
+#| output: false
 penguins |>
   filter(
     !is.na(sex) # Exclude those where sex is missing
   ) |> 
   count(species, year, sex) |>
   pivot_wider(
+    # Multiple columns can also be chosen
+    # The default separator will be "_"
     names_from = c(sex, year), values_from = n
   )
 ```
@@ -132,7 +141,44 @@ penguins |>
 
 ## From Wide To Long
 
+- The reverse operation is `pivot_longer()`
+- This time we move values from multiple columns into a single column
+    + Notice that the new column names ned to be quoted here
+
 ```{r}
+#| output: false
+penguins |>
+  # Place all the length and depth measurements into a single column
+  pivot_longer(
+    cols = ends_with("mm"),
+    names_to = "measurement",
+    values_to = "mm"
+  )
+```
+
+## From Wide To Long
+
+- Again, summarisation shows this to be very helpful
+
+```{r}
+#| output: false
+penguins |>
+  pivot_longer(
+    cols = ends_with("mm"),
+    names_to = "measurement",
+    values_to = "mm"
+  ) |>
+  filter(!is.na(mm)) |>
+  summarise(
+    # Find the mean of each measurement type by year
+    mean_mm = mean(mm), .by = c(year, measurement)
+  ) 
+```
+
+## Using Both Together
+
+```{r}
+#| output: false
 penguins |>
   pivot_longer(
     cols = ends_with("mm"),
@@ -143,6 +189,7 @@ penguins |>
   summarise(
     mean_mm = mean(mm), .by = c(year, measurement)
   ) |>
+  # Now form separate columns for each year
   pivot_wider(names_from = year, values_from = mean_mm)
 ```
 
