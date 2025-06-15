@@ -409,27 +409,35 @@ Dr Stevie Pederson
 
   <p class="date">July 8, 2025</p>
 </section>
+<section>
+<section id="manipulating-tibbles-with-tidyr" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="https://tidyr.tidyverse.org/logo.png" data-background-size="30%" data-background-opacity="0.4" data-background-position="70% 50%">
+<h1>Manipulating Tibbles with <br><code>tidyr</code></h1>
+
+</section>
 <section id="motivation" class="slide level2">
 <h2>Motivation</h2>
 <ul>
 <li>In Excel many people use pivot tables</li>
 <li>Sometimes we need similar structure in R</li>
-<li>Data from plotting and data for tables may require different ‘shapes’</li>
+<li>Data may need to be in different ‘shapes’ for plotting/tables/analysis</li>
 </ul>
 <div class="fragment">
 <ul>
 <li>Often we refer to data as being in <em>long</em> form or in <em>wide</em> form</li>
-<li>In wide form our response variable will be spread across multiple columns</li>
-<li>In long form, the response variable is in a single column</li>
+<li>In wide form our response variable may be spread across <em>multiple columns</em></li>
+<li>In long form, the response variable is in a <em>single column</em></li>
 </ul>
 </div>
 </section>
 <section id="the-package-tidyr" class="slide level2">
 <h2>The package <code>tidyr</code></h2>
 <ul>
-<li>We’ll look at some key functions from <code>tidyr</code></li>
+<li>We’ll look at some key functions from <code>tidyr</code>
+<ul>
 <li><code>pivot_longer()</code> and <code>pivot_wider()</code></li>
 <li><code>separate()</code> and <code>unite()</code></li>
+<li>Many more beyond the scope of today</li>
+</ul></li>
 </ul>
 <div class="fragment">
 <ul>
@@ -546,13 +554,193 @@ Dr Stevie Pederson
 <span id="cb6-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now form separate columns for each year</span></span>
 <span id="cb6-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> year, <span class="at">values_from =</span> mean_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="combining-columns" class="slide level2">
+<h2>Combining Columns</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## We can combine multiple columns using unite</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## By default, the separator will be '_'</span></span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(new_column, species, sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Original columns can be left if preferred</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## An alternative separator can also be provided</span></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(new_column, species, sex, <span class="at">remove =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">":"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="splitting-columns" class="slide level2">
+<h2>Splitting Columns</h2>
+<ul>
+<li>The reverse operation is <code>separate()</code></li>
+<li>We’ll create our own tibble on the fly for this example</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">merged =</span> <span class="fu">c</span>(<span class="st">"A.1"</span>, <span class="st">"B.1"</span>, <span class="st">"C.2"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 1
+  merged
+  &lt;chr&gt; 
+1 A.1   
+2 B.1   
+3 C.2   </code></pre>
+</div>
+</div>
+</section>
+<section id="splitting-columns-1" class="slide level2">
+<h2>Splitting Columns</h2>
+<ul>
+<li>We can now use the dot to separate</li>
+<li>Number of expected columns is set by the <code>into</code> argument</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">merged =</span> <span class="fu">c</span>(<span class="st">"A.1"</span>, <span class="st">"B.1"</span>, <span class="st">"C.2"</span>))  <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(merged, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"letter"</span>, <span class="st">"number"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div data-collape="true">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Setting The Wrong Number of Columns</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>Try adding an additional expected column called “none”</li>
+<li>This is a common error you may see</li>
+<li>Also try setting “letter” as the only column</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="splitting-columns-2" class="slide level2">
+<h2>Splitting Columns</h2>
+<ul>
+<li>Check the help page <code>?separate</code></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>sep = "[^[:alnum:]]+"</code> is a <em>regular expression</em></li>
+<li>Common syntax for working with flexible text strings</li>
+<li>Easy to write <span class="math inline">\(\rightarrow\)</span> horrible to read back
+<ul>
+<li>We’ll explore very soon <span class="math inline">\(\implies\)</span> essential for handling text/categorical data</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>Covered quite some turf</li>
+<li>Switch from wide to long</li>
+<li>Splitting/Merging Columns</li>
+<li>Selecting/Renaming Columns</li>
+<li>Adding Columns</li>
+<li>Summarising Columns</li>
+<li>Filtering/Slicing Rows</li>
+</ul>
+<p><img data-src="assets/doge.jpg" class="absolute" style="top: 100px; right: 0px; width: 700px; "></p>
+</section>
+<section id="summary-1" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>All important preparatory skills for:
+<ul>
+<li>Cleaning your data</li>
+<li>Summary tables</li>
+<li>Plotting Data</li>
+<li>Running Statistical Tests</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Still need:
+<ul>
+<li>Text manipulation (a key skill)</li>
+<li>How to load our own data</li>
+<li>Basic R Data Structures</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="challenges" class="slide level2">
+<h2>Challenges</h2>
+<div style="font-size: 80%">
+<ol type="1">
+<li>Count the number of penguins from each species on each island for each year. Try and make it look like the output below
+<ul>
+<li>Hint: use <code>values_fill = 0</code> to get rid of missing values in the output</li>
+</ul></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 5
+  island     year Adelie Chinstrap Gentoo
+  &lt;fct&gt;     &lt;int&gt;  &lt;int&gt;     &lt;int&gt;  &lt;int&gt;
+1 Biscoe     2007     10         0     34
+2 Biscoe     2008     18         0     46
+3 Biscoe     2009     16         0     44
+4 Dream      2007     20        26      0
+5 Dream      2008     16        18      0
+6 Dream      2009     20        24      0
+7 Torgersen  2007     20         0      0
+8 Torgersen  2008     16         0      0
+9 Torgersen  2009     16         0      0</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Add a column called <code>total</code> which adds the values for all species columns</li>
+<li>Subset the table to only show values from 2009</li>
+<li>Combine the island and year to be a column in the form <code>island:year</code></li>
+</ol>
+</div>
+</section>
+<section id="more-challenges" class="slide level2">
+<h2>More Challenges</h2>
+<div style="font-size: 90%">
+<ul>
+<li>Create the following table showing the mean <code>bill_length_mm</code>
+<ul>
+<li>Decide how to handle missing values</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  species   island    `2007` `2008` `2009`
+  &lt;fct&gt;     &lt;fct&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 Adelie    Torgersen   38.8   38.8   39.3
+2 Adelie    Biscoe      38.3   38.7   39.7
+3 Adelie    Dream       39.1   38.2   38.2
+4 Gentoo    Biscoe      47.0   46.9   48.5
+5 Chinstrap Dream       48.7   48.7   49.1</code></pre>
+</div>
+</div>
+<ul>
+<li>Add a column called <code>overall_mean</code> which averages the values for all years
+<ul>
+<li><em>Hint: The mean is the sum divided by the number of values</em></li>
+</ul></li>
+</ul>
+</div>
 <div class="quarto-auto-generated-content">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

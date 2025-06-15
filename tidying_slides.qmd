@@ -61,23 +61,26 @@ library(dplyr)
 library(tidyr)
 ```
 
+# Manipulating Tibbles with <br>`tidyr` {background-color="#3d3d40" background-image=https://tidyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
 ## Motivation
 
 - In Excel many people use pivot tables
 - Sometimes we need similar structure in R
-- Data from plotting and data for tables may require different 'shapes'
+- Data may need to be in different 'shapes' for plotting/tables/analysis
 
 . . .
 
 - Often we refer to data as being in *long* form or in *wide* form
-- In wide form our response variable will be spread across multiple columns
-- In long form, the response variable is in a single column
+- In wide form our response variable may be spread across *multiple columns*
+- In long form, the response variable is in a *single column*
 
 ## The package `tidyr`
 
 - We'll look at some key functions from `tidyr`
-- `pivot_longer()` and `pivot_wider()`
-- `separate()` and `unite()`
+    - `pivot_longer()` and `pivot_wider()`
+    - `separate()` and `unite()`
+    - Many more beyond the scope of today
 
 . . .
 
@@ -194,4 +197,137 @@ penguins |>
 ```
 
 
+## Combining Columns
 
+```{r}
+#| output: false
+## We can combine multiple columns using unite
+## By default, the separator will be '_'
+penguins |>
+  unite(new_column, species, sex)
+```
+
+. . .
+
+<br>
+
+```{r}
+#| output: false
+## Original columns can be left if preferred
+## An alternative separator can also be provided
+penguins |>
+  unite(new_column, species, sex, remove = FALSE, sep = ":")
+```
+
+## Splitting Columns
+
+- The reverse operation is `separate()`
+- We'll create our own tibble on the fly for this example
+
+```{r}
+tibble(merged = c("A.1", "B.1", "C.2")) 
+```
+
+## Splitting Columns
+
+- We can now use the dot to separate
+- Number of expected columns is set by the `into` argument
+
+```{r}
+#| output: false
+tibble(merged = c("A.1", "B.1", "C.2"))  |>
+  separate(merged, into = c("letter", "number"))
+```
+
+. . .
+
+::: {.callout-note collape="true"}
+## Setting The Wrong Number of Columns 
+- Try adding an additional expected column called "none"
+- This is a common error you may see
+- Also try setting "letter" as the only column
+:::
+
+## Splitting Columns
+
+- Check the help page `?separate`
+
+. . .
+
+- `sep = "[^[:alnum:]]+"` is a *regular expression*
+- Common syntax for working with flexible text strings
+- Easy to write $\rightarrow$ horrible to read back
+    + We'll explore very soon $\implies$ essential for handling text/categorical data
+
+## Summary
+
+- Covered quite some turf
+- Switch from wide to long
+- Splitting/Merging Columns
+- Selecting/Renaming Columns
+- Adding Columns
+- Summarising Columns
+- Filtering/Slicing Rows
+
+![](assets/doge.jpg){.absolute top=100 right=0 width='700px'}
+
+## Summary
+
+- All important preparatory skills for:
+    + Cleaning your data
+    + Summary tables
+    + Plotting Data
+    + Running Statistical Tests
+
+. . .
+
+- Still need:
+    + Text manipulation (a key skill)
+    + How to load our own data
+    + Basic R Data Structures
+
+
+## Challenges
+
+::: {style="font-size: 80%"}
+
+1. Count the number of penguins from each species on each island for each year. Try and make it look like the output below
+    + Hint: use `values_fill = 0` to get rid of missing values in the output
+
+```{r}
+#| echo: false
+penguins |>
+  count(species, island, year) |>
+  pivot_wider(
+    names_from = species, values_from = n, values_fill = 0
+  )
+```
+
+2. Add a column called `total` which adds the values for all species columns
+3. Subset the table to only show values from 2009
+4. Combine the island and year to be a column in the form `island:year`
+
+:::
+
+## More Challenges
+
+::: {style="font-size: 90%"}
+
+- Create the following table showing the mean `bill_length_mm`
+    + Decide how to handle missing values
+
+```{r}
+#| echo: false
+penguins |>
+  summarise(
+    mean = mean(bill_length_mm, na.rm = TRUE), .by = c(species, island, year)
+  ) |>
+  pivot_wider(
+    names_from = year, values_from = mean, values_fill = 0
+  )
+```
+
+- Add a column called `overall_mean` which averages the values for all years
+    + *Hint: The mean is the sum divided by the number of values*
+
+:::

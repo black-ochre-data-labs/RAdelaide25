@@ -225,11 +225,4 @@ penguins |>
 3. Find how many penguins were measured per year on each island
     + Sort your answer by island, then by year
     
-# Manipulating Tibbles with <br>`tidyr` {background-color="#3d3d40" background-image=https://tidyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
 
-## The Package `tidyr`
-
-### TODO
-- Pivoting tables longer/wider
-- Unite & separate columns
-- Maybe use complete

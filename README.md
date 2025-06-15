@@ -26,7 +26,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 10:30 | *Morning Tea* |  |  |
 | 11:00 | Exploring Spreadsheet-Like Data (continued) |  |  |
 |  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 20min |
-|  | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 10min |
+|  | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 30min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) |  |
 |  | Using `stringr` to Modify Text | [Working With Text](text.html) |  |
