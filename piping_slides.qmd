@@ -225,4 +225,41 @@ penguins |>
 3. Find how many penguins were measured per year on each island
     + Sort your answer by island, then by year
     
+## Closing Comments
 
+::: {style="font-size: 90%"}
+
+- The shell has had a pipe since 1973[^1]
+    + Originally `>` then changed to `|`
+- The `R` base pipe (`|>`) was introduced in v.4.1 (2021)
+
+::: {.fragment}
+
+::: {.columns}
+
+::: {.column width="50%}
+
+- An earlier pipe (`%>%`) was introduced in the package `magrittr` (~2014)
+    + Often referred to as "The Magrittr"
+    + Much internet code will use this pipe
+    + Very similar in behaviour [<br>**BUT** differences are non-trivial]{.fragment}
+
+:::
+
+::: {.column width="50%}
+    
+![Rene Magritte, *The Treachery of Images*, 1929](https://uploads7.wikiart.org/images/rene-magritte/the-treachery-of-images-this-is-not-a-pipe-1948(2).jpg)
+
+:::
+
+:::
+
+:::
+
+:::
+
+[^1]: https://en.wikipedia.org/wiki/Pipeline_(Unix)
+
+::: {.notes}
+Interestingly, the shell was also developed at Bell Labs in the 1970s
+:::
