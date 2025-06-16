@@ -28,10 +28,9 @@ Data for the workshop is available as a zip file [here](data.zip)
 |  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 20min |
 |  | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 30min |
 | 12:30 | *Lunch* |  |  |
-| 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 90min |
-|  | Using `stringr` to Modify Text | [Working With Text](text.html) |  |
+| 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 110min |
 | 3:00 | *Afternoon Tea* |  |  |
-| 4:00 | Challenges and Bring Your Own Data | [Day1](day1.html) |  |
+| 3:30 | Using `stringr` to Modify Text | [Working With Text](text.html) |  |
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
 |:---|:---|:---|:---|

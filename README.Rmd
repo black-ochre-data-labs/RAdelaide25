@@ -40,9 +40,8 @@ Data for the workshop is available as a zip file [here](data.zip)
 | | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | `r getTiming("tidying_slides.qmd", 1.2)` |
 | 12:30 | *Lunch* | | |
 | 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |
-|  | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd", 1.2)` |
 | 3:00  | *Afternoon Tea* | | |
-| 4:00 | Challenges and Bring Your Own Data  | [Day1](day1.html) | |
+| 3:30 | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd", 1.2)` |
 
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
