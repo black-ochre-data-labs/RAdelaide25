@@ -216,6 +216,36 @@ penguins |>
   slice_head(n = 5) # Take the first 5 rows
 ```
 
+## Using Distinct Wisely
+
+- The function `distinct()` (from `dplyr`) will remove duplicate rows
+    + Only across the provided columns
+    
+```{r}
+#| output: false
+## Return the unique values in the species column
+penguins |> distinct(species)
+
+## Return the unique combinations of the species and island columns
+penguins |> distinct(species, island)
+```
+
+## Using Distinct Wisely
+
+- Setting the argument `.keep_all = TRUE` will return all columns
+    + Only the first unique appearance will be retained
+
+```{r}
+#| output: false
+## Sort by body mass, descending then use distinct to return the
+## first unique combination of species and island
+penguins |>
+  arrange(desc(body_mass_g)) |> 
+  distinct(species, island, .keep_all = TRUE)
+```
+
+
+
 ## Some Challenges To Solve
 
 1. Find the lightest 5 Gentoo penguins
@@ -224,6 +254,8 @@ penguins |>
     + Sort your answer in descending order
 3. Find how many penguins were measured per year on each island
     + Sort your answer by island, then by year
+4. Can you use `slice_max()` to return the same penguins as the final example, i.e. the heaviest from each species and island?    
+    
     
 ## Closing Comments
 

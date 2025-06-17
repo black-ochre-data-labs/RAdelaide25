@@ -3493,6 +3493,38 @@ Is this any good?
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>) <span class="co"># Take the first 5 rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="using-distinct-wisely" class="level2">
+<h2 class="anchored" data-anchor-id="using-distinct-wisely">Using Distinct Wisely</h2>
+<ul>
+<li>The function <code>distinct()</code> (from <code>dplyr</code>) will remove duplicate rows
+<ul>
+<li>Only across the provided columns</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Return the unique values in the species column</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">distinct</span>(species)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Return the unique combinations of the species and island columns</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">distinct</span>(species, island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="using-distinct-wisely-1" class="level2">
+<h2 class="anchored" data-anchor-id="using-distinct-wisely-1">Using Distinct Wisely</h2>
+<ul>
+<li>Setting the argument <code>.keep_all = TRUE</code> will return all columns
+<ul>
+<li>Only the first unique appearance will be retained</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Sort by body mass, descending then use distinct to return the</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="do">## first unique combination of species and island</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(body_mass_g)) <span class="sc">|&gt;</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(species, island, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="some-challenges-to-solve" class="level2">
 <h2 class="anchored" data-anchor-id="some-challenges-to-solve">Some Challenges To Solve</h2>
 <ol type="1">
@@ -3508,6 +3540,7 @@ Is this any good?
 <ul>
 <li>Sort your answer by island, then by year</li>
 </ul></li>
+<li>Can you use <code>slice_max()</code> to return the same penguins as the final example, i.e. the heaviest from each species and island?</li>
 </ol>
 </section>
 <section id="closing-comments" class="level2">
