@@ -820,6 +820,26 @@ p + theme_bw() +
   )
 ```
 
+## Using Themes
+
+- Plot titles align left by default
+
+```{r}
+p + theme_bw() + 
+  ggtitle("Penguin Bill Measurements")
+```
+
+. . .
+
+- We can use `theme()` to align in the centre
+    + `hjust` is the horizontal adjustment
+
+```{r}
+p + theme_bw() + 
+  ggtitle("Penguin Bill Measurements") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
 
 # Different Plot Types{background-color="#3d3d40"}
 
@@ -1094,7 +1114,62 @@ penguins |>
   theme_bw()
 ```
 
+## Adding Labels To Points
 
+- The penguins dataset isn't well suited to adding labels
+    + Let's make a toy dataset
+
+```{r}
+tibble(
+  x = 1:4, y = x^2, label = c("a", "b", "c", "d")
+)
+```
+
+## Adding Labels To Points
+
+- We can easily plot points, but what about labels?
+
+```{r}
+#| fig-show: hide
+tibble(
+  x = 1:4, y = x^2, label = c("a", "b", "c", "d")
+) |> 
+  ggplot(aes(x, y)) +
+  geom_point()
+```
+
+## Adding Labels To Points
+
+- Using `geom_text()` will overlay labels exactly on the points
+
+```{r}
+#| fig-show: hide
+tibble(
+  x = 1:4, y = x^2, label = c("a", "b", "c", "d")
+) |> 
+  ggplot(aes(x, y)) +
+  geom_point() +
+  geom_text(aes(label = label), size = 4)
+```
+
+## Adding Labels To Points
+
+- Using `geom_text_repel()` will shift labels marginally away from the points
+
+```{r}
+#| fig-show: hide
+library(ggrepel)
+tibble(
+  x = 1:4, y = x^2, label = c("a", "b", "c", "d")
+) |> 
+  ggplot(aes(x, y)) +
+  geom_point() +
+  geom_text_repel(aes(label = label), size = 4)
+```
+
+. . .
+
+- `geom_label()` and `geom_label_repel()` will add borders and fill to labels
 
 ## Saving Images
 
@@ -1139,3 +1214,4 @@ A fabulous resource: https://r-graphics.org/
 
 
 ## References
+
