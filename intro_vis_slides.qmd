@@ -673,6 +673,7 @@ penguins |>
 #| fig-show: hide
 ## Save the figure for exploring theme attributes
 p <- penguins |>
+  filter(!is.na(sex)) |> # Remove the penguins with unrecorded sex
   ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
   geom_point(aes(shape = sex), size = 3) + 
   stat_smooth(method = "lm", se = FALSE) +
@@ -711,19 +712,6 @@ p + theme_bw() +
   theme(text = element_text(size = 14, ))
 ```
 
-## Using Themes
-
-- Any individual text element of a figure can be modified using `element_text()`
-
-```{r}
-#| fig-show: hide
-p + theme_bw() +
-  theme(
-    ## A slightly exaggerated modification of axis titles
-    axis.title = element_text(colour = "darkred", size = 16, face = "bold")
-  )
-```
-
 
 ## Using Themes
 
@@ -756,6 +744,81 @@ p + theme_bw() +
 ::: {.notes}
 - By default the legend will align the centre at the given co-ordinates
 :::
+
+## Using Themes
+
+- Any individual text element of a figure can be modified using `element_text()`
+
+```{r}
+#| fig-show: hide
+p + theme_bw() +
+  theme(
+    ## A slightly exaggerated modification of axis titles
+    axis.title = element_text(colour = "darkred", size = 16, face = "bold"),
+  )
+```
+
+## Using Themes
+
+::: {style="font-size: 85%;"}
+
+- Looking at the help page `?theme` $\implies$ 4 main types of 'element'
+
+:::: {.columns}
+
+::: {.column} 
+1. `element_text()`
+    + Control all text elements (axes, titles etc)
+    + Doesn't impact labels within figures
+    
+::: {.fragment}
+2. `element_line()`
+    + Control all lines (axes, gridlines, borders etc)
+    + Can set colour, size, linetype, linewidth
+:::
+
+:::
+
+::: {.column}
+
+::: {.fragment}
+3. `element_rect()`
+    + Control all rectangles (background, legends, panels etc)
+    + Can set colour, fill, size, linetype, linewidth
+:::
+
+::: {.fragment}
+4. `element_blank()`
+    + Hides an element
+:::
+
+:::
+
+::::
+
+::: {.fragment}
+- Other element types are a bit more nuanced
+:::
+
+:::
+
+## Using Themes
+
+```{r}
+#| fig-show: hide
+# Make the most horrible figure possible
+p + theme_bw() +
+  theme(
+    ## A slightly exaggerated modification of axis titles
+    axis.title = element_text(colour = "darkred", size = 16, face = "bold"),
+    ## Make axes thick, blue lines. Ewww
+    axis.line = element_line(colour = "darkblue", linewidth = 2),
+    ## Hide the underlying grid
+    panel.grid = element_blank(),
+    ## Make the area background a light grey
+    plot.background = element_rect(fill = "grey70")
+  )
+```
 
 
 # Different Plot Types{background-color="#3d3d40"}
@@ -880,18 +943,25 @@ penguins |>
   facet_grid(~species, scales = "free_x", space = "free_x")
 ```
 
+## Overlaying Geoms
+
+- `geom_jitter()` will draw points but with noise in either direction
+- The `alpha` parameter will make the points partially transparent
 
 ```{r}
 #| fig-show: hide
 penguins |> 
   filter(!is.na(sex)) |>
   ggplot(aes(sex, body_mass_g, fill = sex)) +
-  geom_boxplot(outliers = FALSE) +
-  geom_jitter(width = 0.1, alpha = 0.5) +
+  geom_boxplot(outliers = FALSE) + # Hide any outliers from the boxes
+  geom_jitter(width = 0.1, alpha = 0.5) + # Outliers will be shown here
   facet_wrap(~species + island, nrow = 1)
 ```
 
 ## Trying a Violin Plot
+
+- Violin plots are similar to boxplots
+    + can estimate distibutions beyond the points (`trim = FALSE`)
 
 ```{r}
 #| fig-show: hide
@@ -903,18 +973,101 @@ penguins |>
   facet_wrap(~species + island, nrow = 1)
 ```
 
-
 ## Creating A Histogram
+
+- The default histogram in `ggplot2` is a bit ugly
 
 ```{r}
 #| fig-show: hide
 penguins |>
   filter(!is.na(sex)) |>
   ggplot(aes(body_mass_g)) +
-  geom_histogram(fill = "grey70", colour = "black") +
+  geom_histogram()
+```
+
+. . .
+
+- This can be easily improved by setting `fill = "grey70"` and `colour = "black"`
+- `binwidth` is automatically set $implies$ try `binwidth = 100`
+
+## Creating A Histogram
+
+```{r}
+#| fig-show: hide
+## Now apply facet_grid to show by sex & species
+penguins |>
+  filter(!is.na(sex)) |>
+  ggplot(aes(body_mass_g)) +
+  geom_histogram(fill = "grey70", colour = "black", binwidth = 100) +
   facet_grid(species ~ sex) +
   theme_bw()
 ```
+
+
+## Creating A Histogram
+
+- The above shows counts $\implies$ can also show frequency (i.e. density)
+- Unfortunately, the code is ugly but does make sense
+    + (The 'stat' is counting, so after counting convert to a frequency)
+
+```{r}
+#| fig-show: hide
+## Repeat but showing bars as frequencies
+penguins |>
+  filter(!is.na(sex)) |>
+  ggplot(aes(body_mass_g)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    fill = "grey70", colour = "black", binwidth = 100
+  ) +
+  facet_grid(species ~ sex) +
+  theme_bw()
+```
+
+::: {.notes}
+- The first plot is informative if we have roughly the same number in each panel
+- The second option can be more informative for unbalanced data
+:::
+
+
+## Creating a Summary Barplot
+
+- Bar plots are pretty common in many fields of research
+- First we'll create a summary table with mean and sd
+    + Use the mean for bars
+    + sd for error bars
+
+```{r}
+#| fig-show: hide
+penguins |>
+  filter(!is.na(sex)) |>
+  summarise(
+    weight_mn = mean(body_mass_g, na.rm = TRUE),
+    weight_sd = sd(body_mass_g, na.rm = TRUE),
+    .by = c(species, sex)
+  ) 
+```
+
+## Creating a Summary Barplot
+
+- Now we can use `geom_col()`
+
+```{r}
+#| fig-show: hide
+## Begin creating a bar plot, with separate panels for each species
+penguins |>
+  filter(!is.na(sex)) |>
+  summarise(
+    weight_mn = mean(body_mass_g, na.rm = TRUE),
+    weight_sd = sd(body_mass_g, na.rm = TRUE),
+    .by = c(species, sex)
+  ) |>
+  ggplot(aes(sex, weight_mn, fill = sex)) +
+  geom_col() +
+  facet_wrap(~species, nrow = 1) 
+```
+
+
 
 ## Creating a Summary Barplot
 
@@ -929,11 +1082,13 @@ penguins |>
   ) |>
   ggplot(aes(sex, weight_mn, fill = sex)) +
   geom_col() +
+  ## Now add errorbars adding/subtracting from the mean 'on the fly'
   geom_errorbar(
     aes(ymin = weight_mn - weight_sd, ymax = weight_mn + weight_sd),
-    width = 0.2
+    width = 0.2 # Set the width of tails on the error bars
   ) +
   facet_wrap(~species, nrow = 1) +
+  ## Some extra code to make the plot look great
   scale_y_continuous(expand = expansion(c(0, 0.05))) +
   scale_fill_brewer(palette = "Set1") +
   theme_bw()
@@ -962,11 +1117,25 @@ ggsave("myplot.png", width = 7, height = 7, units = "in")
 - I think saving using code is preferable
 - Modify an analysis or data $\implies$ saved figures will also update
     + This saves time & ensures reproducibility
+    + Modifying font sizes etc for publication can take a while
 
 ## Conclusion
 
 ![](https://r-graphics.org/cover.jpg){width=400}
 
 A fabulous resource: https://r-graphics.org/
+
+## Challenges
+
+1. Create a barplot with error bars showing mean flipper length by species
+   + Colour (i.e. fill) however you choose
+2. Create a histogram of flipper length by species
+   + Facet by species
+3. Use boxplots to show the same (flipper length by species)
+   + Don't facet, but fill the boxes by sex
+4. Using points, compare flipper length to body mass
+    + Colour by species including a regression line
+    + Try adding `stat_ellipse()` to your plot
+
 
 ## References

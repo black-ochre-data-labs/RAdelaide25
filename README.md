@@ -28,7 +28,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 |  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 30min |
 |  | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 30min |
 | 12:30 | *Lunch* |  |  |
-| 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 110min |
+| 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 120min |
 | 3:00 | *Afternoon Tea* |  |  |
 | 3:30 | Using `stringr` to Modify Text | [Working With Text](text.html) |  |
 
