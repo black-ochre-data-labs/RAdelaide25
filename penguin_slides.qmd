@@ -81,6 +81,7 @@ knitr::opts_chunk$set(
     + For organising data 
     + For creating summary tables
     + To prepare for creating plots & figures
+    + Is a core `tidyverse` package
 
 . . .
 
@@ -161,7 +162,7 @@ library(palmerpenguins)
 
 ## The `penguins` dataset
 
-::: {style="font-size: 95%;"}
+::: {style="font-size: 90%;"}
 
 - The `palmerpenguins` package contains a dataset called `penguins`
     + Add the comment and code below, then execute
@@ -212,22 +213,6 @@ penguins
 - Final lines show how many more rows & columns there are
 - Notice there are no rownames, just row numbers
 
-## An Alternative Way to View Penguins
-
-```{r}
-#| output: false
-#| eval: false
-# We can also use the View() function
-View(penguins)
-```
-
-. . .
-
-- I personally prefer seeing things printed in the console
-    + Summarises the data
-    + Describes the column types
-- Leaving `View()` in a simple script is OK for exploration
-    + Unhelpful when running long scripts
 
 ## Exploring Penguins
 
@@ -284,109 +269,13 @@ Copy the column names after the code, then comment
 nrow(penguins)
 ncol(penguins)
 dim(penguins)
-```
-
-. . .
-
-- Can you figure out what each of these functions does?
-- The same summary information printed when we called the object by name
-
-## Calling Functions
-
-- Let's look at the top and bottom of the dataset
-
-```{r}
-#| output: false
-# What does the top of the dataset look like?
-head(penguins)
-
-# What does the bottom of the dataset look like?
 tail(penguins)
 ```
 
 . . .
 
-- These functions print 6 rows by default
-- We can change this $\implies$ let's check the help page
-    + In the console type `?head` (We don't need a record of this)
-    
-##
+- Can you figure out what each of these functions does?
 
-::: {style="font-size: 85%;"}
-
-### Return the First or Last Parts of an Object
-
-**Description**
-
-Returns the first or last parts of a vector, matrix, array, table, data frame or function. 
-Since `head()` and `tail()` are generic functions, they have been extended to other classes, including "ts" from stats.
-
-**Usage**
-```
-head(x, ...)
-## Default S3 method:
-head(x, n = 6L, ...)
-## S3 method for class 'matrix'
-head(x, n = 6L, ...) # is exported as head.matrix()
-## NB: The methods for 'data.frame' and 'array'  are identical to the 'matrix' one
-
-blah blah blah ...
-```
-
-**Arguments**
-
-`x` an object
-
-`n` an integer vector of length up to dim(x) (or 1, for non-dimensioned objects). Blah blah blah
-
-:::
-
-## Function Arguments
-
-- This is telling as that the function `head()` ( and also `tail()`) can take two arguments
-- The first is an object `x`
-    + We often call argument that can be anything `x`
-- The second is an argument named `n`
-    + That `n` is followed by `= 6L` tells us `n` has a default value
-    + This is why 6 rows were always printed
-    
-::: {.notes}
-- The `L` after 6 is shorthand to force the value to be an integer
-:::
-
-## Function Arguments
-
-    
-```{r}
-#| output: false
-# Print the first 10 rows by setting n = 10
-head(penguins, n = 10)
-
-# Repeat for the bottom 10 rows
-tail(penguins, n = 10)
-```
-
-. . .
-
-<br>
-
-```{r}
-#| output: false
-# Arguments can be named explicitly
-head(x = penguins, n = 10)
-
-# If passed in order, we don't need to name them
-head(penguins, 10)
-
-# If naming explicitly, the order doesn't matter
-# This is very useful when there are multiple arguments
-head(n = 10, x = penguins)
-```
-
-::: {.notes}
-- This is a relatively trivial function $\implies$ we'll be much more interesting soon
-- Also link to `?extraChIPs::plotSplitDonut`
-:::
 
 # The package<br>`dplyr` {background-color="#3d3d40" background-image=https://dplyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
 
@@ -808,3 +697,15 @@ slice_max(penguins, body_mass_g, n = 1, by = species)
 - Already a huge amount to remember!
 - We'll be doing more exercises soon
 
+## A Word Of Caution
+
+- `dplyr` was written to parallel some SQL functions <br>$\implies$ Uses function names from SQL
+- Some other packages had the same idea much earlier
+    + e.g. multiple packages contain a `filter` or `select` function
+    
+. . .
+    
+- If either function gives unexpected output<br>$\implies$ call directly from the package (aka namespace)
+- We can use `dplyr::select()` instead of `select()` 
+    + Ensures we use the `dplyr` version
+    + Same for `dplyr::filter()`

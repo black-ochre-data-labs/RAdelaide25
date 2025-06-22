@@ -33,21 +33,21 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 9:00  | Welcome To Country |     | 15min    |
 |   | Installation Help  |     | 15min    |
 |  | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 1.2)`|
-|  | Exploring Spreadsheet-Like Data   | [Exploring Penguins](penguins.html) | `r getTiming("penguin_slides.qmd", 1.2)`|
+|  | Importing Spreadsheet-Like Data   | [Importing Penguins](import.html)   | `r getTiming("import_slides.qmd", 1.2)`|
 | 10:30 | *Morning Tea* | | |
-| 11:00 | Exploring Spreadsheet-Like Data (continued) | | |
+| 11:00 | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | `r getTiming("penguin_slides.qmd", 1.2)`|
 | | Building Chains Of Code | [Piping Functions](piping_functions.html) | `r getTiming("piping_slides.qmd", 1.5)` |
-| | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | `r getTiming("tidying_slides.qmd", 1.2)` |
 | 12:30 | *Lunch* | | |
-| 1:30  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |
+| 1:30 | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | `r getTiming("tidying_slides.qmd", 1.2)` |
+| | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.5)` |
 | 3:00  | *Afternoon Tea* | | |
-| 3:30 | Using `stringr` to Modify Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd", 1.2)` |
+| | Visualising Your Data with `ggplot2` (continued) | |  |
+| 4:30 | Day 1 Challenges | [Day1](day1.html) | 30min|
 
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
-| 9:00 | Day 1 Challenges | [Day1](day1.html) | 30min|
-| 9:30 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | 15min |
+| 9:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | `r getTiming("text_slides.qmd", 1.2)` |
 | 9:45 | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) | `r getTiming("tidyr_slides.qmd")` |
 | 10:30 | *Morning Tea* | | |
 | 11:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | `r getTiming("data_types_slides.qmd", 1.2)` |

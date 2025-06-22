@@ -439,6 +439,7 @@ Dr Stevie Pederson
 <li>For organising data</li>
 <li>For creating summary tables</li>
 <li>To prepare for creating plots &amp; figures</li>
+<li>Is a core <code>tidyverse</code> package</li>
 </ul></li>
 </ul>
 <div class="fragment">
@@ -544,7 +545,7 @@ Dr Stevie Pederson
 </section>
 <section id="the-penguins-dataset" class="slide level2">
 <h2>The <code>penguins</code> dataset</h2>
-<div style="font-size: 95%;">
+<div style="font-size: 90%;">
 <ul>
 <li>The <code>palmerpenguins</code> package contains a dataset called <code>penguins</code>
 <ul>
@@ -647,34 +648,14 @@ Dr Stevie Pederson
 </ul>
 </div>
 </section>
-<section id="an-alternative-way-to-view-penguins" class="slide level2">
-<h2>An Alternative Way to View Penguins</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># We can also use the View() function</span></span>
-<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<ul>
-<li>I personally prefer seeing things printed in the console
-<ul>
-<li>Summarises the data</li>
-<li>Describes the column types</li>
-</ul></li>
-<li>Leaving <code>View()</code> in a simple script is OK for exploration
-<ul>
-<li>Unhelpful when running long scripts</li>
-</ul></li>
-</ul>
-</div>
-</section>
 <section id="exploring-penguins" class="slide level2">
 <h2>Exploring Penguins</h2>
 <ul>
 <li>A common initial data exploration task is to get a summary of the data</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The column names are:</span></span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The column names are:</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "species"           "island"            "bill_length_mm"   
 [4] "bill_depth_mm"     "flipper_length_mm" "body_mass_g"      
@@ -723,129 +704,17 @@ Dr Stevie Pederson
 <li>Let’s continue checking the object</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Find out how big the dataset is</span></span>
-<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(penguins)</span>
-<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(penguins)</span>
-<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Find out how big the dataset is</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(penguins)</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(penguins)</span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(penguins)</span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
 <ul>
 <li>Can you figure out what each of these functions does?</li>
-<li>The same summary information printed when we called the object by name</li>
 </ul>
-</div>
-</section>
-<section id="calling-functions-1" class="slide level2">
-<h2>Calling Functions</h2>
-<ul>
-<li>Let’s look at the top and bottom of the dataset</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># What does the top of the dataset look like?</span></span>
-<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span>
-<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># What does the bottom of the dataset look like?</span></span>
-<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<ul>
-<li>These functions print 6 rows by default</li>
-<li>We can change this <span class="math inline">\(\implies\)</span> let’s check the help page
-<ul>
-<li>In the console type <code>?head</code> (We don’t need a record of this)</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="section" class="slide level2">
-<h2></h2>
-<section id="return-the-first-or-last-parts-of-an-object" style="font-size: 85%;">
-<h3>Return the First or Last Parts of an Object</h3>
-<p><strong>Description</strong></p>
-<p>Returns the first or last parts of a vector, matrix, array, table, data frame or function. Since <code>head()</code> and <code>tail()</code> are generic functions, they have been extended to other classes, including “ts” from stats.</p>
-<p><strong>Usage</strong></p>
-<pre><code>head(x, ...)
-## Default S3 method:
-head(x, n = 6L, ...)
-## S3 method for class 'matrix'
-head(x, n = 6L, ...) # is exported as head.matrix()
-## NB: The methods for 'data.frame' and 'array'  are identical to the 'matrix' one
-
-blah blah blah ...</code></pre>
-<p><strong>Arguments</strong></p>
-<p><code>x</code> an object</p>
-<p><code>n</code> an integer vector of length up to dim(x) (or 1, for non-dimensioned objects). Blah blah blah</p>
-</section>
-</section>
-<section id="function-arguments" class="slide level2">
-<h2>Function Arguments</h2>
-<ul>
-<li>This is telling as that the function <code>head()</code> ( and also <code>tail()</code>) can take two arguments</li>
-<li>The first is an object <code>x</code>
-<ul>
-<li>We often call argument that can be anything <code>x</code></li>
-</ul></li>
-<li>The second is an argument named <code>n</code>
-<ul>
-<li>That <code>n</code> is followed by <code>= 6L</code> tells us <code>n</code> has a default value</li>
-<li>This is why 6 rows were always printed</li>
-</ul></li>
-</ul>
-<aside class="notes">
-<ul>
-<li>The <code>L</code> after 6 is shorthand to force the value to be an integer</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="function-arguments-1" class="slide level2">
-<h2>Function Arguments</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the first 10 rows by setting n = 10</span></span>
-<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins, <span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Repeat for the bottom 10 rows</span></span>
-<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(penguins, <span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<p><br></p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Arguments can be named explicitly</span></span>
-<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="at">x =</span> penguins, <span class="at">n =</span> <span class="dv">10</span>)</span>
-<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># If passed in order, we don't need to name them</span></span>
-<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins, <span class="dv">10</span>)</span>
-<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># If naming explicitly, the order doesn't matter</span></span>
-<span id="cb11-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># This is very useful when there are multiple arguments</span></span>
-<span id="cb11-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">x =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<aside class="notes">
-<ul>
-<li>This is a relatively trivial function <span class="math inline">\(\implies\)</span> we’ll be much more interesting soon</li>
-<li>Also link to <code>?extraChIPs::plotSplitDonut</code></li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </div>
 </section>
 <section>
@@ -864,7 +733,7 @@ blah blah blah ...</code></pre>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Load the package `dplyr`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Load the package `dplyr`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -892,9 +761,9 @@ blah blah blah ...</code></pre>
 <section id="exploring-penguins-with-dplyr-1" class="slide level2">
 <h2>Exploring Penguins with <code>dplyr</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## The `glimpse()` function is provided by dplyr</span></span>
-<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Can be very helpful with large column numbers</span></span>
-<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## The `glimpse()` function is provided by dplyr</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Can be very helpful with large column numbers</span></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 344
 Columns: 8
@@ -925,17 +794,17 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the penguins by body mass in increasing order</span></span>
-<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, body_mass_g)</span>
-<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the penguins by body mass in decreasing order</span></span>
-<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, <span class="fu">desc</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the penguins by body mass in increasing order</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, body_mass_g)</span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the penguins by body mass in decreasing order</span></span>
+<span id="cb10-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, <span class="fu">desc</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort multiple columns in the order passed to the function</span></span>
-<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, species, body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort multiple columns in the order passed to the function</span></span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(penguins, species, body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -983,17 +852,17 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <section id="filtering-penguins-1" class="slide level2">
 <h2>Filtering Penguins</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Subset the data to those from the Island of Dream</span></span>
-<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, island <span class="sc">==</span> <span class="st">"Dream"</span>)</span>
-<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Subset the data to those NOT from the Island of Dream</span></span>
-<span id="cb17-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, island <span class="sc">!=</span> <span class="st">"Dream"</span>)</span>
-<span id="cb17-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Subset the penguins to those lighter than 4000g</span></span>
-<span id="cb17-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, body_mass_g <span class="sc">&lt;</span> <span class="dv">4000</span>)</span>
-<span id="cb17-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Find the penguins from Dream that are heavier than 4000g</span></span>
-<span id="cb17-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, island <span class="sc">==</span> <span class="st">"Dream"</span>, body_mass_g <span class="sc">&gt;</span> <span class="dv">4000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Subset the data to those from the Island of Dream</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, island <span class="sc">==</span> <span class="st">"Dream"</span>)</span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Subset the data to those NOT from the Island of Dream</span></span>
+<span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, island <span class="sc">!=</span> <span class="st">"Dream"</span>)</span>
+<span id="cb12-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Subset the penguins to those lighter than 4000g</span></span>
+<span id="cb12-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, body_mass_g <span class="sc">&lt;</span> <span class="dv">4000</span>)</span>
+<span id="cb12-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Find the penguins from Dream that are heavier than 4000g</span></span>
+<span id="cb12-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, island <span class="sc">==</span> <span class="st">"Dream"</span>, body_mass_g <span class="sc">&gt;</span> <span class="dv">4000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="slicing-penguins" class="slide level2">
@@ -1003,11 +872,11 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li><code>slice()</code> can be used to return rows <em>by position</em></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Slice out the first 10 rows of the penguins dataset</span></span>
-<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb18-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Now slice out the 101st to 110th rows</span></span>
-<span id="cb18-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">101</span><span class="sc">:</span><span class="dv">110</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Slice out the first 10 rows of the penguins dataset</span></span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Now slice out the 101st to 110th rows</span></span>
+<span id="cb13-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">101</span><span class="sc">:</span><span class="dv">110</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="a-brief-diversion" class="slide level2">
@@ -1016,11 +885,11 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>In the two previous examples we used a sequence of consecutive values</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">101</span><span class="sc">:</span><span class="dv">110</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">101</span><span class="sc">:</span><span class="dv">110</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 101 102 103 104 105 106 107 108 109 110</code></pre>
 </div>
@@ -1041,7 +910,7 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>In <code>R</code> we can form a vector by combining values with the function <code>c()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 3 5 7 9</code></pre>
 </div>
@@ -1049,15 +918,15 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <div class="fragment">
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the first few odd numbered rows using a vector of positions</span></span>
-<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the first few odd numbered rows using a vector of positions</span></span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Rows can be returned in any order</span></span>
-<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Rows can be returned in any order</span></span>
+<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1068,14 +937,14 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li><code>select()</code> can be used to return columns</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns can be 'selected' by passing the required column names</span></span>
-<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, island, body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns can be 'selected' by passing the required column names</span></span>
+<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, island, body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns can also be selected by position using a vector</span></span>
-<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Columns can also be selected by position using a vector</span></span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -1107,41 +976,41 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all columns that start with "bill", after the species and island columns</span></span>
-<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, island, <span class="fu">starts_with</span>(<span class="st">"bill"</span>))</span>
-<span id="cb29-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all length-related columns, after the species and island columns</span></span>
-<span id="cb29-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, island, <span class="fu">contains</span>(<span class="st">"length"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all columns that start with "bill", after the species and island columns</span></span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, island, <span class="fu">starts_with</span>(<span class="st">"bill"</span>))</span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all length-related columns, after the species and island columns</span></span>
+<span id="cb24-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, island, <span class="fu">contains</span>(<span class="st">"length"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="helper-functions-1" class="slide level2">
 <h2>Helper Functions</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Place all metadata first, followed by measured values</span></span>
-<span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># This line shows how useful 'everything()' can be</span></span>
-<span id="cb30-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, island, sex, year, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Place all metadata first, followed by measured values</span></span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># This line shows how useful 'everything()' can be</span></span>
+<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, island, sex, year, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
 <li>To remove a column, we preface the selection with <code>-</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all columns that end with 'mm'</span></span>
-<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">"mm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove all columns that end with 'mm'</span></span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, <span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">"mm"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="relocating-penguins" class="slide level2">
 <h2>Relocating Penguins</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Relocate is a newer addition to dplyr and can also be used to reorder columns</span></span>
-<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The arguments .before and .after can be used to specify where to place columns</span></span>
-<span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we're moving columns with an underscore to after the year column</span></span>
-<span id="cb32-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">relocate</span>(penguins, <span class="fu">contains</span>(<span class="st">"_"</span>), <span class="at">.after =</span> year)</span>
-<span id="cb32-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, we're moving the sex and year columns to 'before' the bill columns</span></span>
-<span id="cb32-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">relocate</span>(penguins, sex, year, <span class="at">.before =</span> <span class="fu">starts_with</span>(<span class="st">"bill"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Relocate is a newer addition to dplyr and can also be used to reorder columns</span></span>
+<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The arguments .before and .after can be used to specify where to place columns</span></span>
+<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we're moving columns with an underscore to after the year column</span></span>
+<span id="cb27-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">relocate</span>(penguins, <span class="fu">contains</span>(<span class="st">"_"</span>), <span class="at">.after =</span> year)</span>
+<span id="cb27-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># This time, we're moving the sex and year columns to 'before' the bill columns</span></span>
+<span id="cb27-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">relocate</span>(penguins, sex, year, <span class="at">.before =</span> <span class="fu">starts_with</span>(<span class="st">"bill"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="renaming-penguins" class="slide level2">
@@ -1150,16 +1019,16 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>When we call select, we can rename columns on the fly</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Rename the island column as 'location', leaving the order unchanged</span></span>
-<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, <span class="at">location =</span> island, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Rename the island column as 'location', leaving the order unchanged</span></span>
+<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(penguins, species, <span class="at">location =</span> island, <span class="fu">everything</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
 <li>Alternatively, we can just use <code>rename()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Or just rename the individual column</span></span>
-<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rename</span>(penguins, <span class="at">location =</span> island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Or just rename the individual column</span></span>
+<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">rename</span>(penguins, <span class="at">location =</span> island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1170,8 +1039,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li><code>mutate()</code> is used to modify existing columns or create new ones</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a column called `body_mass_kg` that is the body mass in kg</span></span>
-<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">body_mass_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a column called `body_mass_kg` that is the body mass in kg</span></span>
+<span id="cb30-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(penguins, <span class="at">body_mass_kg =</span> body_mass_g <span class="sc">/</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercises" class="slide level2">
@@ -1204,17 +1073,17 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of penguins by species</span></span>
-<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species)</span>
-<span id="cb36-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of penguins by species and island</span></span>
-<span id="cb36-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species, island)</span>
-<span id="cb36-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># If we change the order of the columns, we get a different order</span></span>
-<span id="cb36-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, island, species)</span>
-<span id="cb36-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument `sort = TRUE` will sort the results</span></span>
-<span id="cb36-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species, island, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of penguins by species</span></span>
+<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species)</span>
+<span id="cb31-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of penguins by species and island</span></span>
+<span id="cb31-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species, island)</span>
+<span id="cb31-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># If we change the order of the columns, we get a different order</span></span>
+<span id="cb31-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, island, species)</span>
+<span id="cb31-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># The argument `sort = TRUE` will sort the results</span></span>
+<span id="cb31-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(penguins, species, island, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="obtaining-summaries-1" class="slide level2">
@@ -1227,8 +1096,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the mean weight of each species</span></span>
-<span id="cb37-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g), <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the mean weight of each species</span></span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g), <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1238,8 +1107,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignore the missing values when calculating the mean</span></span>
-<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Ignore the missing values when calculating the mean</span></span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1249,10 +1118,10 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>We can also summarise using multiple columns</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year</span></span>
-<span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
-<span id="cb39-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
-<span id="cb39-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year</span></span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
+<span id="cb34-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
+<span id="cb34-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1276,12 +1145,12 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>We could split across multiple lines for greater readability</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year</span></span>
-<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
-<span id="cb40-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, </span>
-<span id="cb40-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb40-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
-<span id="cb40-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year</span></span>
+<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
+<span id="cb35-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, </span>
+<span id="cb35-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb35-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
+<span id="cb35-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="obtaining-summaries-4" class="slide level2">
@@ -1291,13 +1160,13 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>Instead of using <code>count()</code> we can call <code>n()</code> as part of <code>summarise()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year, counting the number of penguins</span></span>
-<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
-<span id="cb41-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, </span>
-<span id="cb41-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb41-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">total =</span> <span class="fu">n</span>(),</span>
-<span id="cb41-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
-<span id="cb41-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise by both species and year, counting the number of penguins</span></span>
+<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(</span>
+<span id="cb36-3"><a href="" aria-hidden="true" tabindex="-1"></a>  penguins, </span>
+<span id="cb36-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean_weight =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb36-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">total =</span> <span class="fu">n</span>(),</span>
+<span id="cb36-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.by =</span> <span class="fu">c</span>(species, year)</span>
+<span id="cb36-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="grouping-arguments" class="slide level2">
@@ -1306,8 +1175,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <li>The recent addition of <code>.by</code> has beefed up some earlier functions</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab the first 5 rows of each species</span></span>
-<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Grab the first 5 rows of each species</span></span>
+<span id="cb37-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice</span>(penguins, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">.by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1321,8 +1190,8 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the heaviest penguin from each species</span></span>
-<span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_max</span>(penguins, body_mass_g, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the heaviest penguin from each species</span></span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_max</span>(penguins, body_mass_g, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">by =</span> species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1342,6 +1211,26 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <ul>
 <li>Already a huge amount to remember!</li>
 <li>We’ll be doing more exercises soon</li>
+</ul>
+</div>
+</section>
+<section id="a-word-of-caution" class="slide level2">
+<h2>A Word Of Caution</h2>
+<ul>
+<li><code>dplyr</code> was written to parallel some SQL functions <br><span class="math inline">\(\implies\)</span> Uses function names from SQL</li>
+<li>Some other packages had the same idea much earlier
+<ul>
+<li>e.g.&nbsp;multiple packages contain a <code>filter</code> or <code>select</code> function</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>If either function gives unexpected output<br><span class="math inline">\(\implies\)</span> call directly from the package (aka namespace)</li>
+<li>We can use <code>dplyr::select()</code> instead of <code>select()</code>
+<ul>
+<li>Ensures we use the <code>dplyr</code> version</li>
+<li>Same for <code>dplyr::filter()</code></li>
+</ul></li>
 </ul>
 <div class="quarto-auto-generated-content">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>

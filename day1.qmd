@@ -1,0 +1,65 @@
+---
+title: "Day 1 Challenges"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: day1.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+# Some Initial Challenges
+
+```{r, echo=FALSE}
+library(tidyverse)
+```
+
+
+1. Load the Guinea Pigs dataset (`data/pigs.csv`)
+    + Contains odontoblast (tooth) length in guinea pigs
+    + Vitamin C via direct supplement or OJ
+    + Three doses (Low, Med, High)
+2. Create a boxplot of length separating groups by dose & supp
+3. Find the mean odontoblast length for each dose & supplement method
+4. Include the standard deviation alongside the mean
+5. Create a barplot showing mean length with error bars
+
+::: {.notes}
+We'll learn how to set the dose categories in order tomorrow
+:::
+
+
+## Loading and Manipulating Data
+
+1. Find which sheets are in the file "data/NERP_Fauna_Survey_Protocols_Field_Trial_2015_Data_v1.xlsx" ^[Obtained from https://portal.tern.org.au/results?topicTerm=surveillance]
+
+2. Load the main data sheet from this file using `read_excel()` from `readxl`
+
+3. How would you compare measurements for the species across different sites
+    + Try using tables
+    + How can you visualise this?
+

@@ -22,20 +22,20 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 9:00 | Welcome To Country |  | 15min |
 |  | Installation Help |  | 15min |
 |  | Introducing R & RStudio | [Introduction](intro.html) | 50min |
-|  | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | 60min |
+|  | Importing Spreadsheet-Like Data | [Importing Penguins](import.html) | 50min |
 | 10:30 | *Morning Tea* |  |  |
-| 11:00 | Exploring Spreadsheet-Like Data (continued) |  |  |
+| 11:00 | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | 60min |
 |  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 30min |
-|  | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 30min |
 | 12:30 | *Lunch* |  |  |
-| 1:30 | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 120min |
+| 1:30 | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 30min |
+|  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 130min |
 | 3:00 | *Afternoon Tea* |  |  |
-| 3:30 | Using `stringr` to Modify Text | [Working With Text](text.html) |  |
+|  | Visualising Your Data with `ggplot2` (continued) |  |  |
+| 4:30 | Day 1 Challenges | [Day1](day1.html) | 30min |
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
 |:---|:---|:---|:---|
-| 9:00 | Day 1 Challenges | [Day1](day1.html) | 30min |
-| 9:30 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | 15min |
+| 9:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) |  |
 | 9:45 | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) |  |
 | 10:30 | *Morning Tea* |  |  |
 | 11:00 | Vectors and Data Structures in `R` | [Data Types](data_types.html) |  |
