@@ -3,7 +3,7 @@ RAdelaide 2025
 Dr Stevie Pederson  
 Black Ochre Data Labs  
 Indigenous Genomics Group  
-Telethon Kids Institute
+The Kids Research Institute Australia
 
 July 8-10, 2025
 
@@ -37,7 +37,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 |:---|:---|:---|:---|
 | 9:00 | Vectors and Data Structures in `R` | [Data Types](data_types.html) | 90min |
 | 10:30 | *Morning Tea* |  |  |
-| 11:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) |  |
+| 11:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | 70min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) |  |
 | 3:00 | *Afternoon Tea* |  |  |

@@ -4,7 +4,7 @@ author: |
   | Dr Stevie Pederson
   | Black Ochre Data Labs
   | Indigenous Genomics Group
-  | Telethon Kids Institute
+  | The Kids Research Institute Australia
 date: "July 8-10, 2025"
 output: github_document
 ---
@@ -49,7 +49,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 |:----- |:----- |:----- |:-------- |
 | 9:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | `r getTiming("data_types_slides.qmd", 1.4)` |
 | 10:30 | *Morning Tea* | | |
-| 11:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | `r getTiming("text_slides.qmd", 1.2)` |
+| 11:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | `r getTiming("text_slides.qmd", 1.5)` |
 | 12:30 | *Lunch* | | |
 | 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
 | 3:00  | *Afternoon Tea* | | |
