@@ -28,17 +28,16 @@ Data for the workshop is available as a zip file [here](data.zip)
 |  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 30min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 30min |
-|  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 130min |
+|  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 120min |
 | 3:00 | *Afternoon Tea* |  |  |
 |  | Visualising Your Data with `ggplot2` (continued) |  |  |
 | 4:30 | Day 1 Challenges | [Day1](day1.html) | 30min |
 
 | Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
 |:---|:---|:---|:---|
-| 9:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) |  |
-| 9:45 | Reshaping Data With `tidyr` | [Reshaping Data](tidyr.html) |  |
+| 9:00 | Vectors and Data Structures in `R` | [Data Types](data_types.html) | 90min |
 | 10:30 | *Morning Tea* |  |  |
-| 11:00 | Vectors and Data Structures in `R` | [Data Types](data_types.html) |  |
+| 11:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) |  |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) |  |
 | 3:00 | *Afternoon Tea* |  |  |
