@@ -58,7 +58,10 @@ knitr::opts_chunk$set(
 )
 library(palmerpenguins)
 library(dplyr)
+library(lubridate)
 ```
+
+# The Pipe Operator {background-color="#3d3d40"}
 
 ## Motivation
 
@@ -216,11 +219,12 @@ penguins |>
   slice_head(n = 5) # Take the first 5 rows
 ```
 
-## Using Distinct Wisely
+# Revisiting `dplyr` {background-color="#3d3d40" background-image=https://dplyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
 
-- The function `distinct()` (from `dplyr`) will remove duplicate rows
-    + Only across the provided columns
-    
+## Additional Capabilities of `dplyr`
+
+- The function `distinct()` will remove duplicate rows across the provided columns
+
 ```{r}
 #| output: false
 ## Return the unique values in the species column
@@ -229,6 +233,132 @@ penguins |> distinct(species)
 ## Return the unique combinations of the species and island columns
 penguins |> distinct(species, island)
 ```
+
+
+. . .
+
+- `dplyr` also provides functions for joining multiple data frames
+    + `left_join()` and `right_join()`
+    + `full_join()` and `inner_join()`
+
+## Bringing Everything Together
+
+- The problem we want to address is a missing column from the `penguins` data
+- Check the object `penguins_raw`
+    + This is the master object which `penguins` was derived from
+    
+. . .
+
+- We'd like to add the `studyName` column to `penguins` for formal reporting
+
+```{r}
+#| output: false
+penguins_raw |>
+  mutate(year = year(`Date Egg`)) |> # `year()` is from the package lubridate
+  distinct(studyName, year)
+```
+
+::: {.notes}
+How would we do this? I can think of two ways
+:::
+
+## Using `case_when()`
+
+- Now that we know our basic structure<br>$\implies$ use `case_when()`
+
+. . .
+
+- This is like an `ifelse` statement with multiple conditions
+    
+```
+if (condition is true) 
+  do something
+else 
+  do something else
+endif
+```
+
+## Using `case_when()`
+
+- We can use this inside a `mutate` function
+- Logical tests are performed sequentially
+    + if `LHS is TRUE` [~ `Assign the RHS value`]{.fragment}
+
+```{r}
+#| output: false
+penguins |>
+  mutate(
+    studyName = case_when(
+      year == 2007 ~ "PAL0708",
+      year == 2008 ~ "PAL0809",
+      year == 2009 ~ "PAL0910",
+    )
+  )
+```
+
+## An Alternative Using Joins
+
+- Many coding problems have more than one viable solution
+- We could also use a `left/right_join()`
+
+```{r}
+#| output: false
+## Create a summary of the studyNames by year
+studies <- penguins_raw |>
+  mutate(year = year(`Date Egg`)) |> 
+  distinct(studyName, year)
+```
+
+## An Alternative Using Joins
+
+- We could now use `left_join()` to add this to `penguins`
+    + `penguins` will be taken as a scaffold to add values to
+    + Is on the LHS of the pipe $\therefore$ `left_join()`
+
+```{r}
+#| output: false
+## Use `left_join()` to join the two datasets on the `year` column
+penguins |> left_join(studies, by = "year") 
+```
+
+. . . 
+
+- Notice that the simple dataset `studies` was expanded
+    + Every time the `year` values matched $\implies$ `studyName` was added
+
+. . .
+
+- The downside to this method is we created a new object (`studies`)
+
+## An Alternative Using Joins
+
+- We could "flip" this using `right_join()`
+    + The dataset on the RHS is taken as the scaffold
+    
+```{r}
+#| output: false
+# Create the summaries on the fly, then use `penguins` as the RHS scaffold
+penguins_raw |>
+  mutate(year = year(`Date Egg`)) |> 
+  distinct(studyName, year) |>
+  right_join(penguins)
+```
+
+. . .
+
+<br>
+- Only difference is the column order
+
+## Additional Joins
+
+- Multiple columns can be passed to the `by` argument
+
+. . .
+
+- `inner_join()` produces the subset where all complete matches are present
+- `full_join()` produces the union of the two datasets
+    + All rows from both datasets are returned
+    + Missing values are filled with `NA`
 
 ## Using Distinct Wisely
 
@@ -245,8 +375,9 @@ penguins |>
 ```
 
 
+# Challenges
 
-## Some Challenges To Solve
+::: {style="font-size: 90%"}
 
 1. Find the lightest 5 Gentoo penguins
     + Return the weights in `kg` instead of `g`
@@ -254,8 +385,10 @@ penguins |>
     + Sort your answer in descending order
 3. Find how many penguins were measured per year on each island
     + Sort your answer by island, then by year
-4. Can you use `slice_max()` to return the same penguins as the final example, i.e. the heaviest from each species and island?    
-    
+4. Use `slice_max()` to return the same penguins as the final example, i.e. the heaviest from each species and island?    
+5. Recreate `penguins` from `penguins_raw`, but retaining `studyName` and the `Individual ID` as additional columns
+
+:::
     
 ## Closing Comments
 

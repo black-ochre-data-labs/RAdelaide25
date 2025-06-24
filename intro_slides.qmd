@@ -71,10 +71,17 @@ http://blackochrelabs.au/RAdelaide25
 
 ## Who Am I? 
 
+::: {.notes}
+- Working on a large-cohort multiomics study with the South Australian Aboriginal Community
+- 1400 participants
+- Trying to find the molecular drivers of increased Type II Diabetes and profound cardiovascular complications
+- Primarily responsible for the transcriptomics layer +  multiomics integration
+:::
+
 **Stephen (Stevie) Pederson** (They/Them)
 
 - Adelaide, Kaurna Country, SA
-- Bioinformatician, Black Ochre Data Labs, Telethon Kids Institute (2022-)
+- Bioinformatician, Black Ochre Data Labs, The Kids Research Institute Australia(2022-)
 
 . . .
 
@@ -90,6 +97,10 @@ http://blackochrelabs.au/RAdelaide25
 
 ## Who Am I? 
 
+::: {.notes}
+- I learned long before all the internet tutorials existed
+:::
+
 **Stephen (Stevie) Pederson** (They/Them)
 
 - R User for ~20 years $\implies$ learnt when R was difficult!
@@ -99,14 +110,14 @@ http://blackochrelabs.au/RAdelaide25
 - Currently Co-Chair of Bioconductor Community Advisory Board
 
 
-![](https://smped.github.io/motifTestR/reference/figures/favicon.png){.absolute bottom=450 right=0 width='120px'}
+![](https://smped.github.io/motifTestR/reference/figures/favicon.png){.absolute bottom=400 right=0 width='120px'}
 
-![](https://github.com/smped/ngsReports/blob/devel/man/figures/ngsReports.png?raw=true){.absolute bottom=350 right=90 width='120px'}
+![](https://github.com/smped/ngsReports/blob/devel/man/figures/ngsReports.png?raw=true){.absolute bottom=300 right=90 width='120px'}
 
-![](https://github.com/smped/extraChIPs/blob/devel/man/figures/extraChIPs.png?raw=true){.absolute bottom=250 right=0 width='120px'}
+![](https://github.com/smped/extraChIPs/blob/devel/man/figures/extraChIPs.png?raw=true){.absolute bottom=200 right=0 width='120px'}
 
 
-![](https://smped.github.io/transmogR/reference/figures/transmogR.png){.absolute bottom=150 right=90 width='120px'}
+![](https://smped.github.io/transmogR/reference/figures/transmogR.png){.absolute bottom=100 right=90 width='120px'}
 
 . . .
 
@@ -119,8 +130,9 @@ http://blackochrelabs.au/RAdelaide25
 
 ## Today's Tutors
 
-- Dr Jimmy Breen & Dr Alastair Ludington (Black Ochre Data Labs)
-- Dr John Salamon & Dr Simon Lee (SAGC)
+- Jimmy Breen, Holly Massacci & Liza Kretschmar (Black Ochre Data Labs)
+- John Salamon & Simon Lee (SAGC)
+- Charlotte Sai (SAHMRI)
 
 ::: {.fragment}
 
@@ -128,7 +140,7 @@ http://blackochrelabs.au/RAdelaide25
 
 - Toilets are back near the lifts
 - Catering will be across the lawn in Merantau
-- Room is considered a wet lab $\implies$ *no drinks*
+- Room is considered a wet lab $\implies$ *no drinks (including water)*
 
 :::
 
@@ -138,14 +150,20 @@ Thanks to everyone for sending your information through regarding dietary needs 
     
 ## Homepage and Material
 
+::: {.notes}
+Please ask questions in the channel. 
+Tutors will be monitoring as well and can stop so we can address the question as a group
+:::
+
 - The workshop homepage is http://blackochrelabs.au/RAdelaide25
     - Data and course material available here
     + Will stay live *in perpetuity*
 - Links to notes available
     + Slides are directly re-formatted as a simple webpage
-    + Slides are visible by clicking the `RevealJS` link below the TOC
+    + Slides are visible by clicking `RevealJS` below the TOC (top-right)
 - Group communication can be done through https://bioinformaticshubsa.slack.com/
     + Join the #radelaide25 channel
+    
 
 ## Course Aims
 
@@ -163,20 +181,51 @@ Thanks to everyone for sending your information through regarding dietary needs 
 
 - The more code you type the more you learn
 
+::: {.notes}
+The last point is key. 
+Please practice exactly like you're learning a new skill (driving, playing piano, speaking French etc)
+:::
+
+## Course Outline
+
+::: {.notes}
+Day 1 may be hard & fast but please stop me & ask questions
+Day 2 is more a "what the hell did we do yesterday" day
+Day 3 should be a real joining the dots day
+:::
+
+- Today we will explore common data structures
+    + Will be a pretty exhausting day
+    + Throwing you in the deep end
+    
+::: {.incremental}
+
+- Day 2 we develop more of a careful, nuanced understanding
+- Day 3 we bring it together and run complete analyses
+
+:::
+
+
 ## A Comment on AI
 
 - AI engines such as ChatGPT have changed the game completely
 - You can ask them to write code for you
-    + They will often get it wrong
+    + They will sometimes get it wrong
     + *You will not understand how to use R*
-- If I ask ChatGPT to write code for me $\rightarrow$ mine is usually better
+- If I ask ChatGPT to write code for me $\rightarrow$ mine is usually better[<br> and **correct**]{.fragment}
+    
+## A Comment on AI
+
+- I do regularly use ChatGPT or Claude.ai to help me write code
+    + I ask for help in less familiar languages (e.g. C, python)
+    + I ask it to help me write documentation or comment code
+    + I often have it running as a "co-pilot"
+    + Some examples in RAdelaide25 were inspired by ideas from AI engines
     
 . . .
 
-- I do sometimes use ChatGPT or Claude.ai to help me write code
-    + I ask for help in less familiar languages (e.g. C, python)
-    + I ask it to help me write documentation or comment code
-    + I sometimes have it running as a "co-pilot"
+- Github CoPilot is free for academic users
+    + Worth exploring but you will need a github account
     
 ::: {.notes}
 - Running in Co-Pilot mode can be stupidly frustrating as it just keeps making suggestions relentlessly
@@ -195,6 +244,7 @@ Thanks to everyone for sending your information through regarding dietary needs 
     - (Can be) very fast
 - Very easy to *dynamically interact* with large datasets
     - Can also run as static scripts on HPC clusters
+    - Low-level languages like `C`/`C++` don't allow for interactive analysis
     
 ::: {.notes}
 I regularly work with data containing millions of lines
@@ -205,10 +255,10 @@ I regularly work with data containing millions of lines
 - Never use drop-down menus or buttons $\implies$ type every command
     - Complex processes are often implemented as 'simple' functions
 - Considered a *high-level* language
-    - Usually easy to read and understand
-    - Some trade-off in speed
+    - Usually easy to read and understand then low-level languages (e.g. `C`)
+    - Trade-off in regard to speed & memory management
 
-. . .
+## How do we use R?
     
 - **Reproducible Research!!!**
     - Keep records (i.e. scripts) of every step of every analysis
@@ -249,7 +299,7 @@ Experience is the best teacher $\implies$ please practice your skills
 ::: {.notes}
 - Ross Ihaka is of NZ Maori descent
 - Last commercial release of S-Plus in 2007
-- I first found R in 2002, which was v1.4
+- I first found R in 2002, which was v1.5
 :::    
     
 ## What is R?
@@ -361,12 +411,13 @@ Also gave me an opportunity to have some great conversations with Winston Chang
 ::: {.column width="55%"}
 
 - Let's try using `R` as a standalone tool $\implies$ open `R` NOT `RStudio`
-    + On `linux`: Open a terminal then enter `R`
-    + On OSX: Click ![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png){width="40px"} on your dock
-    + On Windows: Click ![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png){width="40px"} in your Start Menu
+    + On `linux`: <br>Open a terminal then enter `R`
+    + OSX: Click ![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png){width="40px"} on your dock
+    + Windows: Click ![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png){width="40px"} in your Start Menu
     
     
 - Do not open ![](assets/RStudio_icon.png){width="60px"} 
+- This is `R` at it's ugliest (how I learned R)
 
 :::
 ::: {.column width="45%"}
@@ -388,7 +439,7 @@ Also gave me an opportunity to have some great conversations with Winston Chang
 
 ## The R Console
 
-::: {style="font-size: 95%;"}
+::: {style="font-size: 90%;"}
 
 - This is often referred to as the `R Console` 
 - At it's simplest `R` is just a calculator (Press Enter)
@@ -403,6 +454,7 @@ Also gave me an opportunity to have some great conversations with Winston Chang
 ::: {.fragment}
 
 - `R` has many standard functions
+    + place the value *inside* the brackets *after* the function name
 
 ```{r}
 #| prompt: true
@@ -412,12 +464,6 @@ log10(1000)
 
 
 ::: 
-
-::: {.fragment}
-
-- We place the value *inside* the brackets *after* the function name
-
-:::
 
 :::
 
@@ -462,6 +508,17 @@ x
 
 . . .
 
+- Imagine your R Environment to be like an Excel Workbook
+    + Each object is named just like each spreadsheet is named
+    + But objects **don't have to look like a spreadsheet**
+
+. . .
+
+- We can save R Environments but usually don't
+    + Save the code instead!
+
+## The R Console
+
 - We can pass objects to functions and perform operations on them
 
 ```{r}
@@ -483,6 +540,7 @@ x > 1
 
 ## Recording Our R History
 
+
 - Try using your up and down arrow keys in the `R Console`
 - This will scroll through the history of commands you've entered
     + Can re-execute or modify any of these
@@ -493,7 +551,6 @@ x > 1
 - A common strategy is to record our code as an *R Script* as we write it
     + Just a plain text file with a record of our commands
 - `R Studio` makes that easy & convenient
-- Many people now use RMarkdown to combine analysis, results and figures
 
 
 # R Studio { background-color="#3d3d40" background-image="assets/RStudio_icon.png" background-size="25%" background-opacity="0.5" background-position="50% 50%"}
@@ -564,7 +621,7 @@ x > 1
 2. Now open `RStudio`
     + `RStudio` will always open in a directory somewhere
     + Look in the `Files` pane (bottom-right) to see where it's looking
-    + This is also the working directory for `R`
+    + This is the current working directory for `R`
 
 . . . 
 
@@ -679,6 +736,7 @@ x <- 5
     + Multiple objects are usually created during an analysis
     + Can save all the objects in your environment as a single `.RData` object
     + `R` can be set to automatically save your environment on exit
+    + Unlike Excel: *We usually save our code not our environment*
 
 ## The **History** Tab
 
@@ -708,8 +766,8 @@ x <- 5
 - Many inbuilt functions are organised into a package called `base`
     - Packages group similar/related functions together
     - `base` is always installed and loaded with `R`
-- Click on the underlined word `Index` at the bottom for a list of functions in the `base` packages
-   + **Absolutely no need to learn any of these**
+<!-- - Click on the underlined word `Index` at the bottom for a list of functions in the `base` packages -->
+<!--    + **Absolutely no need to learn any of these** -->
     
 ::: {.notes}
 - May be issues with `URL '/help/library/base/html/00Index.html' not found`
@@ -720,6 +778,10 @@ x <- 5
 
 - Help pages in `R` can be hit & miss
     + Some are excellent and informative $\implies$ some aren't
+    + I regularly read my own help pages
+    
+. . .
+    
 - Bioconductor has a support forum for Bioconductor packages
     + All packages have a vignette (again varying quality)
     
