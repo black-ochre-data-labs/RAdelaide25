@@ -37,9 +37,9 @@ Data for the workshop is available as a zip file [here](data.zip)
 |:---|:---|:---|:---|
 | 9:00 | Vectors and Data Structures in `R` | [Data Types](data_types.html) | 90min |
 | 10:30 | *Morning Tea* |  |  |
-| 11:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | 70min |
+| 11:00 | Using `stringr` to Modify Text (continued) | [Working With Text](text.html) | 80min |
 | 12:30 | *Lunch* |  |  |
-| 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) |  |
+| 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | 70min |
 | 3:00 | *Afternoon Tea* |  |  |
 | 3:30 | Using Rmarkdown | [RMarkdown](rmarkdown.html) |  |
 

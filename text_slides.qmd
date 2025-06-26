@@ -534,7 +534,7 @@ sex <- c("M", "male", "femal", "Female")
 A common data type in statistics is a *categorical variable* (i.e. a `factor`)
 
 - Can appear to be a `character` vector/column
-    + Can easily trip an unsuspecting analyst up
+    + Can easily trip an unsuspecting data scientist up
 - Data will be a set of common groups/categories
 
 ```{r}
@@ -578,9 +578,10 @@ as.character(pet_factors)
 . . .
 
 ```{r}
-names(pet_vec) <- pet_vec
-pet_vec
+names(pet_vec) <- pet_vec # Set the names as equal to the values
+pet_vec[as.character(pet_factors)]
 pet_vec[pet_factors]
+pet_vec[as.integer(pet_factors)]
 ```
 
 . . .
@@ -596,6 +597,17 @@ pet_vec[pet_factors]
 - `forcats` is a part of the core `tidyverse`
     + Specifically for wrangling `factors`
     + Also plays very nicely with `stringr`
+    
+. . .
+
+- `as.factor()` and `factor(levels = ...)` are `base` functions
+- Most `forcats` functions start with `fct_` or use `_`
+
+. . .
+
+- `as_factor()` parallels `as.factor()`
+    + But uses the order of appearance, not alpha-numeric sorting
+- `fct()` replicates `factor()` with stricter error handling
     
 ## Some Handy Tricks
 
@@ -638,4 +650,32 @@ fct_lump_prop(pet_vec, prop = 0.3)
 ```{r}
 fct_rev(pet_vec)
 ```
+
+## Some Handy Tricks
+
+- Relabelling factors can take advantage of `stringr`
+
+```{r}
+pet_vec |>
+  as_factor() |>
+  fct_relabel(.fun = str_to_lower)
+```
+
+. . .
+
+- We'll learn more about tailoring the functions (i.e. inline functions) soon
+
+## Some Handy Tricks
+
+- We can combine multiple factors using `fct_cross()`
+
+```{r}
+sz <- c("big", "small", "small", "big", "small", "tiny") |>
+  factor(levels = c("tiny", "small", "big"))
+pet_vec |>
+  as_factor() |>
+  fct_cross(sz)
+```
+
+
 

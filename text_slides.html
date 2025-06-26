@@ -737,10 +737,10 @@ Dr Stevie Pederson
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>cyto <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Xp11.23"</span>, <span class="st">"11q2.3"</span>, <span class="st">"2p7.1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
-<li>Change these phone numbers to start with <code>+61</code> instead of 0</li>
+<li>Change these phone numbers to start with <code>+61</code> instead of <code>0</code></li>
 </ol>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a>phones <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0499123456"</span>, <span class="st">"0498765432"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a>phones <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0499123456"</span>, <span class="st">"0498760432"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="challenges-slide-2" class="slide level2">
@@ -775,7 +775,7 @@ Dr Stevie Pederson
 <ul>
 <li>Can appear to be a <code>character</code> vector/column
 <ul>
-<li>Can easily trip an unsuspecting analyst up</li>
+<li>Can easily trip an unsuspecting data scientist up</li>
 </ul></li>
 <li>Data will be a set of common groups/categories</li>
 </ul>
@@ -824,6 +824,21 @@ Dr Stevie Pederson
 <li>Also plays very nicely with <code>stringr</code></li>
 </ul></li>
 </ul>
+<div class="fragment">
+<ul>
+<li><code>as.factor()</code> and <code>factor(levels = ...)</code> are <code>base</code> functions</li>
+<li>Most <code>forcats</code> functions start with <code>fct_</code> or use <code>_</code></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><code>as_factor()</code> parallels <code>as.factor()</code>
+<ul>
+<li>But uses the order of appearance, not alpha-numeric sorting</li>
+</ul></li>
+<li><code>fct()</code> replicates <code>factor()</code> with stricter error handling</li>
+</ul>
+</div>
 </section>
 <section id="some-handy-tricks" class="slide level2">
 <h2>Some Handy Tricks</h2>

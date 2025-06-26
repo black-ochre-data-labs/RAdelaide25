@@ -1,0 +1,736 @@
+---
+title: "Basic Statistics in R"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2025-07-09"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: basic_stats.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Statistics in R {background-color="#3d3d40"}
+
+## Introduction
+
+```{r packages, echo=FALSE}
+library(tidyverse)
+library(pander)
+library(scales)
+theme_set(theme_bw())
+```
+
+
+- `R` has it's origins as a statistical analysis language (i.e. `S`)
+- Purpose of this session is NOT to teach statistical theory
+    - I am a bioinformatician NOT a statistician
+- Perform simple analyses in R
+- Up to you to know what you're doing
+    - Or talk to your usual statisticians & collaborators
+    
+## Distributions
+
+- `R` comes with nearly every distribution
+- Standard syntax for accessing each
+
+## Distributions 
+
+| Distribution | Density   | Area Under Curve | Quantile  | Random    |
+|:------------ |:--------- |:---------------- |:--------- |:--------- |
+| Normal       | `dnorm()` | `pnorm()`        | `qnorm()` | `rnorm()` |
+| T            | `dt()`    | `pt()`           | `qt()`    | `rt()`    |
+| Uniform      | `dunif()` | `punif()`        | `qunif()` | `runif()` |
+| Exponential  | `dexp()`  | `pexp()`         | `qexp()`  | `rexp()`  |
+| $\chi^2$     | `dchisq()` | `pchisq()`      | `qchisq()` | `rchisq()` |
+| Binomial     | `dbinom()` | `pbinom()`      | `qbinom()` | `rbinom()` |
+| Poisson      | `dpois()` | `ppois()`        | `qpois()` | `rpois()` |
+
+## Distributions 
+
+- Also Beta, $\Gamma$, Log-Normal, F, Geometric, Cauchy, Hypergeometric etc...
+
+```{r, eval=FALSE}
+?Distributions
+```
+
+## Distributions 
+
+::: {.panel-tabset}
+
+### PDF
+
+```{r pdf-norm}
+#| output-location: column
+## dnorm gives the classic bell-curve
+tibble(
+  x = seq(-4, 4, length.out = 1e3)
+) %>% 
+  ggplot(aes(x, y = dnorm(x))) + 
+  geom_line(colour = "red")
+```
+
+### CDF
+
+```{r cdf-norm}
+#| output-location: column
+## pnorm gives the area under the 
+## bell-curve (which sums to 1)
+tibble(
+  x = seq(-4, 4, length.out = 1e3)
+) %>% 
+  ggplot(aes(x, y = pnorm(x))) + 
+  geom_line()
+```
+
+
+:::
+
+## The T Distribution
+
+::: {.notes}
+- A T distribution looks very much like a Standard normal N(0, 1) but has heavier tails
+- This allows for greater uncertainty in the tails
+:::
+
+```{r}
+#| echo: false
+#| fig-align: "left"
+tibble(
+  x = seq(-4, 4, length.out = 1e3),
+  z = dnorm(x),
+  t3 = dt(x, df = 3),
+  t10 = dt(x, df = 10)
+) %>% 
+  pivot_longer(
+    cols = all_of(c("z", "t3", "t10")), names_to = "dist", values_to = "y"
+  ) %>% 
+  mutate(
+    dist = case_when(
+      dist == "z" ~ "italic(N)(0,1)",
+      dist == "t3" ~ "italic(t)[3]",
+      dist == "t10" ~ "italic(t)[10]"
+    ) 
+  ) %>% 
+  ggplot(aes(x, y, colour = dist)) + 
+  geom_line() +
+  scale_color_brewer(
+    palette = "Set1", labels = parse_format(), name = "Distribution"
+  )  +
+  theme(text = element_text(size = 16))
+```
+
+
+
+# Basic Tests {background-color="#3d3d40"}
+
+## Data For This Session
+
+We'll use the `pigs` dataset from earlier
+
+```{r}
+library(tidyverse)
+library(scales)
+library(car)
+theme_set(theme_bw())
+pigs <- file.path("data", "pigs.csv") %>%
+	read_csv %>%
+	mutate(
+	  dose = fct(dose, levels = c("Low", "Med", "High")),
+	  supp = fct(supp)
+	)
+```
+
+## Data For This Session
+
+```{r boxplot-pigs, fig.width=8}
+#| output-location: column
+pigs %>% 
+  ggplot(
+    aes(x = dose, y = len, fill = supp)
+  ) +
+	geom_boxplot()
+```
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(results = 'hide')
+```
+
+## Pop Quiz
+
+::: {.callout-important collapse = "true"}
+## Can anyone define a p-value?
+::: {.incremental}
+- A p-value is the probability of observing a test statistic **at least as extreme as the one observed**, assuming the null hypothesis is true.
+- In plain English, assuming there's nothing interesting to see here, how likely are we to observe our result, or one even more extreme
+- A p-value of 0.05 $\implies$ about 1 in 20 times we'll see something like this by random
+:::
+:::
+
+## t-tests
+
+- Assumes normally distributed data
+- $t$-tests always test $H_0$ Vs $H_A$
+    + For data with exactly two groups
+
+. . .
+
+- The simplest test is on a simple vector
+    + Not particularly meaningful for our data
+
+```{r, eval = FALSE}
+?t.test
+t.test(pigs$len)
+```
+
+::: {.callout-note collapse="true"}
+## What is $H_0$ in the above test?
+
+::: {.fragment}
+The true mean of the underlying distribution from which the vector is sampled, is zero: i.e. $\mu = 0$
+:::
+
+:::
+
+## t-tests
+
+When comparing the means of two vectors
+
+$$
+H_0: \mu_{1} = \mu_{2} \\
+H_A: \mu_{1} \neq \mu_{2}
+$$
+
+We could use two vectors (i.e. `x` & `y`)
+
+```{r}
+vc <- dplyr::filter(pigs, supp == "VC")$len
+oj <- dplyr::filter(pigs, supp == "OJ")$len
+t.test(x = vc, y = oj)
+```
+
+. . .
+
+::: {.callout-note collapse="true"}
+## Is This a Paired Test?
+
+::: {.fragment}
+No
+:::
+
+:::
+
+## t-tests
+
+- An alternative is the `R` formula method: `len~supp`
+    + Length is a response variable
+    + Supplement is the predictor
+- Can *only use one predictor for a T-test*
+    + Otherwise it's linear regression
+
+```{r}
+t.test(len~supp, data = pigs)
+```
+
+**Did this give the same results?**
+
+## t-tests
+
+- Do we think the variance is equal between the two groups?
+
+```{r}
+#| results: markup
+pigs |> summarise(sd = sd(len), .by = supp)
+```
+
+. . .
+
+- We can use Levene's Test to formalise this
+
+```{r}
+leveneTest(len~supp, data = pigs)
+```
+
+## t-tests
+
+- Now we can assume equal variances
+    + By default, variances are assumed to be unequal
+
+```{r}
+t.test(len~supp, data = pigs, var.equal = TRUE)
+```
+
+. . .
+
+- If relevant, the confidence interval can also be adjusted
+
+
+## Wilcoxon Tests 
+
+- We assumed the above dataset was normally distributed:<br>**What if it's not?**
+
+. . .
+
+- Non-parametric equivalent is the *Wilcoxon Rank-Sum* Test (aka *Mann-Whitney*)
+
+. . .
+
+- This assigns ranks to each value based on their value
+    + The test is then performed on ranks **NOT** the values
+    + Tied values can be problematic
+- Test that the centre of each underlying distribution is the same
+
+```{r}
+wilcox.test(len~supp, data = pigs)
+```
+
+## A Brief Comment
+
+- Both of these are suitable *for comparing two groups*
+- T-tests assume Normally Distributed Data underlies the random sample
+    + Are robust to some deviation from normality
+    + Data can sometimes be transformed (e.g. `sqrt()`, `log()` etc)
+- The Wilcoxon Rank Sum Test assumes nothing about the underlying distribution
+    + Much less powerful will small sample sizes
+    + Highly comparable at n $\geq$ 30
+
+. . .
+
+
+
+## $\chi^2$ Test
+
+- Here we need counts
+- Commonly used in *Observed Vs Expected*
+
+$$
+H_0: \text{No association between groups and outcome}\\
+H_A: \text{Association between groups and outcome}
+$$
+
+
+## $\chi^2$ Test
+
+```{r}
+pass <- matrix(c(25, 8, 6, 15), nrow = 2)
+colnames(pass) <- c("Pass", "Fail")
+rownames(pass) <- c("Attended", "Skipped")
+pass
+chisq.test(pass)
+```
+
+. . .
+
+**Can anyone remember when we shouldn't use a $\chi^2$ test?**
+
+## Fisher's Exact Test
+
+- $\chi^2$ tests became popular in the days of the printed tables
+    - We now have computers
+- Fisher's Exact Test is preferable in the cases of low cell counts
+    + (Or any other time...)
+- Same $H_0$ as the $\chi^2$ test
+- Uses the hypergeometric distribution
+
+```{r}
+fisher.test(pass)
+```
+
+## Summary of Tests
+
+- `t.test()`, `wilcox.test()`
+- `chisq.test()`, `fisher.test()`
+
+. . . 
+
+- `shapiro.test()`, `bartlett.test()`
+    + Tests for normality or homogeneity of variance
+
+. . .
+
+- `binomial.test()`, `poisson.test()`
+- `kruskal.test()`, `ks.test()`
+
+## `htest` Objects
+
+- All produce objects of class `htest`
+- Use `print.htest()` to display results
+- Is really a list
+    + Use `names()` to see what other values are returned
+
+. . .
+
+- Can usually extract p-values using `test$p.value`
+
+```{r}
+fisher.test(pass)$p.value
+```
+
+
+
+# Regression {background-color="#3d3d40"}
+
+## Linear Regression
+
+We are trying to estimate a line with slope & intercept
+
+$$
+y = ax + b
+$$
+
+. . .
+
+Or 
+
+$$
+y = \beta_0 + \beta_1 x
+$$
+
+
+## Linear Regression
+
+Linear Regression always uses the `R` formula syntax
+
+- `y ~ x`: `y` is a function of `x`
+- We use the function `lm()`
+
+```{r}
+lm_pigs <- lm(len ~ supp , data = pigs) 
+summary(lm_pigs)
+```
+
+. . .
+
+- Intercept is assumed unless explicitly removed (`~ 0 + ...`)
+
+## Linear Regression
+
+- It looks like `supp == VC` reduces the length of the teeth
+- In reality we'd like to see if dose has an effect as well
+
+```{r}
+lm_pigs_dose <- lm(len ~ supp + dose, data = pigs) 
+summary(lm_pigs_dose)
+```
+
+. . .
+
+- Which values are associated with the intercept & slope?
+
+. . .
+
+- It looks like an increasing dose-level increases length
+
+## Interaction Terms
+
+
+- We have given each group a separate intercept 
+    + The same slope
+    + Requires an **interaction term** for different slopes
+
+::: {.fragment}
+
+```{r}
+lm_pigs_full <- lm(len ~ supp + dose + supp:dose, data = pigs) 
+summary(lm_pigs_full)
+```
+
+:::
+
+::: {.fragment}
+
+<br>
+
+- How do we interpret this?
+
+:::
+
+## Interaction Terms
+
+An alternative way to write the above in `R` is:
+
+```{r}
+lm_pigs_full <- lm(len ~ (supp + dose)^2, data = pigs) 
+summary(lm_pigs_full)
+```
+
+## Model Selection
+
+Which model should we choose?
+
+```{r}
+anova(lm_pigs, lm_pigs_dose, lm_pigs_full)
+```
+
+## Model Selection
+
+Are we happy with our model assumptions?
+
+1. Normally distributed
+2. Constant Variance
+3. Linear relationship
+
+```{r}
+#| eval: false
+plot(lm_pigs_full)
+```
+
+## Model Selection
+
+- This creates plots using base graphics
+- To show them all on the same panel
+
+```{r}
+#| output-location: column
+par(mfrow = c(2, 2))
+plot(lm_pigs_full)
+```
+
+## Visualising Residuals
+
+- `mfrow()` stands for *multi-frame row*
+- Needs to be reset to a single frame
+
+```{r}
+par(mfrow = c(1, 1))
+```
+
+## Logistic Regression
+
+- Logistic Regression models probabilities (e.g. $H_0: \pi = 0$)
+- We can specify two columns to the model
+    - One would represent total successes, the other failures
+    - This is `binomial` data, $\pi$ is the probability of success
+
+. . .
+
+- Alternatively the response might be a vector of `TRUE/FALSE` or `0/1`
+
+## Logistic Regression
+
+- The probability of admission to a PhD^[Taken from https://stats.oarc.ucla.edu]
+    + Graduate Record Exam scores
+    + Grade Point Average
+    + Prestige of admitting institution (1 is most prestigous)
+
+```{r}
+#| results: markup
+admissions <- read_csv("https://stats.idre.ucla.edu/stat/data/binary.csv")
+glimpse(admissions)
+```
+
+## Logistic Regression
+
+```{r}
+#| results: markup
+glm(admit ~ gre + gpa + rank, data = admissions, family = "binomial") %>% 
+  summary()
+```
+
+## Logistic Regression
+
+- Probabilities are fit on the *logit* scale
+- Transforms 0 < $\pi$ < 1 to $-\infty$ < logit($\pi$) < $\infty$
+
+$$
+\text{logit}(\pi) = \log(\frac{\pi}{1-\pi})
+$$
+
+
+## Automated Model Selection
+
+- One strategy during model fitting is to fit a heavily parameterised model
+- `R` can remove terms as required using Akaike's Information Criterion (AIC)
+    + The function is `step()`
+    
+
+. . .
+
+```{r}
+#| results: hide
+glm(admit ~ (gre + gpa + rank)^2, data = admissions, family = "binomial") %>% 
+  step() %>% 
+  summary()
+```
+
+. . .
+
+- Here we do end up with the same model
+
+
+## Mixed Effects Models
+
+Mixed effects models include:
+
+1) Fixed effects & 2) Random effects
+
+May need to nest results within a biological sample, include day effects etc.
+
+```{r}
+Rabbit <- MASS::Rabbit
+head(Rabbit)
+```
+
+## Mixed Effects Models 
+
+Here we have the change in Blood pressure within the same 5 rabbits
+
+- 6 dose levels of control + 6 dose levels of `MDL`
+- Just looking within one rabbit
+
+```{r}
+filter(Rabbit, Animal == "R1")
+```
+
+
+## Mixed Effects Models 
+
+If fitting within one rabbit $\implies$ use `lm()`
+
+```{r}
+lm_r1 <- lm(
+  BPchange~(Treatment + Dose)^2, data = Rabbit, subset = Animal == "R1"
+)
+summary(lm_r1)
+```
+
+## Mixed Effects Models
+
+To nest within each rabbit we:
+
+- Use `lmer()` from `lme4`
+- Introduce a random effect `(1|Animal)`
+    + Captures variance between rabbits
+
+```{r}
+library(lme4)
+lme_rabbit <- lmer(BPchange~Treatment + Dose + (1|Animal), data = Rabbit)
+summary(lme_rabbit)
+coef(summary(lme_rabbit))
+```
+
+::: {.notes}
+- Mixed-effects models were originally fitted using `nlme`
+- No longer being developed
+:::
+
+## Mixed Effects Models 
+
+This gives $t$-statistics, but no $p$-value
+
+**Why?**
+
+. . .
+
+```{r}
+library(lmerTest)
+lme_rabbit <- lmer(BPchange~Treatment + Dose + (1|Animal), data = Rabbit)
+summary(lme_rabbit)
+```
+
+
+## Mixed Effects Models 
+
+- Doug Bates & Ben Bolker are key R experts in this field
+    + Doug has left the R community
+- Lots of discussion for issues estimating DF with random effects
+- Ben Bolker also maintains `glmmTMB` and `glmmADMB`
+    + Generalised Mixed-effects Models
+    + https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html
+
+::: {.notes}
+Two linear algebra equations in & I was lost
+:::
+
+## Modelling Summary
+
+- `lm()` for standard regression models
+- `glm()` for generalised linear models
+- `lmer()` for linear mixed-effects models
+
+. . .
+
+- Robust models are implemented in `MASS`
+
+# Other Statistical Tools {background-color="#3d3d40"}
+
+## Mutiple Testing in R
+
+- The function `p.adjust()` takes the argument `method = ...`
+
+```{r, results='markup'}
+p.adjust.methods
+```
+
+
+. . .
+
+
+```{r}
+lm_pigs_full %>% 
+  broom::tidy() %>% 
+  mutate(
+    adjP = p.adjust(p.value, "bonf"),
+    sig = case_when(
+      adjP < 0.001 ~ "***",
+      adjP < 0.01 ~ "**",
+      adjP < 0.05 ~ "*",
+      adjP < 0.1 ~ ".",
+      TRUE ~ ""
+    )
+  )
+```
+
+
+. . .
+
+Also the package `multcomp` is excellent but challenging
+
