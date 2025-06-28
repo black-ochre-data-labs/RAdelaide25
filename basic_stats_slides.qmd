@@ -7,6 +7,7 @@ institute: |
   | Telethon Kids Institute
 date: "2025-07-09"
 date-format: long
+bibliography: bibliography.bib
 title-slide-attributes:
     data-background-color: "#3d3d40"
     data-background-image: assets/bodl_logo_white_background.jpg
@@ -137,8 +138,10 @@ tibble(
 ## The T Distribution
 
 ::: {.notes}
+
 - A T distribution looks very much like a Standard normal N(0, 1) but has heavier tails
 - This allows for greater uncertainty in the tails
+
 :::
 
 ```{r}
@@ -170,7 +173,7 @@ tibble(
 
 
 
-# Basic Tests {background-color="#3d3d40"}
+# Tests For Continuous Data {background-color="#3d3d40"}
 
 ## Data For This Session
 
@@ -180,6 +183,7 @@ We'll use the `pigs` dataset from earlier
 library(tidyverse)
 library(scales)
 library(car)
+library(palmerpenguins)
 theme_set(theme_bw())
 pigs <- file.path("data", "pigs.csv") %>%
 	read_csv %>%
@@ -206,13 +210,18 @@ knitr::opts_chunk$set(results = 'hide')
 
 ## Pop Quiz
 
-::: {.callout-important collapse = "true"}
-## Can anyone define a p-value?
+::: {.callout-important collapse="true"}
+
+### Can anyone define a p-value?
+
 ::: {.incremental}
+
 - A p-value is the probability of observing a test statistic **at least as extreme as the one observed**, assuming the null hypothesis is true.
 - In plain English, assuming there's nothing interesting to see here, how likely are we to observe our result, or one even more extreme
-- A p-value of 0.05 $\implies$ about 1 in 20 times we'll see something like this by random
+- A p-value of 0.05 $\implies$ about 1 in 20 times we'll see something like this in a random sample
+
 :::
+
 :::
 
 ## t-tests
@@ -232,7 +241,7 @@ t.test(pigs$len)
 ```
 
 ::: {.callout-note collapse="true"}
-## What is $H_0$ in the above test?
+### What is $H_0$ in the above test?
 
 ::: {.fragment}
 The true mean of the underlying distribution from which the vector is sampled, is zero: i.e. $\mu = 0$
@@ -294,10 +303,13 @@ pigs |> summarise(sd = sd(len), .by = supp)
 . . .
 
 - We can use Levene's Test to formalise this
+    + From the package `car`
+    + Bartlett's test is very similar (`bartlett.test()`)
 
 ```{r}
 leveneTest(len~supp, data = pigs)
 ```
+
 
 ## t-tests
 
@@ -338,17 +350,19 @@ wilcox.test(len~supp, data = pigs)
 - T-tests assume Normally Distributed Data underlies the random sample
     + Are robust to some deviation from normality
     + Data can sometimes be transformed (e.g. `sqrt()`, `log()` etc)
+
+. . . 
+
 - The Wilcoxon Rank Sum Test assumes nothing about the underlying distribution
     + Much less powerful will small sample sizes
     + Highly comparable at n $\geq$ 30
+- The package `coin` implements a range on non-parametric tests
 
-. . .
-
-
+# Tests For Categorical Data {background-color="#3d3d40"}
 
 ## $\chi^2$ Test
 
-- Here we need counts
+- Here we need counts and categories
 - Commonly used in *Observed Vs Expected*
 
 $$
@@ -356,27 +370,48 @@ H_0: \text{No association between groups and outcome}\\
 H_A: \text{Association between groups and outcome}
 $$
 
+::: {.callout-note collapse="true"}
+### When we shouldn't use a $\chi^2$ test?
+
+::: {.fragment}
+When expected cell values are > 5 [@Cochran1954-rd]
+:::
+
+:::
 
 ## $\chi^2$ Test
 
+
 ```{r}
-pass <- matrix(c(25, 8, 6, 15), nrow = 2)
-colnames(pass) <- c("Pass", "Fail")
-rownames(pass) <- c("Attended", "Skipped")
+#| output-location: column
+#| results: markup
+pass <- matrix(
+  c(25, 8, 6, 15), nrow = 2, 
+  dimnames = list(
+    c("Attended", "Skipped"), 
+    c("Pass", "Fail"))
+)
 pass
-chisq.test(pass)
 ```
 
 . . .
 
-**Can anyone remember when we shouldn't use a $\chi^2$ test?**
+<br>
+
+```{r}
+#| output-location: column
+#| results: markup
+pass_chisq <- chisq.test(pass)
+pass_chisq
+```
+
 
 ## Fisher's Exact Test
 
 - $\chi^2$ tests became popular in the days of the printed tables
     - We now have computers
 - Fisher's Exact Test is preferable in the cases of low cell counts
-    + (Or any other time...)
+    + (Or any other time you feel like it...)
 - Same $H_0$ as the $\chi^2$ test
 - Uses the hypergeometric distribution
 
@@ -392,6 +427,7 @@ fisher.test(pass)
 . . . 
 
 - `shapiro.test()`, `bartlett.test()`
+- `car::leveneTest()`
     + Tests for normality or homogeneity of variance
 
 . . .
@@ -402,18 +438,48 @@ fisher.test(pass)
 ## `htest` Objects
 
 - All produce objects of class `htest`
-- Use `print.htest()` to display results
-- Is really a list
+- Is really a `list`
     + Use `names()` to see what other values are returned
-
+    
+```{r}
+names(pass_chisq)
+```
+    
 . . .
 
+- Will vary slightly between tests
 - Can usually extract p-values using `test$p.value`
 
 ```{r}
-fisher.test(pass)$p.value
+pass_chisq$p.value
 ```
 
+## `htest` Objects
+
+```{r}
+#| results: markup
+## Have a look at the list elements produced by fisher.test
+fisher.test(pass) |> names()
+```
+
+. . .
+
+<br>
+
+```{r}
+#| results: markup
+## Are these similar to those produced by t.test?
+t.test(len~supp, data = pigs) |> names()
+```
+
+. . .
+
+- There is a function `print.htest()` which organises the printout for us
+
+::: {.notes}
+- We'll come back to methods later, but this is a common way for output to be produced
+- The will be a print function for objects of each class, i.e. `print.class_of_object`
+:::
 
 
 # Regression {background-color="#3d3d40"}
@@ -434,15 +500,48 @@ $$
 y = \beta_0 + \beta_1 x
 $$
 
+::: {.incremental}
+
+- $y$ is the *response variable* 
+- $x$ is the *predictor variable*
+- Makes the most intuitive sense when both $x$ & $y$ are continuous
+
+:::
 
 ## Linear Regression
 
 Linear Regression always uses the `R` formula syntax
 
-- `y ~ x`: `y` is a function of `x`
+- `y ~ x`: `y` depends on `x`
 - We use the function `lm()`
+- Once we have our model, we can predict $y$ based on $x$ values
+
+. . .
+
+- We'll use the penguins dataset for some exploration
+
+## Linear Regression
+
 
 ```{r}
+#| output-location: column
+## Does bill length depend on body mass?
+## Plot the predictor (body mass) on `x`
+## The response (bill_length) goes on `y`
+penguins |>
+  ggplot(
+    aes(body_mass_g, bill_length_mm)
+  ) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## Linear Regression
+
+```{r}
+lm(bill_length_mm ~ body_mass_g, data = penguins) |> summary()
+
+
 lm_pigs <- lm(len ~ supp , data = pigs) 
 summary(lm_pigs)
 ```
@@ -734,3 +833,4 @@ lm_pigs_full %>%
 
 Also the package `multcomp` is excellent but challenging
 
+## References
