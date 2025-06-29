@@ -402,7 +402,7 @@ penguins |>
 
 ::: {.columns}
 
-::: {.column width="50%}
+::: {.column width="50%"}
 
 - An earlier pipe (`%>%`) was introduced in the package `magrittr` (~2014)
     + Often referred to as "The Magrittr"
@@ -411,7 +411,7 @@ penguins |>
 
 :::
 
-::: {.column width="50%}
+::: {.column width="50%"}
     
 ![Rene Magritte, *The Treachery of Images*, 1929](https://uploads7.wikiart.org/images/rene-magritte/the-treachery-of-images-this-is-not-a-pipe-1948(2).jpg)
 
