@@ -1,0 +1,1009 @@
+---
+title: "Linear Regression in R"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2025-07-09"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: linear_regression.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 1    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+
+# Linear Regression {background-color="#3d3d40"}
+
+## Setup
+
+- Start clear R session
+- Create a blank R script: `LinearRegression.R`
+- Load the key packages
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+theme_set(
+  theme_bw() + theme(plot.title = element_text(hjust = 0.5))
+)
+```
+
+
+## Linear Regression
+
+We are trying to estimate a line with slope & intercept
+
+$$
+y = ax + b
+$$
+
+. . .
+
+Or 
+
+$$
+y = \beta_0 + \beta_1 x
+$$
+
+::: {.incremental}
+
+- $y$ is the *response variable* 
+- $x$ is the *predictor variable*
+- Makes the most intuitive sense when both $x$ & $y$ are continuous
+
+:::
+
+## Linear Regression
+
+Linear Regression always uses the `R` formula syntax
+
+- `y ~ x`: `y` depends on `x`
+- We use the function `lm()`
+- Once we have our model, we can predict $y$ based on $x$ values
+
+. . .
+
+- We'll use the penguins dataset for some exploration
+
+## Linear Regression
+
+
+```{r}
+#| output-location: column
+## Does bill length depend on body mass?
+## Plot the predictor (body mass) on `x`
+## The response (bill_length) goes on `y`
+penguins |>
+  ggplot(
+    aes(body_mass_g, bill_length_mm)
+  ) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+::: {.notes}
+- There looks like a fairly clear linear relationship
+:::
+
+## Linear Regression
+
+- Bill length is the response variable ($y$)
+- Body Mass is the predictor variable ($x$)
+
+```{r}
+#| results: markup
+## Fit a linear regression model and save the output as an R object
+bill_length_lm <- lm(bill_length_mm ~ body_mass_g, data = penguins)
+bill_length_lm
+```
+
+## Linear Regression
+
+::: {.notes}
+- The basic output is only minimally informative
+- Often pass to the function `summary()` to present and interpret
+:::
+
+
+```{r}
+#| results: markup
+## Use `summary` to view and interpret the fitted model
+summary(bill_length_lm)
+```
+
+## Linear Regression
+
+1. The code used is returned as `Call:`
+2. A brief summary of the residuals are returned
+3. The fitted values are returned in the `Coefficients` element
+    + We have the estimate of the intercept & slope
+    + The standard error of the estimates
+    + A t-test testing $H_0: \beta_i = 0$
+    + The p-value for each t-test
+4. Additional model summary information
+    + $R^2$ is the proportion of variance explained by the model
+    
+::: {.notes}
+- Adjusted R-squared is the R-squared adjusted for the number of predictors
+- Mostly relevant when comparing models where predictors vary
+:::
+
+## Coefficients
+
+::: {.callout-important collapse="true"}
+### How do we interpret the Intercept?
+::: {.fragment}
+This is what the bill length would be if a penguin weighed exactly 0
+:::
+:::
+
+::: {.fragment}
+
+- We'd probably expect this to be zero but they almost never are
+- The Intercept is almost always significant
+- What does this really tell us about the relationship between bill length and weight?
+- Generally focussed on the relationship within the range of observed predictors
+    + No guaranteed linear relationship outside of this range
+    
+:::
+
+## Coefficients
+
+::: {.callout-important collapse="true"}
+### How do we interpret the `body_mass_g` term?
+::: {.fragment}
+This is how much we would expect the bill length to change for **every one unit increase in the predictor** <br>
+i.e. for every 1$g$ increase in weight, the bill length would be expected to increase by about `r round(coef(bill_length_lm)[[2]], 4)`mm
+    
+:::
+:::
+
+::: {.fragment}
+- The $t$-test here is highly relevant
+    + $H_0\colon \beta_1 = 0~$  Vs  $~H_A\colon \beta_1 \neq 0$
+- Reject $H_0 \implies$ there *is an association between predictor & response*
+:::
+
+## Linear Regression
+
+- Points never lie exactly on the regression line $\implies$ Why?
+
+. . .
+
+- We're actually fitting the model
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+$$
+
+::: {.incremental}
+
+
+- $\beta_0 + \beta_1 x_i$ is the exact line co-ordinate (Intercept + slope*predictor)
+- $\epsilon_i$ is the the vertical difference between the observed value and the fitted value
+    + Known as a *residual*
+    + Defined as $\epsilon_i \sim \mathcal{N}(0, \sigma)$
+
+:::
+
+::: {.notes}
+- Residual means the bit left over when we subtract the predicted value from the observed
+:::
+
+## Linear Regression
+
+Linear Regression formally has 4 key assumptions
+
+::: {.incremental}
+1. Linear relationship between predictor and response
+    + Mean of residuals is zero across the entire range
+2. Constant variance across the range of data (homoscedasticity)
+3. Residuals are normally distributed
+4. Independence of errors
+
+:::
+
+::: {.incremental}
+- Three of these are represented in the definition $\epsilon_i \sim \mathcal{N}(0, \sigma)$
+:::
+
+
+## Linear Regression
+
+- To check our fitted model, we should check the residuals to ensure $\epsilon_i \sim \mathcal{N}(0, \sigma)$
+
+```{r}
+#| eval: false
+## Check the residuals. It will ask you the following
+## Hit <Return> to see next plot: 
+## So follow the instructions and check each plot before proceeding
+## There are 4 plots by default
+plot(bill_length_lm)
+```
+
+## Linear Regression
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+```{r}
+#| echo: false
+plot(bill_length_lm, which = 1)
+```
+
+:::
+
+::: {.column width='40%'}
+
+::: {style="font-size: 90%"}
+
+<br>
+
+- Check the zero mean of $\mathcal{N}(0, \sigma)$
+- Is this assumption satisfied across the range of the data?
+
+:::
+
+:::
+
+::::
+
+## Linear Regression
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+```{r}
+#| echo: false
+plot(bill_length_lm, which = 2)
+```
+
+:::
+
+::: {.column width='40%'}
+
+::: {style="font-size: 90%"}
+
+<br>
+
+- Check the normality of $\mathcal{N}(0, \sigma)$
+- The dashed line is the expected line from a normal distribution
+- Is this assumption satisfied across the range of the data?
+
+:::
+
+:::
+
+::::
+
+## Linear Regression
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+```{r}
+#| echo: false
+plot(bill_length_lm, which = 3)
+```
+
+:::
+
+::: {.column width='40%'}
+
+::: {style="font-size: 90%"}
+
+<br>
+
+- Check the constant variance of $\mathcal{N}(0, \sigma)$
+- Is this assumption satisfied across the range of the data?
+
+:::
+
+:::
+
+::::
+
+## Linear Regression
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+```{r}
+#| echo: false
+plot(bill_length_lm, which = 5)
+```
+
+:::
+
+::: {.column width='40%'}
+
+::: {style="font-size: 90%"}
+
+<br>
+
+- Checks if any points are exerting excessive 'leverage' on the model
+- Beyond scope of today
+
+:::
+
+:::
+
+::::
+
+## Regression Diagnostic Plots
+
+- All of these figures used base plotting functions
+- Stepping through can be frustrating
+    + Especially when running an automated script
+    
+. . .
+
+- Can plot all 4 at once using a simple trick
+
+```{r}
+#| eval: false
+## Define a 2x2 grid, plotting figures in a row-wise manner
+par(mfrow = c(2, 2))
+## Plot the four regression diagnostic plots
+plot(bill_length_lm)
+## Reset the grid layout to be the default 1x1
+par(mfrow = c(1, 1,))
+```
+
+::: {.notes}
+- `par()` is a function to set graphical parameters
+- `mfrow` means 'Multi-Figures By Row'
+- c(2, 2,) means plot in a 2x2 grid
+- I rarely show these so no need for ggplot versions
+:::
+
+## Objects Of Class `lm`
+
+- The linear model we fitted produced an object of class `lm`
+
+```{r}
+class(bill_length_lm)
+```
+
+. . .
+
+- This is also a list
+
+```{r}
+#| results: hide
+## Inspect the actual object
+glimpse(bill_length_lm)
+```
+
+## Objects Of Class `lm`
+
+- We can use the list structure to inspect the residuals manually
+
+```{r}
+#| output-location: column
+## Plot a histogram of the residuals
+hist(bill_length_lm$residuals)
+```
+
+## Objects Of Class `lm`
+
+- We could even use the Shapiro-Wilk test for normality
+
+```{r}
+#| results: markup
+shapiro.test(bill_length_lm$residuals)
+```
+
+. . .
+
+- How can we interpret all of this?
+- Maybe there's a better model
+
+## Adding Terms
+
+```{r}
+#| output-location: column
+## Does bill length depend on body mass?
+## Plot the predictor (body mass) on `x`
+## The response (bill_length) goes on `y`
+## Does each species need it's own model
+penguins |>
+  ggplot(
+    aes(
+      body_mass_g, bill_length_mm, 
+      colour = species
+    )
+  ) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+::: {.notes}
+- Do we think these slopes are the same?
+- Do we think the intercepts are the same?
+:::
+
+## Adding Terms
+
+```{r}
+#| results: markup
+## Include the species in the model
+## NB: This will fit a separate intercept for each species
+bill_length_sp_lm <- lm(bill_length_mm ~ species + body_mass_g, data = penguins) 
+summary(bill_length_sp_lm)
+```
+
+::: {.notes}
+- There is already a large increase in R-squared so this model may fit better
+:::
+
+## Adding Terms
+
+```{r}
+#| output-location: column
+#| fig-show: hold
+## Check the residuals after 
+## including a separate intercept
+## for species
+par(mfrow = c(2, 2))
+plot(bill_length_sp_lm)
+par(mfrow = c(1, 1))
+```
+
+## Model Diagnostics
+
+```{r}
+#| fig-show: hide
+#| results: markup
+## Check the histogram of residuals
+hist(bill_length_sp_lm$residuals, breaks = 20)
+## Perform the Shapiro-Wilk test for Normality
+shapiro.test(bill_length_sp_lm$residuals)
+```
+
+## Interpreting the Coefficients
+
+- Now we're happier with the model $\rightarrow$ what do the coefficients mean?
+
+```{r}
+#| echo: false
+#| results: markup
+summary(bill_length_sp_lm)$coef
+```
+
+. . .
+
+- By default, the primary Intercept is the first factor level in `species`
+
+```{r}
+#| results: markup
+levels(penguins$species)
+```
+
+## Interpreting the Coefficients
+
+- Now we're happier with the model $\rightarrow$ what do the coefficients mean?
+
+```{r}
+#| echo: false
+#| results: markup
+summary(bill_length_sp_lm)$coef
+```
+
+- The baseline intercept is for Adelie penguins
+- Additional intercept terms are the differences between the baseline and each species
+    + Does this check-out in our initial plot of the data?
+- They all appear significant when checking each $H_0$
+    
+## Adding Terms
+
+- Do we think each species may have a different relationship between mass and bill length?
+    + Do we need to fit a separate slope for each species?
+- This is done in `R` using an "interaction term" separating terms by `:`
+    + `species:body_mass_g`
+    
+```{r}
+bill_length_int_lm <- lm(
+  bill_length_mm ~ species + body_mass_g + species:body_mass_g, 
+  data = penguins
+) 
+summary(bill_length_int_lm)
+```
+
+::: {.notes}
+- Now what do we think?
+:::
+    
+## Interpreting the Coefficients
+
+- The baseline terms for the Intercept and `body_mass_g` are now **both** for Adelie
+- Differences in slope for each species are provided as `speciesChinstrap:body_mass_g` and `speciesGentoo:body_mass_g`
+    
+. . .
+
+- The regression line for Adelie is y = `r  round(coef(bill_length_int_lm)[[1]], 2)` + `r round(coef(bill_length_int_lm)[[4]], 4)`*`body_mass_g`
+
+. . .
+
+- For Chinstrap: y = (`r paste(round(coef(bill_length_int_lm)[1:2], 2), collapse = "+")`) + (`r paste(round(coef(bill_length_int_lm)[4:5], 4), collapse = "+")`)*body_mass_g`
+
+## Interpreting the Coefficients
+
+- The model matrix $X$ is a key part of understanding statistics
+- The model coefficients ($\hat{\beta}$) are actually estimated by performing linear algebra on this
+- The least squares solution is $\hat{\beta} = (X^TX)^{-1}X^Ty$
+    
+. . .
+
+```{r}
+y <- penguins$bill_length_mm[!is.na(penguins$body_mass_g)]
+X <- model.matrix(~ species + body_mass_g + species:body_mass_g, data = penguins)
+```
+
+## Interpreting the Coefficients
+
+
+
+```{r}
+#| results: markup
+head(X)
+```
+
+
+
+## Interpreting the Coefficients
+
+```{r}
+#| results: markup
+## No need to save this, I'm just demonstrating a point
+## The inverse of a matrix is found using `solve()`
+## Matrix multiplication is performed using %*%
+## The transpose of a matrix is found using `t()`
+beta_hat <- solve(t(X) %*% X) %*% t(X) %*% y
+cbind(beta_hat, coef(bill_length_int_lm))
+```
+
+## Interpreting the Coefficients
+
+::: {style="font-size: 85%"}
+
+- An excellent primer on model matrices is [here](https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/designmatrices.html)[^1]
+- Conventional statistics always sets a baseline level for the intercept
+    + Performs a $t$-test automatically for differences
+    + Really quite convenient if less obvious
+
+::: {.fragment}
+
+- We could remove the common intercept using `~ 0 + species + body_mass_g.`
+    + Would return a separate intercept by removing the common (baseline) level
+    + No real advantage except non-statisticians like it
+- No statistical evidence provided for differences in intercepts<br>$\implies$ have to test ourselves &#128546;
+    
+:::
+    
+[^1]: https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/designmatrices.html
+:::
+    
+## Model Diagnostics
+
+```{r}
+#| output-location: column
+#| fig-show: hold
+## Check the residuals after 
+## including a separate intercept
+## and slope for species
+par(mfrow = c(2, 2))
+plot(bill_length_int_lm)
+par(mfrow = c(1, 1))
+```
+
+    
+## Model Selection
+
+- How do we decide on the best model?
+- A common technique is Analysis of Variance (ANOVA)
+- Classic ANOVA checks importance of each term within a model
+
+```{r}
+## Run a separate ANOVA on each model
+anova(bill_length_lm)
+anova(bill_length_sp_lm)
+anova(bill_length_int_lm)
+```
+
+. . .
+
+- Does this give any clue as to the best model?
+    
+## Model Selection
+
+- We have progressively added terms to each model
+- Can use ANOVA to compare suitability of each model
+
+```{r}
+## Compare the models using ANOVA
+## If a model is a significant improvement, the p-value from the 
+## F test will be clearly significant
+anova(
+  bill_length_lm,
+  bill_length_sp_lm,
+  bill_length_int_lm
+)
+```
+
+. . .
+
+- It looks like the separate slopes are not an improvement
+- The separate intercepts **are** an improvement
+
+## Speeding The Process Up
+
+- This was a careful breakdown of finding the best model
+- We can partially automate this and use some shortcuts
+
+. . .
+
+- The shorthand for an interaction term with separate intercepts is `*`
+
+```{r}
+## Refit the model with an interaction term using the shorthand code
+bill_length_int_lm <- lm(
+  bill_length_mm ~ species * body_mass_g, data = penguins
+)
+summary(bill_length_int_lm)
+```
+
+. . .
+
+- Alternatively, all terms can be placed inside brackets & raised to a power
+    + `(species + body_mass_g)^2` would give two-way interactions
+    
+## Speeding The Process Up
+
+::: {.notes}
+- The AIC is a function of the number of model terms and the log likelihood function
+- Beyond the scope of today
+- Doesn't perform well with highly correlated predictors
+:::
+
+- After specifying a 'full' model $\implies$ use `step()` to remove redundant terms
+    + Removes terms in a step-wise manner
+    + Uses Akaike's Information Criterion (AIC) to determine optimal model
+    + Finds model with lowest AIC
+
+```{r}
+step(bill_length_int_lm)
+```
+
+## Objects of Class `summary.lm`
+    
+- The coefficients element of the basic `lm` object only had the fitted values
+    + Not the std errors, t-tests or p-values
+    
+```{r}
+## Extract the coefficients directly from the linear model
+bill_length_sp_lm$coefficients
+```
+
+. . .    
+    
+- These values are produced by the function `summary()`
+
+```{r}
+## Extract the coefficients from the summary object
+summary(bill_length_sp_lm)$coefficients
+```
+
+## Objects of Class `summary.lm`
+
+```{r}
+## Check the class of the output from summary
+summary(bill_length_sp_lm) |> class()
+## Prove conclusively that it is really a list
+## with a class attribute stuck on it
+summary(bill_length_sp_lm) |> is.list()
+## See what attributes it has
+summary(bill_length_sp_lm) |> attributes()
+## Check the full details
+summary(bill_length_sp_lm) |> glimpse()
+```
+
+. . .
+
+- The full complexity of the object is mostly irrelevant
+
+## Using A More Tidyverse Friendly Approach
+
+- The function `tidy()` from the package `broom` is a catch-all function
+    - Will return a tibble
+    + Returns the same from `lm` and `summary.lm` objects
+
+```{r}
+bill_length_sp_lm |> broom::tidy()
+```
+
+## Adding Significance Stars
+
+- The easiest way for me as a `case_when()`
+
+```{r}
+bill_length_sp_lm |> 
+  broom::tidy() |>
+  mutate(
+    stars = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01 ~ "**",
+      p.value < 0.05 ~ "*",
+      p.value < 0.1 ~ ".",
+      TRUE ~ ""
+    )
+  )
+```
+
+## Or Fitting a Model On The Fly
+
+- Obviously no room for checking model diagnostics
+
+```{r}
+penguins |>
+  ## Piped data can be recalled using `_`
+  lm( bill_length_mm ~ species * body_mass_g, data = _) |> 
+  step() |> # Fit the best model using the AIC
+  broom::tidy() |> # Turn the output into a tibble & add stars
+  mutate(
+    stars = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01 ~ "**",
+      p.value < 0.05 ~ "*",
+      p.value < 0.1 ~ ".",
+      TRUE ~ ""
+    )
+  )
+```
+
+# S3 Method Dispatch
+
+## S3 Method Dispatch
+
+- Objects with class `lm` and `summary.lm` are `S3` objects
+- Very informal class structure in `R`
+- Easy to work with $\implies$ easy to break
+
+. . .
+
+- When we printed these objects $\implies$ `print.lm()` or `print.summary.lm()`
+- Likewise when we plotted the `lm` object $\implies$ `plot.lm()`
+
+. . .
+
+```{r}
+#| eval: false
+?plot.lm
+```
+
+## S3 Method Dispatch
+
+- If we only want a subset of figures
+
+```{r}
+par(mfrow = c(1, 2))
+plot(
+  bill_length_sp_lm, which = c(1, 3),
+  caption = list(
+    "Separate Intercepts: Residuals vs Fitted", NULL,
+    "Separate Intercepts: Scale-Location"
+  )
+)
+par(mfrow = c(1, 1))
+```
+
+## S3 Method Dispatch
+
+- We can also check what we pass to `broom::tidy()`
+
+```{r}
+#| eval: false
+?broom::tidy.lm
+```
+
+. . .
+
+- `broom::tidy()` has multiple versions for objects of different classes
+    + e.g. `broom::tidy.prcomp()` for PCA results
+
+
+## S3 Method Dispatch
+
+- `S3` objects can be easily broken
+
+```{r}
+broken_lm <- bill_length_sp_lm
+class(broken_lm) <- "htest"
+broken_lm
+```
+
+. . .
+
+- `R` looked for the `print.htest` method
+- The structure didn't match what was expected $\implies$ nonsense output
+
+## Confidence Intervals
+
+- For confidence or prediction intervals, we can use `predict.lm()`
+
+::: {.callout-important collapse="true"}
+### What's the difference between a confidence and prediction interval
+
+::: {.fragment}
+- 95% Confidence Intervals: The mean will be in the given interval 95% of the time
+- 95% Prediction Intervals: An observation will be in the given interval 95% of the time
+:::
+
+:::
+
+::: {.fragment}
+- We will need a new data frame to make the predictions about
+:::
+
+## Confidence Intervals
+
+```{r}
+## Create some new penguins
+new_penguins <- tibble(
+  species = c("Adelie", "Gentoo"), 
+  body_mass_g = 4500
+)
+## Predict their mean bill length
+predict(bill_length_sp_lm, newdata = new_penguins, interval = "confidence")
+## Predict the range a new observation may lie in
+predict(bill_length_sp_lm, newdata = new_penguins, interval = "prediction")
+```
+
+
+## Confidence Intervals
+
+- We may wish to include our new penguins in these results
+
+```{r}
+## Predict their mean bill length, but include the original data
+new_penguins |>
+  bind_cols(
+    predict(bill_length_sp_lm, newdata = new_penguins, interval = "confidence")
+  )
+```
+
+## Confidence Intervals
+
+- Confidence Intervals for model terms can also be found using `broom::tidy()`
+
+```{r}
+## Use broom:tidy to find confidence intervals for coefficients
+bill_length_sp_lm |>
+  broom::tidy(conf.int = TRUE) 
+```
+
+# Closing Comments
+
+## Additional Plotting Comments
+
+- I rarely show diagnostic plots:
+    + For me when fitting data & performing analysis
+    + No need for ggplot versions
+    
+##     
+    
+```{r}
+#| output-location: column
+tibble(
+  fitted= fitted(bill_length_sp_lm), 
+  residuals = resid(bill_length_sp_lm)
+) |> 
+  ggplot(aes(fitted, residuals)) + 
+  geom_point() + 
+  geom_smooth(
+    se = FALSE, colour = 'red', 
+    linewidth = 0.5
+    ) +
+  ggtitle("Residuals vs Fitted") +
+  labs(
+    x = "Fitted Values", y = "Residuals"
+  ) 
+```
+
+##     
+    
+```{r}
+#| output-location: column
+tibble(
+  residuals = rstandard(bill_length_sp_lm)
+) |> 
+  ggplot(aes(sample = residuals)) + 
+  geom_qq() +
+  geom_qq_line() +
+  ggtitle("Q-Q Residuals") +
+  labs(
+    x = "Theoretical Quantiles", 
+    y = "Standardized Residuals"
+  ) 
+```
+
+
+
+
+## Additional Plotting Packages
+
+- Multiple options for great looking plots 
+    + [`ggpmisc`](https://docs.r4photobiology.info/ggpmisc/index.html) for adding correlations, regression equations etc
+    + [`ggstats`](https://larmarange.github.io/ggstats/) for multiple fresh perspectives on coefficients
+    + [`ggstatsplot`](https://indrajeetpatil.github.io/ggstatsplot/) also a wide range of plotting capabilities
+
+
+## Challenges
+
+::: {style="font-size: 90%"}
+
+1. How could we account for `sex` in the existing `penguins` model?
+2. Load the `pigs` dataset
+3. Make a boxplot:
+    + `len` will be the predictor ($y$)
+    + Place `dose` on the $x$-axis using `supp` to fill the boxes
+4. Find the best model for `len`, using `supp` and `dose` as the predictors
+5. Check the residuals and diagnostic plots
+6. Make sure you can interpret the model coefficients
+7. What is the 99% confidence interval for `supp = "VC"` & `dose = "High"`
+    + What does this mean?
+
+:::
+
