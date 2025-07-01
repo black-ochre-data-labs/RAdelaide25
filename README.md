@@ -39,11 +39,15 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 10:30 | *Morning Tea* |  |  |
 | 11:00 | Working With Text | [Working With Text](text.html) | 80min |
 | 12:30 | *Lunch* |  |  |
-| 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | 180min |
+| 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | 200min |
 | 3:00 | *Afternoon Tea* |  |  |
-| 3:30 | Using Rmarkdown | [RMarkdown](rmarkdown.html) |  |
+| 3:30 | Basic Statistical Analysis (continued) |  |  |
 
 | Day 3 | Topic | Notes | Estimated Duration <br>(approx) |
 |:---|:---|:---|:---|
-| 9:00 | Questions & Comments | [Questions From The Floor](day3.html) | 15min |
-| 9:15 | Functions | [Functions](functions.html) |  |
+| 9:00 | Using Rmarkdown | [RMarkdown](rmarkdown.html) |  |
+| 10:30 | *Morning Tea* |  |  |
+| 11:00 | Functions and Iteration | [Functions](functions.html) |  |
+| 12:30 | *Lunch* |  |  |
+| 1:30 | Statistical Techniques Beyond Linear Regression |  |  |
+| 3:00 | *Afternoon Tea* |  |  |

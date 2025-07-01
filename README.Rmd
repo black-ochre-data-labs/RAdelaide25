@@ -53,12 +53,17 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 12:30 | *Lunch* | | |
 | 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
 | 3:00  | *Afternoon Tea* | | |
-| 3:30 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
+| 3:30 | Basic Statistical Analysis (continued) | | |
 
 
 
 | Day 3 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
-| 9:00 | Questions & Comments | [Questions From The Floor](day3.html) | 15min |
-| 9:15 | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 0.9)` |
+| 9:00 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
+| 10:30 | *Morning Tea* | | |
+| 11:00 | Functions and Iteration | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 0.9)` |
+| 12:30 | *Lunch* | | |
+| 1:30 | Statistical Techniques Beyond Linear Regression | | |
+| 3:00  | *Afternoon Tea* | | |
+
 

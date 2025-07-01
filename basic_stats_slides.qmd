@@ -67,7 +67,9 @@ knitr:
 library(tidyverse)
 library(pander)
 library(scales)
-theme_set(theme_bw())
+theme_set(
+  theme_bw() + theme(plot.title = element_text(hjust = 0.5))
+)
 ```
 
 
@@ -184,7 +186,9 @@ library(tidyverse)
 library(scales)
 library(car)
 library(palmerpenguins)
-theme_set(theme_bw())
+theme_set(
+  theme_bw() + theme(plot.title = element_text(hjust = 0.5))
+)
 pigs <- file.path("data", "pigs.csv") %>%
 	read_csv %>%
 	mutate(
@@ -813,11 +817,12 @@ par(mfrow = c(1, 1,))
 - `par()` is a function to set graphical parameters
 - `mfrow` means 'Multi-Figures By Row'
 - c(2, 2,) means plot in a 2x2 grid
+- I rarely show these so no need for ggplot versions
 :::
 
 ## Objects Of Class `lm`
 
-- The linear model we fitted produced an object of class `lm
+- The linear model we fitted produced an object of class `lm`
 
 ```{r}
 class(bill_length_lm)
@@ -974,7 +979,7 @@ summary(bill_length_int_lm)
     
 ## Interpreting the Coefficients
 
-- The baseline terms for the Intercept and `body_mass_g` are now **both** for Adelide
+- The baseline terms for the Intercept and `body_mass_g` are now **both** for Adelie
 - Differences in slope for each species are provided as `speciesChinstrap:body_mass_g` and `speciesGentoo:body_mass_g`
     
 . . .
@@ -984,6 +989,63 @@ summary(bill_length_int_lm)
 . . .
 
 - For Chinstrap: y = (`r paste(round(coef(bill_length_int_lm)[1:2], 2), collapse = "+")`) + (`r paste(round(coef(bill_length_int_lm)[4:5], 4), collapse = "+")`)*body_mass_g`
+
+## Interpreting the Coefficients
+
+- The model matrix $X$ is a key part of understanding statistics
+- The model coefficients ($\hat{\beta}$) are actually estimated by performing linear algebra on this
+- The least squares solution is $\hat{\beta} = (X^TX)^{-1}X^Ty$
+    
+. . .
+
+```{r}
+y <- penguins$bill_length_mm[!is.na(penguins$body_mass_g)]
+X <- model.matrix(~ species + body_mass_g + species:body_mass_g, data = penguins)
+```
+
+## Interpreting the Coefficients
+
+
+
+```{r}
+#| results: markup
+head(X)
+```
+
+
+
+## Interpreting the Coefficients
+
+```{r}
+#| results: markup
+## No need to save this, I'm just demonstrating a point
+## The inverse of a matrix is found using `solve()`
+## Matrix multiplication is performed using %*%
+## The transpose of a matrix is found using `t()`
+beta_hat <- solve(t(X) %*% X) %*% t(X) %*% y
+cbind(beta_hat, coef(bill_length_int_lm))
+```
+
+## Interpreting the Coefficients
+
+::: {style="font-size: 85%"}
+
+- An excellent primer on model matrices is [here](https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/designmatrices.html)[^1]
+- Conventional statistics always sets a baseline level for the intercept
+    + Performs a $t$-test automatically for differences
+    + Really quite convenient if less obvious
+
+::: {.fragment}
+
+- We could remove the common intercept using `~ 0 + species + body_mass_g.`
+    + Would return a separate intercept by removing the common (baseline) level
+    + No real advantage except non-statisticians like it
+- No statistical evidence provided for differences in intercepts<br>$\implies$ have to test ourselves &#128546;
+    
+:::
+    
+[^1]: https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/designmatrices.html
+:::
     
 ## Model Diagnostics
 
@@ -1054,7 +1116,10 @@ bill_length_int_lm <- lm(
 summary(bill_length_int_lm)
 ```
 
+. . .
 
+- Alternatively, all terms can be placed inside brackets & raised to a power
+    + `(species + body_mass_g)^2` would give two-way interactions
     
 ## Speeding The Process Up
 
@@ -1065,7 +1130,7 @@ summary(bill_length_int_lm)
 :::
 
 - After specifying a 'full' model $\implies$ use `step()` to remove redundant terms
-    + Removes terms in a stepwise manner
+    + Removes terms in a step-wise manner
     + Uses Akaike's Information Criterion (AIC) to determine optimal model
     + Finds model with lowest AIC
 
@@ -1097,7 +1162,7 @@ summary(bill_length_sp_lm)$coefficients
 ```{r}
 ## Check the class of the output from summary
 summary(bill_length_sp_lm) |> class()
-## Prove conclusivelt that it is really a list
+## Prove conclusively that it is really a list
 ## with a class attribute stuck on it
 summary(bill_length_sp_lm) |> is.list()
 ## See what attributes it has
@@ -1138,7 +1203,28 @@ bill_length_sp_lm |>
   )
 ```
 
+## Or Fitting a Model On The Fly
 
+- Obviously no room for checking model diagnostics
+
+```{r}
+penguins |>
+  ## Piped data can be recalled using `_`
+  lm( bill_length_mm ~ species * body_mass_g, data = _) |> 
+  step() |> # Fit the best model using the AIC
+  broom::tidy() |> # Turn the output into a tibble & add stars
+  mutate(
+    stars = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01 ~ "**",
+      p.value < 0.05 ~ "*",
+      p.value < 0.1 ~ ".",
+      TRUE ~ ""
+    )
+  )
+```
+
+# S3 Method Dispatch
 
 ## S3 Method Dispatch
 
@@ -1219,7 +1305,7 @@ broken_lm
 :::
 
 ::: {.fragment}
-- We will need a new data frame to make the predications about
+- We will need a new data frame to make the predictions about
 :::
 
 ## Confidence Intervals
@@ -1259,20 +1345,77 @@ bill_length_sp_lm |>
   broom::tidy(conf.int = TRUE) 
 ```
 
+# Closing Comments
+
+## Additional Plotting Comments
+
+- I rarely show diagnostic plots:
+    + For me when fitting data & performing analysis
+    + No need for ggplot versions
+    
+##     
+    
+```{r}
+#| output-location: column
+tibble(
+  fitted= fitted(bill_length_sp_lm), 
+  residuals = resid(bill_length_sp_lm)
+) |> 
+  ggplot(aes(fitted, residuals)) + 
+  geom_point() + 
+  geom_smooth(
+    se = FALSE, colour = 'red', 
+    linewidth = 0.5
+    ) +
+  ggtitle("Residuals vs Fitted") +
+  labs(
+    x = "Fitted Values", y = "Residuals"
+  ) 
+```
+
+##     
+    
+```{r}
+#| output-location: column
+tibble(
+  residuals = rstandard(bill_length_sp_lm)
+) |> 
+  ggplot(aes(sample = residuals)) + 
+  geom_qq() +
+  geom_qq_line() +
+  ggtitle("Q-Q Residuals") +
+  labs(
+    x = "Theoretical Quantiles", 
+    y = "Standardized Residuals"
+  ) 
+```
+
+
+
+
+## Additional Plotting Packages
+
+- Multiple options for great looking plots 
+    + [`ggpmisc`](https://docs.r4photobiology.info/ggpmisc/index.html) for adding correlations, regression equations etc
+    + [`ggstats`](https://larmarange.github.io/ggstats/) for multiple fresh perspectives on coefficients
+    + [`ggstatsplot`](https://indrajeetpatil.github.io/ggstatsplot/) also a wide range of plotting capabilities
 
 
 ## Challenges
 
-1. Load the `pigs` dataset
-2. Make a boxplot:
+::: {style="font-size: 90%"}
+
+1. How could we account for `sex` in the existing `penguins` model?
+2. Load the `pigs` dataset
+3. Make a boxplot:
     + `len` will be the predictor ($y$)
     + Place `dose` on the $x$-axis using `supp` to fill the boxes
-3. Using `supp` and `dose` as the predictors and `len` as the response, find the best model
-4. Check the residuals and diagnostic plots
-5. Make sure you understand the model coefficients
-6. What is the 99% confidence interval for `supp = "VC"` & `dose = "High"`
+4. Find the best model for `len`, using `supp` and `dose` as the predictors
+5. Check the residuals and diagnostic plots
+6. Make sure you can interpret the model coefficients
+7. What is the 99% confidence interval for `supp = "VC"` & `dose = "High"`
     + What does this mean?
 
-
+:::
 
 ## References

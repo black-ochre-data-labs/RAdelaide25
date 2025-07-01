@@ -419,13 +419,15 @@ Dr Stevie Pederson
 <span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
 <span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
 <span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"data"</span>, <span class="st">"pigs.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a>    read_csv <span class="sc">%&gt;%</span></span>
-<span id="cb4-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb4-9"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">dose =</span> <span class="fu">fct</span>(dose, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Med"</span>, <span class="st">"High"</span>)),</span>
-<span id="cb4-10"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">supp =</span> <span class="fu">fct</span>(supp)</span>
-<span id="cb4-11"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(</span>
+<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
+<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-8"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"data"</span>, <span class="st">"pigs.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="" aria-hidden="true" tabindex="-1"></a>    read_csv <span class="sc">%&gt;%</span></span>
+<span id="cb4-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb4-11"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">dose =</span> <span class="fu">fct</span>(dose, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Med"</span>, <span class="st">"High"</span>)),</span>
+<span id="cb4-12"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">supp =</span> <span class="fu">fct</span>(supp)</span>
+<span id="cb4-13"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="data-for-this-session-1" class="slide level2">
@@ -1229,6 +1231,7 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <li><code>par()</code> is a function to set graphical parameters</li>
 <li><code>mfrow</code> means ‘Multi-Figures By Row’</li>
 <li>c(2, 2,) means plot in a 2x2 grid</li>
+<li>I rarely show these so no need for ggplot versions</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1246,7 +1249,7 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <section id="objects-of-class-lm" class="slide level2">
 <h2>Objects Of Class <code>lm</code></h2>
 <ul>
-<li>The linear model we fitted produced an object of class `lm</li>
+<li>The linear model we fitted produced an object of class <code>lm</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(bill_length_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1515,7 +1518,7 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <section id="interpreting-the-coefficients-2" class="slide level2">
 <h2>Interpreting the Coefficients</h2>
 <ul>
-<li>The baseline terms for the Intercept and <code>body_mass_g</code> are now <strong>both</strong> for Adelide</li>
+<li>The baseline terms for the Intercept and <code>body_mass_g</code> are now <strong>both</strong> for Adelie</li>
 <li>Differences in slope for each species are provided as <code>speciesChinstrap:body_mass_g</code> and <code>speciesGentoo:body_mass_g</code></li>
 </ul>
 <div class="fragment">
@@ -1529,21 +1532,100 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 </ul>
 </div>
 </section>
+<section id="interpreting-the-coefficients-3" class="slide level2">
+<h2>Interpreting the Coefficients</h2>
+<ul>
+<li>The model matrix <span class="math inline">\(X\)</span> is a key part of understanding statistics</li>
+<li>The model coefficients (<span class="math inline">\(\hat{\beta}\)</span>) are actually estimated by performing linear algebra on this</li>
+<li>The least squares solution is <span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span></li>
+</ul>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> penguins<span class="sc">$</span>bill_length_mm[<span class="sc">!</span><span class="fu">is.na</span>(penguins<span class="sc">$</span>body_mass_g)]</span>
+<span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> species <span class="sc">+</span> body_mass_g <span class="sc">+</span> species<span class="sc">:</span>body_mass_g, <span class="at">data =</span> penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="interpreting-the-coefficients-4" class="slide level2">
+<h2>Interpreting the Coefficients</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  (Intercept) speciesChinstrap speciesGentoo body_mass_g
+1           1                0             0        3750
+2           1                0             0        3800
+3           1                0             0        3250
+5           1                0             0        3450
+6           1                0             0        3650
+7           1                0             0        3625
+  speciesChinstrap:body_mass_g speciesGentoo:body_mass_g
+1                            0                         0
+2                            0                         0
+3                            0                         0
+5                            0                         0
+6                            0                         0
+7                            0                         0</code></pre>
+</div>
+</div>
+</section>
+<section id="interpreting-the-coefficients-5" class="slide level2">
+<h2>Interpreting the Coefficients</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## No need to save this, I'm just demonstrating a point</span></span>
+<span id="cb52-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## The inverse of a matrix is found using `solve()`</span></span>
+<span id="cb52-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Matrix multiplication is performed using %*%</span></span>
+<span id="cb52-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## The transpose of a matrix is found using `t()`</span></span>
+<span id="cb52-5"><a href="" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span>
+<span id="cb52-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(beta_hat, <span class="fu">coef</span>(bill_length_int_lm))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                      [,1]          [,2]
+(Intercept)                  26.9941391366 26.9941391367
+speciesChinstrap              5.1800537287  5.1800537287
+speciesGentoo                -0.2545906615 -0.2545906615
+body_mass_g                   0.0031878758  0.0031878758
+speciesChinstrap:body_mass_g  0.0012748183  0.0012748183
+speciesGentoo:body_mass_g     0.0009029956  0.0009029956</code></pre>
+</div>
+</div>
+</section>
+<section id="interpreting-the-coefficients-6" class="slide level2">
+<h2>Interpreting the Coefficients</h2>
+<div style="font-size: 85%">
+<ul>
+<li>An excellent primer on model matrices is <a href="https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/designmatrices.html">here</a><sup>1</sup></li>
+<li>Conventional statistics always sets a baseline level for the intercept
+<ul>
+<li>Performs a <span class="math inline">\(t\)</span>-test automatically for differences</li>
+<li>Really quite convenient if less obvious</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>We could remove the common intercept using <code>~ 0 + species + body_mass_g.</code>
+<ul>
+<li>Would return a separate intercept by removing the common (baseline) level</li>
+<li>No real advantage except non-statisticians like it</li>
+</ul></li>
+<li>No statistical evidence provided for differences in intercepts<br><span class="math inline">\(\implies\)</span> have to test ourselves 😢</li>
+</ul>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/designmatrices.html</p></li></ol></aside></section>
 <section id="model-diagnostics-1" class="slide level2">
 <h2>Model Diagnostics</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the residuals after </span></span>
-<span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## including a separate intercept</span></span>
-<span id="cb49-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## and slope for species</span></span>
-<span id="cb49-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb49-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bill_length_int_lm)</span>
-<span id="cb49-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the residuals after </span></span>
+<span id="cb54-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## including a separate intercept</span></span>
+<span id="cb54-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## and slope for species</span></span>
+<span id="cb54-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb54-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bill_length_int_lm)</span>
+<span id="cb54-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="basic_stats_slides_files/figure-revealjs/unnamed-chunk-40-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+<p><img data-src="basic_stats_slides_files/figure-revealjs/unnamed-chunk-43-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
 </figure>
 </div>
 </div>
@@ -1557,10 +1639,10 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <li>Classic ANOVA checks importance of each term within a model</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Run a separate ANOVA on each model</span></span>
-<span id="cb50-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(bill_length_lm)</span>
-<span id="cb50-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(bill_length_sp_lm)</span>
-<span id="cb50-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(bill_length_int_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Run a separate ANOVA on each model</span></span>
+<span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(bill_length_lm)</span>
+<span id="cb55-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(bill_length_sp_lm)</span>
+<span id="cb55-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(bill_length_int_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1575,14 +1657,14 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <li>Can use ANOVA to compare suitability of each model</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Compare the models using ANOVA</span></span>
-<span id="cb51-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## If a model is a significant improvement, the p-value from the </span></span>
-<span id="cb51-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## F test will be clearly significant</span></span>
-<span id="cb51-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(</span>
-<span id="cb51-5"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_lm,</span>
-<span id="cb51-6"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_sp_lm,</span>
-<span id="cb51-7"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_int_lm</span>
-<span id="cb51-8"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Compare the models using ANOVA</span></span>
+<span id="cb56-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## If a model is a significant improvement, the p-value from the </span></span>
+<span id="cb56-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## F test will be clearly significant</span></span>
+<span id="cb56-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(</span>
+<span id="cb56-5"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_lm,</span>
+<span id="cb56-6"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_sp_lm,</span>
+<span id="cb56-7"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_int_lm</span>
+<span id="cb56-8"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1602,12 +1684,20 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <li>The shorthand for an interaction term with separate intercepts is <code>*</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Refit the model with an interaction term using the shorthand code</span></span>
-<span id="cb52-2"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_int_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb52-3"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_mm <span class="sc">~</span> species <span class="sc">*</span> body_mass_g, <span class="at">data =</span> penguins</span>
-<span id="cb52-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb52-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_int_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Refit the model with an interaction term using the shorthand code</span></span>
+<span id="cb57-2"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_int_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb57-3"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_mm <span class="sc">~</span> species <span class="sc">*</span> body_mass_g, <span class="at">data =</span> penguins</span>
+<span id="cb57-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_int_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+<div class="fragment">
+<ul>
+<li>Alternatively, all terms can be placed inside brackets &amp; raised to a power
+<ul>
+<li><code>(species + body_mass_g)^2</code> would give two-way interactions</li>
+</ul></li>
+</ul>
 </div>
 </section>
 <section id="speeding-the-process-up-1" class="slide level2">
@@ -1632,13 +1722,13 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <ul>
 <li>After specifying a ‘full’ model <span class="math inline">\(\implies\)</span> use <code>step()</code> to remove redundant terms
 <ul>
-<li>Removes terms in a stepwise manner</li>
+<li>Removes terms in a step-wise manner</li>
 <li>Uses Akaike’s Information Criterion (AIC) to determine optimal model</li>
 <li>Finds model with lowest AIC</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(bill_length_int_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(bill_length_int_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="objects-of-class-summary.lm" class="slide level2">
@@ -1650,31 +1740,31 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the coefficients directly from the linear model</span></span>
-<span id="cb54-2"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_sp_lm<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the coefficients directly from the linear model</span></span>
+<span id="cb59-2"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_sp_lm<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
 <li>These values are produced by the function <code>summary()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the coefficients from the summary object</span></span>
-<span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the coefficients from the summary object</span></span>
+<span id="cb60-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="objects-of-class-summary.lm-1" class="slide level2">
 <h2>Objects of Class <code>summary.lm</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the class of the output from summary</span></span>
-<span id="cb56-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm) <span class="sc">|&gt;</span> <span class="fu">class</span>()</span>
-<span id="cb56-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Prove conclusivelt that it is really a list</span></span>
-<span id="cb56-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## with a class attribute stuck on it</span></span>
-<span id="cb56-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm) <span class="sc">|&gt;</span> <span class="fu">is.list</span>()</span>
-<span id="cb56-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## See what attributes it has</span></span>
-<span id="cb56-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm) <span class="sc">|&gt;</span> <span class="fu">attributes</span>()</span>
-<span id="cb56-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the full details</span></span>
-<span id="cb56-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm) <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the class of the output from summary</span></span>
+<span id="cb61-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm) <span class="sc">|&gt;</span> <span class="fu">class</span>()</span>
+<span id="cb61-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Prove conclusively that it is really a list</span></span>
+<span id="cb61-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## with a class attribute stuck on it</span></span>
+<span id="cb61-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm) <span class="sc">|&gt;</span> <span class="fu">is.list</span>()</span>
+<span id="cb61-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## See what attributes it has</span></span>
+<span id="cb61-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm) <span class="sc">|&gt;</span> <span class="fu">attributes</span>()</span>
+<span id="cb61-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the full details</span></span>
+<span id="cb61-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bill_length_sp_lm) <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1692,7 +1782,7 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_sp_lm <span class="sc">|&gt;</span> broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_sp_lm <span class="sc">|&gt;</span> broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="adding-significance-stars" class="slide level2">
@@ -1701,20 +1791,47 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <li>The easiest way for me as a <code>case_when()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_sp_lm <span class="sc">|&gt;</span> </span>
-<span id="cb58-2"><a href="" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
-<span id="cb58-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb58-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">stars =</span> <span class="fu">case_when</span>(</span>
-<span id="cb58-5"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.001</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
-<span id="cb58-6"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
-<span id="cb58-7"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
-<span id="cb58-8"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">~</span> <span class="st">"."</span>,</span>
-<span id="cb58-9"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">""</span></span>
-<span id="cb58-10"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb58-11"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_sp_lm <span class="sc">|&gt;</span> </span>
+<span id="cb63-2"><a href="" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
+<span id="cb63-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb63-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">stars =</span> <span class="fu">case_when</span>(</span>
+<span id="cb63-5"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.001</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
+<span id="cb63-6"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
+<span id="cb63-7"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
+<span id="cb63-8"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">~</span> <span class="st">"."</span>,</span>
+<span id="cb63-9"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">""</span></span>
+<span id="cb63-10"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb63-11"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="s3-method-dispatch" class="slide level2">
+<section id="or-fitting-a-model-on-the-fly" class="slide level2">
+<h2>Or Fitting a Model On The Fly</h2>
+<ul>
+<li>Obviously no room for checking model diagnostics</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Piped data can be recalled using `_`</span></span>
+<span id="cb64-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>( bill_length_mm <span class="sc">~</span> species <span class="sc">*</span> body_mass_g, <span class="at">data =</span> _) <span class="sc">|&gt;</span> </span>
+<span id="cb64-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step</span>() <span class="sc">|&gt;</span> <span class="co"># Fit the best model using the AIC</span></span>
+<span id="cb64-5"><a href="" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> <span class="co"># Turn the output into a tibble &amp; add stars</span></span>
+<span id="cb64-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb64-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">stars =</span> <span class="fu">case_when</span>(</span>
+<span id="cb64-8"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.001</span> <span class="sc">~</span> <span class="st">"***"</span>,</span>
+<span id="cb64-9"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.01</span> <span class="sc">~</span> <span class="st">"**"</span>,</span>
+<span id="cb64-10"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">~</span> <span class="st">"*"</span>,</span>
+<span id="cb64-11"><a href="" aria-hidden="true" tabindex="-1"></a>      p.value <span class="sc">&lt;</span> <span class="fl">0.1</span> <span class="sc">~</span> <span class="st">"."</span>,</span>
+<span id="cb64-12"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">""</span></span>
+<span id="cb64-13"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb64-14"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section>
+<section>
+<section id="s3-method-dispatch" class="title-slide slide level1 center">
+<h1>S3 Method Dispatch</h1>
+
+</section>
+<section id="s3-method-dispatch-1" class="slide level2">
 <h2>S3 Method Dispatch</h2>
 <ul>
 <li>Objects with class <code>lm</code> and <code>summary.lm</code> are <code>S3</code> objects</li>
@@ -1729,35 +1846,35 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 </div>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="" aria-hidden="true" tabindex="-1"></a>?plot.lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a>?plot.lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
-<section id="s3-method-dispatch-1" class="slide level2">
+<section id="s3-method-dispatch-2" class="slide level2">
 <h2>S3 Method Dispatch</h2>
 <ul>
 <li>If we only want a subset of figures</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb60-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb60-3"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_sp_lm, <span class="at">which =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>),</span>
-<span id="cb60-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="fu">list</span>(</span>
-<span id="cb60-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Separate Intercepts: Residuals vs Fitted"</span>, <span class="cn">NULL</span>,</span>
-<span id="cb60-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Separate Intercepts: Scale-Location"</span></span>
-<span id="cb60-7"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb60-8"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb66-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb66-3"><a href="" aria-hidden="true" tabindex="-1"></a>  bill_length_sp_lm, <span class="at">which =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="cb66-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="fu">list</span>(</span>
+<span id="cb66-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Separate Intercepts: Residuals vs Fitted"</span>, <span class="cn">NULL</span>,</span>
+<span id="cb66-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Separate Intercepts: Scale-Location"</span></span>
+<span id="cb66-7"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb66-8"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<img data-src="basic_stats_slides_files/figure-revealjs/unnamed-chunk-51-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
-<section id="s3-method-dispatch-2" class="slide level2">
+<img data-src="basic_stats_slides_files/figure-revealjs/unnamed-chunk-55-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<section id="s3-method-dispatch-3" class="slide level2">
 <h2>S3 Method Dispatch</h2>
 <ul>
 <li>We can also check what we pass to <code>broom::tidy()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="" aria-hidden="true" tabindex="-1"></a>?broom<span class="sc">::</span>tidy.lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="" aria-hidden="true" tabindex="-1"></a>?broom<span class="sc">::</span>tidy.lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1768,15 +1885,15 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 </ul>
 </div>
 </section>
-<section id="s3-method-dispatch-3" class="slide level2">
+<section id="s3-method-dispatch-4" class="slide level2">
 <h2>S3 Method Dispatch</h2>
 <ul>
 <li><code>S3</code> objects can be easily broken</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="" aria-hidden="true" tabindex="-1"></a>broken_lm <span class="ot">&lt;-</span> bill_length_sp_lm</span>
-<span id="cb63-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(broken_lm) <span class="ot">&lt;-</span> <span class="st">"htest"</span></span>
-<span id="cb63-3"><a href="" aria-hidden="true" tabindex="-1"></a>broken_lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="" aria-hidden="true" tabindex="-1"></a>broken_lm <span class="ot">&lt;-</span> bill_length_sp_lm</span>
+<span id="cb69-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(broken_lm) <span class="ot">&lt;-</span> <span class="st">"htest"</span></span>
+<span id="cb69-3"><a href="" aria-hidden="true" tabindex="-1"></a>broken_lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -1810,22 +1927,22 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 </div>
 <div class="fragment">
 <ul>
-<li>We will need a new data frame to make the predications about</li>
+<li>We will need a new data frame to make the predictions about</li>
 </ul>
 </div>
 </section>
 <section id="confidence-intervals-1" class="slide level2">
 <h2>Confidence Intervals</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Create some new penguins</span></span>
-<span id="cb64-2"><a href="" aria-hidden="true" tabindex="-1"></a>new_penguins <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb64-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">species =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Gentoo"</span>), </span>
-<span id="cb64-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">body_mass_g =</span> <span class="dv">4500</span></span>
-<span id="cb64-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb64-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Predict their mean bill length</span></span>
-<span id="cb64-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(bill_length_sp_lm, <span class="at">newdata =</span> new_penguins, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
-<span id="cb64-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Predict the range a new observation may lie in</span></span>
-<span id="cb64-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(bill_length_sp_lm, <span class="at">newdata =</span> new_penguins, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Create some new penguins</span></span>
+<span id="cb70-2"><a href="" aria-hidden="true" tabindex="-1"></a>new_penguins <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb70-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">species =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Gentoo"</span>), </span>
+<span id="cb70-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">body_mass_g =</span> <span class="dv">4500</span></span>
+<span id="cb70-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb70-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Predict their mean bill length</span></span>
+<span id="cb70-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(bill_length_sp_lm, <span class="at">newdata =</span> new_penguins, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
+<span id="cb70-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Predict the range a new observation may lie in</span></span>
+<span id="cb70-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(bill_length_sp_lm, <span class="at">newdata =</span> new_penguins, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="confidence-intervals-2" class="slide level2">
@@ -1834,11 +1951,11 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <li>We may wish to include our new penguins in these results</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Predict their mean bill length, but include the original data</span></span>
-<span id="cb65-2"><a href="" aria-hidden="true" tabindex="-1"></a>new_penguins <span class="sc">|&gt;</span></span>
-<span id="cb65-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
-<span id="cb65-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(bill_length_sp_lm, <span class="at">newdata =</span> new_penguins, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
-<span id="cb65-5"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Predict their mean bill length, but include the original data</span></span>
+<span id="cb71-2"><a href="" aria-hidden="true" tabindex="-1"></a>new_penguins <span class="sc">|&gt;</span></span>
+<span id="cb71-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(</span>
+<span id="cb71-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">predict</span>(bill_length_sp_lm, <span class="at">newdata =</span> new_penguins, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
+<span id="cb71-5"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="confidence-intervals-3" class="slide level2">
@@ -1847,28 +1964,110 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <li>Confidence Intervals for model terms can also be found using <code>broom::tidy()</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Use broom:tidy to find confidence intervals for coefficients</span></span>
-<span id="cb66-2"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_sp_lm <span class="sc">|&gt;</span></span>
-<span id="cb66-3"><a href="" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Use broom:tidy to find confidence intervals for coefficients</span></span>
+<span id="cb72-2"><a href="" aria-hidden="true" tabindex="-1"></a>bill_length_sp_lm <span class="sc">|&gt;</span></span>
+<span id="cb72-3"><a href="" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section></section>
+<section>
+<section id="closing-comments" class="title-slide slide level1 center">
+<h1>Closing Comments</h1>
+
+</section>
+<section id="additional-plotting-comments" class="slide level2">
+<h2>Additional Plotting Comments</h2>
+<ul>
+<li>I rarely show diagnostic plots:
+<ul>
+<li>For me when fitting data &amp; performing analysis</li>
+<li>No need for ggplot versions</li>
+</ul></li>
+</ul>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb73-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">fitted=</span> <span class="fu">fitted</span>(bill_length_sp_lm), </span>
+<span id="cb73-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuals =</span> <span class="fu">resid</span>(bill_length_sp_lm)</span>
+<span id="cb73-4"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb73-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(fitted, residuals)) <span class="sc">+</span> </span>
+<span id="cb73-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb73-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(</span>
+<span id="cb73-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">'red'</span>, </span>
+<span id="cb73-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.5</span></span>
+<span id="cb73-10"><a href="" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb73-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Residuals vs Fitted"</span>) <span class="sc">+</span></span>
+<span id="cb73-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb73-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Fitted Values"</span>, <span class="at">y =</span> <span class="st">"Residuals"</span></span>
+<span id="cb73-14"><a href="" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="basic_stats_slides_files/figure-revealjs/unnamed-chunk-61-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb74-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">residuals =</span> <span class="fu">rstandard</span>(bill_length_sp_lm)</span>
+<span id="cb74-3"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb74-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> residuals)) <span class="sc">+</span> </span>
+<span id="cb74-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
+<span id="cb74-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb74-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Q-Q Residuals"</span>) <span class="sc">+</span></span>
+<span id="cb74-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb74-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Theoretical Quantiles"</span>, </span>
+<span id="cb74-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Standardized Residuals"</span></span>
+<span id="cb74-11"><a href="" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="basic_stats_slides_files/figure-revealjs/unnamed-chunk-62-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="additional-plotting-packages" class="slide level2">
+<h2>Additional Plotting Packages</h2>
+<ul>
+<li>Multiple options for great looking plots
+<ul>
+<li><a href="https://docs.r4photobiology.info/ggpmisc/index.html"><code>ggpmisc</code></a> for adding correlations, regression equations etc</li>
+<li><a href="https://larmarange.github.io/ggstats/"><code>ggstats</code></a> for multiple fresh perspectives on coefficients</li>
+<li><a href="https://indrajeetpatil.github.io/ggstatsplot/"><code>ggstatsplot</code></a> also a wide range of plotting capabilities</li>
+</ul></li>
+</ul>
 </section>
 <section id="challenges" class="slide level2">
 <h2>Challenges</h2>
+<div style="font-size: 90%">
 <ol type="1">
+<li>How could we account for <code>sex</code> in the existing <code>penguins</code> model?</li>
 <li>Load the <code>pigs</code> dataset</li>
 <li>Make a boxplot:
 <ul>
 <li><code>len</code> will be the predictor (<span class="math inline">\(y\)</span>)</li>
 <li>Place <code>dose</code> on the <span class="math inline">\(x\)</span>-axis using <code>supp</code> to fill the boxes</li>
 </ul></li>
-<li>Using <code>supp</code> and <code>dose</code> as the predictors and <code>len</code> as the response, find the best model</li>
+<li>Find the best model for <code>len</code>, using <code>supp</code> and <code>dose</code> as the predictors</li>
 <li>Check the residuals and diagnostic plots</li>
-<li>Make sure you understand the model coefficients</li>
+<li>Make sure you can interpret the model coefficients</li>
 <li>What is the 99% confidence interval for <code>supp = "VC"</code> &amp; <code>dose = "High"</code>
 <ul>
 <li>What does this mean?</li>
 </ul></li>
 </ol>
+</div>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
@@ -1879,6 +2078,7 @@ Cochran, William G. 1954. <span>“Some Methods for Strengthening the Common χ 
 </div>
 </div>
 </section></section>
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>

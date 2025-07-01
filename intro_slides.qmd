@@ -130,7 +130,7 @@ http://blackochrelabs.au/RAdelaide25
 
 ## Today's Tutors
 
-- Jimmy Breen, Holly Massacci & Liza Kretschmar (Black Ochre Data Labs)
+- Jimmy Breen, Holly Massacci & Liza Kretzschmar (Black Ochre Data Labs)
 - John Salamon & Simon Lee (SAGC)
 - Charlotte Sai (SAHMRI)
 
@@ -140,6 +140,7 @@ http://blackochrelabs.au/RAdelaide25
 
 - Toilets are back near the lifts
 - Catering will be across the lawn in Merantau
+    + Rose is in charge of all things catering!
 - Room is considered a wet lab $\implies$ *no drinks (including water)*
 
 :::
