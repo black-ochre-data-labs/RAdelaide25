@@ -19,9 +19,9 @@ Data for the workshop is available as a zip file [here](data.zip)
 
 | Day 1 | Topic | Notes | Estimated Duration <br>(approx) |
 |:---|:---|:---|:---|
-| 8:30 | Installation Help |  | 15min |
-| 9:00 | Welcome To Country |  | 15min |
-| 9:15 | Welcome |  | 10min |
+| 8:45 | Installation Help |  | 30min |
+| 9:15 | Welcome To Country |  | 15min |
+| 9:30 | Welcome |  | 10min |
 |  | Introducing R & RStudio | [Introduction](intro.html) | 40min |
 |  | Importing Spreadsheet-Like Data | [Importing Penguins](import.html) | 50min |
 | 10:30 | *Morning Tea* |  |  |
@@ -47,9 +47,9 @@ Data for the workshop is available as a zip file [here](data.zip)
 
 | Day 3 | Topic | Notes | Estimated Duration <br>(approx) |
 |:---|:---|:---|:---|
-| 9:00 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | 60min |
+| 9:00 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | 80min |
 | 10:30 | *Morning Tea* |  |  |
 | 11:00 | Functions and Iteration | [Functions](functions.html) |  |
 | 12:30 | *Lunch* |  |  |
-| 1:30 | Models Beyond Linear Regression |  |  |
+| 1:30 | Moving Beyond Linear Regression |  |  |
 | 3:00 | *Afternoon Tea* |  |  |
