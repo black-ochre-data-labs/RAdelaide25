@@ -49,7 +49,8 @@ Data for the workshop is available as a zip file [here](data.zip)
 |:---|:---|:---|:---|
 | 9:00 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | 80min |
 | 10:30 | *Morning Tea* |  |  |
-| 11:00 | Functions and Iteration | [Functions](functions.html) |  |
+| 11:00 | Functions | [Functions](functions.html) | 60min |
+|  | Iteration | [Iteration](iteration.html) |  |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Moving Beyond Linear Regression |  |  |
 | 3:00 | *Afternoon Tea* |  |  |

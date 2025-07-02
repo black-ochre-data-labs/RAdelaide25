@@ -63,7 +63,8 @@ Data for the workshop is available as a zip file [here](data.zip)
 |:----- |:----- |:----- |:-------- |
 | 9:00 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.75)` |
 | 10:30 | *Morning Tea* | | |
-| 11:00 | Functions and Iteration | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 0.9)` |
+| 11:00 | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 1.5)` |
+| | Iteration | [Iteration](iteration.html) | `r getTiming("iteration_slides.qmd", 0.9)` |
 | 12:30 | *Lunch* | | |
 | 1:30 | Moving Beyond Linear Regression | | |
 | 3:00  | *Afternoon Tea* | | |

@@ -1,0 +1,550 @@
+---
+title: "Functions and Iteration"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2025-07-10"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: functions.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    results: markup
+    fig.align: center  
+    fig.height: 8
+    fig.width: 10
+---
+
+# Functions {background-color="#3c3c44"}
+
+## Functions
+
+- Now familiar with using functions
+- Writing our own functions is an everyday skill in `R`
+- Sometimes complex $\implies$ often *very simple*
+- Mostly "inline" functions for simple data manipulation
+    + Very common for axis labels in `ggplot()`
+    + Required for `across()` in `dplyr`
+    
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## Using `rename_with()`
+
+- `dplyr` allows you to rename columns of a `data.frame` using `rename_with()`
+- Requires a function
+
+```{r}
+penguins |> 
+  rename_with(str_to_title)
+```
+
+::: {.fragment}
+- How could we replace the underscores with a space and return everything in Title Case?
+:::
+
+## Using `across()`
+
+- Sometimes we wish to perform an identical operation across multiple columns
+    + Find the max, min, mean, sd etc
+    + Format in a similar way
+- The function `across()` is very powerful for this type of operation
+- Demonstrate using RA Fisher's "iris" data
+    + Measure four variables for 3 species of iris
+
+```{r}
+## Preview the data.frame called 'iris'
+head(iris)
+```
+
+## Using `across()` {.slide-only .unlisted}
+
+- We can easily find the mean of each numeric column
+    + Noting that the names all finish with 'th' $\implies$ use `ends_with()`
+
+```{r}
+iris |>
+  as_tibble() |>
+  summarise(
+    ## We specify the columns using tidy syntax, then pass a function
+    across(.cols = ends_with("th"), .fns = mean),
+    .by = Species
+  )
+```
+
+## Using `across()` {.slide-only .unlisted}
+
+::: {.notes}
+- Naming them makes for easier output to wrangle
+- Note the function name was added as a suffix
+:::
+
+- We can actually apply multiple functions by passing a named list
+    + Functions are just R objects
+    
+```{r}
+iris |>
+  as_tibble() |>
+  summarise(
+    ## Specify the columns using tidy syntax, then pass a named list of functions
+    across(.cols = ends_with("th"), .fns = list(mn = mean, sd = sd)),
+    .by = Species
+  )
+```
+
+## Using `across()` {.slide-only .unlisted}
+
+::: {.notes}
+- Using two statistics is relatively trivial
+:::
+
+- We could easily wrangle this using some `pivot_*()` functions
+
+```{r}
+iris |>
+  as_tibble() |>
+  summarise(
+    across(.cols = ends_with("th"), .fns = list(mn = mean, sd = sd)),
+    .by = Species
+  ) |>
+  pivot_longer(cols = contains("_")) |>
+  separate(name, into = c("feature", "stat"), sep = "_") |>
+  pivot_wider(names_from = stat, values_from = value) 
+```
+
+
+## Using `across()` {.slide-only .unlisted}
+
+- Applying this to the penguins dataset is not so easy
+- Missing values will cause `mean()` (& `sd()`) to produce `NA`
+    + `NA` values may appear differently in different columns
+    + Removing rows may not be suitable
+    
+## Checking Missing Values
+
+- `if_any()` and `if_all()` are similar to `across()`, but apply logical tests
+- Can also take a list of functions
+    
+```{r}
+## Find all the missing values in the dataset
+penguins |>
+  as_tibble() |>
+  dplyr::filter(
+    ## if_any() is like a version of across, but performing logical tests
+    if_any(.cols = everything(), .fns = is.na)
+  )
+```
+
+## Trying To Use `across()` With `penguins`
+
+- There are no missing values for Chinstrap $\implies$ mean is returned
+    + `NA` values for the other species
+
+```{r}
+penguins |>
+  as_tibble() |>
+  summarise(
+    ## Select all numeric columns using `where()`
+    ## This applies a logical test to each column & selects it if TRUE
+    across(where(is.numeric), mean), .by = species
+  )
+```
+
+## Trying To Use `across()` With `penguins`  {.slide-only .unlisted}
+
+- We know that `mean()` can take the argument `na.rm = TRUE`
+- How can we pass that to `mean` here?
+
+::: {.fragment}
+
+- We write an *inline function* using `\(x)`
+
+```{r}
+penguins |>
+  as_tibble() |>
+  summarise(
+    across(where(is.numeric), \(x) mean(x, na.rm = TRUE)), 
+    .by = species
+  )
+```
+
+:::
+
+<!-- ## Another Quick Example -->
+
+<!-- - We could use this to find every penguin with the smallest measurements -->
+<!-- - Here's we'll use `if_any()` inside `dplyr::filter()` -->
+
+<!-- ```{r} -->
+<!-- penguins |> -->
+<!--   as_tibble() |> -->
+<!--   dplyr::filter( -->
+<!--     if_any(ends_with("mm"), \(x) x == min(x, na.rm = TRUE)), -->
+<!--     .by = species -->
+<!--   ) -->
+<!-- ``` -->
+
+## Inline Functions
+
+- This is an every day process in `R`
+    + Similar to above
+    + Modifying labels in plots
+    + Modifying factor levels
+- We need to first learn about functions a bit more
+
+## How Functions Are Defined
+
+Functions have three key components
+
+1. The arguments [also known as the `formals()`]{.fragment}
+2. The code that is executed [known as the `body()`]{.fragment}
+3. Their own environment
+    + When we pass data to a function it is renamed internally
+    + Everything is executed in a separate environment to the `GlobalEnvironment`
+    
+## Function Arguments
+
+- The function `sd()` is a beautifully simple one
+- Check the help page: `?sd`
+- The arguments are:
+    + `x`: a numeric vector
+    + `na.rm`: a logical value
+
+```{r}
+formals(sd)
+```
+
+## Function Arguments  {.slide-only .unlisted}
+
+- Notice that the default value for `na.rm` is visible, but `x` is empty
+    + We need to provide `x`
+- Any data we pass to `sd` is passed to the internal environment as `x`
+    + Doesn't change in the `Global Environment`
+
+## The Functon Body
+
+- We can look at the code executed by a function by calling `body()`
+
+```{r}
+body(sd)
+```
+
+## The Functon Body {.slide-only .unlisted}
+
+- To reformat that & make it look nicer:
+
+```r
+## If x is not a factor or vector, try coercing x to being a double
+## If not possible, the function will error by default here
+if (!(is.vector(x) || is.factor(x))) {
+  x <- as.double(x)
+}
+## Now we have x in a suitable type of vector, find the square root of the variance
+sqrt(var(x), na.rm = na.rm)
+```
+
+::: {.fragment}
+- Any vector we pass as `x` can be manipulated as `x` inside the function's environment
+- No changes made to the original vector in the Global Environment
+:::
+
+# Writing Our Own Functions {background-color="#3c3c44"}
+
+## Writing Our Own Function
+
+::: {.notes}
+- Take as many question from the floor as needed
+:::
+
+- Before we write a brief inline function $\rightarrow$ let's write a more formal one
+- We'll take a vector and transform everything to a $Z$-score
+- First we decide on the function name: `z_score`
+    + Just like a standard `R` object
+- The contents of the `R` object are some `R` code
+
+```{r}
+z_score <- function(x, na.rm = FALSE) {
+  ## The key elements we need for a Z-score are the mean & SD of a vector
+  mn <- mean(x, na.rm = na.rm)
+  sd <- sd(x, na.rm = na.rm)
+  ## To calculate the z-score we subtract the mean, then divide by the SD
+  ## The last line executed is what the function returns
+  (x - mn) / sd # No need to assign this internally to an object
+}
+```
+
+## Writing Our Own Function {.slide-only .unlisted}
+
+- To run this function, we simply pass a vector to it
+- Because it's a function, the vector will go inside the brackets
+
+```{r}
+## Create a vector
+some_num <- c(1:10, 20)
+## Now calculate the z-scores
+z_score(some_num)
+```
+
+## Writing Our Own Function {.slide-only .unlisted}
+
+- Let's look inside the function using `browser()`
+- This will pause execution of the function, allowing us to see inside the function's environment
+- You might feel like RStudio has gone a bit weird
+
+```{r}
+#| eval: false
+z_score <- function(x, na.rm = FALSE) {
+  browser() # Pause execution as soon as we call the function
+  ## The key elements we need for a Z-score are the mean & SD of a vector
+  mn <- mean(x, na.rm = na.rm)
+  sd <- sd(x, na.rm = na.rm)
+  ## To calculate the z-score we subtract the mean, then divide by the SD
+  ## The last line executed is what the function returns
+  (x - mn) / sd # No need to assign this internally to an object
+}
+z_score(some_num)
+```
+
+## Writing Our Own Function {.slide-only .unlisted}
+
+- Notice in the Environment Tab, we're now inside `z_score()`
+- The only values are `na.rm` and `x`
+
+::: {.fragment}
+
+- The Console should display `Browse[1]>`
+- We can check the contents of the function environment by typing `ls()`
+    + The only objects are `na.rm` and `x`
+
+:::
+
+::: {.fragment}
+- Type `x` and see what you get
+    + It should be the same as `some_num`
+    
+:::
+
+::: {.notes}
+- Has the browser highlighted the line in the function
+:::
+
+## Writing Our Own Function {.slide-only .unlisted}
+
+::: {style="font-size:95%"}
+
+1. Copy & paste the first line of the function into your Console
+2. Type `ls()`
+    + There should now be an object `mn`
+    + This exists only within the function's environment
+3. Repeat for the next line
+    + There should now be an object `sd`
+4. Execute the last line
+    + This is what the function returns
+    
+::: {.fragment}
+- Type `Q` to exit the browser & return to the Global Environment
+- `mn` and `sd` no longer exist $\implies$ `some_num` is unchanged
+:::
+
+:::
+
+::: {.notes}
+- Don't forget to remove the line `browser()`!!!
+:::
+
+## Writing Our Own Function {.slide-only .unlisted}
+
+- Since `R` v4.0 the shorthand `\(x)` is the same as `function(x)`
+    + Much faster for lazy people
+    + Also cleaner for inline functions
+    
+::: {.fragment}
+- Also note how RStudio managed your indentation
+- Everything inside the function was given 2 (or 4) spaces
+- This makes it clear where the code is being execute when you read it
+:::
+
+## The Ellipsis (`...`)
+
+- `R` has a very unique feature using the syntax `...`
+- You may have seen this in multiple help pages
+- Allows arguments to be passed internally to functions without being defined
+    + Makes it very powerful but a little dangerous
+    
+::: {.fragment}
+- Check the help page for `mean()`
+:::
+    
+## The Ellipsis (`...`) {.slide-only .unlisted}
+
+- Let's add this to our function
+
+```{r}
+z_score <- function(x, na.rm = FALSE, ...) {
+  ## The key elements we need for a Z-score are the mean & SD of a vector
+  ## Include the ellipsis here for any additional arguments
+  mn <- mean(x, na.rm = na.rm, ...)
+  sd <- sd(x, na.rm = na.rm)
+  ## To calculate the z-score we subtract the mean, then divide by the SD
+  ## The last line executed is what the function returns
+  (x - mn) / sd # No need to assign this internally to an object
+}
+z_score(some_num)
+```
+
+
+## The Ellipsis (`...`) {.slide-only .unlisted}
+
+- We know that `mean` can take an argument `trim`
+- Let's see what happens
+
+```{r}
+z_score(some_num, trim = 0.1)
+```
+
+::: {.incremental}
+- This argument was passed to `mean` and the outermost 10% of observations excluded
+- What might've happened if we'd passed this to `sd()` internally?
+    + An error!!! `sd()` can't take an argument called `trim`
+
+:::
+
+# Closing Comments {background-color="#3c3c44"}
+
+## S3 Method Dispatch
+
+- The most common class system in `R` is the `S3` class
+- Can make looking inside functions frustrating
+
+::: {.fragment}
+- Look inside the function `mean` using `body(mean)`
+    + `UseMethod("mean")`
+    
+:::
+
+::: {.fragment}
+- This relies on the idea that multiple versions of `mean` exist
+- Have been defined for objects of different classes
+:::
+
+
+## S3 Method Dispatch {.slide-only .unlisted}
+
+- To see all of the versions of `mean` that exist
+
+```{r}
+methods(mean)
+```
+
+::: {.incremental}
+- The class is listed after `mean.`
+    + An asterisk means the function is hidden from our eyes &#129335;
+- When mean is called on an object:
+    + The class of the object is checked
+    + A matching method is found if possible
+    + If no method is found: use `mean.default()`
+
+:::
+
+## S3 Method Dispatch {.slide-only .unlisted}
+
+- For numeric vectors, `mean.default()` will be called
+
+```{r}
+#| eval: false
+## Look inside the default function
+body(mean.default)
+```
+
+::: {.incremental}
+- See if you can follow what's happening
+- A bunch of checks are performed
+- The length is found
+- Trimming is performed if requested
+:::
+
+::: {.fragment}
+
+- `.Internal(mean(x))` is called
+    + `.Internal` means the function is built right into the core `R` code
+    + Not for hacks like us $\implies$ only for `R` Core 
+    
+:::
+
+## S3 Method Dispatch {.slide-only .unlisted}
+
+- Many functions operate like this
+
+```{r}
+#| results: hide
+methods(print)
+methods(summary)
+```
+
+
+## Challenge
+
+- Try creating an inline function to rename `penguins` in Title Case
+- You'll need to
+    1. remove underscores & replace with spaces
+    2. convert to title case
+    3. decide what to do with `mm` (or `Mm`)
+    
+```{r}
+#| results: hide
+## As a starting hint
+penguins |> 
+  rename_with(
+    \(x) {
+      str_to_title(x)
+    }
+  )
+```
+
+
