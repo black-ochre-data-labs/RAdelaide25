@@ -340,9 +340,24 @@ x
 ::: {.fragment}
 
 - Imagine your R Environment to be like an Excel Workbook
-    + Each object is named just like each spreadsheet is named
-    + But objects **don't have to look like a spreadsheet**
+    + Each object is named just like each spreadsheet is named<br>$\implies$ objects **don't have to look like a spreadsheet**
 
+:::
+
+## The R Console {.slide-only .unlisted}
+
+::: {.callout-important collapse="true"}
+### Do R Objects Have Rules About Valid/Invalid Names
+
+::: {.incremental}
+- Yes. The only special characters which can be used are `.` and `_`
+    + This makes perfect sense when you realise `+`, `/`, `*`, `-` etc. are mathematical operators
+- Object names must start with a letter, `.` or `_`
+    + Objects starting with a `.` are often hidden from view
+- Common conventions are snake_case (`my_object`) or camelCase (`myObject`)
+- Numbers can follow the initial character, e.g. `x1` is valid whilst `1x` is not
+
+:::
 :::
 
 ## The R Console {.slide-only .unlisted}

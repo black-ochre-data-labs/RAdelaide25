@@ -611,13 +611,39 @@ Dr Stevie Pederson
 <ul>
 <li>Imagine your R Environment to be like an Excel Workbook
 <ul>
-<li>Each object is named just like each spreadsheet is named</li>
-<li>But objects <strong>don’t have to look like a spreadsheet</strong></li>
+<li>Each object is named just like each spreadsheet is named<br><span class="math inline">\(\implies\)</span> objects <strong>don’t have to look like a spreadsheet</strong></li>
 </ul></li>
 </ul>
 </div>
 </section>
 <section id="the-r-console-5" class="slide level2 slide-only unlisted">
+<h2>The R Console</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Do R Objects Have Rules About Valid/Invalid Names</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li class="fragment">Yes. The only special characters which can be used are <code>.</code> and <code>_</code>
+<ul>
+<li class="fragment">This makes perfect sense when you realise <code>+</code>, <code>/</code>, <code>*</code>, <code>-</code> etc. are mathematical operators</li>
+</ul></li>
+<li class="fragment">Object names must start with a letter, <code>.</code> or <code>_</code>
+<ul>
+<li class="fragment">Objects starting with a <code>.</code> are often hidden from view</li>
+</ul></li>
+<li class="fragment">Common conventions are snake_case (<code>my_object</code>) or camelCase (<code>myObject</code>)</li>
+<li class="fragment">Numbers can follow the initial character, e.g.&nbsp;<code>x1</code> is valid whilst <code>1x</code> is not</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="the-r-console-6" class="slide level2 slide-only unlisted">
 <h2>The R Console</h2>
 <ul>
 <li>We can pass objects to functions and perform operations on them</li>
@@ -641,7 +667,7 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="the-r-console-6" class="slide level2 slide-only unlisted">
+<section id="the-r-console-7" class="slide level2 slide-only unlisted">
 <h2>The R Console</h2>
 <ul>
 <li>Everything we’ve just done is trivial</li>
@@ -851,7 +877,7 @@ Dr Stevie Pederson
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-r-console-7" class="slide level2">
+<section id="the-r-console-8" class="slide level2">
 <h2>The R Console</h2>
 <ul>
 <li>This is the R Console <em>within</em> the RStudio IDE</li>

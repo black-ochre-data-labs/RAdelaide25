@@ -30,11 +30,11 @@ Data for the workshop is available as a zip file [here](data.zip)
 
 | Day 1 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
-| 8:45  | Installation Help  |     | 30min    |
+| 8:30  | Installation Help  |     | 30min    |
+| 9:00  | Welcome & Housekeeping | | `r getTiming("welcome.qmd", 1)`|
 | 9:15  | Welcome To Country |     | 15min    |
-| 9:30 | Welcome | | `r getTiming("welcome.qmd", 1)`|
-|      | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 1.2)`|
-|      | Importing Spreadsheet-Like Data   | [Importing Penguins](import.html)   | `r getTiming("import_slides.qmd", 1.2)`|
+| 9:30  | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 1.2)`|
+|       | Importing Spreadsheet-Like Data   | [Importing Penguins](import.html)   | `r getTiming("import_slides.qmd", 1.2)`|
 | 10:30 | *Morning Tea* | | |
 | 11:00 | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | `r getTiming("penguin_slides.qmd", 1.2)`|
 | | Building Chains Of Code | [Piping Functions](piping_functions.html) | `r getTiming("piping_slides.qmd", 1.5)` |
