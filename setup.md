@@ -1,5 +1,8 @@
 # RAdelaide25 Setup Instructions
 
+The course will be run in Room 4.50, The Braggs, The University of Adelaide, starting at 9am each day.
+https://maps.app.goo.gl/fHG17gG7qNFMWNUw5
+
 For this session we'll need both `R` and `RStudio` installed and the 
 instructions for this are provided below.
 People on managed devices may need to work with their IT Department, whilst for 
@@ -12,7 +15,8 @@ tested on.
 Earlier versions are still expected to work, as long as they are above the 
 minimum version (i.e. R 4.2.1, R 4.3.x or R 4.4.x).
 
-If you're having trouble with installation, we will be available from 8:30 on Tuesday 8th to help you.
+If you're having trouble with installation, we will be available from 8:30 on 
+Tuesday 8th to help you.
 
 ## Self-Managed Devices
 
