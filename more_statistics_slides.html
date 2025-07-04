@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="more_statistics_slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="more_statistics_slides_files/libs/quarto-html/tabby.min.js"></script>
+<script src="more_statistics_slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="more_statistics_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="more_statistics_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="more_statistics_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="more_statistics_slides_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
+
+  <meta name="author" content="Dr Stevie Pederson">
+  <meta name="dcterms.date" content="2025-07-10">
+  <title>Extended Statistics In R</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="more_statistics_slides_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="more_statistics_slides_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="more_statistics_slides_files/libs/revealjs/dist/theme/quarto-30963254ca3fee1f61c50d8fd85c7cc4.css">
+  <link href="more_statistics_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="more_statistics_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="more_statistics_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="more_statistics_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#3d3d40" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
+  <h1 class="title">Extended Statistics In R</h1>
+  <p class="subtitle">RAdelaide 2025</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr Stevie Pederson 
+</div>
+        <p class="quarto-title-affiliation">
+            </p><div class="line-block">Black Ochre Data Labs<br>
+            Telethon Kids Institute</div>
+          <p></p>
+    </div>
+</div>
+
+  <p class="date">July 10, 2025</p>
+</section>
+<section>
+<section id="beyond-linear-regression" class="title-slide slide level1 center" data-background-color="#3d3d40">
+<h1>Beyond Linear Regression</h1>
+
+</section>
+<section id="beyond-linear-regression-1" class="slide level2">
+<h2>Beyond Linear Regression</h2>
+<ul>
+<li>Linear Regression relies on Normally Distributed residuals
+<ul>
+<li>We can estimate points and data will be normally distributed around the estimates</li>
+</ul></li>
+<li>This relies on the mean (<span class="math inline">\(\mu\)</span>) and standard deviation (<span class="math inline">\(\sigma\)</span>) being independent
+<ul>
+<li>And on data being continuous</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Some data is not normally distributed
+<ul>
+<li>Discrete data</li>
+<li>Probabilities and proportions</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="generalised-linear-models" class="slide level2">
+<h2>Generalised Linear Models</h2>
+<aside class="notes">
+<ul>
+<li>The underlying theory is well beyond the scope</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li>We often use a generalisation of linear modelling to fit these models
+<ul>
+<li>Formally known as Generalised Linear Models (GLMs)</li>
+</ul></li>
+<li>Cannot be fit using Least Squares
+<ul>
+<li>Parameter estimates by maximising likelihood functions</li>
+<li>Use iterative solutions to converge</li>
+</ul></li>
+<li>Always have an underlying distribution used for parameter estimation
+<ul>
+<li>Poisson Distribution: Log-linear Model</li>
+<li>Binomial Distribution: Logistic Regression</li>
+</ul></li>
+</ul>
+</section>
+<section id="logistic-regression" class="slide level2">
+<h2>Logistic Regression</h2>
+<ul>
+<li>Logistic regression estimates the probablity (<span class="math inline">\(\pi\)</span>) of an event occurring
+<ul>
+<li>A binary outcome <span class="math inline">\(\implies\)</span> Success Vs Failure</li>
+</ul></li>
+<li>Can also be considered a classification problem</li>
+<li>Heavily used in machine learning</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Probabilites are bound at [0, 1]
+<ul>
+<li>makes fitting challenging near boundary points</li>
+</ul></li>
+<li>Probabilities are transformed using the logit transformation
+<ul>
+<li>Transforms values on [0, 1] to <span class="math inline">\([-\infty, \infty]\)</span></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="the-logit-transformation" class="slide level2">
+<h2>The Logit Transformation</h2>
+<p><span class="math display">\[
+\text{logit}(\pi) = \log \frac{\pi}{1-\pi}
+\]</span></p>
+<ul>
+<li class="fragment"><span class="math inline">\(\pi = 0.5\)</span> <span class="math inline">\(\rightarrow\)</span> logit <span class="math inline">\((\pi) = \log \frac{0.5}{0.5} = 0\)</span></li>
+<li class="fragment"><span class="math inline">\(\pi = 0\)</span> <span class="math inline">\(\rightarrow\)</span> logit <span class="math inline">\((\pi) = \log \frac{0}{1} = -\infty\)</span></li>
+<li class="fragment"><span class="math inline">\(\pi = 1\)</span> <span class="math inline">\(\rightarrow\)</span> logit <span class="math inline">\((\pi) = \log \frac{1}{0} = \infty\)</span></li>
+</ul>
+</section>
+<section id="the-logit-transformation-1" class="slide level2 slide-only unlisted">
+<h2>The Logit Transformation</h2>
+<ul>
+<li>Parameters from logistic regression estimate <span class="math inline">\(\text{logit}(\pi)\)</span></li>
+</ul>
+<ul>
+<li class="fragment">Estimates near zero <span class="math inline">\(\implies \pi = 0.5\)</span></li>
+<li class="fragment">Estimates above zero <span class="math inline">\(\implies \pi &gt; 0.5\)</span></li>
+<li class="fragment">Estimates below zero <span class="math inline">\(\implies \pi &lt; 0.5\)</span></li>
+</ul>
+</section>
+<section id="an-example-of-logistic-regression" class="slide level2">
+<h2>An Example Of Logistic Regression</h2>
+<ul>
+<li>A perfect example for logistic regression <span class="math inline">\(\implies\)</span> survivors of the Titanic!</li>
+<li>Available in the package <code>carData</code>
+<ul>
+<li>If you don’t have this installed: <code>install.packages(c("car", "carData"))</code></li>
+<li>The package <code>car</code> is the <em>Companion to Applied Regression</em> (not broom brooms)</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Start a new R session and new R script</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(carData)</span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="the-titanic-survivors" class="slide level2">
+<h2>The Titanic Survivors</h2>
+<ul>
+<li>Let’s tidy up the data first</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>titanic_tbl <span class="ot">&lt;-</span> TitanicSurvival <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"name"</span>) <span class="sc">|&gt;</span> <span class="co"># Tibbles are nice. Keep the passenger names</span></span>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">if_all</span>(<span class="fu">everything</span>(), \(x) <span class="sc">!</span><span class="fu">is.na</span>(x))) <span class="co"># Discard incomplete records</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-titanic-survivors-1" class="slide level2 slide-only unlisted">
+<h2>The Titanic Survivors</h2>
+<ul>
+<li>And a quick preview using only the categorical variables</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>titanic_tbl <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(survived, sex, passengerClass) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> survived, <span class="at">values_from =</span> n) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">prob =</span> yes <span class="sc">/</span> (no <span class="sc">+</span> yes)</span>
+<span id="cb3-6"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  sex    passengerClass    no   yes  prob
+  &lt;fct&gt;  &lt;fct&gt;          &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1 female 1st                5   128 0.962
+2 female 2nd               11    92 0.893
+3 female 3rd               80    72 0.474
+4 male   1st               98    53 0.351
+5 male   2nd              135    23 0.146
+6 male   3rd              290    59 0.169</code></pre>
+</div>
+</div>
+<ul>
+<li>It looks rather like sex and class might play a role</li>
+</ul>
+</section>
+<section id="the-titanic-survivors-2" class="slide level2 slide-only unlisted">
+<h2>The Titanic Survivors</h2>
+<ul>
+<li>For logistic regression, we need to specify the underlying distribution<br><span class="math inline">\(\implies\)</span> <code>family = binomial</code></li>
+<li>This tells <code>glm</code> we are fitting binomial probabilities</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit a model using sex, age and passengerClass to predict survival probability</span></span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>titanic_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>  survived <span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> passengerClass, <span class="at">data =</span> TitanicSurvival, <span class="at">family =</span> binomial</span>
+<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-titanic-survivors-3" class="slide level2 slide-only unlisted">
+<h2>The Titanic Survivors</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(titanic_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = survived ~ sex + age + passengerClass, family = binomial, 
+    data = TitanicSurvival)
+
+Coefficients:
+                   Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)        3.522074   0.326702  10.781  &lt; 2e-16 ***
+sexmale           -2.497845   0.166037 -15.044  &lt; 2e-16 ***
+age               -0.034393   0.006331  -5.433 5.56e-08 ***
+passengerClass2nd -1.280570   0.225538  -5.678 1.36e-08 ***
+passengerClass3rd -2.289661   0.225802 -10.140  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1414.62  on 1045  degrees of freedom
+Residual deviance:  982.45  on 1041  degrees of freedom
+  (263 observations deleted due to missingness)
+AIC: 992.45
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<ul>
+<li>How would we interpret these coefficients?</li>
+<li>What does the Intercept represent?</li>
+</ul>
+</section>
+<section id="the-titanic-survivors-4" class="slide level2 slide-only unlisted">
+<h2>The Titanic Survivors</h2>
+<ul>
+<li>For a 50yo woman in 1st Class</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>logit_pi <span class="ot">&lt;-</span> <span class="fu">sum</span>(x <span class="sc">*</span> <span class="fu">coef</span>(titanic_glm))</span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>logit_pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.802412</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>This is &gt; 0 <span class="math inline">\(\implies\)</span> &gt;50% chance of survival</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>inv_logit <span class="ot">&lt;-</span> \(x) {<span class="fu">exp</span>(x) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(x))} <span class="co"># Convert back to probabilities</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">inv_logit</span>(logit_pi) <span class="co"># The actual probability of survival</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8584423</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="making-predictions" class="slide level2">
+<h2>Making Predictions</h2>
+<div style="font-size:95%">
+<ul>
+<li>We could obtain a probability for each passenger
+<ul>
+<li>Might be considered to be training a model</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a>titanic_tbl <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Setting type = "response" will transform back to [0,1]</span></span>
+<span id="cb12-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob_survival =</span> <span class="fu">predict</span>(titanic_glm, <span class="at">type =</span> <span class="st">"response"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(prob_survival))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,046 × 6
+   name                        survived sex     age passengerClass prob_survival
+   &lt;chr&gt;                       &lt;fct&gt;    &lt;fct&gt; &lt;dbl&gt; &lt;fct&gt;                  &lt;dbl&gt;
+ 1 Allison, Miss. Helen Lorai… no       fema…     2 1st                    0.969
+ 2 Carter, Miss. Lucile Polk   yes      fema…    14 1st                    0.954
+ 3 Madill, Miss. Georgette Al… yes      fema…    15 1st                    0.953
+ 4 Hippach, Miss. Jean Gertru… yes      fema…    16 1st                    0.951
+ 5 Lines, Miss. Mary Conover   yes      fema…    16 1st                    0.951
+ 6 Maioni, Miss. Roberta       yes      fema…    16 1st                    0.951
+ 7 Dick, Mrs. Albert Adrian (… yes      fema…    17 1st                    0.950
+ 8 Penasco y Castellana, Mrs.… yes      fema…    17 1st                    0.950
+ 9 Astor, Mrs. John Jacob (Ma… yes      fema…    18 1st                    0.948
+10 Marvin, Mrs. Daniel Warner… yes      fema…    18 1st                    0.948
+# ℹ 1,036 more rows</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-predictions" class="slide level2">
+<h2>Checking Predictions</h2>
+<ul>
+<li>If building a predictive model we often use an ROC curve to check accuracy
+<ul>
+<li>Order by probability then plot the True/False Positive Rates</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>titanic_tbl <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob_survival =</span> <span class="fu">predict</span>(titanic_glm, <span class="at">type =</span> <span class="st">"response"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(prob_survival)) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="do">## Calculate the True Positive Rate as we step through the predictions</span></span>
+<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">TPR =</span> <span class="fu">cumsum</span>(survived <span class="sc">==</span> <span class="st">"yes"</span>) <span class="sc">/</span> <span class="fu">sum</span>(survived <span class="sc">==</span> <span class="st">"yes"</span>),</span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="do">## And the False Positive Rate as we step through in order</span></span>
+<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">FPR =</span> <span class="fu">cumsum</span>(survived <span class="sc">==</span> <span class="st">"no"</span>) <span class="sc">/</span> <span class="fu">sum</span>(survived <span class="sc">==</span> <span class="st">"no"</span>)</span>
+<span id="cb14-9"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(FPR, TPR)) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb14-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</section>
+<section id="checking-predictions-output" class="slide level2 output-location-slide"><h2>Checking Predictions</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="more_statistics_slides_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="testing-multiple-models" class="slide level2">
+<h2>Testing Multiple Models</h2>
+<div style="font-size:90%">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_model =</span> <span class="fu">glm</span>(</span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>    survived <span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> passengerClass, <span class="at">data =</span> titanic_tbl, <span class="at">family =</span> binomial</span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">interactions =</span> <span class="fu">glm</span>(</span>
+<span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a>    survived <span class="sc">~</span> (sex <span class="sc">+</span> age <span class="sc">+</span> passengerClass)<span class="sc">^</span><span class="dv">2</span>, <span class="at">data =</span> titanic_tbl, <span class="at">family =</span> binomial </span>
+<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-8"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(\(x) <span class="fu">mutate</span>(titanic_tbl, <span class="at">pi =</span> <span class="fu">predict</span>(x, <span class="at">type =</span> <span class="st">"response"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb15-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="at">.id =</span> <span class="st">"model"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-11"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(model, <span class="fu">desc</span>(pi)) <span class="sc">|&gt;</span></span>
+<span id="cb15-12"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">TPR =</span> <span class="fu">cumsum</span>(survived <span class="sc">==</span> <span class="st">"yes"</span>) <span class="sc">/</span> <span class="fu">sum</span>(survived <span class="sc">==</span> <span class="st">"yes"</span>),</span>
+<span id="cb15-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">FPR =</span> <span class="fu">cumsum</span>(survived <span class="sc">==</span> <span class="st">"no"</span>) <span class="sc">/</span> <span class="fu">sum</span>(survived <span class="sc">==</span> <span class="st">"no"</span>),</span>
+<span id="cb15-15"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> model</span>
+<span id="cb15-16"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb15-17"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(FPR, TPR, <span class="at">colour =</span> model)) <span class="sc">+</span></span>
+<span id="cb15-18"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb15-19"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</div>
+</section>
+<section id="testing-multiple-models-output" class="slide level2 output-location-slide"><h2>Testing Multiple Models</h2><div class="cell output-location-slide" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="more_statistics_slides_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div></section><section id="a-brief-comment" class="slide level2">
+<h2>A Brief Comment</h2>
+<ul>
+<li>If using logistic regression in this context:
+<ul>
+<li>Usually break data into a training &amp; test set</li>
+<li>Assess the performance on the test set after training</li>
+</ul></li>
+<li>This forms the basis of some Machine Learning techniques</li>
+</ul>
+</section>
+<section id="poisson-regression" class="slide level2">
+<h2>Poisson Regression</h2>
+<aside class="notes">
+<ul>
+<li>Quasipoisson is another parameterisation for overdispersed data</li>
+<li>NB has a strict quadratic relationship between mean and overdispersion</li>
+<li>Not so strict for Quasipoisson</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li>Another common type of GLM is Poisson regression</li>
+<li>Fitting the rate of an event occurring (<span class="math inline">\(\lambda\)</span>)
+<ul>
+<li>e.g.&nbsp;cars at an intersection per hour</li>
+<li>Rates are always &gt; 0 <span class="math inline">\(\implies\)</span> estimated on the log scale</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Poisson distributions have a variance that strictly equals the rate</li>
+<li>Overdispersed distributions allow for an inflated variance
+<ul>
+<li>Simply add an overdispersion term to allow for this</li>
+<li>Very common in bioinformatics, e.g.&nbsp;RNA-Seq</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="poisson-regression-1" class="slide level2 slide-only unlisted">
+<h2>Poisson Regression</h2>
+<ul>
+<li><code>InsectSprays</code> provides counts of insects after applying insecticides <code>A-F</code></li>
+<li>The units used for counting were an equal size (but are undefined)
+<ul>
+<li>We can assume fewer insects is better</li>
+</ul></li>
+</ul>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>InsectSprays <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ave =</span> <span class="fu">mean</span>(count), <span class="at">.by =</span> spray</span>
+<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>  spray       ave
+1     A 14.500000
+2     B 15.333333
+3     C  2.083333
+4     D  4.916667
+5     E  3.500000
+6     F 16.666667</code></pre>
+</div>
+</div></div>
+</section>
+<section id="poisson-regression-2" class="slide level2 slide-only unlisted">
+<h2>Poisson Regression</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>insect_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> spray, <span class="at">data =</span> InsectSprays, <span class="at">family =</span> poisson)</span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(insect_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = count ~ spray, family = poisson, data = InsectSprays)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  2.67415    0.07581  35.274  &lt; 2e-16 ***
+sprayB       0.05588    0.10574   0.528    0.597    
+sprayC      -1.94018    0.21389  -9.071  &lt; 2e-16 ***
+sprayD      -1.08152    0.15065  -7.179 7.03e-13 ***
+sprayE      -1.42139    0.17192  -8.268  &lt; 2e-16 ***
+sprayF       0.13926    0.10367   1.343    0.179    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 409.041  on 71  degrees of freedom
+Residual deviance:  98.329  on 66  degrees of freedom
+AIC: 376.59
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+<ul>
+<li>How do we interpret these coefficients?</li>
+</ul>
+</section>
+<section id="poisson-regression-3" class="slide level2 slide-only unlisted">
+<h2>Poisson Regression</h2>
+<ul>
+<li>Model checking for Poisson models
+<ul>
+<li>Do residuals appear consistently distributed?</li>
+</ul></li>
+</ul>
+<div class="cell columns column-output-location" data-layout-align="center">
+<div class="column">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitted</span>(insect_glm), </span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">residuals</span>(insect_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="more_statistics_slides_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="poisson-regression-4" class="slide level2 slide-only unlisted">
+<h2>Poisson Regression</h2>
+<ul>
+<li>Model checking for Poisson models
+<ul>
+<li>Is there evidence of overdispersion?</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(insect_glm) <span class="sc">/</span> <span class="fu">df.residual</span>(insect_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.489828</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>If this value is &gt;&gt;1 <span class="math inline">\(\implies\)</span> overdispersion</li>
+<li>Maybe try a quasipoisson instead of poisson?
+<ul>
+<li><code>family = quasipoisson</code></li>
+<li>Will probably be more conservative</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="a-brief-comment-1" class="slide level2">
+<h2>A Brief Comment</h2>
+<ul>
+<li>Early RNA-Seq analysis used Poisson models <span class="math inline">\(\implies\)</span> counts / gene</li>
+<li>May also be appropriate for matching sequence motifs across a set of DNA sequences</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>If units of counting unequal size <span class="math inline">\(\implies\)</span> use an <code>offset</code>
+<ul>
+<li>Counting trees in unevenly sized forests?</li>
+<li>Number of crimes in cities of different sized populations</li>
+</ul></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="mixed-effects-models" class="title-slide slide level1 center" data-background-color="#3d3d40">
+<h1>Mixed-Effects Models</h1>
+
+</section>
+<section id="mixed-effects-models-1" class="slide level2">
+<h2>Mixed-Effects Models</h2>
+<ul>
+<li>Mixed-effects models are very common within ecological research
+<ul>
+<li>Need to understand the difference between fixed and random effects</li>
+</ul></li>
+<li>Linear Regression fits fixed effects
+<ul>
+<li>Assumes the estimated effect is effectively the same across experiments</li>
+<li>Reproducible</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Random effects are the effects of a variable that is <em>not fixed</em>
+<ul>
+<li>e.g.&nbsp;the effect of a particular site on a response variable</li>
+<li>The effect of a site is not fixed, it varies across sites</li>
+<li>We can model this variation using random effects</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="mixed-effects-models-2" class="slide level2 slide-only unlisted">
+<h2>Mixed-Effects Models</h2>
+<ul>
+<li>How do we model random effects?</li>
+</ul>
+<ul>
+<li class="fragment">I learned these as <em>nested models</em> fitting within distinct groups defined by random variables</li>
+<li class="fragment">Could be the date of a delivery<br><span class="math inline">\(\implies\)</span> can be observed and modelled but not reproduced
+<ul>
+<li class="fragment">The Intercept term for each group (<span class="math inline">\(i\)</span>) is <span class="math inline">\(\mu_i \sim \mathcal{N}(\mu, \sigma_{\mu})\)</span></li>
+<li class="fragment">Response terms follow standard regression assumptions e.g.&nbsp;<span class="math inline">\(e_{ij} \sim \mathcal{N}(0, \sigma)\)</span></li>
+</ul></li>
+<li class="fragment">We have two components to the variance</li>
+</ul>
+</section>
+<section id="mixed-effects-models-3" class="slide level2 slide-only unlisted">
+<h2>Mixed-Effects Models</h2>
+<ul>
+<li>The syntax in <code>R</code> is super-clumsy</li>
+<li>Most commonly, people use the package <code>lme4</code> and the function <code>lmer()</code>
+<ul>
+<li>Early mixed-effects models used <code>nlme</code> <span class="math inline">\(\implies\)</span> no longer supported</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Machines, <span class="at">package =</span> <span class="st">"nlme"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>We are measuring productivity using machines A, B or C (fixed)
+<ul>
+<li>Nested within each of 6 factory workers</li>
+<li>Each individual will have different productivity<br><span class="math inline">\(\implies\)</span> measurable &amp; modellable but random across the population</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="mixed-effects-models-4" class="slide level2 slide-only unlisted">
+<h2>Mixed-Effects Models</h2>
+<ul>
+<li>To denote the nesting or random effect <code>(1 | Worker)</code>
+<ul>
+<li><code>Machine</code> is specified as per usual for fixed effects</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>machines_lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(score <span class="sc">~</span> Machine <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Worker) , <span class="at">data =</span> Machines) </span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(machines_lmer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: score ~ Machine + (1 | Worker)
+   Data: Machines
+
+REML criterion at convergence: 286.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.7249 -0.5233  0.1328  0.6513  1.7559 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ Worker   (Intercept) 26.487   5.147   
+ Residual              9.996   3.162   
+Number of obs: 54, groups:  Worker, 6
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   52.356      2.229  23.485
+MachineB       7.967      1.054   7.559
+MachineC      13.917      1.054  13.205
+
+Correlation of Fixed Effects:
+         (Intr) MachnB
+MachineB -0.236       
+MachineC -0.236  0.500</code></pre>
+</div>
+</div>
+</section>
+<section id="mixed-effects-models-5" class="slide level2 slide-only unlisted">
+<h2>Mixed-Effects Models</h2>
+<ul>
+<li>This output looks very different</li>
+<li>We have Random effects and Fixed Effects</li>
+<li>No <span class="math inline">\(p\)</span>-values!!!</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>The intercept gives the average score for Machine A</li>
+<li>The random effects indicate how these scores vary across workers</li>
+<li>We have an estimate and a standard error <span class="math inline">\(\implies t\)</span>-statistic
+<ul>
+<li>Degrees of freedom are controversial for mixed-effects models</li>
+<li>Can’t determine the <span class="math inline">\(t\)</span>-distribution to use for <span class="math inline">\(p\)</span>-values</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="mixed-effects-models-6" class="slide level2 slide-only unlisted">
+<h2>Mixed-Effects Models</h2>
+<ul>
+<li>A compromise is to use <code>lmerTest</code> before fitting</li>
+<li>Provides <span class="math inline">\(p\)</span>-values</li>
+<li>Discussion is beyond the scope of this course (&amp; my knowledge)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a>machines_lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(score <span class="sc">~</span> Machine <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Worker) , <span class="at">data =</span> Machines) </span>
+<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(machines_lmer) <span class="sc">|&gt;</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate Std. Error        df  t value     Pr(&gt;|t|)
+(Intercept) 52.355556   2.229312  5.833185 23.48507 5.328296e-07
+MachineB     7.966667   1.053882 46.000000  7.55935 1.329432e-09
+MachineC    13.916667   1.053882 46.000000 13.20514 2.933231e-17</code></pre>
+</div>
+</div>
+</section>
+<section id="generalised-mixed-effects-models" class="slide level2">
+<h2>Generalised Mixed-Effects Models</h2>
+<ul>
+<li>GLMMs are also heavily used in ecology <span class="math inline">\(\implies\)</span> require genuine understanding
+<ul>
+<li>Very heavy on linear algebra</li>
+</ul></li>
+<li>Ben Bolker is the undisputed GLMM heavyweight
+<ul>
+<li>Has a <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html">comprehensive page describing these</a></li>
+</ul></li>
+<li><code>lme4</code> has implemented <code>glmer()</code></li>
+<li>Additional GLMM fitting in the packages <code>glmmADMB</code> and <code>glmmTMB</code>
+<ul>
+<li>Useful for challenging datasets</li>
+</ul></li>
+<li>Doug Bates (<code>nlme</code>) was a member of R Core but has left the <code>R</code> community</li>
+</ul>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="more_statistics_slides_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="more_statistics_slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    <script type="text/javascript">
+      Reveal.on('ready', event => {
+        if (event.indexh === 0) {
+          document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+        }
+      });
+      Reveal.addEventListener('slidechanged', (event) => {
+        if (event.indexh === 0) {
+          Reveal.configure({ slideNumber: null });
+          document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+        }
+        if (event.indexh === 1) {
+          Reveal.configure({ slideNumber: 'c' });
+          document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+        }
+      });
+    </script>
+    
+
+</body></html>
