@@ -53,6 +53,6 @@ Data for the workshop is available as a zip file [here](data.zip)
 |  | Iteration | [Iteration](iteration.html) | 40min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Moving Beyond Linear Regression | [Extending Statistics](more_statistics.html) | 40min |
-|  | Extending Visualisation | [Extending Visualisation](extended_visualisation.html) |  |
+|  | Extending Visualisation | [Extending Visualisation](extended_visualisation.html) | 60min |
 | 3:00 | *Afternoon Tea* |  |  |
 | 3:30 | Final Challenges |  | 90min |

@@ -1,0 +1,810 @@
+---
+title: "Extended Visualisations In R"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | Telethon Kids Institute
+date: "2025-07-10"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: linear_regression.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Additional Key Visualisations {background-color="#3d3d40"}
+
+## Introduction
+
+- Beyond all variations of regression and ggplot visualisations
+  - Principal Component Analysis
+  - Correlations
+  - Heatmaps
+
+::: {.fragment}
+```{r}
+library(tidyverse)
+library(corrplot)
+library(pheatmap)
+library(scales)
+library(patchwork)
+library(ggcorrplot)
+library(ggbiplot)
+library(plotly)
+library(palmerpenguins)
+theme_set(theme_bw())
+```
+
+:::
+
+## Correlations
+
+- Assessing correlations between variables is extremely common
+    + Interpretation is intuitive for numeric variables
+    + Not clear for factors $\implies$ maybe if ordered?
+- Pearson correlations for Normally-distributed variables 
+- Spearman correlations $\implies$ rank-based correlations
+- The function `cor()` always returns a symmetric matrix
+    + Usually a diagonal of `1` $\implies$ variables correlation with self
+
+## Correlations {.slide-only .unlisted}
+
+
+```{r}
+penguin_cor <- penguins |>
+  ## Just select the variables we know are numeric
+  dplyr::select(ends_with("_mm"), ends_with("_g")) |>
+  ## Remove any rows with missing measurements
+  dplyr::filter(!if_any(everything(), is.na)) |>
+  cor()
+penguin_cor
+```
+
+## Basic Visualisations
+
+::: {.notes}
+- Try checking a few different methods and types
+:::
+
+- `corrplot` can make some helpful & simple visualisations
+    + `method = c("circle", "square", "ellipse", "number", "shade", "color", "pie")`
+    + `type = c("full", "lower", "upper")`
+
+```{r}
+penguin_cor |>
+  corrplot(
+    ## Hide the diagonal and show measurements in order of clustering
+    diag = FALSE, order = "hclust",
+    ## Add correlatiion coefficients as integers (cor * 100)
+    addCoef.col = "grey20", addCoefasPercent = TRUE,
+  )
+```
+
+::: {.incremental}
+- Can't be saved as an object $\implies$ only returns the matrix
+:::
+
+## Limitations of `corrplot`
+
+::: {.notes}
+- Because we can't save figures as an object, becomes difficult
+:::
+
+::: {style="font-size:95%"}
+
+- What if we wanted to split correlations by some category
+    + The below calculates correlations within each sex
+
+```{r}
+penguins %>% ## Using the magrittr allow the piped data to be accessed using `.`
+  split(f = .$sex) |> ## Split by sex then find correlations
+  lapply(dplyr::select, ends_with("_mm"), ends_with("_g")) |>
+  lapply(dplyr::filter, !if_any(everything(), is.na)) |>
+  lapply(cor)
+```
+
+:::
+
+
+## Limitations of `corrplot` {.slide-only .unlisted}
+
+```{r}
+#| results: hide
+#| fig-show: hide
+par(mfrow = c(1, 2)) # Layout two columns and one row
+penguins %>% ## Using the magrittr allow the piped data to be accessed using `.`
+  split(f = .$sex) |> ## Split by sex then find correlations
+  lapply(dplyr::select, ends_with("_mm"), ends_with("_g")) |>
+  lapply(dplyr::filter, !if_any(everything(), is.na)) |>
+  lapply(cor) |>
+  lapply(corrplot, diag = FALSE, method = "number")
+par(mfrow = c(1, 1))
+```
+
+
+## A `ggplot`-based Alternative
+
+
+```{r}
+#| output-location: column
+p <- penguin_cor |>
+  ggcorrplot(
+    show.diag = FALSE, lab = TRUE, 
+    hc.order = TRUE
+  ) 
+p
+```
+
+
+## A `ggplot`-based Alternative {.slide-only .unlisted}
+
+::: {style="font-size:92%"}
+
+- We know how to make this look a bit more professional
+
+```{r}
+#| output-location: column
+#| code-line-numbers: "1-8|9-15|16"
+p +
+  scale_x_discrete(
+    labels = \(x) {
+      str_remove_all(x, "_[gm]+$") |> 
+        str_replace_all("_", " ") |> 
+        str_to_title()
+    }
+  ) +
+  scale_y_discrete(
+    labels = \(x) {
+      str_remove_all(x, "_[gm]+$") |> 
+        str_replace_all("_", " ") |> 
+        str_to_title()
+    }
+  ) +
+  theme(panel.grid = element_blank()) 
+```
+
+:::
+
+## DIY Correlation Plots
+
+- Realistically we can do it ourselves
+- Gives complete control over everything
+
+::: {.fragment}
+
+- To cluster variables $\implies$ use `hclust()`
+    + Return a vector of variables in order
+    + How they would appear on a dendrogram
+
+
+```{r}
+cor_lab <- penguin_cor |> 
+  dist() |> ## hclust needs a distance matrix as input
+  hclust() |> ## Cluster the variables
+  pluck("labels") ## Extract the labels element using `pluck()`
+```
+:::
+
+## DIY Correlation Plots {.slide-only .unlisted}
+
+
+```{r}
+penguin_cor|>
+  ## Coerce the matrix to a tibble, setting the rownames as `x`
+  as_tibble(rownames = "x") |>
+  ## Now pivot to long form
+  pivot_longer(contains("_"), names_to = "y", values_to = "Correlation") |>
+  ## Optionally remove the diagonal
+  dplyr::filter(x != y) |>
+  ## Set the factor levels using the output of hclust
+  mutate(across(all_of(c("x", "y")), \(x) fct(x, levels = cor_lab))) 
+```
+
+## DIY Correlation Plots {.slide-only .unlisted}
+
+```{r}
+#| code-line-numbers: "12|13-17|15"
+#| output-location: slide
+p <- penguin_cor|>
+  ## Coerce the matrix to a tibble, setting the rownames as `x`
+  as_tibble(rownames = "x") |>
+  ## Now pivot to long form
+  pivot_longer(contains("_"), names_to = "y", values_to = "Correlation") |>
+  ## Optionally remove the diagonal
+  dplyr::filter(x != y) |>
+  ## Set the factor levels using the output of hclust
+  mutate(across(all_of(c("x", "y")), \(x) fct(x, levels = cor_lab))) |>
+  ## Pass to ggplot
+  ggplot(aes(x, y)) +
+  geom_raster(aes(fill = Correlation)) +
+  geom_label(
+    aes(label = Correlation),
+    data = . %>% mutate(Correlation = percent(Correlation, accuracy = 1)),
+    size = 4, fill = "#FFFFFF99"
+  ) 
+p
+```
+
+
+## Now Complete the Figure
+
+
+```{r}
+#| code-line-numbers: "3"
+#| output-location: slide
+p +
+  scale_fill_gradient2(
+    low = "darkblue", high = "darkred", limits = c(-1, 1),
+    labels = percent_format(accuracy = 1)
+  ) +
+  scale_x_discrete(
+    expand = expansion(0, 0),
+    labels = \(x) {
+      str_remove_all(x, "_[gm]+$") |> str_replace_all("_", " ") |> str_to_title()
+    }
+  ) +
+  scale_y_discrete(
+    expand = expansion(0, 0),
+    labels = \(x) {
+      str_remove_all(x, "_[gm]+$") |> str_replace_all("_", " ") |> str_to_title()
+    }
+  ) +
+  theme(panel.grid = element_blank(), axis.title = element_blank())
+```
+
+
+## Saving As a Function
+
+::: {style="font-size:85%"}
+
+```{r}
+my_corrplot <- function(x, ...) {
+  ## Get the labels in clustered order
+  labs <- hclust(dist(x))$labels
+  ## Define a function to tidy labels
+  my_label_fun <- \(x) str_remove_all(x, "_[gm]+$") |> str_replace_all("_", " ") |> str_to_title()
+  ## Coerce to a tibble
+  tbl <- x |> 
+    as_tibble(rownames = "x") |>
+    pivot_longer(contains("_"), names_to = "y", values_to = "Correlation") |>
+    dplyr::filter(x != y) |>
+    mutate(across(all_of(c("x", "y")), \(x) fct(x, levels = labs))) 
+  ## Create the basic plot
+  ggplot(tbl, aes(x, fct_rev(y))) + ## Note that fct_rev will change the diagonal
+    geom_raster(aes(fill = Correlation)) +
+    geom_label(
+      aes(label = Correlation),
+      data = . %>% mutate(Correlation = percent(Correlation, accuracy = 1)),
+      size = 4, fill = "#FFFFFF99"
+    ) +
+    scale_fill_gradient2(
+      low = "darkblue", high = "darkred", limits = c(-1, 1), labels = percent_format(accuracy = 1)
+    ) +
+    scale_x_discrete(expand = expansion(0, 0), labels = my_label_fun) +
+    scale_y_discrete(expand = expansion(0, 0), labels = my_label_fun) 
+}
+```
+
+:::
+
+## Apply To Each Cohort
+
+- First we'll split the data again
+- Then we'll create each figure saving as a list of figures
+
+```{r}
+cor_by_sex <- penguins %>% 
+  split(f = .$sex) |>
+  lapply(dplyr::select, ends_with("_mm"), ends_with("_g")) |>
+  lapply(dplyr::filter, !if_any(everything(), is.na)) |>
+  lapply(cor) |>
+  lapply(my_corrplot)
+```
+
+## Using Patchwork
+
+- The package `patchwork` allows for multi-plot layouts
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "1-3|4-9|10-14"
+## Optionally add a title to each individual figure
+names(cor_by_sex) |>
+  lapply(\(x) cor_by_sex[[x]] + ggtitle(x)) |>
+  ## Pass to `patchwork::wrap_plots()` to place into a single figure
+  wrap_plots() +
+  ## Define the layout and collect any similar axes/legends
+  plot_layout(guides = "collect", axes = "collect", nrow = 1) +
+  ## Add capital letters to each panel 
+  plot_annotation(tag_levels = "A") &
+  ## Themes can be added to all figures using the `&` as above
+  theme(
+    legend.position = "bottom", panel.grid = element_blank(),
+    axis.title = element_blank()
+  )
+```
+
+## Using `pheatmap`
+
+- A final useful package is `pheatmap`
+    + Widely used beyond correlations
+    + Not `ggplot2` based
+- Heavily customisable
+    + Allows for dendrograms on either or both axes
+- Can take a bit of fiddling
+    
+```{r}
+#| fig-show: hide
+pheatmap(penguin_cor, display_numbers = TRUE)
+```
+
+::: {.fragment}
+- Notice the colour gradient is *not* centred at zero!
+    + Extremely common issue with `pheatmap()`
+:::
+
+
+## Using `pheatmap` {.slide-only .unlisted}
+
+- The best option is to create a manual palette
+
+```{r}
+#| output-location: slide
+# Create a colour gradient with 101 colours
+heat_col <- colorRampPalette(c("skyblue3", "white", "indianred2"))(101)
+pheatmap(
+  penguin_cor,
+  ## Control the appearance of correlations
+  display_numbers = TRUE, number_color = "black", fontsize_number = 12, 
+  ## Now place the breaks symmetrically across the range of the data
+  ## with length matching the provided palette
+  breaks = seq(-1, 1, length.out = length(heat_col)),
+  color = heat_col
+)
+```
+
+## Brief Comments
+
+- The above provides multiple strategies for correlations and heatmaps
+- The package [`ComplexHeatmap`](https://jokergoo.github.io/ComplexHeatmap-reference/book/) is widely used when including annotations
+    + Would take half a day to demonstrate
+    
+::: {.fragment}
+    
+- Also sets the stage for PCA
+
+:::
+
+# Principal Component Analysis {background-color="#3d3d40"}
+
+## Principal Component Analysis
+
+- PCA is very heavily used across many fields
+- Is an *unsupervised* technique
+    + Naive to any pre-defined groups or data structures
+    + PLS is an analogous supervised technique
+
+::: {.columns}
+
+::: {.fragment}
+
+::: {.column width="50%"}
+![Image from https://numxl.com/blogs/principal-component-analysis-pca-101/](https://numxl.com/wp-content/uploads/principal-component-analysis-pca-featured-1024x576.png)
+:::
+
+::: {.column width="50%"}
+::: {.incremental}
+::: {style="font-size:90%"}
+
+- Identifies direction(s) of maximal variance in multi-dimensional data
+    + Successive components are orthogonal
+    + In 2D super easy to imagine
+    + Data is rotated around components
+
+:::
+:::
+:::
+
+:::
+
+:::
+
+## Penguins Raw 
+
+- Let's work on the complete (raw) penguins dataset
+    + 2-additional measurements ($\Delta N_{15}$ & $\Delta C_{13}$)
+    + Slightly different column names
+    + Can generate identifiers for each set of measurements
+
+```{r}
+glimpse(penguins_raw)
+```
+
+## Penguins Raw {.slide-only .unlisted}
+
+- Create a new *matrix* for our analysis
+    + Need complete sets of measurements
+
+```{r}
+penguin_mat <- penguins_raw |>
+  ## Combine study-name and individual IDs for unique identifiers
+  unite(id, studyName, `Individual ID`, sep = "_") |>
+  ## Select the new IDs and the columns we want
+  dplyr::select(
+    id, contains("(mm)"), contains("(g)"), starts_with("Delta")
+  ) |>
+  ## Remove any incomplete rows
+  dplyr::filter(!if_any(everything(), is.na)) |>
+  ## Coerce to a data.frame so we can add rownames
+  as.data.frame() |>
+  column_to_rownames("id") |> 
+  ## Now coerce to a matrix
+  as.matrix()
+```
+
+
+## Penguins Raw {.slide-only .unlisted}
+
+::: {style="font-size:92%"}
+
+```{r}
+head(penguin_mat)
+```
+
+:::
+
+## Principal Component Analysis
+
+- PCA expects variables to be on comparable scales
+- `scale. = TRUE` will scale all column variances to 1
+    + This is not `TRUE` by default but *should be*
+    + Will significantly impact results <br>different scales $\implies$ bias in variance measures
+- `center = TRUE` will centre the data to mean = 0
+    + This is `TRUE` by default
+
+```{r}
+## The most common function for PCA is `prcomp()`
+penguin_pca <- prcomp(penguin_mat, scale. = TRUE, center = TRUE)
+```
+
+
+## Principal Component Analysis {.slide-only .unlisted}
+
+- Each component captures a decreasing proportion of the variance
+- Often the first few indicate some kind of structure
+    + Later components just capture noise
+
+```{r}
+summary(penguin_pca)
+```
+
+## Principal Component Analysis {.slide-only .unlisted}
+
+- `screeplot()` shows these components as a barplot (base graphics)
+
+```{r}
+screeplot(penguin_pca)
+```
+
+## Principal Component Analysis {.slide-only .unlisted}
+
+- `biplot()` shows rotated points
+    + Also shows associations between components and columns
+
+```{r}
+#| output-location: column
+biplot(penguin_pca)
+```
+
+## Principal Component Analysis {.slide-only .unlisted}
+
+```{r}
+ggbiplot(penguin_pca)
+```
+
+## Principal Component Analysis {.slide-only .unlisted}
+
+::: {style="font-size:95%"}
+
+```{r}
+#| output-location: slide
+#| code-line-numbers: "3-7|8-9|11-12"
+#| fig-width: 10
+#| fig-height: 7
+penguin_pca |>
+  ggbiplot( 
+    ## Annotations for colours need to be  extracted from the original dataset
+    groups = tibble(id = rownames(penguin_mat)) |>
+      separate(id, c("studyName", "Individual ID")) |>
+      left_join(penguins_raw) |>
+      pluck("Species"),
+    ## Ellipses can also be added. This will use both colour and fill
+    ellipse = TRUE, ellipse.alpha = 0.1
+  ) +
+  scale_colour_brewer(palette = "Set1",  labels = \(x) str_extract(x, "^[:alpha:]+")) +
+  scale_fill_brewer(palette = "Set1", labels = \(x) str_extract(x, "^[:alpha:]+")) +
+  labs(colour = "Species", fill = "Species")
+```
+
+:::
+
+## Using `broom:tidy()`
+
+- My preferred approach is `broom::tidy()`<br>$\implies$ take control of all plots & questions
+
+```{r}
+broom::tidy(penguin_pca)
+```
+
+## Using `broom:tidy()` {.slide-only .unlisted}
+
+- First make a `tibble` $\rightarrow$ add the original data
+
+```{r}
+#| code-line-numbers: "3-4|5-6|7-8"
+penguin_pca_tbl <- penguin_pca |>
+  broom::tidy() |>
+  ## Pivot every component into it's own column
+  pivot_wider(names_from = "PC", values_from = "value", names_prefix = "PC") |>
+  ## Separate the IDs back to their original columns
+  separate(row, c("studyName", "Individual ID")) |>
+  ## Join the original data
+  left_join(penguins_raw) |>
+  ## Get rid of any with missing data from the Sex column
+  dplyr::filter(!is.na(Sex))
+```
+
+## Using `broom:tidy()` {.slide-only .unlisted}
+
+```{r}
+glimpse(penguin_pca_tbl)
+```
+
+## Visualisation Using `ggplot2()`
+
+::: {style="font-size:90%"}
+
+- Now we can tailor our own visualisation
+
+```{r}
+#| output-location: column
+A <- penguin_pca_tbl |>
+  ggplot(aes(PC1, PC2)) +
+  geom_point(
+    aes(colour = Species, shape = Sex)
+  )  +
+  scale_colour_brewer(
+    palette = "Set1", 
+    labels = \(x) str_extract(x, "^[:alpha:]+")
+  ) +
+  scale_shape_manual(
+    values = c(1, 19), labels = str_to_title
+  )
+A
+```
+
+:::
+
+## Visualisation Using `ggplot2()` {.slide-only .unlisted}
+
+::: {style="font-size:90%"}
+
+- Any combination of components can be checked
+
+```{r}
+#| output-location: column
+#| fig-height: 5
+B <- penguin_pca_tbl |>
+  ggplot(aes(PC2, PC3)) +
+  geom_point(
+    aes(colour = Species, shape = Sex)
+    )  +
+  scale_colour_brewer(
+    palette = "Set1", 
+    labels = \(x) str_extract(x, "^[:alpha:]+")
+  ) +
+  scale_shape_manual(
+    values = c(1, 19), labels = str_to_title
+  )
+A + B +
+  plot_layout(guides = "collect") +
+  plot_annotation(tag_levels = "A") &
+  theme(legend.position = "bottom")
+```
+
+:::
+
+## Visualisation Using `ggplot2()` {.slide-only .unlisted}
+
+::: {.callout-important collapse="true"}
+## How do we interpret these plots? What does each component capture?
+::: {.incremental}
+- PC1 seems to separate Gentoo from the other two species
+- PC2 seems to separate Adelie from Chinstrap
+- PC3 seems separate by Sex
+:::
+:::
+
+## What Measurements Drive Each Component?
+
+- Beyond a `biplot` $\implies$ correlations between PCs and measurements
+- Make a figure with PCs on the x-axis & variables on the y
+    + Fill a heatmap using correlations
+- Best to only use numeric variables
+    + Will check our categorical variables later
+
+## What Measurements Drive Each Component? {.slide-only .unlisted}
+    
+```{r}
+#| code-line-numbers: "2-3|4-6|7-10|11-13|14-16"
+penguin_pca_cors <- penguin_pca_tbl |>
+  ## Select the PCs and numeric variables
+  dplyr::select(starts_with("PC"), where(is.numeric), -contains("Sample")) |>
+  ## Get the correlations
+  cor() |>
+  as_tibble(rownames = "x") |>
+  ## Pivot like we did earlier
+  pivot_longer(
+    cols = c(-all_of("x"), starts_with("PC")), names_to = "y", values_to = "cor"
+  ) |>
+  ## Correlations between PCs will always be zero
+  ## Only compare measurements with PCs
+  dplyr::filter(str_detect(x, "PC"), !str_detect(y, "PC")) |>
+  ## Arrange by highest correlation to see if it looks OK
+  arrange(x, cor) |>
+  mutate(y = fct_inorder(y)) 
+```
+
+## What Measurements Drive Each Component? {.slide-only .unlisted}
+
+::: {style="font-size: 93%"}
+
+```{r}
+#| output-location: slide
+penguin_pca_cors %>% 
+  ggplot(aes(x, y)) +
+  geom_raster(aes(fill = cor)) +
+  geom_label(
+    aes(label = lab),
+    data = . %>% 
+      dplyr::filter(abs(cor) > 0.2) %>% 
+      mutate(lab = percent(cor, accuracy = 1)),
+    size = 4, fill = "#FFFFFF99"
+  ) +
+  labs(x = "Principal Component", y = "Measurement", fill = "Correlation") +
+  scale_fill_gradient2(
+      low = "darkblue", high = "darkred", limits = c(-1, 1),
+      labels = percent_format(accuracy = 1)
+  ) +
+  scale_x_discrete(expand = expansion(0, 0)) +
+  scale_y_discrete(expand = expansion(0, 0)) 
+```
+
+:::
+
+## What Measurements Drive Each Component? {.slide-only .unlisted}
+
+```{r}
+#| output-location: slide
+A <- penguin_pca_tbl |>
+  ggplot(aes(Species, PC1)) +
+  geom_boxplot(aes(fill = Species)) +  
+  scale_x_discrete(labels = label_wrap(25)) +
+  scale_fill_brewer(
+    palette = "Set1", labels = \(x) str_extract(x, "^[:alpha:]+")
+  ) 
+B <- penguin_pca_tbl |>
+  ggplot(aes(Species, PC3)) +
+  geom_boxplot(aes(fill = Sex)) +  
+  scale_x_discrete(labels = label_wrap(25)) +
+  scale_fill_brewer(palette = "Set2", labels = str_to_title)
+A + B + 
+  plot_layout(axes = "collect") &
+  theme(legend.position = "bottom")
+```
+
+## What Measurements Drive Each Component? {.slide-only .unlisted}
+
+- By correlations & checking manually<br>$\implies$does Culmen Depth seprate sexes within each species?
+
+```{r}
+#| output-location: slide
+penguin_pca_tbl |>
+  ggplot(aes(Species, `Culmen Depth (mm)`, fill = Sex)) +
+  geom_boxplot() +
+  scale_x_discrete(labels = label_wrap(25)) +
+  scale_fill_brewer(palette = "Set2", labels = str_to_title)
+```
+
+## Interactive Plots
+
+- The package `plotly` can transform any `ggplot` object into an interactive figure
+    + `plotly::ggplotly()`
+
+```{r}
+#| output-location: slide
+#| fig-width: 12
+#| fig-height: 8
+ggplotly(
+  penguin_pca_tbl |>
+    ggplot(
+      aes(
+        PC1, `Flipper Length (mm)`, 
+        ## Just try adding random aesthetics to see if 
+        ## ggplot can handle them
+        key1 = studyName, key2 = `Individual ID`
+      )
+    ) +
+    geom_point(aes(colour = Species, shape = Sex)) +
+    scale_colour_brewer(
+      palette = "Set1", labels = \(x) str_extract(x, "^[:alpha:]+")
+    ) +
+    scale_shape_manual(values = c(21, 19), labels = str_to_title)  
+)
+```
+
+## Interactive Plots {.slide-only .unlisted}
+
+- Exploring interactively in 3D is great fun
+    + Rarely useful for a publication or communication
+
+```{r}
+#| output-location: slide
+#| fig-width: 12
+#| fig-height: 8
+penguin_pca_tbl |>
+  plot_ly(
+    type = "scatter3d", mode = "markers",
+    x = ~PC1, y = ~PC2, z = ~PC3, color = ~Species,
+    symbol = ~Sex, symbols = c(19, 1)
+  ) 
+```
+
+
