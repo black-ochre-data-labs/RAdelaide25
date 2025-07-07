@@ -204,7 +204,7 @@ Dr Stevie Pederson
 </div>
         <p class="quarto-title-affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
     </div>
 </div>
@@ -227,6 +227,7 @@ Dr Stevie Pederson
 <li>Perhaps we might like to subset (i.e.&nbsp;filter) our data, then sort it</li>
 <li>How do we do that?</li>
 </ul>
+</div>
 <aside class="notes">
 <ul>
 <li>Should we stick with DataExploration.R?</li>
@@ -242,7 +243,6 @@ Dr Stevie Pederson
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="the-ugly-old-school-way" class="slide level2">
 <h2>The Ugly (Old-School) Way</h2>
@@ -264,7 +264,7 @@ Dr Stevie Pederson
 </ol>
 </div>
 </section>
-<section id="the-ugly-old-school-way-1" class="slide level2">
+<section id="the-ugly-old-school-way-1" class="slide level2 slide-only unlisted">
 <h2>The Ugly (Old-School) Way</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's create an object first: 'adelie_penguins'</span></span>
@@ -303,6 +303,8 @@ Dr Stevie Pederson
 <ul>
 <li>We have first filtered our dataset <span class="math inline">\(\implies\)</span> becomes the <code>tibble</code> to be sorted</li>
 </ul>
+</div>
+<div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -344,7 +346,7 @@ Dr Stevie Pederson
 </ul>
 </div>
 </section>
-<section id="the-pipe-operator-2" class="slide level2">
+<section id="the-pipe-operator-2" class="slide level2 slide-only unlisted">
 <h2>The Pipe Operator</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># This is conventionally how we've used filter</span></span>
@@ -370,7 +372,7 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="the-pipe-operator-3" class="slide level2">
+<section id="the-pipe-operator-3" class="slide level2 slide-only unlisted">
 <h2>The Pipe Operator</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, we're passing the object to filter using |&gt;</span></span>
@@ -401,7 +403,7 @@ Dr Stevie Pederson
 </ul>
 </div>
 </section>
-<section id="the-pipe-operator-4" class="slide level2">
+<section id="the-pipe-operator-4" class="slide level2 slide-only unlisted">
 <h2>The Pipe Operator</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the object, then pass the filtered object to arrange using the pipe</span></span>
@@ -472,15 +474,6 @@ Dr Stevie Pederson
 <span id="cb12-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Return the unique combinations of the species and island columns</span></span>
 <span id="cb12-5"><a href="" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">distinct</span>(species, island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="fragment">
-<ul>
-<li><code>dplyr</code> also provides functions for joining multiple data frames
-<ul>
-<li><code>left_join()</code> and <code>right_join()</code></li>
-<li><code>full_join()</code> and <code>inner_join()</code></li>
-</ul></li>
-</ul>
-</div>
 </section>
 <section id="bringing-everything-together" class="slide level2">
 <h2>Bringing Everything Together</h2>
@@ -500,6 +493,7 @@ Dr Stevie Pederson
 <span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(<span class="st">`</span><span class="at">Date Egg</span><span class="st">`</span>)) <span class="sc">|&gt;</span> <span class="co"># `year()` is from the package lubridate</span></span>
 <span id="cb13-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(studyName, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <aside class="notes">
 <p>How would we do this? I can think of two ways</p>
 <style type="text/css">
@@ -513,7 +507,6 @@ Dr Stevie Pederson
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="using-case_when" class="slide level2">
 <h2>Using <code>case_when()</code></h2>
@@ -531,7 +524,7 @@ else
 endif</code></pre>
 </div>
 </section>
-<section id="using-case_when-1" class="slide level2">
+<section id="using-case_when-1" class="slide level2 slide-only unlisted">
 <h2>Using <code>case_when()</code></h2>
 <ul>
 <li>We can use this inside a <code>mutate</code> function</li>
@@ -564,7 +557,7 @@ endif</code></pre>
 <span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(studyName, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="an-alternative-using-joins-1" class="slide level2">
+<section id="an-alternative-using-joins-1" class="slide level2 slide-only unlisted">
 <h2>An Alternative Using Joins</h2>
 <ul>
 <li>We could now use <code>left_join()</code> to add this to <code>penguins</code>
@@ -591,7 +584,7 @@ endif</code></pre>
 </ul>
 </div>
 </section>
-<section id="an-alternative-using-joins-2" class="slide level2">
+<section id="an-alternative-using-joins-2" class="slide level2 slide-only unlisted">
 <h2>An Alternative Using Joins</h2>
 <ul>
 <li>We could “flip” this using <code>right_join()</code>
@@ -607,7 +600,9 @@ endif</code></pre>
 <span id="cb18-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p><br> - Only difference is the column order</p>
+<ul>
+<li>Only difference is the column order</li>
+</ul>
 </div>
 </section>
 <section id="additional-joins" class="slide level2">

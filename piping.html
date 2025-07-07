@@ -2362,6 +2362,15 @@ $code-block-border-color: #368AC4;
 <style type="text/css">.notes {
 display: none;
 }
+
+h1.slide-only,
+h2.slide-only,
+h3.slide-only,
+h4.slide-only,
+h5.slide-only,
+h6.slide-only {
+display: none;
+}
 </style>
 </head>
 
@@ -2372,10 +2381,29 @@ display: none;
   <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul>
-  <li><a href="#the-pipe-operator" id="toc-the-pipe-operator" class="nav-link active" data-scroll-target="#the-pipe-operator">The Pipe Operator</a></li>
-  <li><a href="#revisiting-dplyr" id="toc-revisiting-dplyr" class="nav-link" data-scroll-target="#revisiting-dplyr">Revisiting <code>dplyr</code></a></li>
-  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a></li>
+  <ul class="collapse">
+  <li><a href="#the-pipe-operator" id="toc-the-pipe-operator" class="nav-link active" data-scroll-target="#the-pipe-operator">The Pipe Operator</a>
+  <ul class="collapse">
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#the-ugly-old-school-way" id="toc-the-ugly-old-school-way" class="nav-link" data-scroll-target="#the-ugly-old-school-way">The Ugly (Old-School) Way</a></li>
+  <li><a href="#another-ugly-old-school-way" id="toc-another-ugly-old-school-way" class="nav-link" data-scroll-target="#another-ugly-old-school-way">Another Ugly (Old-School) Way</a></li>
+  <li><a href="#the-pipe-operator-1" id="toc-the-pipe-operator-1" class="nav-link" data-scroll-target="#the-pipe-operator-1">The Pipe Operator</a></li>
+  <li><a href="#forming-a-chain-across-multiple-lines" id="toc-forming-a-chain-across-multiple-lines" class="nav-link" data-scroll-target="#forming-a-chain-across-multiple-lines">Forming a Chain Across Multiple Lines</a></li>
+  <li><a href="#a-longer-example" id="toc-a-longer-example" class="nav-link" data-scroll-target="#a-longer-example">A Longer Example</a></li>
+  </ul></li>
+  <li><a href="#revisiting-dplyr" id="toc-revisiting-dplyr" class="nav-link" data-scroll-target="#revisiting-dplyr">Revisiting <code>dplyr</code></a>
+  <ul class="collapse">
+  <li><a href="#additional-capabilities-of-dplyr" id="toc-additional-capabilities-of-dplyr" class="nav-link" data-scroll-target="#additional-capabilities-of-dplyr">Additional Capabilities of <code>dplyr</code></a></li>
+  <li><a href="#bringing-everything-together" id="toc-bringing-everything-together" class="nav-link" data-scroll-target="#bringing-everything-together">Bringing Everything Together</a></li>
+  <li><a href="#using-case_when" id="toc-using-case_when" class="nav-link" data-scroll-target="#using-case_when">Using <code>case_when()</code></a></li>
+  <li><a href="#an-alternative-using-joins" id="toc-an-alternative-using-joins" class="nav-link" data-scroll-target="#an-alternative-using-joins">An Alternative Using Joins</a></li>
+  <li><a href="#additional-joins" id="toc-additional-joins" class="nav-link" data-scroll-target="#additional-joins">Additional Joins</a></li>
+  <li><a href="#using-distinct-wisely" id="toc-using-distinct-wisely" class="nav-link" data-scroll-target="#using-distinct-wisely">Using Distinct Wisely</a></li>
+  </ul></li>
+  <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a>
+  <ul class="collapse">
+  <li><a href="#closing-comments" id="toc-closing-comments" class="nav-link" data-scroll-target="#closing-comments">Closing Comments</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="piping_slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
 </div>
@@ -2398,7 +2426,7 @@ display: none;
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
       </div>
   </div>
@@ -2429,11 +2457,12 @@ display: none;
 <li>We’ve seen a bunch of ways to explore our data</li>
 <li>Only using one function at a time</li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>Perhaps we might like to subset (i.e. filter) our data, then sort it</li>
 <li>How do we do that?</li>
 </ul>
+</div>
 <div class="notes">
 <ul>
 <li>Should we stick with DataExploration.R?</li>
@@ -2450,16 +2479,18 @@ display: none;
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## First we can subset the dataset</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, species <span class="sc">==</span> <span class="st">&quot;Adelie&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <p>How do we then pass this to the <code>arrange()</code> function?</p>
-<p>. . .</p>
+</div>
+<div class="fragment">
 <ol type="1">
 <li>We could save this as a new object and then call <code>arrange()</code> on that object</li>
 <li>We could place the output of <code>filter()</code> inside <code>arrange()</code></li>
 </ol>
+</div>
 </section>
-<section id="the-ugly-old-school-way-1" class="level2">
-<h2 class="anchored" data-anchor-id="the-ugly-old-school-way-1">The Ugly (Old-School) Way</h2>
+<section id="the-ugly-old-school-way-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="the-ugly-old-school-way-1">The Ugly (Old-School) Way</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s create an object first: &#39;adelie_penguins&#39;</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>adelie_penguins <span class="ot">&lt;-</span> <span class="fu">filter</span>(penguins, species <span class="sc">==</span> <span class="st">&quot;Adelie&quot;</span>)</span>
@@ -2467,7 +2498,7 @@ display: none;
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we can pass this to `arrange()`</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(adelie_penguins, body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2485,6 +2516,7 @@ Is this any good?
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="another-ugly-old-school-way" class="level2">
 <h2 class="anchored" data-anchor-id="another-ugly-old-school-way">Another Ugly (Old-School) Way</h2>
@@ -2495,10 +2527,12 @@ Is this any good?
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  body_mass_g</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>We have first filtered our dataset <span class="math inline">\(\implies\)</span> becomes the <code>tibble</code> to be sorted</li>
 </ul>
+</div>
+<div class="fragment">
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2516,6 +2550,7 @@ Is this any good?
 </div>
 </div>
 </div>
+</div>
 </section>
 <section id="the-pipe-operator-1" class="level2">
 <h2 class="anchored" data-anchor-id="the-pipe-operator-1">The Pipe Operator</h2>
@@ -2523,7 +2558,7 @@ Is this any good?
 <li>R v.4.1 introduced the (base) <em>pipe operator</em>: <code>|&gt;</code></li>
 <li>Exactly like sticking a pipe or a hose on the output of one function then placing the pipe as the input of the next</li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>This allows us to pass the output of one function to the next
 <ul>
@@ -2532,16 +2567,18 @@ Is this any good?
 <li>No need to wrap the output of one function inside another</li>
 </ul></li>
 </ul>
-<p>. . .</p>
+</div>
+<div class="fragment">
 <ul>
 <li>The output of the first function is passed to the next
 <ul>
 <li>By default, it will be the <em>first</em> argument</li>
 </ul></li>
 </ul>
+</div>
 </section>
-<section id="the-pipe-operator-2" class="level2">
-<h2 class="anchored" data-anchor-id="the-pipe-operator-2">The Pipe Operator</h2>
+<section id="the-pipe-operator-2" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="the-pipe-operator-2">The Pipe Operator</h2>
 <div class="cell" data-layout-align="center" data-output-location="fragment">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is conventionally how we&#39;ve used filter</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(penguins, species <span class="sc">==</span> <span class="st">&quot;Adelie&quot;</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2564,8 +2601,8 @@ Is this any good?
 </div>
 </div>
 </section>
-<section id="the-pipe-operator-3" class="level2">
-<h2 class="anchored" data-anchor-id="the-pipe-operator-3">The Pipe Operator</h2>
+<section id="the-pipe-operator-3" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="the-pipe-operator-3">The Pipe Operator</h2>
 <div class="cell" data-layout-align="center" data-output-location="fragment">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, we&#39;re passing the object to filter using |&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Adelie&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2593,8 +2630,8 @@ Is this any good?
 </ul>
 </div>
 </section>
-<section id="the-pipe-operator-4" class="level2">
-<h2 class="anchored" data-anchor-id="the-pipe-operator-4">The Pipe Operator</h2>
+<section id="the-pipe-operator-4" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="the-pipe-operator-4">The Pipe Operator</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the object, then pass the filtered object to arrange using the pipe</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Adelie&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2628,11 +2665,12 @@ Is this any good?
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">&quot;Adelie&quot;</span>) <span class="sc">|&gt;</span> <span class="co"># First filter the species</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(body_mass_g) <span class="co"># Now sort by body mass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>Makes long chains much easier to read</li>
 <li>Can easily comment out a line when building/testing code</li>
 </ul>
+</div>
 </section>
 <section id="a-longer-example" class="level2">
 <h2 class="anchored" data-anchor-id="a-longer-example">A Longer Example</h2>
@@ -2661,14 +2699,6 @@ Is this any good?
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Return the unique combinations of the species and island columns</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">distinct</span>(species, island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
-<ul>
-<li><code>dplyr</code> also provides functions for joining multiple data frames
-<ul>
-<li><code>left_join()</code> and <code>right_join()</code></li>
-<li><code>full_join()</code> and <code>inner_join()</code></li>
-</ul></li>
-</ul>
 </section>
 <section id="bringing-everything-together" class="level2">
 <h2 class="anchored" data-anchor-id="bringing-everything-together">Bringing Everything Together</h2>
@@ -2679,7 +2709,7 @@ Is this any good?
 <li>This is the master object which <code>penguins</code> was derived from</li>
 </ul></li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>We’d like to add the <code>studyName</code> column to <code>penguins</code> for formal reporting</li>
 </ul>
@@ -2687,6 +2717,7 @@ Is this any good?
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>penguins_raw <span class="sc">|&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(<span class="st">`</span><span class="at">Date Egg</span><span class="st">`</span>)) <span class="sc">|&gt;</span> <span class="co"># `year()` is from the package lubridate</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(studyName, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <div class="notes">
 <p>How would we do this? I can think of two ways</p>
@@ -2697,7 +2728,7 @@ Is this any good?
 <ul>
 <li>Now that we know our basic structure<br><span class="math inline">\(\implies\)</span> use <code>case_when()</code></li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>This is like an <code>ifelse</code> statement with multiple conditions</li>
 </ul>
@@ -2706,9 +2737,10 @@ Is this any good?
 else 
   do something else
 endif</code></pre>
+</div>
 </section>
-<section id="using-case_when-1" class="level2">
-<h2 class="anchored" data-anchor-id="using-case_when-1">Using <code>case_when()</code></h2>
+<section id="using-case_when-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="using-case_when-1">Using <code>case_when()</code></h2>
 <ul>
 <li>We can use this inside a <code>mutate</code> function</li>
 <li>Logical tests are performed sequentially
@@ -2740,8 +2772,8 @@ endif</code></pre>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(studyName, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="an-alternative-using-joins-1" class="level2">
-<h2 class="anchored" data-anchor-id="an-alternative-using-joins-1">An Alternative Using Joins</h2>
+<section id="an-alternative-using-joins-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="an-alternative-using-joins-1">An Alternative Using Joins</h2>
 <ul>
 <li>We could now use <code>left_join()</code> to add this to <code>penguins</code>
 <ul>
@@ -2753,20 +2785,22 @@ endif</code></pre>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Use `left_join()` to join the two datasets on the `year` column</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> <span class="fu">left_join</span>(studies, <span class="at">by =</span> <span class="st">&quot;year&quot;</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>Notice that the simple dataset <code>studies</code> was expanded
 <ul>
 <li>Every time the <code>year</code> values matched <span class="math inline">\(\implies\)</span> <code>studyName</code> was added</li>
 </ul></li>
 </ul>
-<p>. . .</p>
+</div>
+<div class="fragment">
 <ul>
 <li>The downside to this method is we created a new object (<code>studies</code>)</li>
 </ul>
+</div>
 </section>
-<section id="an-alternative-using-joins-2" class="level2">
-<h2 class="anchored" data-anchor-id="an-alternative-using-joins-2">An Alternative Using Joins</h2>
+<section id="an-alternative-using-joins-2" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="an-alternative-using-joins-2">An Alternative Using Joins</h2>
 <ul>
 <li>We could “flip” this using <code>right_join()</code>
 <ul>
@@ -2780,15 +2814,18 @@ endif</code></pre>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(studyName, year) <span class="sc">|&gt;</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
-<p><br> - Only difference is the column order</p>
+<div class="fragment">
+<ul>
+<li>Only difference is the column order</li>
+</ul>
+</div>
 </section>
 <section id="additional-joins" class="level2">
 <h2 class="anchored" data-anchor-id="additional-joins">Additional Joins</h2>
 <ul>
 <li>Multiple columns can be passed to the <code>by</code> argument</li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li><code>inner_join()</code> produces the subset where all complete matches are present</li>
 <li><code>full_join()</code> produces the union of the two datasets
@@ -2797,6 +2834,7 @@ endif</code></pre>
 <li>Missing values are filled with <code>NA</code></li>
 </ul></li>
 </ul>
+</div>
 </section>
 <section id="using-distinct-wisely" class="level2">
 <h2 class="anchored" data-anchor-id="using-distinct-wisely">Using Distinct Wisely</h2>

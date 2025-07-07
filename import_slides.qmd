@@ -67,17 +67,18 @@ Now that we've spent some time exploring the penguins dataset, how would we impo
 
 - Working with data in R is **very different** to Excel
 - Can have complicated structures or be simple (e.g. `x <- 1:5`)
-- Spreadsheet-like data is very common (e.g. `penguins`)
+- Spreadsheet-like data is very common
 - Is known as a `data.frame`
     - A common variant is known as a `tibble` 
     + These were originally called `tbl_df` objects referring to SQL tables
-    + Is just a `data.frame` with some convenient features
+    + Is just a `data.frame` with some convenience features
     
 ## Data In R {.slide-only .unlisted}
 
 - We import the data as an `R` object
     - All analysis is performed on the `R` object
     - **Almost never** modify the source file
+- Once data is imported the source file is no longer involved
 
 ## Common File Types
     
@@ -98,13 +99,13 @@ Now that we've spent some time exploring the penguins dataset, how would we impo
      + No formulas $\implies$ only values
      + No graphs/figures
      
-::: {.fragment}
+## Common File Types {.slide-only .unlisted}
      
 - Tab-separated Values (`.tsv`)
     + Like a `.csv` but with tabs separating columns
 - Sometimes see files saved as `.txt`
     + Can be anything $\implies$ need to check
-:::   
+
 ## Importing Data
 
 When importing data into `R`:
@@ -143,7 +144,7 @@ If we're not careful:
 ::: {.fragment}
 
 - Very common sources of broken data $\implies$ may need fixing
-- '000s of publications with dates for gene names or results
+- '000s of publications with dates for gene names in results
 
 :::
 
@@ -160,14 +161,13 @@ Mention my former collaborator who would often have completely different results
 
 ## Preparation {.slide-only .unlisted}
 
-Then get the data for this exercise.
 
 1. Download the file `data.zip` from the workshop homepage
 2. Place in your directory `RAdelaide25`
 3. `Extract to here` which should create a folder named `data`
 
 ::: {.callout-tip collapse="true"}
-#### Make sure your files are in `data` not in `data/data`
+### Make sure your files are in `data` not in `data/data`
 :::
     
 ::: {.fragment}    
@@ -184,11 +184,11 @@ Then get the data for this exercise.
 ## Importing Data
 
 1. Preview the file `penguins.csv` by clicking on it (`View File`)
-    + Try in Excel if you prefer, but **DO NOT** save anything from Excel
+    + Try in Excel if you prefer, but **DO NOT(!!!)** save anything from Excel
     
 ::: {.fragment}
 
-- This is our dataset as a simple `.csv` file
+- This is a common dataset as a simple `.csv` file
 - This type of data is very easy to manage in `R`
     - Plain text with comma delimiters
     - Simple column structure with column names
@@ -389,11 +389,6 @@ You can delete the line `View(penguins)`
 
 Instead of `View()` $\implies$ preview by typing the object name
 
-<br>
-
-:::: {.columns}
-
-::: {.column width='40%'}
 
 ```{r import-penguins, echo=FALSE, include=FALSE}
 library(readr)
@@ -405,15 +400,10 @@ penguins <- read_csv(here::here("data/penguins.csv"))
 penguins
 ```
 
-:::
+## Data Frame Objects {.slide-only .unlisted}
 
-::: {.column width='60%'}
-
-::: {.fragment}
 
 Gives a preview up to 10 lines with:
-
-:::
 
 ::: {.incremental}
 
@@ -424,11 +414,6 @@ Gives a preview up to 10 lines with:
 
 :::
 
-:::
-
-::::
-
-<br>
 
 ::: {.fragment}
 I personally find this more informative than `View()`
@@ -451,6 +436,7 @@ I personally find this more informative than `View()`
     + Often referred to as *tidy*-programming or similar
 - Calling `library(tidyverse)` loads multiple key packages
     + `readr` is one of these $\implies$ usually just load the tidyverse
+    + Will load `dplyr`, `tidyr`, `readr`, `ggplot2` + others
     
 
 ## The Tidyverse {.slide-only .unlisted}
@@ -465,7 +451,7 @@ I personally find this more informative than `View()`
 
 :::
 
-## Tibble Objects
+## Previewing Objects
 
 - Some additional ways to inspect tibbles are:
 
@@ -613,13 +599,10 @@ read_csv(
 )
 ```
 
+::: {.incremental}
+
 - This function has *way too many arguments* (`file`, `col_names` etc.)
-
-::: {.fragment}
-
-- Most have default values given
-    + All were defined *somewhere in the GUI*
-    + Default assumes column names are the first row (`col_names = TRUE`)
+- Most have default values given<br>`col_names = TRUE` $\implies$ column names assumed as the first row
 
 :::
 
@@ -665,7 +648,7 @@ penguins <- read_csv("data/penguins.csv", col_types = "ccnnnncn")
 
 ## `read_csv()` Vs `read.csv()`
 
-::: {style="font-size: 90%;"}
+::: {style="font-size: 95%;"}
 
 - `RStudio` now uses `read_csv()` from `readr` **by default**
 - You will often see `read.csv()` (from `utils`) in older scripts 

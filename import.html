@@ -2404,7 +2404,7 @@ display: none;
   <li><a href="#data-frame-objects-1" id="toc-data-frame-objects-1" class="nav-link" data-scroll-target="#data-frame-objects-1">Data Frame Objects</a></li>
   <li><a href="#tibble-objects" id="toc-tibble-objects" class="nav-link" data-scroll-target="#tibble-objects">Tibble Objects</a></li>
   <li><a href="#the-tidyverse" id="toc-the-tidyverse" class="nav-link" data-scroll-target="#the-tidyverse">The Tidyverse</a></li>
-  <li><a href="#tibble-objects-1" id="toc-tibble-objects-1" class="nav-link" data-scroll-target="#tibble-objects-1">Tibble Objects</a></li>
+  <li><a href="#previewing-objects" id="toc-previewing-objects" class="nav-link" data-scroll-target="#previewing-objects">Previewing Objects</a></li>
   </ul></li>
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
   <ul class="collapse">
@@ -2440,7 +2440,7 @@ display: none;
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
       </div>
   </div>
@@ -2473,12 +2473,12 @@ display: none;
 <ul>
 <li>Working with data in R is <strong>very different</strong> to Excel</li>
 <li>Can have complicated structures or be simple (e.g. <code>x &lt;- 1:5</code>)</li>
-<li>Spreadsheet-like data is very common (e.g. <code>penguins</code>)</li>
+<li>Spreadsheet-like data is very common</li>
 <li>Is known as a <code>data.frame</code>
 <ul>
 <li>A common variant is known as a <code>tibble</code></li>
 <li>These were originally called <code>tbl_df</code> objects referring to SQL tables</li>
-<li>Is just a <code>data.frame</code> with some convenient features</li>
+<li>Is just a <code>data.frame</code> with some convenience features</li>
 </ul></li>
 </ul>
 </section>
@@ -2490,6 +2490,7 @@ display: none;
 <li>All analysis is performed on the <code>R</code> object</li>
 <li><strong>Almost never</strong> modify the source file</li>
 </ul></li>
+<li>Once data is imported the source file is no longer involved</li>
 </ul>
 </section>
 <section id="common-file-types" class="level2">
@@ -2518,7 +2519,9 @@ display: none;
 <li>No graphs/figures</li>
 </ul></li>
 </ul>
-<div class="fragment">
+</section>
+<section id="common-file-types-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="common-file-types-1">Common File Types</h2>
 <ul>
 <li>Tab-separated Values (<code>.tsv</code>)
 <ul>
@@ -2529,7 +2532,6 @@ display: none;
 <li>Can be anything <span class="math inline">\(\implies\)</span> need to check</li>
 </ul></li>
 </ul>
-</div>
 </section>
 <section id="importing-data-1" class="level2">
 <h2 class="anchored" data-anchor-id="importing-data-1">Importing Data</h2>
@@ -2573,7 +2575,7 @@ display: none;
 <div class="fragment">
 <ul>
 <li>Very common sources of broken data <span class="math inline">\(\implies\)</span> may need fixing</li>
-<li>’000s of publications with dates for gene names or results</li>
+<li>’000s of publications with dates for gene names in results</li>
 </ul>
 </div>
 <div class="notes">
@@ -2589,7 +2591,6 @@ display: none;
 </section>
 <section id="preparation-1" class="level2 slide-only unlisted">
 <h2 class="slide-only unlisted anchored" data-anchor-id="preparation-1">Preparation</h2>
-<p>Then get the data for this exercise.</p>
 <ol type="1">
 <li>Download the file <code>data.zip</code> from the workshop homepage</li>
 <li>Place in your directory <code>RAdelaide25</code></li>
@@ -2627,12 +2628,12 @@ Make sure your files are in <code>data</code> not in <code>data/data</code>
 <ol type="1">
 <li>Preview the file <code>penguins.csv</code> by clicking on it (<code>View File</code>)
 <ul>
-<li>Try in Excel if you prefer, but <strong>DO NOT</strong> save anything from Excel</li>
+<li>Try in Excel if you prefer, but <strong>DO NOT(!!!)</strong> save anything from Excel</li>
 </ul></li>
 </ol>
 <div class="fragment">
 <ul>
-<li>This is our dataset as a simple <code>.csv</code> file</li>
+<li>This is a common dataset as a simple <code>.csv</code> file</li>
 <li>This type of data is very easy to manage in <code>R</code>
 <ul>
 <li>Plain text with comma delimiters</li>
@@ -2855,9 +2856,6 @@ Make sure your files are in <code>data</code> not in <code>data/data</code>
 <section id="data-frame-objects-2" class="level2 slide-only unlisted">
 <h2 class="slide-only unlisted anchored" data-anchor-id="data-frame-objects-2">Data Frame Objects</h2>
 <p>Instead of <code>View()</code> <span class="math inline">\(\implies\)</span> preview by typing the object name</p>
-<p><br></p>
-<div class="columns">
-<div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -2878,10 +2876,10 @@ Make sure your files are in <code>data</code> not in <code>data/data</code>
 # ℹ 2 more variables: sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
 </div>
 </div>
-</div><div class="column" style="width:60%;">
-<div class="fragment">
+</section>
+<section id="data-frame-objects-3" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="data-frame-objects-3">Data Frame Objects</h2>
 <p>Gives a preview up to 10 lines with:</p>
-</div>
 <div class="incremental">
 <ul class="incremental">
 <li>The object type: <code>A tibble</code></li>
@@ -2890,9 +2888,6 @@ Make sure your files are in <code>data</code> not in <code>data/data</code>
 <li>Data types: <code>&lt;chr&gt;</code>, <code>&lt;chr&gt;</code>, <code>&lt;dbl&gt;</code> etc</li>
 </ul>
 </div>
-</div>
-</div>
-<p><br></p>
 <div class="fragment">
 <p>I personally find this more informative than <code>View()</code></p>
 </div>
@@ -2920,6 +2915,7 @@ Make sure your files are in <code>data</code> not in <code>data/data</code>
 <li>Calling <code>library(tidyverse)</code> loads multiple key packages
 <ul>
 <li><code>readr</code> is one of these <span class="math inline">\(\implies\)</span> usually just load the tidyverse</li>
+<li>Will load <code>dplyr</code>, <code>tidyr</code>, <code>readr</code>, <code>ggplot2</code> + others</li>
 </ul></li>
 </ul>
 </section>
@@ -2936,8 +2932,8 @@ Make sure your files are in <code>data</code> not in <code>data/data</code>
 </ul>
 </div>
 </section>
-<section id="tibble-objects-1" class="level2">
-<h2 class="anchored" data-anchor-id="tibble-objects-1">Tibble Objects</h2>
+<section id="previewing-objects" class="level2">
+<h2 class="anchored" data-anchor-id="previewing-objects">Previewing Objects</h2>
 <ul>
 <li>Some additional ways to inspect tibbles are:</li>
 </ul>
@@ -3126,16 +3122,10 @@ Make sure your files are in <code>data</code> not in <code>data/data</code>
 <span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">skip_empty_rows =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">lazy =</span> <span class="fu">should_read_lazy</span>()</span>
 <span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
+<div class="incremental">
+<ul class="incremental">
 <li>This function has <em>way too many arguments</em> (<code>file</code>, <code>col_names</code> etc.)</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Most have default values given
-<ul>
-<li>All were defined <em>somewhere in the GUI</em></li>
-<li>Default assumes column names are the first row (<code>col_names = TRUE</code>)</li>
-</ul></li>
+<li>Most have default values given<br><code>col_names = TRUE</code> <span class="math inline">\(\implies\)</span> column names assumed as the first row</li>
 </ul>
 </div>
 </div>
@@ -3183,7 +3173,7 @@ Make sure your files are in <code>data</code> not in <code>data/data</code>
 <h1 data-background-color="#3d3d40">Closing Comments</h1>
 <section id="read_csv-vs-read.csv" class="level2">
 <h2 class="anchored" data-anchor-id="read_csv-vs-read.csv"><code>read_csv()</code> Vs <code>read.csv()</code></h2>
-<div style="font-size: 90%;">
+<div style="font-size: 95%;">
 <ul>
 <li><code>RStudio</code> now uses <code>read_csv()</code> from <code>readr</code> <strong>by default</strong></li>
 <li>You will often see <code>read.csv()</code> (from <code>utils</code>) in older scripts</li>

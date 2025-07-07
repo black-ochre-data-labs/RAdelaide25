@@ -23,7 +23,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 9:00 | Welcome & Housekeeping |  | 10min |
 | 9:15 | Welcome To Country |  | 15min |
 | 9:30 | Introducing R & RStudio | [Introduction](intro.html) | 50min |
-|  | Importing Spreadsheet-Like Data | [Importing Penguins](import.html) | 50min |
+|  | Importing Spreadsheet-Like Data | [Importing Penguins](import.html) | 60min |
 | 10:30 | *Morning Tea* |  |  |
 | 11:00 | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | 60min |
 |  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 40min |

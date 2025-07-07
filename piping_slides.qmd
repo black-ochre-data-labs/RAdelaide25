@@ -30,7 +30,7 @@ format:
     output-file: piping.html
     embed-resources: true
     toc: true
-    toc-depth: 1
+    toc-depth: 2
 include-after: |
   <script type="text/javascript">
     Reveal.on('ready', event => {
@@ -68,11 +68,12 @@ library(lubridate)
 - We've seen a bunch of ways to explore our data
 - Only using one function at a time
 
-. . .
+::: {.fragment}
 
 - Perhaps we might like to subset (i.e. filter) our data, then sort it
 - How do we do that?
 
+:::
 
 ::: {.notes}
 - Should we stick with DataExploration.R?
@@ -89,16 +90,19 @@ library(lubridate)
 filter(penguins, species == "Adelie")
 ```
 
-. . .
+::: {.fragment}
 
 How do we then pass this to the `arrange()` function?
 
-. . . 
+:::
+::: {.fragment}
 
 1. We could save this as a new object and then call `arrange()` on that object
 2. We could place the output of `filter()` inside `arrange()`
+:::
 
-## The Ugly (Old-School) Way
+
+## The Ugly (Old-School) Way  {.slide-only .unlisted}
 
 
 ```{r}
@@ -110,7 +114,7 @@ adelie_penguins <- filter(penguins, species == "Adelie")
 arrange(adelie_penguins, body_mass_g)
 ```
 
-. . .
+::: {.fragment}
 
 ::: {.callout-note collapse="true"}
 ## Is this any good?
@@ -120,7 +124,7 @@ A complete analysis would lead to a workspace with multiple, similar objects, e.
 
 This can become very messy and confusing
 :::
-
+:::
 
 ## Another Ugly (Old-School) Way
 
@@ -133,9 +137,13 @@ arrange(
 )
 ```
 
-. . .
+::: {.fragment}
 
 - We have first filtered our dataset $\implies$ becomes the `tibble` to be sorted
+
+:::
+
+::: {.fragment}
 
 ::: {.callout-note collapse="true"}
 ## Is this any good?
@@ -144,25 +152,28 @@ Functions are executed in order from the inside-most function to the outer-most.
 
 Can become very messy if calling 10 functions in a row
 :::
+:::
 
 ## The Pipe Operator
 
 - R v.4.1 introduced the (base) *pipe operator*: `|>`
 - Exactly like sticking a pipe or a hose on the output of one function then placing the pipe as the input of the next 
 
-. . .
-
+::: {.fragment}
 - This allows us to pass the output of one function to the next
     + Can chain together multiple functions
     + No need to create intermediate objects
     + No need to wrap the output of one function inside another
-    
-. . . 
+
+:::
+::: {.fragment}
 
 - The output of the first function is passed to the next
     + By default, it will be the *first* argument
     
-## The Pipe Operator
+:::
+
+## The Pipe Operator {.slide-only .unlisted}
 
 ```{r}
 #| output-location: fragment
@@ -170,7 +181,7 @@ Can become very messy if calling 10 functions in a row
 filter(penguins, species == "Adelie") 
 ```
 
-## The Pipe Operator
+## The Pipe Operator {.slide-only .unlisted}
 
 ```{r}
 #| output-location: fragment
@@ -182,7 +193,7 @@ penguins |> filter(species == "Adelie")
 - Calling an object by name simply returns the complete object
 :::
 
-## The Pipe Operator
+## The Pipe Operator {.slide-only .unlisted}
 
 ```{r}
 # Filter the object, then pass the filtered object to arrange using the pipe
@@ -201,11 +212,11 @@ penguins |>
   arrange(body_mass_g) # Now sort by body mass
 ```
 
-. . .
+::: {.fragment}
 
 - Makes long chains much easier to read
 - Can easily comment out a line when building/testing code
-
+:::
 
 ## A Longer Example
 
@@ -235,20 +246,13 @@ penguins |> distinct(species, island)
 ```
 
 
-. . .
-
-- `dplyr` also provides functions for joining multiple data frames
-    + `left_join()` and `right_join()`
-    + `full_join()` and `inner_join()`
-
 ## Bringing Everything Together
 
 - The problem we want to address is a missing column from the `penguins` data
 - Check the object `penguins_raw`
     + This is the master object which `penguins` was derived from
     
-. . .
-
+::: {.fragment}
 - We'd like to add the `studyName` column to `penguins` for formal reporting
 
 ```{r}
@@ -258,6 +262,8 @@ penguins_raw |>
   distinct(studyName, year)
 ```
 
+:::
+
 ::: {.notes}
 How would we do this? I can think of two ways
 :::
@@ -266,7 +272,7 @@ How would we do this? I can think of two ways
 
 - Now that we know our basic structure<br>$\implies$ use `case_when()`
 
-. . .
+::: {.fragment}
 
 - This is like an `ifelse` statement with multiple conditions
     
@@ -278,7 +284,9 @@ else
 endif
 ```
 
-## Using `case_when()`
+:::
+
+## Using `case_when()` {.slide-only .unlisted}
 
 - We can use this inside a `mutate` function
 - Logical tests are performed sequentially
@@ -309,7 +317,7 @@ studies <- penguins_raw |>
   distinct(studyName, year)
 ```
 
-## An Alternative Using Joins
+## An Alternative Using Joins {.slide-only .unlisted}
 
 - We could now use `left_join()` to add this to `penguins`
     + `penguins` will be taken as a scaffold to add values to
@@ -321,16 +329,18 @@ studies <- penguins_raw |>
 penguins |> left_join(studies, by = "year") 
 ```
 
-. . . 
+::: {.fragment}
 
 - Notice that the simple dataset `studies` was expanded
     + Every time the `year` values matched $\implies$ `studyName` was added
 
-. . .
+:::
+::: {.fragment}
 
 - The downside to this method is we created a new object (`studies`)
+:::
 
-## An Alternative Using Joins
+## An Alternative Using Joins {.slide-only .unlisted}
 
 - We could "flip" this using `right_join()`
     + The dataset on the RHS is taken as the scaffold
@@ -344,21 +354,21 @@ penguins_raw |>
   right_join(penguins)
 ```
 
-. . .
-
-<br>
+::: {.fragment}
 - Only difference is the column order
+:::
 
 ## Additional Joins
 
 - Multiple columns can be passed to the `by` argument
 
-. . .
+::: {.fragment}
 
 - `inner_join()` produces the subset where all complete matches are present
 - `full_join()` produces the union of the two datasets
     + All rows from both datasets are returned
     + Missing values are filled with `NA`
+:::
 
 ## Using Distinct Wisely
 
