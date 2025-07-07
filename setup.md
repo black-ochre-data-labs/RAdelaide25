@@ -29,7 +29,9 @@ This will be the latest release (v4.5.1)
 install.packages(
   c(
     "tidyverse", "ggrepel", "ggpmisc", "corrplot", "pheatmap", "reactable", 
-    "htmltools", "palmerpenguins", "lme4", "lmerTest", "rmarkdown"
+    "htmltools", "palmerpenguins", "lme4", "lmerTest", "rmarkdown",
+    "broom", "car", "carData", "glue", "patchwork", "plotly", "scales",
+    "ggthemes", "ggbiplot", "ggcorrplot"
   )
 )
 ```
@@ -54,7 +56,9 @@ Again, do contact us if there are any problems with this code being executed.
 install.packages(
   c(
     "tidyverse", "ggrepel", "ggpmisc", "corrplot", "pheatmap", "reactable", 
-    "htmltools", "palmerpenguins", "lme4", "lmerTest", "rmarkdown"
+    "htmltools", "palmerpenguins", "lme4", "lmerTest", "rmarkdown",
+    "broom", "car", "carData", "glue", "patchwork", "plotly", "scales",
+    "ggthemes", "ggbiplot", "ggcorrplot"
   )
 )
 ```
