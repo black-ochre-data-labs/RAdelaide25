@@ -26,7 +26,7 @@ format:
     show-slide-number: all
   html: 
     css: [bodl.scss, extra.css]
-    output-file: linear_regression.html
+    output-file: more_statistics.html
     embed-resources: true    
     toc: true
     toc-depth: 2    
