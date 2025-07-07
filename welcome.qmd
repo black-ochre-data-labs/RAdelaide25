@@ -171,6 +171,23 @@ Tutors will be monitoring as well and can stop so we can address the question as
 - Group communication can be done through https://bioinformaticshubsa.slack.com/
     + Join the #radelaide25 channel
     
+## Background Experience
+
+::: {.notes}
+- We had 3 SPSS users & 2 Stata Users so please feel free to lend your statistical expertise
+- 5 python programmers end even some with LaTex/markdown
+- Very surprised to see someone with Perl experience. The language of old-school bioinformatics
+:::
+
+- Who's never used R before?
+
+::: {.incremental}
+- Who's dabbled in R?
+- Some experience but aware of weaknesses
+- Who thinks they can run some sessions next year?
+- Has anyone run R scripts on an HPC?
+:::
+
 
 ## Course Aims
 
@@ -219,6 +236,14 @@ Please practice exactly like you're learning a new skill (driving, playing piano
     + Analytic techniques beyond t-tests and linear regression
 
 :::
+
+## Future Courses
+
+- No true bioinformatics in this course
+    + Focus on the basics in R
+- Teaming up with Cathal King (SAGC) to present 2x back-to-back workshops in September
+    + Day1: Bulk transcriptomics
+    + Day2: Single Cell transcriptomics
 
 
 ## A Comment on AI
