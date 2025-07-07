@@ -1,5 +1,5 @@
 ---
-title: "Introductory Visualisation Using `ggplot2`"
+title: "Introductory Visualisation"
 subtitle: "RAdelaide 2025"
 author: "Dr Stevie Pederson"
 institute: |
@@ -30,7 +30,7 @@ format:
     output-file: intro_vis.html
     embed-resources: true    
     toc: true
-    toc-depth: 1    
+    toc-depth: 2  
     self-contained: true
 include-after: |
   <script type="text/javascript">
@@ -61,15 +61,7 @@ knitr:
     fig.width: 8
 ---
 
-## Base Plotting in R
-
-- `R` comes with some very powerful plotting capabilities
-    + Provided in the base package `graphics`
-    + Always loaded with every session
-- Examples are often extremely helpful
-- People used happily for decades
-    + The release of `ggplot2` changed everything
-- Let's quickly explore base plotting before moving to the good stuff
+# Visualisation in R
 
 ## Start a New R Script
 
@@ -83,7 +75,17 @@ library(dplyr)
 ```
 
 
-## Base Plotting In R
+## Base Plotting in R
+
+- `R` comes with some very powerful plotting capabilities
+    + Provided in the base package `graphics`
+    + Always loaded with every session
+- Examples are often extremely helpful
+- People used happily for decades
+    + The release of `ggplot2` changed everything
+- Let's quickly explore base plotting before moving to the good stuff
+
+## Base Plotting In R {.slide-only .unlisted}
 
 - Simple plots are usually easy
     + Complex figures can get really messy
@@ -96,7 +98,7 @@ library(dplyr)
 plot(cars)
 ```
 
-## Base Plotting In R
+## Base Plotting In R {.slide-only .unlisted}
 
 - The first two columns were automatically placed on the x & y axis
 - We could set values for x & y manually
@@ -109,7 +111,7 @@ plot(cars)
 plot(x = penguins$bill_depth_mm, y = penguins$bill_length_mm)
 ```
 
-## Base Plotting In R
+## Base Plotting In R {.slide-only .unlisted}
 
 - The function `boxplot()` can also create simple figures easily
 - For categorical variables (i.e. factors) we can use the formula notation
@@ -121,12 +123,14 @@ plot(x = penguins$bill_depth_mm, y = penguins$bill_length_mm)
 boxplot(body_mass_g ~ species, data = penguins)
 ```
 
-. . .
+::: {.fragment}
 
 - The dependent variable will always appear on the y-axis
 - The predictor will always appear on the x-axis
 
-## Base Plotting In R
+:::
+
+## Base Plotting In R {.slide-only .unlisted}
 
 - We can also use combinations of predictor variables
 
@@ -138,7 +142,7 @@ boxplot(body_mass_g ~ sex + species, data = penguins)
 
 
 
-## Base Plotting In R
+## Base Plotting In R {.slide-only .unlisted}
 
 - Histograms can be produced on an individual column
     + The number of breaks can be set manually
@@ -150,7 +154,7 @@ boxplot(body_mass_g ~ sex + species, data = penguins)
 hist(penguins$body_mass_g, breaks = 20, xlab = "Body Mass (g)")
 ```
 
-## Base Plotting In R
+## Base Plotting In R {.slide-only .unlisted}
 
 - Large datasets can be quickly explored using `pairs()`
 - Shows all pairwise combinations of columns
@@ -167,7 +171,7 @@ pairs(penguins)
 :::
 
 
-# Visualisation With<br>`ggplot2` {background-color="#3d3d40" background-image=https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/ggplot2.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+# Visualisation With `ggplot2` {background-color="#3d3d40" background-image=https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/ggplot2.png background-size="25%" background-opacity="0.4" background-position='80% 20%'}
 
 ```{r load-pigs, echo=FALSE}
 library(ggplot2)
@@ -182,7 +186,7 @@ library(ggplot2)
     + Breaks visualisation into *layers*
 
 
-## The Grammar of Graphics
+## The Grammar of Graphics {.slide-only .unlisted}
 
 :::: {.columns}
 
@@ -204,16 +208,16 @@ Taken from https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.ht
 
 ::::
 
-## The Grammar of Graphics 
+## The Grammar of Graphics  {.slide-only .unlisted}
 
-::: {style="font-size: 80%;"}
+::: {style="font-size: 85%;"}
 
 Everything is added in layers
 
 :::: {.columns}
 
 
-::: {.column}
+::: {.column width="52%"}
 
 
 
@@ -244,7 +248,7 @@ Everything is added in layers
 :::
 
 
-::: {.column}
+::: {.column width="48%"}
 
 
 ::: {.fragment}
@@ -290,13 +294,13 @@ Everything is added in layers
     + `distance` each car takes to stop
 - We can make a classic `x` vs `y` plot using points
 
-. . . 
+::: {.fragment}
 
 - The *predictor* (x) would be `speed`
 - The *response* (y) would be `distance`
+:::
 
-
-## An Initial Example
+## An Initial Example {.slide-only .unlisted}
 
 - We may as well start by piping our data in
 
@@ -306,22 +310,23 @@ cars |>
   ggplot(aes(x = speed, y = dist))
 ```
 
-. . .
+::: {.fragment}
 
 - We have defined the plotting *aesthetics*
     + `x` & `y`
     + Don't need to name if passing *in order*
 - Axis limits match the data
 
-. . .
-
+:::
+::: {.fragment}
 - No geometry has been specified $\implies$ nothing was drawn
+:::
 
 ::: {.notes}
 - The package is `ggplot2` but the function is `ggplot()`
 :::
 
-## An Initial Example
+## An Initial Example {.slide-only .unlisted}
 
 - To add points, we add `geom_point()` *after calling* `ggplot()`
 - Adding `+` after `ggplot()` says "But wait! There's more..."
@@ -333,11 +338,13 @@ cars |>
   geom_point() 
 ```
 
-. . .
+::: {.fragment}
 
-- When developing `ggplot2` neither pipe had been developed yet
+- When `ggplot2` was created neither pipe had been developed yet
 
-## An Initial Example
+:::
+
+## An Initial Example {.slide-only .unlisted}
 
 - To add points, we add `geom_point()` *after calling* `ggplot()`
     + Adding `+` after `ggplot()` says "But wait! There's more..."
@@ -349,19 +356,21 @@ cars |> # Layer 1: Data
   geom_point() # Layer 3: Geometry
 ```
 
-. . .
+::: {.fragment}
 
 - By default:
     + Layer 4: No facets
     + Layer 5: No summary statistics
     + Layer 6: Cartesian co-ordinate system
     + Layer 7: Crappy theme with grey background &#129326;
-    
+
+:::
+
 ::: {.notes}
 Axis limits are automatically determined
 :::
 
-## An Initial Example
+## An Initial Example {.slide-only .unlisted}
 
 - A simple summary statistic to add might be `stat_smooth()`
 - Automatically chooses the smoother
@@ -397,7 +406,7 @@ penguins |> # Layer 1: Data
   geom_point()  # Layer 3: Geometry
 ```
 
-## Creating Our First Plot
+## Creating Our First Plot {.slide-only .unlisted}
 
 - There seem to be groups. Are these based on species? $\implies$ Add colour
 
@@ -409,7 +418,7 @@ penguins |>
   geom_point()
 ```
 
-## Creating Our First Plot
+## Creating Our First Plot {.slide-only .unlisted}
 
 - We can also add regression lines
     + We'll add equations later
@@ -439,7 +448,7 @@ penguins |>
   stat_smooth(method = "lm", se = FALSE)
 ```
 
-## Understanding Aesthetics
+## Understanding Aesthetics {.slide-only .unlisted}
 
 - We could set this again if we choose
 
@@ -470,7 +479,7 @@ penguins |>
 ```
 
 
-## Using Facets
+## Using Facets {.slide-only .unlisted}
 
 - We can allow x and y axes to scale separately for each panel
     + Not always a helpful strategy
@@ -503,14 +512,15 @@ penguins |>
   scale_y_continuous()
 ```
 
-. . .
+::: {.fragment}
 
 - Multiple presets are available:
     + `scale_x_log10()`, `scale_x_sqrt()`, `scale_x_reverse()`
     + Also available for `y`
+
+:::    
     
-    
-## Setting Scales
+## Setting Scales {.slide-only .unlisted}
 
 - For aesthetics like colour, we often want to tailor these
     + Default is `scale_colour_discrete()` [(Meh...)]{.fragment}
@@ -527,12 +537,14 @@ penguins |>
   scale_colour_brewer()
 ```
 
-. . .
+::: {.fragment}
 
 - Default palettes can be good sometimes
     + To show options for `scale_colour_brewer()` $\implies$ `RColorBrewer::display.brewer.all()`
 
-## Setting Scales
+:::
+
+## Setting Scales {.slide-only .unlisted}
 
 - I often use Set1, but try a few others
 - `scale_colour_viridis_d()` will give a colourblind-friendly palette
@@ -548,7 +560,7 @@ penguins |>
   scale_colour_brewer(palette = "Set1")
 ```
 
-## Setting Scales
+## Setting Scales {.slide-only .unlisted}
 
 - Standard 7-colour palette adapted for colourblindness is included in `ggthemes` [@Wong2011-xb]
     + Many alternatives exist
@@ -573,11 +585,15 @@ penguins |>
 
 - What else might be informative?
 
-. . .
+::: {.fragment}
 
 - Can we separate by island or sex?
     + `sex` will have missing values
     + Let's set the shape of the points
+    
+:::
+
+::: {.fragment}
 
 ```{r}
 #| fig-show: hide
@@ -589,6 +605,8 @@ penguins |>
   stat_smooth(method = "lm", se = FALSE) +
   scale_colour_colorblind()
 ```
+
+:::
 
 ## Modifying Points
 
@@ -606,7 +624,7 @@ penguins |>
   scale_colour_colorblind()
 ```
 
-## Modifying Points
+## Modifying Points {.slide-only .unlisted}
 
 - Points can be set manually using `scale_shape_manual()`
     + Also `scale_colour_manual()`
@@ -623,17 +641,18 @@ penguins |>
   scale_shape_manual(values = c(19, 1)) ## Manually choose the point shapes
 ```
 
-## Modifying Points
+## Modifying Points {.slide-only .unlisted}
 
 - How did I know to choose those two values?
 - Why do numbers represent different shapes
 
-. . .
+::: {.fragment}
 
 - Enter `?pch` and scroll down a little
     + 21-25 have both a colour (outline) and fill capability
 
 ![](assets/pch.png){width="800px"}
+:::
 
 ## Finishing Our Figure
 
@@ -662,7 +681,7 @@ penguins |>
 - We can type literally anything for labels which can leave to door open to errors
 :::
 
-## Finishing Our Figure
+## Finishing Our Figure {.slide-only .unlisted}
 
 - The final layer in the Grammar of Graphics is the *Theme*
 - Controls the overall appearance not controlled elsewhere
@@ -699,7 +718,7 @@ p <- penguins |>
 p + theme_bw()
 ```
 
-## Using Themes
+## Using Themes {.slide-only .unlisted}
 
 - Additional modifications:
     + Setting the base font size for all annotations
@@ -713,7 +732,7 @@ p + theme_bw() +
 ```
 
 
-## Using Themes
+## Using Themes {.slide-only .unlisted}
 
 - A key application is the placement of legends
 
@@ -723,7 +742,7 @@ p + theme_bw() +
   theme(legend.position = "bottom")
 ```
 
-## Using Themes
+## Using Themes {.slide-only .unlisted}
 
 - Legend can be placed inside using three steps
     + Set `legend.position = "inside"`
@@ -745,7 +764,7 @@ p + theme_bw() +
 - By default the legend will align the centre at the given co-ordinates
 :::
 
-## Using Themes
+## Using Themes {.slide-only .unlisted}
 
 - Any individual text element of a figure can be modified using `element_text()`
 
@@ -758,7 +777,7 @@ p + theme_bw() +
   )
 ```
 
-## Using Themes
+## Using Themes {.slide-only .unlisted}
 
 ::: {style="font-size: 85%;"}
 
@@ -802,7 +821,7 @@ p + theme_bw() +
 
 :::
 
-## Using Themes
+## Using Themes {.slide-only .unlisted}
 
 ```{r}
 #| fig-show: hide
@@ -820,7 +839,7 @@ p + theme_bw() +
   )
 ```
 
-## Using Themes
+## Using Themes {.slide-only .unlisted}
 
 - Plot titles align left by default
 
@@ -829,7 +848,7 @@ p + theme_bw() +
   ggtitle("Penguin Bill Measurements")
 ```
 
-. . .
+::: {.fragment}
 
 - We can use `theme()` to align in the centre
     + `hjust` is the horizontal adjustment
@@ -840,6 +859,7 @@ p + theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
+:::
 
 # Different Plot Types{background-color="#3d3d40"}
 
@@ -904,7 +924,7 @@ penguins |>
 
 
 
-## Creating Our Boxplot
+## Creating Our Boxplot {.slide-only .unlisted}
 
 - To incorporate the sex $\implies$ add a fill aesthetic
     + `colour` is generally applied to shape outlines
@@ -917,11 +937,13 @@ penguins |>
   geom_boxplot()
 ```
 
-. . .
+::: {.fragment}
 
 - `ggplot2` will always separate multiple values/category
 
-## Creating Our Boxplot
+:::
+
+## Creating Our Boxplot {.slide-only .unlisted}
 
 
 ```{r}
@@ -935,7 +957,7 @@ penguins |>
 
 
 
-## Creating Our Boxplot
+## Creating Our Boxplot {.slide-only .unlisted}
 
 - We could also separate by island using `facet_wrap()`
 
@@ -949,7 +971,7 @@ penguins |>
 ```
 
 
-## Creating Our Boxplot
+## Creating Our Boxplot {.slide-only .unlisted}
 
 - A less-intuitive alternative (`facet_grid()`) will allow for unequal-sized facets
 
@@ -1005,12 +1027,13 @@ penguins |>
   geom_histogram()
 ```
 
-. . .
+::: {.fragment}
 
 - This can be easily improved by setting `fill = "grey70"` and `colour = "black"`
 - `binwidth` is automatically set $implies$ try `binwidth = 100`
+:::
 
-## Creating A Histogram
+## Creating A Histogram {.slide-only .unlisted}
 
 ```{r}
 #| fig-show: hide
@@ -1024,7 +1047,7 @@ penguins |>
 ```
 
 
-## Creating A Histogram
+## Creating A Histogram {.slide-only .unlisted}
 
 - The above shows counts $\implies$ can also show frequency (i.e. density)
 - Unfortunately, the code is ugly but does make sense
@@ -1058,7 +1081,7 @@ penguins |>
     + sd for error bars
 
 ```{r}
-#| fig-show: hide
+#| output-location: column
 penguins |>
   filter(!is.na(sex)) |>
   summarise(
@@ -1068,7 +1091,7 @@ penguins |>
   ) 
 ```
 
-## Creating a Summary Barplot
+## Creating a Summary Barplot {.slide-only .unlisted}
 
 - Now we can use `geom_col()`
 
@@ -1089,7 +1112,7 @@ penguins |>
 
 
 
-## Creating a Summary Barplot
+## Creating a Summary Barplot {.slide-only .unlisted}
 
 ```{r}
 #| fig-show: hide
@@ -1125,7 +1148,7 @@ tibble(
 )
 ```
 
-## Adding Labels To Points
+## Adding Labels To Points {.slide-only .unlisted}
 
 - We can easily plot points, but what about labels?
 
@@ -1138,7 +1161,7 @@ tibble(
   geom_point()
 ```
 
-## Adding Labels To Points
+## Adding Labels To Points {.slide-only .unlisted}
 
 - Using `geom_text()` will overlay labels exactly on the points
 
@@ -1152,7 +1175,7 @@ tibble(
   geom_text(aes(label = label), size = 4)
 ```
 
-## Adding Labels To Points
+## Adding Labels To Points {.slide-only .unlisted}
 
 - Using `geom_text_repel()` will shift labels marginally away from the points
 
@@ -1167,16 +1190,15 @@ tibble(
   geom_text_repel(aes(label = label), size = 4)
 ```
 
-. . .
-
+::: {.fragment}
 - `geom_label()` and `geom_label_repel()` will add borders and fill to labels
+:::
 
 ## Saving Images
 
 - The simple way is click `Export` in the `Plots` pane
 
-. . .
-
+::: {.fragment}
 - The way to save using code is
 
 ``` r
@@ -1187,12 +1209,16 @@ ggsave("myplot.png", width = 7, height = 7, units = "in")
 - Output format is determined by the suffix
 - Try saving as a pdf...
 
-## Saving Images
+:::
+
+## Saving Images {.slide-only .unlisted}
 
 - I think saving using code is preferable
 - Modify an analysis or data $\implies$ saved figures will also update
     + This saves time & ensures reproducibility
     + Modifying font sizes etc for publication can take a while
+
+# Conclusion
 
 ## Conclusion
 

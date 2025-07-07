@@ -32,7 +32,7 @@ knitr:
     fig.width: 10
 ---
 
-# Some Initial Challenges
+## Some Initial Challenges
 
 ```{r, echo=FALSE}
 library(tidyverse)
@@ -48,9 +48,7 @@ library(tidyverse)
 4. Include the standard deviation alongside the mean
 5. Create a barplot showing mean length with error bars
 
-::: {.notes}
-We'll learn how to set the dose categories in order tomorrow
-:::
+(We'll learn how to set the dose categories in order tomorrow)
 
 
 ## Loading and Manipulating Data
