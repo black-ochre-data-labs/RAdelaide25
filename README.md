@@ -13,7 +13,9 @@ This will be a three day course to enable researchers to develop their
 capabilities using the language `R`. Beginners are welcome and
 intermediate users will also gain a great deal from attending.
 
-Data for the workshop is available as a zip file [here](data.zip)
+Data for the workshop is available as a zip file [here](data.zip). We
+will explain where to place this data and how to structure directories
+in the opening sessions.
 
 ## Provisional Course Outline
 
@@ -41,7 +43,7 @@ Data for the workshop is available as a zip file [here](data.zip)
 | 11:00 | Working With Text | [Working With Text](text.html) | 80min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | 40min |
-| 2:10 | Linear Regression | [Linear Regression](linear_regression.html) | 150min |
+|  | Linear Regression | [Linear Regression](linear_regression.html) | 150min |
 | 3:00 | *Afternoon Tea* |  |  |
 | 3:30 | Linear Regression (continued) |  |  |
 

@@ -617,7 +617,7 @@ read_csv(
 All `arguments` were defined somewhere in the GUI.
 
 1. Open the GUI Preview by clicking on the file again
-2. Uncheck the `First Row as Names` checkbox
+2. Uncheck the `First Row as Names` check-box
 
 ::: {.fragment}
 

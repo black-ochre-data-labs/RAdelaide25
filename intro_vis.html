@@ -2499,8 +2499,7 @@ display: none;
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="base-plotting-in-r" class="level2">
@@ -3482,7 +3481,7 @@ display: none;
 <ul>
 <li>Violin plots are similar to boxplots
 <ul>
-<li>can estimate distibutions beyond the points (<code>trim = FALSE</code>)</li>
+<li>can estimate distributions beyond the points (<code>trim = FALSE</code>)</li>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -3614,7 +3613,7 @@ display: none;
 <span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
 <span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sex, weight_mn, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Now add errorbars adding/subtracting from the mean &#39;on the fly&#39;</span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Now add error bars adding/subtracting from the mean &#39;on the fly&#39;</span></span>
 <span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
 <span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> weight_mn <span class="sc">-</span> weight_sd, <span class="at">ymax =</span> weight_mn <span class="sc">+</span> weight_sd),</span>
 <span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span> <span class="co"># Set the width of tails on the error bars</span></span>

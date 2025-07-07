@@ -70,8 +70,7 @@ knitr:
 
 ```{r}
 library(palmerpenguins)
-library(ggplot2)
-library(dplyr)
+library(tidyverse)
 ```
 
 
@@ -1003,7 +1002,7 @@ penguins |>
 ## Trying a Violin Plot
 
 - Violin plots are similar to boxplots
-    + can estimate distibutions beyond the points (`trim = FALSE`)
+    + can estimate distributions beyond the points (`trim = FALSE`)
 
 ```{r}
 #| fig-show: hide
@@ -1125,7 +1124,7 @@ penguins |>
   ) |>
   ggplot(aes(sex, weight_mn, fill = sex)) +
   geom_col() +
-  ## Now add errorbars adding/subtracting from the mean 'on the fly'
+  ## Now add error bars adding/subtracting from the mean 'on the fly'
   geom_errorbar(
     aes(ymin = weight_mn - weight_sd, ymax = weight_mn + weight_sd),
     width = 0.2 # Set the width of tails on the error bars

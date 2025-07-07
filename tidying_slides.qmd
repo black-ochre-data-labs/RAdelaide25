@@ -147,7 +147,7 @@ penguins |>
 
 - The reverse operation is `pivot_longer()`
 - This time we move values from multiple columns into a single column
-    + Notice that the new column names ned to be quoted here
+    + Notice that the new column names need to be quoted here
 
 ```{r}
 #| output: false
