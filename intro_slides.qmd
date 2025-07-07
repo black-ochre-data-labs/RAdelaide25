@@ -1,10 +1,10 @@
 ---
-title: "Welcome & Introduction"
+title: "Introduction To R and RStudio"
 subtitle: "RAdelaide 2025"
 author: "Dr Stevie Pederson"
 institute: |
   | Black Ochre Data Labs
-  | Telethon Kids Institute
+  | The Kids Research Institute Australia
 date: "2025-07-08"
 date-format: long
 bibliography: bibliography.bib
@@ -122,6 +122,7 @@ Experience is the best teacher $\implies$ please practice your skills
 ::: {.notes}
 - Ross Ihaka is of NZ Maori descent
 - Last commercial release of S-Plus in 2007
+- Some of the code for GLMs was written by Prof Bill Venables (Head of Maths, UofA)
 :::    
     
 - Derivative of `S` [Bell Labs, @Chambers1977-ry]
@@ -137,6 +138,7 @@ Experience is the best teacher $\implies$ please practice your skills
 - My first exposure to R was 2002 (R v1.5)
 
 :::
+
 ## What is R? {.slide-only .unlisted}
 
 ::: {.notes}
@@ -196,6 +198,29 @@ Experience is the best teacher $\implies$ please practice your skills
     - Curated for language consistency & documentation
 
 :::
+
+::: {.fragment}
+- Some packages also live on github or bitbucket
+    + Will include latest (unstable) development versions
+    
+:::
+
+## R Packages {.slide-only .unlisted}
+
+- Installation of a package can be done through a variety of methods:
+    + `install.packages("packageName")` will only install from CRAN
+
+::: {.fragment}
+- Bioconductor also provide a CRAN package: `BiocManager`
+    + `BiocManager::install("packageName")` installs from CRAN, Bioconductor & github
+
+:::
+
+::: {.fragment}
+- The CRAN package `pak` also installs from multiple locations
+:::
+
+
    
 <!-- ## Where is R used? {visibility="hidden"} -->
 
@@ -347,15 +372,17 @@ x
 ## The R Console {.slide-only .unlisted}
 
 ::: {.callout-important collapse="true"}
-### Do R Objects Have Rules About Valid/Invalid Names
+## Do R Objects Have Rules About Valid/Invalid Names
 
 ::: {.incremental}
-- Yes. The only special characters which can be used are `.` and `_`
+- The only "special characters" which can be used are `.` and `_`
     + This makes perfect sense when you realise `+`, `/`, `*`, `-` etc. are mathematical operators
-- Object names must start with a letter, `.` or `_`
+    + Names cannot contain spaces $\implies$ `R` will think there are two objects
+- Object names must start with a letter, `.` or `_`.
     + Objects starting with a `.` are often hidden from view
 - Common conventions are snake_case (`my_object`) or camelCase (`myObject`)
-- Numbers can follow the initial character, e.g. `x1` is valid whilst `1x` is not
+- Numbers can follow the initial character but cannot start a name
+    + e.g. `x1` is a valid name whilst `1x` is not
 
 :::
 :::
@@ -460,12 +487,12 @@ x > 1
 ## Some very helpful features of `RStudio`
 
 - We can write scripts and **execute code** interactively
-- Predictive auto-completion 
 - We can see **everything** we need (directories, plots, code, history etc.)
 
 ::: {.fragment}
 
-- Use `R Projects` to manage each analysis
+- Predictive auto-completion 
+- Integration with Github Co-Pilot
 - Integration with other languages
     + markdown, $\LaTeX$, bash, python, C++, git etc.
 - Numerous add-ons to simplify larger tasks
@@ -476,12 +503,14 @@ x > 1
 - Posit is now developing Positron to better enable a variety of languages
 :::
 
-## Important Setup 
+## Create an R Project
 
+I use `R Projects` to manage each analysis
+
+::: {.fragment}
 1. Create a directory on your computer for today's material
     + We recommend `RAdelaide25` in your home directory
 
-::: {.fragment}
 :::
 
 ::: {.fragment}
@@ -493,24 +522,33 @@ x > 1
 
 :::
 
-::: {.fragment}
+
+## Create an R Project {.slide-only .unlisted}
+
+<!-- (Not needed for any using the Posit cloud) -->
 
 We want RStudio to be looking in our new directory (`RAdelaide25`) <br>$\implies$R Projects make this easy
 
+::: {.fragment}
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+- `File` > `New Project` > `Existing Directory` 
+- Browse to your `RAdelaide25` directory $\implies$ `Create Project`
+
 :::
 
-## Create an R Project
+::: {.column width="50%"}
 
-(Not needed for any using the Posit cloud)
+![](assets/RProject.png){.absolute right=0 bottom=100}
+:::
 
-`File` > `New Project` > `Existing Directory` <br>
+:::
 
-```{r, echo = FALSE, fig.align='left', out.width='35%'}
-knitr::include_graphics("assets/RProject.png")
-```
+:::
 
-
-- Browse to your `RAdelaide25` directory $\implies$ `Create Project`
 
 ## Create an R Project {.slide-only .unlisted}
 
@@ -724,8 +762,13 @@ Page 2 has lots of hints:
     
 ## Conclusion
 
+- `R` is the engine, driving everything we do
 - RStudio brings together multiple features for easy coding
 - Can easily access Help, Plots, Scripts etc
 - Integrated Development Environment (IDE)
+
+::: {.fragment}
+- Other IDEs do exist (e.g. VSCode, Positron) $\implies$ beyond scope of course
+:::
 
 # References

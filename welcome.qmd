@@ -1,10 +1,10 @@
 ---
-title: "Welcome & Intriduction"
+title: "Welcome & Introduction"
 subtitle: "RAdelaide 2025"
 author: "Dr Stevie Pederson"
 institute: |
   | Black Ochre Data Labs
-  | Telethon Kids Institute
+  | The Kids Research Institute Australia
 date: "2025-07-08"
 date-format: long
 bibliography: bibliography.bib
@@ -62,20 +62,29 @@ http://blackochrelabs.au/RAdelaide25
 
 # Introduction {background-color="#3d3d40"}
 
-
-## Who Am I? 
+## Who Is Black Ochre Data Labs
 
 ::: {.notes}
-- Working on a large-cohort multiomics study with the South Australian Aboriginal Community
-- 1400 participants
-- Trying to find the molecular drivers of increased Type II Diabetes and profound cardiovascular complications
-- Primarily responsible for the transcriptomics layer +  multiomics integration
+Formerly Telethon Kids
 :::
+
+- A Data Science & Bioinformatics group based in The Kids Research Institute Australia
+    + Led by Prof Alex Brown and Chief Data Scientist A/Prof Jimmy Breen
+- BODL team members are spread across Australia
+    + Majority in Adelaide or Perth
+
+. . .    
+    
+- Focus is on Genomics for Indigenous Australians $\implies$ Precision Health 
+- Help address some of the current inequities in health care
+- Also have a keen interest in training and capacity building
+
+## Who Am I? 
 
 **Stephen (Stevie) Pederson** (They/Them)
 
 - Adelaide, Kaurna Country, SA
-- Bioinformatician, Black Ochre Data Labs, The Kids Research Institute Australia(2022-)
+- Bioinformatician, Black Ochre Data Labs (2022-)
 
 ::: {.fragment}
 
@@ -166,14 +175,15 @@ Tutors will be monitoring as well and can stop so we can address the question as
 ## Course Aims
 
 - Provide a deep understanding of how to work with data in R
-    + Importing Data
-    + Visualising Data
-    + Understanding Data
-- Enable use of modern analytic approaches [$\implies$ reproducible research]{.fragment .fade-in}
-
+    + Importing and Visualising Data
+    + Understanding R Data Structures
+    + Most common analytic methods and strategies
+    
 ::: {.incremental}
 
-- Not just *how* [$\implies$ a deep understanding of underlying structures]{.fragment .fade-in}
+- Enable use of modern analytic approaches [$\implies$ reproducible research]{.fragment .fade-in}
+- Provide you with all the building blocks you need
+    + Not just *how* [$\implies$ a deep understanding of underlying structures]{.fragment .fade-in}
 - The more code you type the more you learn
 :::
 
@@ -185,24 +195,28 @@ Please practice exactly like you're learning a new skill (driving, playing piano
 ## Course Outline
 
 ::: {.notes}
-Day 1 may be hard & fast but please stop me & ask questions
-Day 2 is more a "what the hell did we do yesterday" day
-Day 3 should be a real joining the dots day
+- Day 1 may be hard & fast but please stop me & ask questions
+- Day 2 is more a "what the hell did we do yesterday" day
+- Day 3 should be a real joining the dots day
+- We'll cover about as much as is realistic in 3 days
 :::
 
 - Today we will explore common data structures
-    + Will be a pretty exhausting day in the deep end
+    + Will be a pretty exhausting day
     + Basic data wrangling and visualisation
     
 ::: {.fragment}
 
-- Day 2 we develop more of a careful, nuanced understanding
+- Day 2: Developing a more careful, nuanced understanding
+    + How does R actually see data
     + Learn the basics of statistical analysis in R
 
 :::
 ::: {.fragment}
     
-- Day 3 we bring it together and run complete analyses with beautiful figures
+- Day 3: Bring everything together and run complete analyses 
+    + Preparing complete analytic reports with beautiful figures
+    + Analytic techniques beyond t-tests and linear regression
 
 :::
 
@@ -211,13 +225,17 @@ Day 3 should be a real joining the dots day
 
 - AI engines such as ChatGPT have changed the game completely
 - You can ask them to write code for you
-    + They will sometimes get it wrong
-    + *You will not understand how to use R*
+    + They will regularly get it wrong
 - If I ask ChatGPT to write code for me $\rightarrow$ mine is usually better[<br> and **correct**]{.fragment}
+
+. . .
+
+- Can be a helpful addition to your skill set
+    + Especially if your foundations in a language are strong
     
 ## A Comment on AI
 
-- I do regularly use ChatGPT or Claude.ai to help me write code
+- I do use ChatGPT or Claude.ai to help me write code
     + I ask for help in less familiar languages (e.g. C, python)
     + I ask it to help me write documentation or comment code
     + I often have it running as a "co-pilot"
@@ -232,6 +250,7 @@ Day 3 should be a real joining the dots day
     
 ::: {.notes}
 - Running in Co-Pilot mode can be stupidly frustrating as it just keeps making suggestions relentlessly
+- I often asked things like "What's a great dataset for demonstrating logistic regression?"
 - Most of the tutors will have experience with AI so please chat to us in the breaks
 :::
     

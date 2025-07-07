@@ -4,7 +4,7 @@ subtitle: "RAdelaide 2025"
 author: "Dr Stevie Pederson"
 institute: |
   | Black Ochre Data Labs
-  | Telethon Kids Institute
+  | The Kids Research Institute Australia
 date: "2025-07-10"
 date-format: long
 bibliography: bibliography.bib

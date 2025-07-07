@@ -11,7 +11,7 @@
 
   <meta name="author" content="Dr Stevie Pederson">
   <meta name="dcterms.date" content="2025-07-08">
-  <title>Welcome &amp; Introduction</title>
+  <title>Introduction To R and RStudio</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -214,7 +214,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#3d3d40" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
-  <h1 class="title">Welcome &amp; Introduction</h1>
+  <h1 class="title">Introduction To R and RStudio</h1>
   <p class="subtitle">RAdelaide 2025</p>
 
 <div class="quarto-title-authors">
@@ -224,7 +224,7 @@ Dr Stevie Pederson
 </div>
         <p class="quarto-title-affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
     </div>
 </div>
@@ -330,6 +330,7 @@ Dr Stevie Pederson
 <ul>
 <li>Ross Ihaka is of NZ Maori descent</li>
 <li>Last commercial release of S-Plus in 2007</li>
+<li>Some of the code for GLMs was written by Prof Bill Venables (Head of Maths, UofA)</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -454,6 +455,36 @@ Dr Stevie Pederson
 <li><span class="math inline">\(&gt;\)</span> 3000 packages with a more biological/genomics focus</li>
 <li>Curated for language consistency &amp; documentation</li>
 </ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Some packages also live on github or bitbucket
+<ul>
+<li>Will include latest (unstable) development versions</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="r-packages-2" class="slide level2 slide-only unlisted">
+<h2>R Packages</h2>
+<ul>
+<li>Installation of a package can be done through a variety of methods:
+<ul>
+<li><code>install.packages("packageName")</code> will only install from CRAN</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Bioconductor also provide a CRAN package: <code>BiocManager</code>
+<ul>
+<li><code>BiocManager::install("packageName")</code> installs from CRAN, Bioconductor &amp; github</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>The CRAN package <code>pak</code> also installs from multiple locations</li>
 </ul>
 </div>
 <!-- ## Where is R used? {visibility="hidden"} -->
@@ -628,16 +659,20 @@ Dr Stevie Pederson
 </div>
 <div class="callout-content">
 <ul>
-<li class="fragment">Yes. The only special characters which can be used are <code>.</code> and <code>_</code>
+<li class="fragment">The only “special characters” which can be used are <code>.</code> and <code>_</code>
 <ul>
 <li class="fragment">This makes perfect sense when you realise <code>+</code>, <code>/</code>, <code>*</code>, <code>-</code> etc. are mathematical operators</li>
+<li class="fragment">Names cannot contain spaces <span class="math inline">\(\implies\)</span> <code>R</code> will think there are two objects</li>
 </ul></li>
-<li class="fragment">Object names must start with a letter, <code>.</code> or <code>_</code>
+<li class="fragment">Object names must start with a letter, <code>.</code> or <code>_</code>.
 <ul>
 <li class="fragment">Objects starting with a <code>.</code> are often hidden from view</li>
 </ul></li>
 <li class="fragment">Common conventions are snake_case (<code>my_object</code>) or camelCase (<code>myObject</code>)</li>
-<li class="fragment">Numbers can follow the initial character, e.g.&nbsp;<code>x1</code> is valid whilst <code>1x</code> is not</li>
+<li class="fragment">Numbers can follow the initial character but cannot start a name
+<ul>
+<li class="fragment">e.g.&nbsp;<code>x1</code> is a valid name whilst <code>1x</code> is not</li>
+</ul></li>
 </ul>
 </div>
 </div>
@@ -763,12 +798,12 @@ Dr Stevie Pederson
 <h2>Some very helpful features of <code>RStudio</code></h2>
 <ul>
 <li>We can write scripts and <strong>execute code</strong> interactively</li>
-<li>Predictive auto-completion</li>
 <li>We can see <strong>everything</strong> we need (directories, plots, code, history etc.)</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Use <code>R Projects</code> to manage each analysis</li>
+<li>Predictive auto-completion</li>
+<li>Integration with Github Co-Pilot</li>
 <li>Integration with other languages
 <ul>
 <li>markdown, <span class="math inline">\(\LaTeX\)</span>, bash, python, C++, git etc.</li>
@@ -782,16 +817,16 @@ Dr Stevie Pederson
 </ul>
 </div>
 </section>
-<section id="important-setup" class="slide level2">
-<h2>Important Setup</h2>
+<section id="create-an-r-project" class="slide level2">
+<h2>Create an R Project</h2>
+<p>I use <code>R Projects</code> to manage each analysis</p>
+<div class="fragment">
 <ol type="1">
 <li>Create a directory on your computer for today’s material
 <ul>
 <li>We recommend <code>RAdelaide25</code> in your home directory</li>
 </ul></li>
 </ol>
-<div class="fragment">
-
 </div>
 <div class="fragment">
 <ol start="2" type="1">
@@ -803,20 +838,24 @@ Dr Stevie Pederson
 </ul></li>
 </ol>
 </div>
-<div class="fragment">
-<p>We want RStudio to be looking in our new directory (<code>RAdelaide25</code>) <br><span class="math inline">\(\implies\)</span>R Projects make this easy</p>
-</div>
-</section>
-<section id="create-an-r-project" class="slide level2">
-<h2>Create an R Project</h2>
-<p>(Not needed for any using the Posit cloud)</p>
-<p><code>File</code> &gt; <code>New Project</code> &gt; <code>Existing Directory</code> <br></p>
-
-<img data-src="assets/RProject.png" class="quarto-figure quarto-figure-left r-stretch" style="width:35.0%"><ul>
-<li>Browse to your <code>RAdelaide25</code> directory <span class="math inline">\(\implies\)</span> <code>Create Project</code></li>
-</ul>
 </section>
 <section id="create-an-r-project-1" class="slide level2 slide-only unlisted">
+<h2>Create an R Project</h2>
+<!-- (Not needed for any using the Posit cloud) -->
+<p>We want RStudio to be looking in our new directory (<code>RAdelaide25</code>) <br><span class="math inline">\(\implies\)</span>R Projects make this easy</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><code>File</code> &gt; <code>New Project</code> &gt; <code>Existing Directory</code></li>
+<li>Browse to your <code>RAdelaide25</code> directory <span class="math inline">\(\implies\)</span> <code>Create Project</code></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="assets/RProject.png" class="absolute" style="bottom: 100px; right: 0px; "></p>
+</div></div>
+</div>
+</section>
+<section id="create-an-r-project-2" class="slide level2 slide-only unlisted">
 <h2>Create an R Project</h2>
 <aside class="notes">
 <ul>
@@ -1077,10 +1116,16 @@ Dr Stevie Pederson
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
 <ul>
+<li><code>R</code> is the engine, driving everything we do</li>
 <li>RStudio brings together multiple features for easy coding</li>
 <li>Can easily access Help, Plots, Scripts etc</li>
 <li>Integrated Development Environment (IDE)</li>
 </ul>
+<div class="fragment">
+<ul>
+<li>Other IDEs do exist (e.g.&nbsp;VSCode, Positron) <span class="math inline">\(\implies\)</span> beyond scope of course</li>
+</ul>
+</div>
 </section></section>
 <section id="references" class="title-slide slide level1 smaller scrollable">
 <h1>References</h1>
