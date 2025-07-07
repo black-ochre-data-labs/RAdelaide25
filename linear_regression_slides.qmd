@@ -979,8 +979,6 @@ tibble(
 ```
 
 
-
-
 ## Additional Plotting Packages
 
 - Multiple options for great looking plots 
