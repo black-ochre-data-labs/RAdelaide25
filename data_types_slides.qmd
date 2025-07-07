@@ -28,7 +28,7 @@ format:
     output-file: data_types.html
     embed-resources: true    
     toc: true
-    toc-depth: 1    
+    toc-depth: 2
 include-after: |
   <script type="text/javascript">
     Reveal.on('ready', event => {
@@ -65,11 +65,12 @@ knitr:
 - Start a new script `DataTypes.R`
 - Make sure you have a fresh R Session
 
-. . .
+::: {.fragment}
 
 - This session will start simply but we will develop some fundamental concepts
 - Please ask questions often!!!
 
+:::
 
 ## Vectors
 
@@ -88,7 +89,7 @@ Definition
 
 :::
 
-## Vectors
+## Vectors {.slide-only .unlisted}
 
 A simple vector would be
 
@@ -98,7 +99,7 @@ A simple vector would be
 
 __What type of values are in this vector?__
 
-## Vectors 
+## Vectors {.slide-only .unlisted}
 
 Another vector might be
 
@@ -108,7 +109,7 @@ c("a", "cat", "video")
 
 __What type of values are in this vector?__
 
-## Vectors 
+## Vectors {.slide-only .unlisted}
 
 
 ```{r, echo=FALSE, include=TRUE, results='markup'}
@@ -187,11 +188,12 @@ These are the basic building blocks for all `R` objects
 3. double
 4. character
 
-. . .
+::: {.fragment}
 
 - There are two more rare types we'll ignore: `complex` & `raw`
 - **All** `R` data structures are built on these 6 vector types
 
+:::
 
 ## Properties of a vector 
 
@@ -209,7 +211,7 @@ What defining properties might a vector have?
 :::
 
 
-## Properties of a vector
+## Properties of a vector {.slide-only .unlisted}
 
 __Let's try them on our vectors__
 
@@ -234,11 +236,11 @@ c(1, 2)
 - The numbers `1` & `2` were both vectors with `length` 1
 - We have combined two vectors of length 1, to make a vector of length 2
 
-## Working with Vectors 
+## Working with Vectors {.slide-only .unlisted}
 
 __What would happen if we combined two vectors of different types?__
 
-. . .
+::: {.fragment}
 
 ```{r, results='hide'}
 new_vec <- c(logi_vec, int_vec)
@@ -246,13 +248,17 @@ print(new_vec)
 typeof(new_vec)
 ```
 
-## Working with Vectors
+:::
+
+## Working with Vectors {.slide-only .unlisted}
 
 __Q: What happened to the `logical` values?__
 
-. . .
+::: {.fragment}
 
 Answer: `R` will **coerce** them into a common type (i.e. integers).
+
+:::
 
 # Coercion {background-color="#3d3d40"}
 
@@ -260,12 +266,14 @@ Answer: `R` will **coerce** them into a common type (i.e. integers).
 
 **What other types could `logical` vectors be coerced into?**
 
-. . .
+::: {.fragment}
 
 Try using the functions:
 `as.integer()`, `as.double()` & `as.character()` on `logi_vec`
 
-## Coercion
+:::
+
+## Coercion {.slide-only .unlisted}
 
 ::: {.incrementa}
 
@@ -293,7 +301,7 @@ y[2]
 y[1:3]
 ```
 
-## Subsetting Vectors
+## Subsetting Vectors{.slide-only .unlisted}
 
 Double brackets (`[[]]`) can be used to return __single elements__ only
 
@@ -307,7 +315,7 @@ If you tried `y[[1:3]]` you would receive an error message
 Unless you're the Seurat package developers...
 :::
 
-## Subsetting Vectors
+## Subsetting Vectors {.slide-only .unlisted}
 
 If a vector has name attributes, we can call values by name
 
@@ -316,7 +324,7 @@ head(euro)
 euro["ESP"]
 ```
 
-## Subsetting Vectors 
+## Subsetting Vectors  {.slide-only .unlisted}
 
 *Try repeating the* call-by-name *approach using double brackets*
 
@@ -325,20 +333,20 @@ euro["ESP"]
 euro[["ESP"]]
 ```
 
-. . .
+::: {.fragment}
 
 __What was the difference in the output?__
 
-. . .
-
+:::
+::: {.fragment}
 1. Using `[]` returned the vector with the identical structure
 2. Using `[[]]` removed the `attributes` & just gave the value
-
+:::
 ::: {.notes}
 Ask about `Seurat` & mention it's unconventional behaviour
 :::
 
-## Subsetting Vectors 
+## Subsetting Vectors {.slide-only .unlisted}
 
 __Is it better to call by position, or by name?__
 
@@ -356,17 +364,19 @@ Things to consider:
 euro[1:5]
 ```
 
-. . .
+::: {.fragment}
 
 We are using the integer vector `1:5` to extract values from `euro`
 
-. . .
+:::
+::: {.fragment}
 
 ```{r}
 int_vec
 euro[int_vec]
 ```
 
+:::
 
 ## Vector Operations
 
@@ -383,7 +393,7 @@ sqrt(int_vec)
 
 This is one of the real strengths of `R`
 
-## Vector Operations 
+## Vector Operations {.slide-only .unlisted}
 
 We can also combine the above logical test and subsetting
 
@@ -392,14 +402,15 @@ dbl_vec
 dbl_vec > 1
 ```
 
-. . .
+::: {.fragment}
 
 ```{r, results='hide'}
 dbl_vec[dbl_vec > 1]
 ```
 
+:::
 
-## Vector Operations
+## Vector Operations {.slide-only .unlisted}
 
 An additional logical test: `%in%` (read as: "*is in*")
 
@@ -412,11 +423,13 @@ int_vec
 dbl_vec %in% int_vec
 ```
 
-. . .
+::: {.fragment}
 
 Returns `TRUE/FALSE` for each value in `dbl_vec` if it **is in** `int_vec`
 
 NB: `int_vec` was coerced silently to a `double` vector
+
+:::
 
 # Matrices {background-color="#3d3d40"}
 
@@ -430,14 +443,14 @@ int_mat <- matrix(1:6, ncol = 2)
 print(int_mat)
 ```
 
-## Matrices
+## Matrices {.slide-only .unlisted}
 
 - Matrices can only hold __one__ type of value
     + i.e. logical, integer, double, character
 - Have additional attributes such as `dim()`, `nrow()` `ncol()`
 - Can have __optional__ `rownames()` & `colnames()`
 
-## Matrices
+## Matrices {.slide-only .unlisted}
 
 __Some commands to try:__
 
@@ -453,7 +466,7 @@ length(int_mat)
 
 __Ask questions if anything is confusing__
 
-## Matrices
+## Matrices {.slide-only .unlisted}
 
 - Use square brackets to extract values by row & column
 - The form is `x[row, col]`
@@ -466,7 +479,7 @@ int_mat[1,]
 
 __How would we just get the first column?__
 
-## Matrices
+## Matrices {.slide-only .unlisted}
 
 __NB: Forgetting the comma when subsetting will treat the matrix as a single vector running down the columns__
 
@@ -475,7 +488,7 @@ int_mat
 int_mat[5]
 ```
 
-## Matrices
+## Matrices {.slide-only .unlisted}
 
 **Requesting a row or column that doesn't exist is the source of a very common error message**
 
@@ -507,14 +520,16 @@ dim(iris3)
 dimnames(iris3)
 ```
 
-. . .
-
+::: {.fragment}
+<br>
 ```{r}
 iris3[1,,]
 ```
 ```{r,results='hide'}
 iris3[1:2,,]
 ```
+
+:::
 
 ## Homogeneous Data Types
 
@@ -544,7 +559,7 @@ A `list` is a __heterogeneous__ vector.
 
 **These are incredibly common in `R`**
 
-## Lists
+## Lists {.slide-only .unlisted}
 
 Many `R` functions provide output as a list
 
@@ -557,19 +572,19 @@ testResults
 
 NB: There is a function (`print.htest()`) that tells `R` how to print the results to the Console
 
-## Lists {visibility="hidden"}
+<!-- ## Lists {visibility="hidden"} -->
 
-Explore the various attributes of the object `testResults`
+<!-- Explore the various attributes of the object `testResults` -->
 
-```{r, results='hide'}
-attributes(testResults)
-length(testResults)
-names(testResults)
-typeof(testResults)
-```
+<!-- ```{r, results='hide'} -->
+<!-- attributes(testResults) -->
+<!-- length(testResults) -->
+<!-- names(testResults) -->
+<!-- typeof(testResults) -->
+<!-- ``` -->
 
 
-## Lists
+## Lists {.slide-only .unlisted}
 
 We can call the individual components of a list using the `$` symbol followed by the name
 
@@ -593,7 +608,7 @@ typeof(testResults[1])
 - Using single square brackets returns a `list` 
     - i.e. is a subset of the larger object and of the *same type*
 
-## Subsetting Lists
+## Subsetting Lists {.slide-only .unlisted}
 
 Double brackets again retrieve a single element of the vector
 
@@ -606,7 +621,7 @@ typeof(testResults[[1]])
 
 *When would we use either method?*
 
-. . .
+::: {.fragment}
 
 <br>
 We can also use names instead of positions
@@ -616,12 +631,13 @@ testResults[c("statistic", "p.value")]
 testResults[["statistic"]]
 ```
 
+:::
 
-## Lists {visibility="hidden"}
+<!-- ## Lists {visibility="hidden"} -->
 
-- Note also the **Environment** Tab in the top right of RStudio
-- Click the arrow next to `testResults` to expand the entry
-- This is the output of `str(testResults)`
+<!-- - Note also the **Environment** Tab in the top right of RStudio -->
+<!-- - Click the arrow next to `testResults` to expand the entry -->
+<!-- - This is the output of `str(testResults)` -->
 
 # Data Frames {background-color="#3d3d40"}
 
@@ -635,7 +651,7 @@ Finally!
 - Column vectors **MUST** be the same length
 
 
-## Data Frames
+## Data Frames {.slide-only .unlisted}
 
 - Analogous to matrices, but are **specifically for heterogeneous data**
 - Have many of the same attributes as matrices
@@ -643,7 +659,7 @@ Finally!
 - `colnames()` & `rownames()` are **NOT** optional $\implies$ assigned by default
     + `tibble` variants have simple row numbers as rownames
 
-## Data Frames
+## Data Frames {.slide-only .unlisted}
 
 Let's load `pigs` again
 
@@ -653,8 +669,7 @@ pigs <- read_csv("data/pigs.csv")
 head(pigs)
 ```
 
-
-. . .
+::: {.fragment}
 
 <br>
 
@@ -666,7 +681,9 @@ dim(pigs)
 nrow(pigs)
 ```
 
-## Data Frames
+:::
+
+## Data Frames {.slide-only .unlisted}
 
 Individual entries can also be extracted using the square brackets
 
@@ -674,7 +691,7 @@ Individual entries can also be extracted using the square brackets
 pigs[1:2, 1]
 ```
 
-. . .
+::: {.fragment}
 
 We can also refer to columns by name (same as matrices)
 
@@ -682,8 +699,9 @@ We can also refer to columns by name (same as matrices)
 pigs[1:2, "len"]
 ```
 
+:::
 
-## Data Frames
+## Data Frames {.slide-only .unlisted}
 
 Thinking of columns being vectors is quite useful
 
@@ -695,7 +713,7 @@ pigs$len[1:2]
 
 **This does NOT work for rows!!!**
 
-## Data Frames
+## Data Frames {.slide-only .unlisted}
 
 - `R` is *column major* by default (as is `FORTRAN` & Matlab)
     + Very common in the 1970s
@@ -715,7 +733,7 @@ __Data frames are actually special cases of lists__
 - Data Frames can be treated identically to a `list`
 - Have additional subsetting operations and attributes
 
-## Data Frames & Lists
+## Data Frames & Lists {.slide-only .unlisted}
 
 Forgetting the comma, now gives a completely different result to a matrix!
 
@@ -749,7 +767,7 @@ __How do we assign names?__
 named_vec <- c(a = 1, b = 2, c = 3)
 ```
 
-. . .
+::: {.fragment}
 
 OR we can name an existing vector
 
@@ -757,7 +775,9 @@ OR we can name an existing vector
 names(int_vec) <- c("a", "b", "c", "d", "e")
 ```
 
-## Name Attributes
+:::
+
+## Name Attributes {.slide-only .unlisted}
 
 __Can we remove names?__
 
@@ -768,7 +788,7 @@ null_vec <- c()
 length(null_vec)
 ```
 
-## Name Attributes
+## Name Attributes {.slide-only .unlisted}
 
 We can also use this to remove names
 
@@ -792,7 +812,7 @@ int_mat <- matrix(1:6, ncol = 2)
 row_mat <- matrix(1:6, ncol = 2, byrow = TRUE)
 ```
 
-## Matrices 
+## Matrices {.slide-only .unlisted}
 
 We can assign row names & column names after creation
 
@@ -833,7 +853,7 @@ OR
 my_list <- list(integers = int_vec, doubles = dbl_vec)
 ```
 
-## Lists
+## Lists {.slide-only .unlisted}
 
 __What happens if we try this?__
 
@@ -858,7 +878,7 @@ my_df <- data.frame(doubles = dbl_vec, logical = logi_vec)
 names(my_df) == colnames(my_df)
 ```
 
-## Data Frames
+## Data Frames {.slide-only .unlisted}
 
 __What happens if we try to combine components that aren't the same length?__
 
@@ -877,12 +897,15 @@ my_df <- data.frame(
     + e.g. if a numeric column has some text somewhere in a csv
     + If the wrong number of delimiters appear in one of more rows
 
-. . .
+::: {.fragment}
     
-- If we known what columns should be <br>$implies$ can specify types using `col_types`
+- If we known what columns should be <br>$\implies$ can specify types using `col_types`
     + Will force text in numeric columns to `NA`
     + Can enforce integers vs numeric
     
-. . .
+:::
+::: {.fragment}
 
 - One final type we haven't discussed is categorical columns, i.e. factors
+
+:::

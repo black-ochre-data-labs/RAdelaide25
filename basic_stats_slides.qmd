@@ -29,7 +29,7 @@ format:
     output-file: basic_stats.html
     embed-resources: true    
     toc: true
-    toc-depth: 1    
+    toc-depth: 2 
 include-after: |
   <script type="text/javascript">
     Reveal.on('ready', event => {
@@ -75,7 +75,8 @@ theme_set(
 
 - `R` has it's origins as a statistical analysis language (i.e. `S`)
 - Purpose of this session is NOT to teach statistical theory
-    - I am a bioinformatician NOT a statistician
+    - I am more of a bioinformatician than statistician
+    - I did tutor stats for 3 years
 - Perform simple analyses in R
 - Up to you to know what you're doing
     - Or talk to your usual statisticians & collaborators
@@ -85,7 +86,7 @@ theme_set(
 - `R` comes with nearly every distribution
 - Standard syntax for accessing each
 
-## Distributions 
+## Distributions  {.slide-only .unlisted}
 
 | Distribution | Density   | Area Under Curve | Quantile  | Random    |
 |:------------ |:--------- |:---------------- |:--------- |:--------- |
@@ -97,7 +98,7 @@ theme_set(
 | Binomial     | `dbinom()` | `pbinom()`      | `qbinom()` | `rbinom()` |
 | Poisson      | `dpois()` | `ppois()`        | `qpois()` | `rpois()` |
 
-## Distributions 
+## Distributions  {.slide-only .unlisted}
 
 - Also Beta, $\Gamma$, Log-Normal, F, Geometric, Cauchy, Hypergeometric etc...
 
@@ -105,7 +106,7 @@ theme_set(
 ?Distributions
 ```
 
-## Distributions 
+## Distributions  {.slide-only .unlisted}
 
 ::: {.panel-tabset}
 
@@ -180,7 +181,7 @@ tibble(
 ## Data For This Session
 
 - We'll use the `pigs` dataset from earlier
-- Starta new session with new script: `BasicStatistics.R`
+- Start a new session with new script: `BasicStatistics.R`
 
 ```{r}
 library(tidyverse)
@@ -197,7 +198,7 @@ pigs <- file.path("data", "pigs.csv") %>%
 	)
 ```
 
-## Data For This Session
+## Data For This Session {.slide-only .unlisted}
 
 ```{r boxplot-pigs, fig.width=8}
 #| output-location: column
@@ -234,7 +235,7 @@ knitr::opts_chunk$set(results = 'hide')
 - $t$-tests always test $H_0$ Vs $H_A$
     + For data with exactly two groups
 
-. . .
+::: {.fragment}
 
 - The simplest test is on a simple vector
     + Not particularly meaningful for our data
@@ -243,6 +244,10 @@ knitr::opts_chunk$set(results = 'hide')
 ?t.test
 t.test(pigs$len)
 ```
+
+:::
+
+::: {.fragment}
 
 ::: {.callout-note collapse="true"}
 ### What is $H_0$ in the above test?
@@ -253,7 +258,9 @@ The true mean of the underlying distribution from which the vector is sampled, i
 
 :::
 
-## t-tests
+:::
+
+## t-tests {.slide-only .unlisted}
 
 When comparing the means of two vectors
 
@@ -270,7 +277,7 @@ oj <- dplyr::filter(pigs, supp == "OJ")$len
 t.test(x = vc, y = oj)
 ```
 
-. . .
+::: {.fragment}
 
 ::: {.callout-note collapse="true"}
 ## Is This a Paired Test?
@@ -280,8 +287,9 @@ No
 :::
 
 :::
+:::
 
-## t-tests
+## t-tests {.slide-only .unlisted}
 
 - An alternative is the `R` formula method: `len~supp`
     + Length is a response variable
@@ -295,7 +303,7 @@ t.test(len~supp, data = pigs)
 
 **Did this give the same results?**
 
-## t-tests
+## t-tests {.slide-only .unlisted}
 
 - Do we think the variance is equal between the two groups?
 
@@ -304,8 +312,7 @@ t.test(len~supp, data = pigs)
 pigs |> summarise(sd = sd(len), .by = supp)
 ```
 
-. . .
-
+::: {.fragment}
 - We can use Levene's Test to formalise this
     + From the package `car`
     + Bartlett's test is very similar (`bartlett.test()`)
@@ -313,9 +320,9 @@ pigs |> summarise(sd = sd(len), .by = supp)
 ```{r}
 leveneTest(len~supp, data = pigs)
 ```
+:::
 
-
-## t-tests
+## t-tests {.slide-only .unlisted}
 
 - Now we can assume equal variances
     + By default, variances are assumed to be unequal
@@ -324,21 +331,18 @@ leveneTest(len~supp, data = pigs)
 t.test(len~supp, data = pigs, var.equal = TRUE)
 ```
 
-. . .
-
+::: {.fragment}
 - If relevant, the confidence interval can also be adjusted
-
+:::
 
 ## Wilcoxon Tests 
 
 - We assumed the above dataset was normally distributed:<br>**What if it's not?**
 
-. . .
-
+::: {.fragment}
 - Non-parametric equivalent is the *Wilcoxon Rank-Sum* Test (aka *Mann-Whitney*)
-
-. . .
-
+:::
+::: {.fragment}
 - This assigns ranks to each value based on their value
     + The test is then performed on ranks **NOT** the values
     + Tied values can be problematic
@@ -348,6 +352,8 @@ t.test(len~supp, data = pigs, var.equal = TRUE)
 wilcox.test(len~supp, data = pigs)
 ```
 
+:::
+
 ## A Brief Comment
 
 - Both of these are suitable *for comparing two groups*
@@ -355,12 +361,12 @@ wilcox.test(len~supp, data = pigs)
     + Are robust to some deviation from normality
     + Data can sometimes be transformed (e.g. `sqrt()`, `log()` etc)
 
-. . . 
-
+::: {.fragment}
 - The Wilcoxon Rank Sum Test assumes nothing about the underlying distribution
     + Much less powerful will small sample sizes
     + Highly comparable at n $\geq$ 30
 - The package `coin` implements a range on non-parametric tests
+:::
 
 # Tests For Categorical Data {background-color="#3d3d40"}
 
@@ -369,10 +375,8 @@ wilcox.test(len~supp, data = pigs)
 - Here we need counts and categories
 - Commonly used in *Observed Vs Expected*
 
-$$
-H_0: \text{No association between groups and outcome}\\
-H_A: \text{Association between groups and outcome}
-$$
+$$H_0: \text{No association between groups and outcome}$$
+$$H_A: \text{Association between groups and outcome}$$
 
 ::: {.callout-note collapse="true"}
 ### When we shouldn't use a $\chi^2$ test?
@@ -383,7 +387,7 @@ When expected cell values are > 5 [@Cochran1954-rd]
 
 :::
 
-## $\chi^2$ Test
+## $\chi^2$ Test {.slide-only .unlisted}
 
 
 ```{r}
@@ -398,7 +402,7 @@ pass <- matrix(
 pass
 ```
 
-. . .
+::: {.fragment}
 
 <br>
 
@@ -409,6 +413,7 @@ pass_chisq <- chisq.test(pass)
 pass_chisq
 ```
 
+:::
 
 ## Fisher's Exact Test
 
@@ -428,16 +433,18 @@ fisher.test(pass)
 - `t.test()`, `wilcox.test()`
 - `chisq.test()`, `fisher.test()`
 
-. . . 
+::: {.fragment}
 
 - `shapiro.test()`, `bartlett.test()`
 - `car::leveneTest()`
     + Tests for normality or homogeneity of variance
 
-. . .
+:::
+::: {.fragment}
 
 - `binomial.test()`, `poisson.test()`
 - `kruskal.test()`, `ks.test()`
+:::
 
 ## `htest` Objects
 
@@ -449,7 +456,7 @@ fisher.test(pass)
 names(pass_chisq)
 ```
     
-. . .
+::: {.fragment}
 
 - Will vary slightly between tests
 - Can usually extract p-values using `test$p.value`
@@ -458,7 +465,9 @@ names(pass_chisq)
 pass_chisq$p.value
 ```
 
-## `htest` Objects
+:::
+
+## `htest` Objects {.slide-only .unlisted}
 
 ```{r}
 #| results: markup
@@ -466,7 +475,7 @@ pass_chisq$p.value
 fisher.test(pass) |> names()
 ```
 
-. . .
+::: {.fragment}
 
 <br>
 
@@ -476,9 +485,10 @@ fisher.test(pass) |> names()
 t.test(len~supp, data = pigs) |> names()
 ```
 
-. . .
-
+:::
+::: {.fragment}
 - There is a function `print.htest()` which organises the printout for us
+:::
 
 ::: {.notes}
 - We'll come back to methods later, but this is a common way for output to be produced

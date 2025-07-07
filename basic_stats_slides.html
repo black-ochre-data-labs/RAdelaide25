@@ -224,7 +224,7 @@ Dr Stevie Pederson
 </div>
         <p class="quarto-title-affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
     </div>
 </div>
@@ -242,7 +242,8 @@ Dr Stevie Pederson
 <li><code>R</code> has it’s origins as a statistical analysis language (i.e.&nbsp;<code>S</code>)</li>
 <li>Purpose of this session is NOT to teach statistical theory
 <ul>
-<li>I am a bioinformatician NOT a statistician</li>
+<li>I am more of a bioinformatician than statistician</li>
+<li>I did tutor stats for 3 years</li>
 </ul></li>
 <li>Perform simple analyses in R</li>
 <li>Up to you to know what you’re doing
@@ -258,7 +259,7 @@ Dr Stevie Pederson
 <li>Standard syntax for accessing each</li>
 </ul>
 </section>
-<section id="distributions-1" class="slide level2">
+<section id="distributions-1" class="slide level2 slide-only unlisted">
 <h2>Distributions</h2>
 <table class="caption-top" style="width:100%;">
 <colgroup>
@@ -330,7 +331,7 @@ Dr Stevie Pederson
 </tbody>
 </table>
 </section>
-<section id="distributions-2" class="slide level2">
+<section id="distributions-2" class="slide level2 slide-only unlisted">
 <h2>Distributions</h2>
 <ul>
 <li>Also Beta, <span class="math inline">\(\Gamma\)</span>, Log-Normal, F, Geometric, Cauchy, Hypergeometric etc…</li>
@@ -339,7 +340,7 @@ Dr Stevie Pederson
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>?Distributions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="distributions-3" class="slide level2">
+<section id="distributions-3" class="slide level2 slide-only unlisted">
 <h2>Distributions</h2>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">PDF</a></li><li><a href="#tabset-1-2">CDF</a></li></ul>
@@ -413,7 +414,10 @@ Dr Stevie Pederson
 </section>
 <section id="data-for-this-session" class="slide level2">
 <h2>Data For This Session</h2>
-<p>We’ll use the <code>pigs</code> dataset from earlier</p>
+<ul>
+<li>We’ll use the <code>pigs</code> dataset from earlier</li>
+<li>Start a new session with new script: <code>BasicStatistics.R</code></li>
+</ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
@@ -429,7 +433,7 @@ Dr Stevie Pederson
 <span id="cb4-12"><a href="" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="data-for-this-session-1" class="slide level2">
+<section id="data-for-this-session-1" class="slide level2 slide-only unlisted">
 <h2>Data For This Session</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
@@ -488,6 +492,8 @@ Dr Stevie Pederson
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>?t.test</span>
 <span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pigs<span class="sc">$</span>len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+<div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -505,7 +511,7 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="t-tests-1" class="slide level2">
+<section id="t-tests-1" class="slide level2 slide-only unlisted">
 <h2>t-tests</h2>
 <p>When comparing the means of two vectors</p>
 <p><span class="math display">\[
@@ -536,7 +542,7 @@ H_A: \mu_{1} \neq \mu_{2}
 </div>
 </div>
 </section>
-<section id="t-tests-2" class="slide level2">
+<section id="t-tests-2" class="slide level2 slide-only unlisted">
 <h2>t-tests</h2>
 <ul>
 <li>An alternative is the <code>R</code> formula method: <code>len~supp</code>
@@ -554,7 +560,7 @@ H_A: \mu_{1} \neq \mu_{2}
 </div>
 <p><strong>Did this give the same results?</strong></p>
 </section>
-<section id="t-tests-3" class="slide level2">
+<section id="t-tests-3" class="slide level2 slide-only unlisted">
 <h2>t-tests</h2>
 <ul>
 <li>Do we think the variance is equal between the two groups?</li>
@@ -582,7 +588,7 @@ H_A: \mu_{1} \neq \mu_{2}
 </div>
 </div>
 </section>
-<section id="t-tests-4" class="slide level2">
+<section id="t-tests-4" class="slide level2 slide-only unlisted">
 <h2>t-tests</h2>
 <ul>
 <li>Now we can assume equal variances
@@ -655,10 +661,7 @@ H_A: \mu_{1} \neq \mu_{2}
 <li>Here we need counts and categories</li>
 <li>Commonly used in <em>Observed Vs Expected</em></li>
 </ul>
-<p><span class="math display">\[
-H_0: \text{No association between groups and outcome}\\
-H_A: \text{Association between groups and outcome}
-\]</span></p>
+<p><span class="math display">\[H_0: \text{No association between groups and outcome}\]</span> <span class="math display">\[H_A: \text{Association between groups and outcome}\]</span></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -675,7 +678,7 @@ H_A: \text{Association between groups and outcome}
 </div>
 </div>
 </section>
-<section id="chi2-test-1" class="slide level2">
+<section id="chi2-test-1" class="slide level2 slide-only unlisted">
 <h2><span class="math inline">\(\chi^2\)</span> Test</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
@@ -772,7 +775,7 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 </div>
 </div>
 </section>
-<section id="htest-objects-1" class="slide level2">
+<section id="htest-objects-1" class="slide level2 slide-only unlisted">
 <h2><code>htest</code> Objects</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Have a look at the list elements produced by fisher.test</span></span>
@@ -797,6 +800,7 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 <ul>
 <li>There is a function <code>print.htest()</code> which organises the printout for us</li>
 </ul>
+</div>
 <aside class="notes">
 <ul>
 <li>We’ll come back to methods later, but this is a common way for output to be produced</li>
@@ -813,7 +817,6 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>

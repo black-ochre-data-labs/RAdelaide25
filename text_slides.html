@@ -204,7 +204,7 @@ Dr Stevie Pederson
 </div>
         <p class="quarto-title-affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
     </div>
 </div>
@@ -232,7 +232,7 @@ Dr Stevie Pederson
 <span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Hi Mum"</span>, <span class="st">"Hi Mother"</span>, <span class="st">"Hello Maternal Parent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="text-manipulation-1" class="slide level2">
+<section id="text-manipulation-1" class="slide level2 slide-only unlisted">
 <h2>Text Manipulation</h2>
 <ul>
 <li>Working with <code>character</code> vectors</li>
@@ -348,7 +348,7 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="stringrstr_remove_all-1" class="slide level2">
+<section id="stringrstr_remove_all-1" class="slide level2 slide-only unlisted">
 <h2><code>stringr::str_remove_all()</code></h2>
 <ul>
 <li>These allow us to specify wild cards more carefully</li>
@@ -373,7 +373,7 @@ Dr Stevie Pederson
 </ul>
 </div>
 </section>
-<section id="stringrstr_extract-1" class="slide level2">
+<section id="stringrstr_extract-1" class="slide level2 slide-only unlisted">
 <h2><code>stringr::str_extract()</code></h2>
 <ul>
 <li>In <em>regular expressions</em> we can extend a match using <code>+</code><br><span class="math inline">\(\implies\)</span> match one or more characters</li>
@@ -388,7 +388,7 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 </section>
-<section id="stringrstr_extract-2" class="slide level2">
+<section id="stringrstr_extract-2" class="slide level2 slide-only unlisted">
 <h2><code>stringr::str_extract()</code></h2>
 <ul>
 <li>Repeat the match starting with “M”</li>
@@ -405,7 +405,7 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="stringrstr_extract-3" class="slide level2">
+<section id="stringrstr_extract-3" class="slide level2 slide-only unlisted">
 <h2><code>stringr::str_extract()</code></h2>
 <ul>
 <li>We can also specify the exact number of times for a match</li>
@@ -446,6 +446,7 @@ Dr Stevie Pederson
 <li>Each element contains all matches within the initial string</li>
 </ul></li>
 </ul>
+</div>
 <aside class="notes">
 <p>Will talk in detail about lists tomorrow</p>
 <style type="text/css">
@@ -459,7 +460,6 @@ Dr Stevie Pederson
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section></section>
 <section>
 <section id="regular-expressions-1" class="title-slide slide level1 center" data-background-color="#3c3c44">
@@ -486,7 +486,7 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 </section>
-<section id="regular-expressions-3" class="slide level2">
+<section id="regular-expressions-3" class="slide level2 slide-only unlisted">
 <h2>Regular Expressions</h2>
 <ul>
 <li>In logical testing, the symbol <code>|</code> means <code>OR</code></li>
@@ -499,7 +499,7 @@ Dr Stevie Pederson
 <span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"Mum|Mother|Maternal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="regular-expressions-4" class="slide level2">
+<section id="regular-expressions-4" class="slide level2 slide-only unlisted">
 <h2>Regular Expressions</h2>
 <ul>
 <li>Also allows for patterns to be anchored
@@ -515,7 +515,7 @@ Dr Stevie Pederson
 <span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"[:alnum:]+$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="regular-expressions-5" class="slide level2">
+<section id="regular-expressions-5" class="slide level2 slide-only unlisted">
 <h2>Regular Expressions</h2>
 <ul>
 <li>To thoroughly confuse everyone: <code>^</code> has a second meaning
@@ -561,7 +561,7 @@ Dr Stevie Pederson
 <li>Replacing the first instance of “Mum” with “Dad”</li>
 </ol>
 </section>
-<section id="stringrstr_replace-1" class="slide level2">
+<section id="stringrstr_replace-1" class="slide level2 slide-only unlisted">
 <h2><code>stringr::str_replace()</code></h2>
 <ul>
 <li>Wildcards and character sets work in the exact same manner</li>
@@ -572,7 +572,7 @@ Dr Stevie Pederson
 <span id="cb21-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(x, <span class="st">"[M].+"</span>, <span class="st">"Dad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="stringrstr_replace-2" class="slide level2">
+<section id="stringrstr_replace-2" class="slide level2 slide-only unlisted">
 <h2><code>stringr::str_replace()</code></h2>
 <ul>
 <li>The use of <em>capturing patterns</em> makes this extremely flexible</li>
@@ -594,7 +594,7 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="stringrstr_replace-3" class="slide level2">
+<section id="stringrstr_replace-3" class="slide level2 slide-only unlisted">
 <h2><code>stringr::str_replace()</code></h2>
 <ul>
 <li><code>str_replace()</code> only replaces the first match in a string</li>
@@ -615,7 +615,7 @@ Dr Stevie Pederson
 <li><code>str_replace()</code> / <code>str_replace_all()</code> <span class="math inline">\(\implies\)</span> modify a character vector</li>
 </ul>
 </section>
-<section id="brief-summary-1" class="slide level2">
+<section id="brief-summary-1" class="slide level2 slide-only unlisted">
 <h2>Brief Summary</h2>
 <ul>
 <li>All <code>regex</code> based operations</li>
@@ -653,7 +653,7 @@ Dr Stevie Pederson
 <span id="cb26-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_title</span>(<span class="st">"a bad example"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="more-helpful-functions-1" class="slide level2">
+<section id="more-helpful-functions-1" class="slide level2 slide-only unlisted">
 <h2>More Helpful Functions</h2>
 <ul>
 <li>Pseudo-numeric strings are also handled well</li>
@@ -680,7 +680,7 @@ Dr Stevie Pederson
 <span id="cb28-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(x, <span class="at">collapse =</span> <span class="st">"! "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="additional-tools-and-tricks-1" class="slide level2">
+<section id="additional-tools-and-tricks-1" class="slide level2 slide-only unlisted">
 <h2>Additional Tools and Tricks</h2>
 <ul>
 <li>The package <code>glue</code> has revolutionised text manipulation
@@ -786,7 +786,7 @@ Dr Stevie Pederson
 <li>This is a <code>character</code> vector</li>
 </ul>
 </section>
-<section id="factors-2" class="slide level2">
+<section id="factors-2" class="slide level2 slide-only unlisted">
 <h2>Factors</h2>
 <ul>
 <li>We can simply coerce this to a vector of factors</li>
@@ -802,7 +802,7 @@ Dr Stevie Pederson
 <span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a>pet_factors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="factors-3" class="slide level2">
+<section id="factors-3" class="slide level2 slide-only unlisted">
 <h2>Factors</h2>
 <ul>
 <li>These are actually stored as integers</li>
@@ -860,7 +860,7 @@ Dr Stevie Pederson
 </div>
 </div>
 </section>
-<section id="some-handy-tricks-1" class="slide level2">
+<section id="some-handy-tricks-1" class="slide level2 slide-only unlisted">
 <h2>Some Handy Tricks</h2>
 <ul>
 <li>Collapse categories with fewer than <code>n</code> entries</li>
@@ -883,8 +883,37 @@ Dr Stevie Pederson
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fct_rev</span>(pet_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
 </div>
+</section>
+<section id="some-handy-tricks-2" class="slide level2 slide-only unlisted">
+<h2>Some Handy Tricks</h2>
+<ul>
+<li>Relabelling factors can take advantage of <code>stringr</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>pet_vec <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_factor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fct_relabel</span>(<span class="at">.fun =</span> str_to_lower)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>We’ll learn more about tailoring the functions (i.e.&nbsp;inline functions) soon</li>
+</ul>
+</div>
+</section>
+<section id="some-handy-tricks-3" class="slide level2 slide-only unlisted">
+<h2>Some Handy Tricks</h2>
+<ul>
+<li>We can combine multiple factors using <code>fct_cross()</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a>sz <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"big"</span>, <span class="st">"small"</span>, <span class="st">"small"</span>, <span class="st">"big"</span>, <span class="st">"small"</span>, <span class="st">"tiny"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"tiny"</span>, <span class="st">"small"</span>, <span class="st">"big"</span>))</span>
+<span id="cb48-3"><a href="" aria-hidden="true" tabindex="-1"></a>pet_vec <span class="sc">|&gt;</span></span>
+<span id="cb48-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_factor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb48-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fct_cross</span>(sz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

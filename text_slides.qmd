@@ -29,7 +29,7 @@ format:
     output-file: text.html
     embed-resources: true    
     toc: true
-    toc-depth: 1    
+    toc-depth: 2
 include-after: |
   <script type="text/javascript">
     Reveal.on('ready', event => {
@@ -78,7 +78,7 @@ x <- c("Hi Mum", "Hi Mother", "Hello Maternal Parent")
 ```
  
 
-## Text Manipulation
+## Text Manipulation {.slide-only .unlisted}
 
 - Working with `character` vectors
 - One of the most common and regular tasks
@@ -86,13 +86,14 @@ x <- c("Hi Mum", "Hi Mother", "Hello Maternal Parent")
     + Cleaning up data
     + Tidying up text on plots
     
-. . .
+::: {.fragment}
 
 - Particularly relevant when working with IDs
     + May appear as `Run 1` in one file and `Run_001` in another
 - Data providers often have their ID formats and edit the ones provided
     + Need to identify & extract/modify
     
+:::
     
 ## Regular Expressions
 
@@ -101,10 +102,9 @@ x <- c("Hi Mum", "Hi Mother", "Hello Maternal Parent")
     + `regexp` syntax is not unique to `R`
     + `R` does have a few unique "quirks" though
     
-. . .
-
+::: {.fragment}
 - Will progress to categorical data $\implies$ *factors*
-
+:::
 
 ## Text Manipulation
 
@@ -126,7 +126,7 @@ x <- c("Hi Mum", "Hi Mother", "Hello Maternal Parent")
 str_detect(string = x, pattern = "Mat")
 ```
 
-. . .
+::: {.fragment}
 
 - When using *regular expressions* `.` functions as a wildcard
     + `*` has a different meaning
@@ -136,7 +136,7 @@ str_detect(string = x, pattern = "Mat")
 str_detect(string = x, pattern = "M.t")
 ```
 
-
+:::
 
 ## `stringr::str_remove()`
 
@@ -148,9 +148,9 @@ str_remove(x, "Hi ")
 str_remove(x, " ")
 ```
 
-. . .
-
+::: {.fragment}
 - Why did that last one only remove the first space?
+:::
 
 ## `stringr::str_remove_all()`
 
@@ -161,7 +161,7 @@ str_remove(x, " ")
 str_remove_all(x, " ")
 ```
 
-. . .
+::: {.fragment}
 
 - Using `regex` syntax $\implies$ pass sets of letters using `[]` syntax
     
@@ -171,8 +171,9 @@ str_remove_all(x, "[aeiou]")
 ## Remove only the first vowel
 str_remove(x, "[aeiou]")
 ```
+:::
 
-## `stringr::str_remove_all()`
+## `stringr::str_remove_all()` {.slide-only .unlisted}
 
 - These allow us to specify wild cards more carefully
 
@@ -190,11 +191,11 @@ str_extract(x, "H[aeiou]")
 str_extract(x, "H[a-z]")
 ```
 
-. . . 
-
+::: {.fragment}
 - These look very similar $\implies$ second opens possibilities
+:::
 
-## `stringr::str_extract()`
+## `stringr::str_extract()` {.slide-only .unlisted}
 
 - In *regular expressions* we can extend a match using `+`<br>$\implies$ match one or more characters
 
@@ -206,7 +207,7 @@ str_extract(x, "H[a-z]+")
     + The match stops at the whitespace $\implies$ not in the set of characters `[a-z]`
 
 
-## `stringr::str_extract()`
+## `stringr::str_extract()` {.slide-only .unlisted}
 
 - Repeat the match starting with "M"
 
@@ -214,16 +215,16 @@ str_extract(x, "H[a-z]+")
 str_extract(x, "M[a-z]+")
 ```
 
-. . .
+::: {.fragment}
 
 - If we change the lower-case set to a `.` $\implies$ match anything
 
 ```{r}
 str_extract(x, "M.+")
 ```
+:::
 
-
-## `stringr::str_extract()`
+## `stringr::str_extract()` {.slide-only .unlisted}
 
 - We can also specify the exact number of times for a match
 
@@ -232,11 +233,11 @@ str_extract(x, "H.+ M[a-z]{2}")
 str_extract(x, "H.+ M[a-z]{3}")
 ```
 
-. . .
-
+::: {.fragment}
 - The second pattern expects a 4 letter word starting with M
     + Returns `NA` if no match
-    
+
+:::    
 
 ## `stringr::str_extract_all()`
 
@@ -246,7 +247,7 @@ str_extract(x, "H.+ M[a-z]{3}")
 str_extract(x, "[Hh].")
 ```
 
-. . .
+::: {.fragment}
 
 - `str_extract_all()` returns **all matches**
 
@@ -254,10 +255,13 @@ str_extract(x, "[Hh].")
 str_extract_all(x, "[Hh].")
 ```
 
-. . .
+:::
+::: {.fragment}
 
 - Note that now we have a list of the same length as `x`
     + Each element contains all matches within the initial string
+
+:::
 
 ::: {.notes}
 Will talk in detail about lists tomorrow
@@ -278,7 +282,7 @@ Will talk in detail about lists tomorrow
 - Can extend matches using `+` for one or more
     + None or more can be specified using `*`
 
-## Regular Expressions
+## Regular Expressions {.slide-only .unlisted}
 
 - In logical testing, the symbol `|` means `OR`
 - Can also be incorporated into patterns
@@ -291,7 +295,7 @@ str_extract(x, "Mum|Mother|Maternal")
 ```
 
 
-## Regular Expressions
+## Regular Expressions {.slide-only .unlisted}
 
 - Also allows for patterns to be anchored
     + `^` anchors a match to the start
@@ -304,7 +308,7 @@ str_extract(x, "^[:alnum:]+")
 str_extract(x, "[:alnum:]+$")
 ```
 
-## Regular Expressions
+## Regular Expressions {.slide-only .unlisted}
 
 - To thoroughly confuse everyone: `^` has a second meaning
     + Inside `[]` it means *not*
@@ -314,10 +318,9 @@ str_extract(x, "[:alnum:]+$")
 str_extract(x, "[^ ]+$")
 ```
 
-. . .
-
+::: {.fragment}
 - Regular expressions are fun to write [<br>$\implies$*horrible to read back*!]{.framgent}
-
+:::
 
 ## `stringr::str_view()`
 
@@ -343,7 +346,7 @@ str_replace(x, pattern = "Mum", replacement = "Dad")
 1. Searching the `string` "Hi Mum" for the `pattern` "Mum", and
 2. Replacing the first instance of "Mum" with "Dad"
 
-## `stringr::str_replace()`
+## `stringr::str_replace()` {.slide-only .unlisted}
 
 - Wildcards and character sets work in the exact same manner
 
@@ -353,7 +356,7 @@ str_replace(x, "[M].{2}", "Dad")
 str_replace(x, "[M].+", "Dad")
 ```
 
-## `stringr::str_replace()`
+## `stringr::str_replace()` {.slide-only .unlisted}
 
 - The use of *capturing patterns* makes this extremely flexible
 - We can capture words/phrases/patterns using `(pattern)` inside braces
@@ -364,16 +367,15 @@ str_replace(x, "[M].+", "Dad")
 str_replace(x, "H.+ (.+)", "\\1")
 ```
 
-. . . 
-
+::: {.fragment}
 - Now let's capture two patterns
 
 ```{r}
 str_replace(x, "(H.+) (M.+)", "\\2! \\1!")
 ```
+:::
 
-
-## `stringr::str_replace()`
+## `stringr::str_replace()` {.slide-only .unlisted}
 
 - `str_replace()` only replaces the first match in a string
 - `str_replace_all()` replaces **all** matches
@@ -391,7 +393,7 @@ str_replace_all(x, "[a-z]", "*")
 - `str_extract()` $\implies$ extract matching patterns
 - `str_replace()` / `str_replace_all()` $\implies$ modify a character vector
 
-## Brief Summary
+## Brief Summary {.slide-only .unlisted}
 
 - All `regex` based operations
 - Can all be piped
@@ -400,12 +402,11 @@ str_replace_all(x, "[a-z]", "*")
 c("M", "F", "MAle", "Female") |> str_extract("^[MF]")
 ```
 
-. . .
-
+::: {.fragment}
 - *Regular Expressions* are very powerful
 - Horrible to read
 - Exist in all languages $\implies$ not specific to R
-
+:::
 
 # Additional Functions {background-color="#3c3c44" background-image=https://stringr.tidyverse.org/logo.png background-size="40%" background-opacity="0.5" background-position="75% 30%"}
 
@@ -426,7 +427,7 @@ str_trunc(x, width = 7)
 str_to_title("a bad example")
 ```
 
-## More Helpful Functions
+## More Helpful Functions {.slide-only .unlisted}
 
 - Pseudo-numeric strings are also handled well
 
@@ -450,7 +451,7 @@ paste0(x, "!")
 paste(x, collapse = "! ")
 ```
 
-## Additional Tools and Tricks
+## Additional Tools and Tricks {.slide-only .unlisted}
 
 - The package `glue` has revolutionised text manipulation
     + We can pass R objects or function calls to the middle of a text string
@@ -463,12 +464,13 @@ glue("I call them {str_remove(x, 'H.+ ')}")
 glue_collapse(letters, sep = ", ", last = " & ")
 ```
 
-. . . 
+::: {.fragment}
 
 - Output is of class `glue`
     + Coerces back to `character`
     + Plays very well with advanced `tidyverse` syntax (e.g. `rlang`)
 
+:::
 
 ## Working With Strings
 
@@ -543,7 +545,7 @@ pet_vec <- c("Dog", "Dog", "Cat", "Dog", "Bird", "Bird")
 
 - This is a `character` vector
 
-## Factors
+## Factors {.slide-only .unlisted}
 
 - We can simply coerce this to a vector of factors
 - Categories will automatically be assigned alphabetically using `as.factor()`
@@ -560,7 +562,7 @@ pet_factors <- factor(pet_vec, levels = c("Dog", "Cat", "Bird"))
 pet_factors
 ```
 
-## Factors
+## Factors {.slide-only .unlisted}
 
 - These are actually stored as integers
 - Each integer corresponds to a `level`
@@ -575,7 +577,7 @@ as.character(pet_factors)
 
 **What would happen if we think a `factor` is a `character`, and we use it to select values from a `vector`/`matrix`/`data.frame`?**
 
-. . .
+::: {.fragment}
 
 ```{r}
 names(pet_vec) <- pet_vec # Set the names as equal to the values
@@ -584,7 +586,8 @@ pet_vec[pet_factors]
 pet_vec[as.integer(pet_factors)]
 ```
 
-. . .
+:::
+::: {.fragment}
 
 - `read_csv()` and other `readr` functions always parse text as a `character`
     + Older versions of `read.csv()` parsed text to factors by default
@@ -592,22 +595,25 @@ pet_vec[as.integer(pet_factors)]
 - If I want a `factor`, **I explicitly make** a `factor`
    + During statistical analysis `character` vectors are always coerced
 
+:::
+
 ## The package `forcats`
 
 - `forcats` is a part of the core `tidyverse`
     + Specifically for wrangling `factors`
     + Also plays very nicely with `stringr`
     
-. . .
-
+::: {.fragment}
 - `as.factor()` and `factor(levels = ...)` are `base` functions
 - Most `forcats` functions start with `fct_` or use `_`
-
-. . .
+:::
+::: {.fragment}
 
 - `as_factor()` parallels `as.factor()`
     + But uses the order of appearance, not alpha-numeric sorting
 - `fct()` replicates `factor()` with stricter error handling
+
+:::
     
 ## Some Handy Tricks
 
@@ -618,16 +624,17 @@ pet_vec[as.integer(pet_factors)]
 fct_inorder(pet_vec)
 ```
     
-. . .
+::: {.fragment}
     
 - `fct_infreq()` sets categories by their frequency
 
 ```{r}
 fct_infreq(pet_vec)
 ```
+
+:::
     
-    
-## Some Handy Tricks
+## Some Handy Tricks {.slide-only .unlisted}
 
 - Collapse categories with fewer than `n` entries
 
@@ -635,7 +642,7 @@ fct_infreq(pet_vec)
 fct_lump_min(pet_vec, min = 3)
 ```
 
-. . .
+::: {.fragment}
 
 - Collapse categories with fewer than `p` entries
 
@@ -643,7 +650,8 @@ fct_lump_min(pet_vec, min = 3)
 fct_lump_prop(pet_vec, prop = 0.3)
 ```
 
-. . .
+:::
+::: {.fragment}
 
 - Reverse the order (will automatically coerce to a factor)
 
@@ -651,7 +659,9 @@ fct_lump_prop(pet_vec, prop = 0.3)
 fct_rev(pet_vec)
 ```
 
-## Some Handy Tricks
+:::
+
+## Some Handy Tricks {.slide-only .unlisted}
 
 - Relabelling factors can take advantage of `stringr`
 
@@ -661,11 +671,11 @@ pet_vec |>
   fct_relabel(.fun = str_to_lower)
 ```
 
-. . .
-
+::: {.fragment}
 - We'll learn more about tailoring the functions (i.e. inline functions) soon
+:::
 
-## Some Handy Tricks
+## Some Handy Tricks {.slide-only .unlisted}
 
 - We can combine multiple factors using `fct_cross()`
 

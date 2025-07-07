@@ -204,7 +204,7 @@ Dr Stevie Pederson
 </div>
         <p class="quarto-title-affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
     </div>
 </div>
@@ -242,14 +242,14 @@ y = ax + b
 <p><span class="math display">\[
 y = \beta_0 + \beta_1 x
 \]</span></p>
+</div>
 <ul>
 <li class="fragment"><span class="math inline">\(y\)</span> is the <em>response variable</em></li>
 <li class="fragment"><span class="math inline">\(x\)</span> is the <em>predictor variable</em></li>
 <li class="fragment">Makes the most intuitive sense when both <span class="math inline">\(x\)</span> &amp; <span class="math inline">\(y\)</span> are continuous</li>
 </ul>
-</div>
 </section>
-<section id="linear-regression-2" class="slide level2">
+<section id="linear-regression-2" class="slide level2 slide-only unlisted">
 <h2>Linear Regression</h2>
 <p>Linear Regression always uses the <code>R</code> formula syntax</p>
 <ul>
@@ -263,7 +263,7 @@ y = \beta_0 + \beta_1 x
 </ul>
 </div>
 </section>
-<section id="linear-regression-3" class="slide level2">
+<section id="linear-regression-3" class="slide level2 slide-only unlisted">
 <h2>Linear Regression</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
@@ -301,7 +301,7 @@ y = \beta_0 + \beta_1 x
           display:block!important;
       }</style></aside>
 </section>
-<section id="linear-regression-4" class="slide level2">
+<section id="linear-regression-4" class="slide level2 slide-only unlisted">
 <h2>Linear Regression</h2>
 <ul>
 <li>Bill length is the response variable (<span class="math inline">\(y\)</span>)</li>
@@ -322,7 +322,7 @@ Coefficients:
 </div>
 </div>
 </section>
-<section id="linear-regression-5" class="slide level2">
+<section id="linear-regression-5" class="slide level2 slide-only unlisted">
 <h2>Linear Regression</h2>
 <aside class="notes">
 <ul>
@@ -366,7 +366,7 @@ F-statistic: 186.4 on 1 and 340 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="linear-regression-6" class="slide level2">
+<section id="linear-regression-6" class="slide level2 slide-only unlisted">
 <h2>Linear Regression</h2>
 <ol type="1">
 <li>The code used is returned as <code>Call:</code></li>
@@ -429,7 +429,7 @@ F-statistic: 186.4 on 1 and 340 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 </div>
 </section>
-<section id="coefficients-1" class="slide level2">
+<section id="coefficients-1" class="slide level2 slide-only unlisted">
 <h2>Coefficients</h2>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
@@ -456,8 +456,8 @@ F-statistic: 186.4 on 1 and 340 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 </div>
 </section>
-<section id="linear-regression-7" class="slide level2">
-<h2>Linear Regression</h2>
+<section id="residuals" class="slide level2">
+<h2>Residuals</h2>
 <ul>
 <li>Points never lie exactly on the regression line <span class="math inline">\(\implies\)</span> Why?</li>
 </ul>
@@ -468,6 +468,7 @@ F-statistic: 186.4 on 1 and 340 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><span class="math display">\[
 y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 \]</span></p>
+</div>
 <ul>
 <li class="fragment"><span class="math inline">\(\beta_0 + \beta_1 x_i\)</span> is the exact line co-ordinate (Intercept + slope*predictor)</li>
 <li class="fragment"><span class="math inline">\(\epsilon_i\)</span> is the the vertical difference between the observed value and the fitted value
@@ -491,10 +492,9 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
-<section id="linear-regression-8" class="slide level2">
-<h2>Linear Regression</h2>
+<section id="assumptions-of-linear-regression" class="slide level2">
+<h2>Assumptions Of Linear Regression</h2>
 <p>Linear Regression formally has 4 key assumptions</p>
 <ol type="1">
 <li class="fragment">Linear relationship between predictor and response
@@ -509,8 +509,8 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <li class="fragment">Three of these are represented in the definition <span class="math inline">\(\epsilon_i \sim \mathcal{N}(0, \sigma)\)</span></li>
 </ul>
 </section>
-<section id="linear-regression-9" class="slide level2">
-<h2>Linear Regression</h2>
+<section id="model-checking" class="slide level2">
+<h2>Model Checking</h2>
 <ul>
 <li>To check our fitted model, we should check the residuals to ensure <span class="math inline">\(\epsilon_i \sim \mathcal{N}(0, \sigma)\)</span></li>
 </ul>
@@ -522,8 +522,8 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bill_length_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="linear-regression-10" class="slide level2">
-<h2>Linear Regression</h2>
+<section id="model-checking-1" class="slide level2 slide-only unlisted">
+<h2>Model Checking</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -545,8 +545,8 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 </div>
 </div></div>
 </section>
-<section id="linear-regression-11" class="slide level2">
-<h2>Linear Regression</h2>
+<section id="model-checking-2" class="slide level2 slide-only unlisted">
+<h2>Model Checking</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -569,8 +569,8 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 </div>
 </div></div>
 </section>
-<section id="linear-regression-12" class="slide level2">
-<h2>Linear Regression</h2>
+<section id="model-checking-3" class="slide level2 slide-only unlisted">
+<h2>Model Checking</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -592,8 +592,8 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 </div>
 </div></div>
 </section>
-<section id="linear-regression-13" class="slide level2">
-<h2>Linear Regression</h2>
+<section id="model-checking-4" class="slide level2 slide-only unlisted">
+<h2>Model Checking</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell" data-layout-align="center">
@@ -615,8 +615,8 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 </div>
 </div></div>
 </section>
-<section id="regression-diagnostic-plots" class="slide level2">
-<h2>Regression Diagnostic Plots</h2>
+<section id="model-checking-5" class="slide level2 slide-only unlisted">
+<h2>Model Checking</h2>
 <ul>
 <li>All of these figures used base plotting functions</li>
 <li>Stepping through can be frustrating
@@ -636,6 +636,7 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Reset the grid layout to be the default 1x1</span></span>
 <span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>,))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <aside class="notes">
 <ul>
 <li><code>par()</code> is a function to set graphical parameters</li>
@@ -654,7 +655,6 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="objects-of-class-lm" class="slide level2">
 <h2>Objects Of Class <code>lm</code></h2>
@@ -677,7 +677,7 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 </div>
 </div>
 </section>
-<section id="objects-of-class-lm-1" class="slide level2">
+<section id="objects-of-class-lm-1" class="slide level2 slide-only unlisted">
 <h2>Objects Of Class <code>lm</code></h2>
 <ul>
 <li>We can use the list structure to inspect the residuals manually</li>
@@ -696,7 +696,7 @@ y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 </div>
 </div></div>
 </section>
-<section id="objects-of-class-lm-2" class="slide level2">
+<section id="objects-of-class-lm-2" class="slide level2 slide-only unlisted">
 <h2>Objects Of Class <code>lm</code></h2>
 <ul>
 <li>We could even use the Shapiro-Wilk test for normality</li>
@@ -761,7 +761,7 @@ W = 0.95439, p-value = 8.217e-09</code></pre>
           display:block!important;
       }</style></aside>
 </section>
-<section id="adding-terms-1" class="slide level2">
+<section id="adding-terms-1" class="slide level2 slide-only unlisted">
 <h2>Adding Terms</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Include the species in the model</span></span>
@@ -808,7 +808,7 @@ F-statistic:   474 on 3 and 338 DF,  p-value: &lt; 2.2e-16</code></pre>
           display:block!important;
       }</style></aside>
 </section>
-<section id="adding-terms-2" class="slide level2">
+<section id="adding-terms-2" class="slide level2 slide-only unlisted">
 <h2>Adding Terms</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
@@ -870,7 +870,7 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 </div>
 </div>
 </section>
-<section id="interpreting-the-coefficients-1" class="slide level2">
+<section id="interpreting-the-coefficients-1" class="slide level2 slide-only unlisted">
 <h2>Interpreting the Coefficients</h2>
 <ul>
 <li>Now we’re happier with the model <span class="math inline">\(\rightarrow\)</span> what do the coefficients mean?</li>
@@ -893,7 +893,7 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 <li>They all appear significant when checking each <span class="math inline">\(H_0\)</span></li>
 </ul>
 </section>
-<section id="adding-terms-3" class="slide level2">
+<section id="adding-terms-3" class="slide level2 slide-only unlisted">
 <h2>Adding Terms</h2>
 <ul>
 <li>Do we think each species may have a different relationship between mass and bill length?
@@ -954,24 +954,18 @@ F-statistic: 286.1 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
           display:block!important;
       }</style></aside>
 </section>
-<section id="interpreting-the-coefficients-2" class="slide level2">
+<section id="interpreting-the-coefficients-2" class="slide level2 slide-only unlisted">
 <h2>Interpreting the Coefficients</h2>
 <ul>
 <li>The baseline terms for the Intercept and <code>body_mass_g</code> are now <strong>both</strong> for Adelie</li>
 <li>Differences in slope for each species are provided as <code>speciesChinstrap:body_mass_g</code> and <code>speciesGentoo:body_mass_g</code></li>
 </ul>
-<div class="fragment">
 <ul>
-<li>The regression line for Adelie is y = 26.99 + 0.0032*<code>body_mass_g</code></li>
+<li class="fragment"><p>The regression line for Adelie is y = 26.99 + 0.0032*<code>body_mass_g</code></p></li>
+<li class="fragment"><p>For Chinstrap: y = (26.99+5.18) + (0.0032+0.0013)*body_mass_g`</p></li>
 </ul>
-</div>
-<div class="fragment">
-<ul>
-<li>For Chinstrap: y = (26.99+5.18) + (0.0032+0.0013)*body_mass_g`</li>
-</ul>
-</div>
 </section>
-<section id="interpreting-the-coefficients-3" class="slide level2">
+<section id="interpreting-the-coefficients-3" class="slide level2 slide-only unlisted">
 <h2>Interpreting the Coefficients</h2>
 <ul>
 <li>The model matrix <span class="math inline">\(X\)</span> is a key part of understanding statistics</li>
@@ -985,7 +979,7 @@ F-statistic: 286.1 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="interpreting-the-coefficients-4" class="slide level2">
+<section id="interpreting-the-coefficients-4" class="slide level2 slide-only unlisted">
 <h2>Interpreting the Coefficients</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1007,7 +1001,7 @@ F-statistic: 286.1 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="interpreting-the-coefficients-5" class="slide level2">
+<section id="interpreting-the-coefficients-5" class="slide level2 slide-only unlisted">
 <h2>Interpreting the Coefficients</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## No need to save this, I'm just demonstrating a point</span></span>
@@ -1027,7 +1021,7 @@ speciesGentoo:body_mass_g     0.0009029956  0.0009029956</code></pre>
 </div>
 </div>
 </section>
-<section id="interpreting-the-coefficients-6" class="slide level2">
+<section id="interpreting-the-coefficients-6" class="slide level2 slide-only unlisted">
 <h2>Interpreting the Coefficients</h2>
 <div style="font-size: 85%">
 <ul>
@@ -1122,7 +1116,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul>
 </div>
 </section>
-<section id="model-selection-1" class="slide level2">
+<section id="model-selection-1" class="slide level2 slide-only unlisted">
 <h2>Model Selection</h2>
 <ul>
 <li>We have progressively added terms to each model</li>
@@ -1210,7 +1204,7 @@ F-statistic: 286.1 on 5 and 336 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 </div>
 </section>
-<section id="speeding-the-process-up-1" class="slide level2">
+<section id="speeding-the-process-up-1" class="slide level2 slide-only unlisted">
 <h2>Speeding The Process Up</h2>
 <aside class="notes">
 <ul>
@@ -1299,7 +1293,7 @@ body_mass_g       0.003748497 0.0002823439 13.276352 1.158990e-32</code></pre>
 </div>
 </div>
 </section>
-<section id="objects-of-class-summary.lm-1" class="slide level2">
+<section id="objects-of-class-summary.lm-1" class="slide level2 slide-only unlisted">
 <h2>Objects of Class <code>summary.lm</code></h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Check the class of the output from summary</span></span>
@@ -1491,7 +1485,7 @@ bill_length_mm ~ species + body_mass_g
 </div>
 </div>
 </section>
-<section id="s3-method-dispatch-2" class="slide level2">
+<section id="s3-method-dispatch-2" class="slide level2 slide-only unlisted">
 <h2>S3 Method Dispatch</h2>
 <ul>
 <li>If we only want a subset of figures</li>
@@ -1509,7 +1503,7 @@ bill_length_mm ~ species + body_mass_g
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <img data-src="linear_regression_slides_files/figure-revealjs/unnamed-chunk-38-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
-<section id="s3-method-dispatch-3" class="slide level2">
+<section id="s3-method-dispatch-3" class="slide level2 slide-only unlisted">
 <h2>S3 Method Dispatch</h2>
 <ul>
 <li>We can also check what we pass to <code>broom::tidy()</code></li>
@@ -1526,7 +1520,7 @@ bill_length_mm ~ species + body_mass_g
 </ul>
 </div>
 </section>
-<section id="s3-method-dispatch-4" class="slide level2">
+<section id="s3-method-dispatch-4" class="slide level2 slide-only unlisted">
 <h2>S3 Method Dispatch</h2>
 <ul>
 <li><code>S3</code> objects can be easily broken</li>
@@ -1578,7 +1572,7 @@ data:  </code></pre>
 </ul>
 </div>
 </section>
-<section id="confidence-intervals-1" class="slide level2">
+<section id="confidence-intervals-1" class="slide level2 slide-only unlisted">
 <h2>Confidence Intervals</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Create some new penguins</span></span>
@@ -1602,7 +1596,7 @@ data:  </code></pre>
 </div>
 </div>
 </section>
-<section id="confidence-intervals-2" class="slide level2">
+<section id="confidence-intervals-2" class="slide level2 slide-only unlisted">
 <h2>Confidence Intervals</h2>
 <ul>
 <li>We may wish to include our new penguins in these results</li>
@@ -1622,7 +1616,7 @@ data:  </code></pre>
 </div>
 </div>
 </section>
-<section id="confidence-intervals-3" class="slide level2">
+<section id="confidence-intervals-3" class="slide level2 slide-only unlisted">
 <h2>Confidence Intervals</h2>
 <ul>
 <li>Confidence Intervals for model terms can also be found using <code>broom::tidy()</code></li>

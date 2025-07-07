@@ -1,5 +1,5 @@
 ---
-title: "Welcome & Introduction"
+title: "Welcome"
 subtitle: "RAdelaide 2025"
 author: "Dr Stevie Pederson"
 institute: |
@@ -62,14 +62,30 @@ http://blackochrelabs.au/RAdelaide25
 
 # Introduction {background-color="#3d3d40"}
 
+## Welcome to RAdelaide 25
+
+We wish to acknowledge the Kaurna people as the traditional custodians and owners of this beautiful country, and that the land was never ceded.
+
+::: {.fragment}
+
+We acknowledge the strong and ancient connections to country and pay our respects to Kaurna elders, past, present and emerging
+
+:::
+::: {.fragment}
+Especially in NAIDOC week, we also pay our respects to all Aboriginal Australians and acknowledge those who are with us today.
+
+:::
+
 ## Who Is Black Ochre Data Labs
 
 ::: {.notes}
 Formerly Telethon Kids
 :::
 
-- A Data Science & Bioinformatics group based in The Kids Research Institute Australia
-    + Led by Prof Alex Brown and Chief Data Scientist A/Prof Jimmy Breen
+- An Indigenous led Data Science & Bioinformatics group 
+    + Led by Prof Alex Brown 
+    + Chief Data Scientist A/Prof Jimmy Breen
+    + Based at The Kids Research Institute Australia (North Tce)
 - BODL team members are spread across Australia
     + Majority in Adelaide or Perth
 
@@ -130,7 +146,7 @@ Formerly Telethon Kids
 
 :::
 ::: {.fragment}
-*I crash R at least once a week...*
+*I crash R at least once most weeks...*
 
 :::
 
@@ -140,16 +156,32 @@ Formerly Telethon Kids
 - John Salamon & Simon Lee (SAGC)
 - Charlotte Sai (SAHMRI)
 
-::: {.fragment}
+## Who Are The Attendees
 
-### Housekeeping
+::: {.notes}
+- We had 3 SPSS users & 2 Stata Users so please feel free to stop me and ask questions about processes yo may already be familiar with in other statistical languages
+- 5 python programmers end even some with LaTex/markdown
+- Very surprised to see someone with Perl experience. The language of old-school bioinformatics!
+:::
+
+- What are your areas of research and how are you intending to use R?
+
+::: {.incremental}
+- Who's never used R before?
+- Who's dabbled in R?
+- Some experience but aware of weaknesses
+- Who thinks they can run some sessions next year?
+- Has anyone run R scripts on an HPC?
+:::
+
+
+## Housekeeping
 
 - Toilets are back near the lifts
 - Catering will be across the lawn in Merantau
     + Rose is in charge of all things catering!
-- Room is considered a wet lab $\implies$ *no drinks (including water)*
+- Room 4.50 is considered a wet lab $\implies$ *no drinks (including water)*
 
-:::
 
 ::: {.notes}
 Thanks to everyone for sending your information through regarding dietary needs and existing knowledge
@@ -171,22 +203,6 @@ Tutors will be monitoring as well and can stop so we can address the question as
 - Group communication can be done through https://bioinformaticshubsa.slack.com/
     + Join the #radelaide25 channel
     
-## Background Experience
-
-::: {.notes}
-- We had 3 SPSS users & 2 Stata Users so please feel free to lend your statistical expertise
-- 5 python programmers end even some with LaTex/markdown
-- Very surprised to see someone with Perl experience. The language of old-school bioinformatics
-:::
-
-- Who's never used R before?
-
-::: {.incremental}
-- Who's dabbled in R?
-- Some experience but aware of weaknesses
-- Who thinks they can run some sessions next year?
-- Has anyone run R scripts on an HPC?
-:::
 
 
 ## Course Aims
@@ -218,7 +234,7 @@ Please practice exactly like you're learning a new skill (driving, playing piano
 - We'll cover about as much as is realistic in 3 days
 :::
 
-- Today we will explore common data structures
+- Today we will explore spreadsheet-like data structures
     + Will be a pretty exhausting day
     + Basic data wrangling and visualisation
     
@@ -239,12 +255,15 @@ Please practice exactly like you're learning a new skill (driving, playing piano
 
 ## Future Courses
 
-- No true bioinformatics in this course
-    + Focus on the basics in R
-- Teaming up with Cathal King (SAGC) to present 2x back-to-back workshops in September
+- No true bioinformatics in this year's course $\implies$ the basics in R
+- Teaming up with Cathal King (SAGC) to present back-to-back transcriptomics workshops (September 23-24)
     + Day1: Bulk transcriptomics
     + Day2: Single Cell transcriptomics
-
+    
+::: {.incremental}
+- The bioinformaticshubsa slack workspace is the best place to stay in touch with upcoming events
+- Dr Jacqueline Rehn runs monthly drop-in sessions for new bioinformaticians
+:::
 
 ## A Comment on AI
 

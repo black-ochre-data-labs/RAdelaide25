@@ -2382,6 +2382,15 @@ $code-block-border-color: #368AC4;
 <style type="text/css">.notes {
 display: none;
 }
+
+h1.slide-only,
+h2.slide-only,
+h3.slide-only,
+h4.slide-only,
+h5.slide-only,
+h6.slide-only {
+display: none;
+}
 </style>
 </head>
 
@@ -2392,10 +2401,29 @@ display: none;
   <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul>
-  <li><a href="#statistics-in-r" id="toc-statistics-in-r" class="nav-link active" data-scroll-target="#statistics-in-r">Statistics in R</a></li>
-  <li><a href="#tests-for-continuous-data" id="toc-tests-for-continuous-data" class="nav-link" data-scroll-target="#tests-for-continuous-data">Tests For Continuous Data</a></li>
-  <li><a href="#tests-for-categorical-data" id="toc-tests-for-categorical-data" class="nav-link" data-scroll-target="#tests-for-categorical-data">Tests For Categorical Data</a></li>
+  <ul class="collapse">
+  <li><a href="#statistics-in-r" id="toc-statistics-in-r" class="nav-link active" data-scroll-target="#statistics-in-r">Statistics in R</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#distributions" id="toc-distributions" class="nav-link" data-scroll-target="#distributions">Distributions</a></li>
+  <li><a href="#the-t-distribution" id="toc-the-t-distribution" class="nav-link" data-scroll-target="#the-t-distribution">The T Distribution</a></li>
+  </ul></li>
+  <li><a href="#tests-for-continuous-data" id="toc-tests-for-continuous-data" class="nav-link" data-scroll-target="#tests-for-continuous-data">Tests For Continuous Data</a>
+  <ul class="collapse">
+  <li><a href="#data-for-this-session" id="toc-data-for-this-session" class="nav-link" data-scroll-target="#data-for-this-session">Data For This Session</a></li>
+  <li><a href="#pop-quiz" id="toc-pop-quiz" class="nav-link" data-scroll-target="#pop-quiz">Pop Quiz</a></li>
+  <li><a href="#t-tests" id="toc-t-tests" class="nav-link" data-scroll-target="#t-tests">t-tests</a></li>
+  <li><a href="#wilcoxon-tests" id="toc-wilcoxon-tests" class="nav-link" data-scroll-target="#wilcoxon-tests">Wilcoxon Tests</a></li>
+  <li><a href="#a-brief-comment" id="toc-a-brief-comment" class="nav-link" data-scroll-target="#a-brief-comment">A Brief Comment</a></li>
+  </ul></li>
+  <li><a href="#tests-for-categorical-data" id="toc-tests-for-categorical-data" class="nav-link" data-scroll-target="#tests-for-categorical-data">Tests For Categorical Data</a>
+  <ul class="collapse">
+  <li><a href="#chi2-test" id="toc-chi2-test" class="nav-link" data-scroll-target="#chi2-test"><span class="math inline">\(\chi^2\)</span> Test</a></li>
+  <li><a href="#fishers-exact-test" id="toc-fishers-exact-test" class="nav-link" data-scroll-target="#fishers-exact-test">Fisher’s Exact Test</a></li>
+  <li><a href="#summary-of-tests" id="toc-summary-of-tests" class="nav-link" data-scroll-target="#summary-of-tests">Summary of Tests</a></li>
+  <li><a href="#htest-objects" id="toc-htest-objects" class="nav-link" data-scroll-target="#htest-objects"><code>htest</code> Objects</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="basic_stats_slides.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
 </div>
@@ -2418,7 +2446,7 @@ display: none;
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
       </div>
   </div>
@@ -2449,7 +2477,8 @@ display: none;
 <li><code>R</code> has it’s origins as a statistical analysis language (i.e. <code>S</code>)</li>
 <li>Purpose of this session is NOT to teach statistical theory
 <ul>
-<li>I am a bioinformatician NOT a statistician</li>
+<li>I am more of a bioinformatician than statistician</li>
+<li>I did tutor stats for 3 years</li>
 </ul></li>
 <li>Perform simple analyses in R</li>
 <li>Up to you to know what you’re doing
@@ -2465,8 +2494,8 @@ display: none;
 <li>Standard syntax for accessing each</li>
 </ul>
 </section>
-<section id="distributions-1" class="level2">
-<h2 class="anchored" data-anchor-id="distributions-1">Distributions</h2>
+<section id="distributions-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="distributions-1">Distributions</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 21%">
@@ -2537,8 +2566,8 @@ display: none;
 </tbody>
 </table>
 </section>
-<section id="distributions-2" class="level2">
-<h2 class="anchored" data-anchor-id="distributions-2">Distributions</h2>
+<section id="distributions-2" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="distributions-2">Distributions</h2>
 <ul>
 <li>Also Beta, <span class="math inline">\(\Gamma\)</span>, Log-Normal, F, Geometric, Cauchy, Hypergeometric etc…</li>
 </ul>
@@ -2546,8 +2575,8 @@ display: none;
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>?Distributions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="distributions-3" class="level2">
-<h2 class="anchored" data-anchor-id="distributions-3">Distributions</h2>
+<section id="distributions-3" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="distributions-3">Distributions</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href>PDF</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href>CDF</a></li></ul>
 <div class="tab-content">
@@ -2614,7 +2643,7 @@ display: none;
 <h2 class="anchored" data-anchor-id="data-for-this-session">Data For This Session</h2>
 <ul>
 <li>We’ll use the <code>pigs</code> dataset from earlier</li>
-<li>Starta new session with new script: <code>BasicStatistics.R</code></li>
+<li>Start a new session with new script: <code>BasicStatistics.R</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -2631,8 +2660,8 @@ display: none;
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="data-for-this-session-1" class="level2">
-<h2 class="anchored" data-anchor-id="data-for-this-session-1">Data For This Session</h2>
+<section id="data-for-this-session-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="data-for-this-session-1">Data For This Session</h2>
 <div class="cell" data-layout-align="center" data-output-location="column">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
@@ -2682,7 +2711,7 @@ Can anyone define a p-value?
 <li>For data with exactly two groups</li>
 </ul></li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>The simplest test is on a simple vector
 <ul>
@@ -2693,6 +2722,8 @@ Can anyone define a p-value?
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>?t.test</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pigs<span class="sc">$</span>len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
+<div class="fragment">
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2711,9 +2742,10 @@ What is <span class="math inline">\(H_0\)</span> in the above test?
 </div>
 </div>
 </div>
+</div>
 </section>
-<section id="t-tests-1" class="level2">
-<h2 class="anchored" data-anchor-id="t-tests-1">t-tests</h2>
+<section id="t-tests-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="t-tests-1">t-tests</h2>
 <p>When comparing the means of two vectors</p>
 <p><span class="math display">\[
 H_0: \mu_{1} = \mu_{2} \\
@@ -2725,7 +2757,7 @@ H_A: \mu_{1} \neq \mu_{2}
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>oj <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(pigs, supp <span class="sc">==</span> <span class="st">&quot;OJ&quot;</span>)<span class="sc">$</span>len</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">x =</span> vc, <span class="at">y =</span> oj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2744,9 +2776,10 @@ Is This a Paired Test?
 </div>
 </div>
 </div>
+</div>
 </section>
-<section id="t-tests-2" class="level2">
-<h2 class="anchored" data-anchor-id="t-tests-2">t-tests</h2>
+<section id="t-tests-2" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="t-tests-2">t-tests</h2>
 <ul>
 <li>An alternative is the <code>R</code> formula method: <code>len~supp</code>
 <ul>
@@ -2763,8 +2796,8 @@ Is This a Paired Test?
 </div>
 <p><strong>Did this give the same results?</strong></p>
 </section>
-<section id="t-tests-3" class="level2">
-<h2 class="anchored" data-anchor-id="t-tests-3">t-tests</h2>
+<section id="t-tests-3" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="t-tests-3">t-tests</h2>
 <ul>
 <li>Do we think the variance is equal between the two groups?</li>
 </ul>
@@ -2778,7 +2811,7 @@ Is This a Paired Test?
 2 OJ     6.61</code></pre>
 </div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>We can use Levene’s Test to formalise this
 <ul>
@@ -2789,9 +2822,10 @@ Is This a Paired Test?
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(len<span class="sc">~</span>supp, <span class="at">data =</span> pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 </section>
-<section id="t-tests-4" class="level2">
-<h2 class="anchored" data-anchor-id="t-tests-4">t-tests</h2>
+<section id="t-tests-4" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="t-tests-4">t-tests</h2>
 <ul>
 <li>Now we can assume equal variances
 <ul>
@@ -2801,21 +2835,23 @@ Is This a Paired Test?
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(len<span class="sc">~</span>supp, <span class="at">data =</span> pigs, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>If relevant, the confidence interval can also be adjusted</li>
 </ul>
+</div>
 </section>
 <section id="wilcoxon-tests" class="level2">
 <h2 class="anchored" data-anchor-id="wilcoxon-tests">Wilcoxon Tests</h2>
 <ul>
 <li>We assumed the above dataset was normally distributed:<br><strong>What if it’s not?</strong></li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>Non-parametric equivalent is the <em>Wilcoxon Rank-Sum</em> Test (aka <em>Mann-Whitney</em>)</li>
 </ul>
-<p>. . .</p>
+</div>
+<div class="fragment">
 <ul>
 <li>This assigns ranks to each value based on their value
 <ul>
@@ -2826,6 +2862,7 @@ Is This a Paired Test?
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(len<span class="sc">~</span>supp, <span class="at">data =</span> pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
 <section id="a-brief-comment" class="level2">
@@ -2838,7 +2875,7 @@ Is This a Paired Test?
 <li>Data can sometimes be transformed (e.g. <code>sqrt()</code>, <code>log()</code> etc)</li>
 </ul></li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>The Wilcoxon Rank Sum Test assumes nothing about the underlying distribution
 <ul>
@@ -2847,6 +2884,7 @@ Is This a Paired Test?
 </ul></li>
 <li>The package <code>coin</code> implements a range on non-parametric tests</li>
 </ul>
+</div>
 </section>
 </section>
 <section id="tests-for-categorical-data" class="level1" data-background-color="#3d3d40">
@@ -2857,10 +2895,7 @@ Is This a Paired Test?
 <li>Here we need counts and categories</li>
 <li>Commonly used in <em>Observed Vs Expected</em></li>
 </ul>
-<p><span class="math display">\[
-H_0: \text{No association between groups and outcome}\\
-H_A: \text{Association between groups and outcome}
-\]</span></p>
+<p><span class="math display">\[H_0: \text{No association between groups and outcome}\]</span> <span class="math display">\[H_A: \text{Association between groups and outcome}\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2880,8 +2915,8 @@ When we shouldn’t use a <span class="math inline">\(\chi^2\)</span> test?
 </div>
 </div>
 </section>
-<section id="chi2-test-1" class="level2">
-<h2 class="anchored" data-anchor-id="chi2-test-1"><span class="math inline">\(\chi^2\)</span> Test</h2>
+<section id="chi2-test-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="chi2-test-1"><span class="math inline">\(\chi^2\)</span> Test</h2>
 <div class="cell" data-layout-align="center" data-output-location="column">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pass <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">15</span>), <span class="at">nrow =</span> <span class="dv">2</span>, </span>
@@ -2896,7 +2931,7 @@ Attended   25    6
 Skipped     8   15</code></pre>
 </div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <p><br></p>
 <div class="cell" data-layout-align="center" data-output-location="column">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pass_chisq <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(pass)</span>
@@ -2907,6 +2942,7 @@ Skipped     8   15</code></pre>
 
 data:  pass
 X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
+</div>
 </div>
 </div>
 </section>
@@ -2934,7 +2970,7 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 <li><code>t.test()</code>, <code>wilcox.test()</code></li>
 <li><code>chisq.test()</code>, <code>fisher.test()</code></li>
 </ul>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li><code>shapiro.test()</code>, <code>bartlett.test()</code></li>
 <li><code>car::leveneTest()</code>
@@ -2942,11 +2978,13 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 <li>Tests for normality or homogeneity of variance</li>
 </ul></li>
 </ul>
-<p>. . .</p>
+</div>
+<div class="fragment">
 <ul>
 <li><code>binomial.test()</code>, <code>poisson.test()</code></li>
 <li><code>kruskal.test()</code>, <code>ks.test()</code></li>
 </ul>
+</div>
 </section>
 <section id="htest-objects" class="level2">
 <h2 class="anchored" data-anchor-id="htest-objects"><code>htest</code> Objects</h2>
@@ -2960,7 +2998,7 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pass_chisq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <ul>
 <li>Will vary slightly between tests</li>
 <li>Can usually extract p-values using <code>test$p.value</code></li>
@@ -2968,9 +3006,10 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pass_chisq<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 </section>
-<section id="htest-objects-1" class="level2">
-<h2 class="anchored" data-anchor-id="htest-objects-1"><code>htest</code> Objects</h2>
+<section id="htest-objects-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="htest-objects-1"><code>htest</code> Objects</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Have a look at the list elements produced by fisher.test</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(pass) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2979,7 +3018,7 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 [6] &quot;method&quot;      &quot;data.name&quot;  </code></pre>
 </div>
 </div>
-<p>. . .</p>
+<div class="fragment">
 <p><br></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Are these similar to those produced by t.test?</span></span>
@@ -2989,10 +3028,12 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
  [6] &quot;null.value&quot;  &quot;stderr&quot;      &quot;alternative&quot; &quot;method&quot;      &quot;data.name&quot;  </code></pre>
 </div>
 </div>
-<p>. . .</p>
+</div>
+<div class="fragment">
 <ul>
 <li>There is a function <code>print.htest()</code> which organises the printout for us</li>
 </ul>
+</div>
 <div class="notes">
 <ul>
 <li>We’ll come back to methods later, but this is a common way for output to be produced</li>

@@ -29,7 +29,7 @@ format:
     output-file: linear_regression.html
     embed-resources: true    
     toc: true
-    toc-depth: 1    
+    toc-depth: 2
 include-after: |
   <script type="text/javascript">
     Reveal.on('ready', event => {
@@ -77,7 +77,7 @@ theme_set(
 ```
 
 
-## Linear Regression
+## Linear Regression 
 
 We are trying to estimate a line with slope & intercept
 
@@ -85,13 +85,14 @@ $$
 y = ax + b
 $$
 
-. . .
+::: {.fragment}
 
 Or 
 
 $$
 y = \beta_0 + \beta_1 x
 $$
+:::
 
 ::: {.incremental}
 
@@ -101,7 +102,7 @@ $$
 
 :::
 
-## Linear Regression
+## Linear Regression {.slide-only .unlisted}
 
 Linear Regression always uses the `R` formula syntax
 
@@ -109,11 +110,11 @@ Linear Regression always uses the `R` formula syntax
 - We use the function `lm()`
 - Once we have our model, we can predict $y$ based on $x$ values
 
-. . .
-
+::: {.fragment}
 - We'll use the penguins dataset for some exploration
+:::
 
-## Linear Regression
+## Linear Regression {.slide-only .unlisted}
 
 
 ```{r}
@@ -133,7 +134,7 @@ penguins |>
 - There looks like a fairly clear linear relationship
 :::
 
-## Linear Regression
+## Linear Regression {.slide-only .unlisted}
 
 - Bill length is the response variable ($y$)
 - Body Mass is the predictor variable ($x$)
@@ -145,7 +146,7 @@ bill_length_lm <- lm(bill_length_mm ~ body_mass_g, data = penguins)
 bill_length_lm
 ```
 
-## Linear Regression
+## Linear Regression {.slide-only .unlisted}
 
 ::: {.notes}
 - The basic output is only minimally informative
@@ -159,7 +160,7 @@ bill_length_lm
 summary(bill_length_lm)
 ```
 
-## Linear Regression
+## Linear Regression {.slide-only .unlisted}
 
 1. The code used is returned as `Call:`
 2. A brief summary of the residuals are returned
@@ -195,7 +196,7 @@ This is what the bill length would be if a penguin weighed exactly 0
     
 :::
 
-## Coefficients
+## Coefficients {.slide-only .unlisted}
 
 ::: {.callout-important collapse="true"}
 ### How do we interpret the `body_mass_g` term?
@@ -212,20 +213,19 @@ i.e. for every 1$g$ increase in weight, the bill length would be expected to inc
 - Reject $H_0 \implies$ there *is an association between predictor & response*
 :::
 
-## Linear Regression
+## Residuals
 
 - Points never lie exactly on the regression line $\implies$ Why?
 
-. . .
-
+::: {.fragment}
 - We're actually fitting the model
 
 $$
 y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 $$
 
+:::
 ::: {.incremental}
-
 
 - $\beta_0 + \beta_1 x_i$ is the exact line co-ordinate (Intercept + slope*predictor)
 - $\epsilon_i$ is the the vertical difference between the observed value and the fitted value
@@ -238,7 +238,7 @@ $$
 - Residual means the bit left over when we subtract the predicted value from the observed
 :::
 
-## Linear Regression
+## Assumptions Of Linear Regression
 
 Linear Regression formally has 4 key assumptions
 
@@ -256,7 +256,7 @@ Linear Regression formally has 4 key assumptions
 :::
 
 
-## Linear Regression
+## Model Checking
 
 - To check our fitted model, we should check the residuals to ensure $\epsilon_i \sim \mathcal{N}(0, \sigma)$
 
@@ -269,7 +269,7 @@ Linear Regression formally has 4 key assumptions
 plot(bill_length_lm)
 ```
 
-## Linear Regression
+## Model Checking {.slide-only .unlisted}
 
 :::: {.columns}
 
@@ -297,7 +297,7 @@ plot(bill_length_lm, which = 1)
 
 ::::
 
-## Linear Regression
+## Model Checking {.slide-only .unlisted}
 
 :::: {.columns}
 
@@ -326,7 +326,8 @@ plot(bill_length_lm, which = 2)
 
 ::::
 
-## Linear Regression
+
+## Model Checking {.slide-only .unlisted}
 
 :::: {.columns}
 
@@ -354,7 +355,7 @@ plot(bill_length_lm, which = 3)
 
 ::::
 
-## Linear Regression
+## Model Checking {.slide-only .unlisted}
 
 :::: {.columns}
 
@@ -382,14 +383,13 @@ plot(bill_length_lm, which = 5)
 
 ::::
 
-## Regression Diagnostic Plots
+## Model Checking {.slide-only .unlisted}
 
 - All of these figures used base plotting functions
 - Stepping through can be frustrating
     + Especially when running an automated script
     
-. . .
-
+::: {.fragment}
 - Can plot all 4 at once using a simple trick
 
 ```{r}
@@ -402,6 +402,7 @@ plot(bill_length_lm)
 par(mfrow = c(1, 1,))
 ```
 
+:::
 ::: {.notes}
 - `par()` is a function to set graphical parameters
 - `mfrow` means 'Multi-Figures By Row'
@@ -417,7 +418,7 @@ par(mfrow = c(1, 1,))
 class(bill_length_lm)
 ```
 
-. . .
+::: {.fragment}
 
 - This is also a list
 
@@ -426,8 +427,9 @@ class(bill_length_lm)
 ## Inspect the actual object
 glimpse(bill_length_lm)
 ```
+:::
 
-## Objects Of Class `lm`
+## Objects Of Class `lm` {.slide-only .unlisted}
 
 - We can use the list structure to inspect the residuals manually
 
@@ -437,7 +439,7 @@ glimpse(bill_length_lm)
 hist(bill_length_lm$residuals)
 ```
 
-## Objects Of Class `lm`
+## Objects Of Class `lm` {.slide-only .unlisted}
 
 - We could even use the Shapiro-Wilk test for normality
 
@@ -446,10 +448,10 @@ hist(bill_length_lm$residuals)
 shapiro.test(bill_length_lm$residuals)
 ```
 
-. . .
-
+::: {.fragment}
 - How can we interpret all of this?
 - Maybe there's a better model
+:::
 
 ## Adding Terms
 
@@ -475,7 +477,7 @@ penguins |>
 - Do we think the intercepts are the same?
 :::
 
-## Adding Terms
+## Adding Terms {.slide-only .unlisted}
 
 ```{r}
 #| results: markup
@@ -489,7 +491,7 @@ summary(bill_length_sp_lm)
 - There is already a large increase in R-squared so this model may fit better
 :::
 
-## Adding Terms
+## Adding Terms {.slide-only .unlisted}
 
 ```{r}
 #| output-location: column
@@ -523,16 +525,16 @@ shapiro.test(bill_length_sp_lm$residuals)
 summary(bill_length_sp_lm)$coef
 ```
 
-. . .
-
+::: {.fragment}
 - By default, the primary Intercept is the first factor level in `species`
 
 ```{r}
 #| results: markup
 levels(penguins$species)
 ```
+:::
 
-## Interpreting the Coefficients
+## Interpreting the Coefficients {.slide-only .unlisted}
 
 - Now we're happier with the model $\rightarrow$ what do the coefficients mean?
 
@@ -547,7 +549,7 @@ summary(bill_length_sp_lm)$coef
     + Does this check-out in our initial plot of the data?
 - They all appear significant when checking each $H_0$
     
-## Adding Terms
+## Adding Terms {.slide-only .unlisted}
 
 - Do we think each species may have a different relationship between mass and bill length?
     + Do we need to fit a separate slope for each species?
@@ -566,34 +568,32 @@ summary(bill_length_int_lm)
 - Now what do we think?
 :::
     
-## Interpreting the Coefficients
+## Interpreting the Coefficients {.slide-only .unlisted}
 
 - The baseline terms for the Intercept and `body_mass_g` are now **both** for Adelie
 - Differences in slope for each species are provided as `speciesChinstrap:body_mass_g` and `speciesGentoo:body_mass_g`
     
-. . .
+::: {.incremental}
 
 - The regression line for Adelie is y = `r  round(coef(bill_length_int_lm)[[1]], 2)` + `r round(coef(bill_length_int_lm)[[4]], 4)`*`body_mass_g`
 
-. . .
-
 - For Chinstrap: y = (`r paste(round(coef(bill_length_int_lm)[1:2], 2), collapse = "+")`) + (`r paste(round(coef(bill_length_int_lm)[4:5], 4), collapse = "+")`)*body_mass_g`
+:::
 
-## Interpreting the Coefficients
+## Interpreting the Coefficients {.slide-only .unlisted}
 
 - The model matrix $X$ is a key part of understanding statistics
 - The model coefficients ($\hat{\beta}$) are actually estimated by performing linear algebra on this
 - The least squares solution is $\hat{\beta} = (X^TX)^{-1}X^Ty$
     
-. . .
-
+::: {.fragment}
 ```{r}
 y <- penguins$bill_length_mm[!is.na(penguins$body_mass_g)]
 X <- model.matrix(~ species + body_mass_g + species:body_mass_g, data = penguins)
 ```
+:::
 
-## Interpreting the Coefficients
-
+## Interpreting the Coefficients {.slide-only .unlisted}
 
 
 ```{r}
@@ -602,8 +602,7 @@ head(X)
 ```
 
 
-
-## Interpreting the Coefficients
+## Interpreting the Coefficients {.slide-only .unlisted}
 
 ```{r}
 #| results: markup
@@ -615,7 +614,7 @@ beta_hat <- solve(t(X) %*% X) %*% t(X) %*% y
 cbind(beta_hat, coef(bill_length_int_lm))
 ```
 
-## Interpreting the Coefficients
+## Interpreting the Coefficients {.slide-only .unlisted}
 
 ::: {style="font-size: 85%"}
 
@@ -663,11 +662,11 @@ anova(bill_length_sp_lm)
 anova(bill_length_int_lm)
 ```
 
-. . .
-
+::: {.fragment}
 - Does this give any clue as to the best model?
+:::
     
-## Model Selection
+## Model Selection {.slide-only .unlisted}
 
 - We have progressively added terms to each model
 - Can use ANOVA to compare suitability of each model
@@ -683,18 +682,17 @@ anova(
 )
 ```
 
-. . .
-
+::: {.fragment}
 - It looks like the separate slopes are not an improvement
 - The separate intercepts **are** an improvement
+:::
 
 ## Speeding The Process Up
 
 - This was a careful breakdown of finding the best model
 - We can partially automate this and use some shortcuts
 
-. . .
-
+::: {.fragment}
 - The shorthand for an interaction term with separate intercepts is `*`
 
 ```{r}
@@ -705,12 +703,14 @@ bill_length_int_lm <- lm(
 summary(bill_length_int_lm)
 ```
 
-. . .
-
+:::
+::: {.fragment}
 - Alternatively, all terms can be placed inside brackets & raised to a power
     + `(species + body_mass_g)^2` would give two-way interactions
-    
-## Speeding The Process Up
+
+:::
+
+## Speeding The Process Up {.slide-only .unlisted}
 
 ::: {.notes}
 - The AIC is a function of the number of model terms and the log likelihood function
@@ -737,16 +737,16 @@ step(bill_length_int_lm)
 bill_length_sp_lm$coefficients
 ```
 
-. . .    
-    
+::: {.fragment}
 - These values are produced by the function `summary()`
 
 ```{r}
 ## Extract the coefficients from the summary object
 summary(bill_length_sp_lm)$coefficients
 ```
+:::
 
-## Objects of Class `summary.lm`
+## Objects of Class `summary.lm` {.slide-only .unlisted}
 
 ```{r}
 ## Check the class of the output from summary
@@ -760,9 +760,9 @@ summary(bill_length_sp_lm) |> attributes()
 summary(bill_length_sp_lm) |> glimpse()
 ```
 
-. . .
-
+::: {.fragment}
 - The full complexity of the object is mostly irrelevant
+:::
 
 ## Using A More Tidyverse Friendly Approach
 
@@ -821,19 +821,18 @@ penguins |>
 - Very informal class structure in `R`
 - Easy to work with $\implies$ easy to break
 
-. . .
-
+::: {.fragment}
 - When we printed these objects $\implies$ `print.lm()` or `print.summary.lm()`
 - Likewise when we plotted the `lm` object $\implies$ `plot.lm()`
-
-. . .
-
+:::
+::: {.fragment}
 ```{r}
 #| eval: false
 ?plot.lm
 ```
+:::
 
-## S3 Method Dispatch
+## S3 Method Dispatch {.slide-only .unlisted}
 
 - If we only want a subset of figures
 
@@ -849,7 +848,7 @@ plot(
 par(mfrow = c(1, 1))
 ```
 
-## S3 Method Dispatch
+## S3 Method Dispatch {.slide-only .unlisted}
 
 - We can also check what we pass to `broom::tidy()`
 
@@ -858,13 +857,13 @@ par(mfrow = c(1, 1))
 ?broom::tidy.lm
 ```
 
-. . .
-
+::: {.fragment}
 - `broom::tidy()` has multiple versions for objects of different classes
     + e.g. `broom::tidy.prcomp()` for PCA results
 
+:::
 
-## S3 Method Dispatch
+## S3 Method Dispatch {.slide-only .unlisted}
 
 - `S3` objects can be easily broken
 
@@ -874,10 +873,10 @@ class(broken_lm) <- "htest"
 broken_lm
 ```
 
-. . .
-
+::: {.fragment}
 - `R` looked for the `print.htest` method
 - The structure didn't match what was expected $\implies$ nonsense output
+:::
 
 ## Confidence Intervals
 
@@ -897,7 +896,7 @@ broken_lm
 - We will need a new data frame to make the predictions about
 :::
 
-## Confidence Intervals
+## Confidence Intervals {.slide-only .unlisted}
 
 ```{r}
 ## Create some new penguins
@@ -912,7 +911,7 @@ predict(bill_length_sp_lm, newdata = new_penguins, interval = "prediction")
 ```
 
 
-## Confidence Intervals
+## Confidence Intervals {.slide-only .unlisted}
 
 - We may wish to include our new penguins in these results
 
@@ -924,7 +923,7 @@ new_penguins |>
   )
 ```
 
-## Confidence Intervals
+## Confidence Intervals {.slide-only .unlisted}
 
 - Confidence Intervals for model terms can also be found using `broom::tidy()`
 
