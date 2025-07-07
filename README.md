@@ -17,6 +17,8 @@ Data for the workshop is available as a zip file [here](data.zip). We
 will explain where to place this data and how to structure directories
 in the opening sessions.
 
+Installation and package requirements are [here](setup.md)
+
 ## Provisional Course Outline
 
 | Day 1 | Topic | Notes | Estimated Duration <br>(approx) |
