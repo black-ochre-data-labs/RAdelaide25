@@ -1,0 +1,440 @@
+---
+title: "Using Functions in Series"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format:
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    code-tools: true
+    logo: assets/bodl_logo_white_background.jpg
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+  html:
+    css: [bodl.scss, extra.css]
+    output-file: piping.html
+    embed-resources: true
+    toc: true
+    toc-depth: 2
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) {
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE,
+  fig.align = "center"
+)
+library(palmerpenguins)
+library(dplyr)
+library(lubridate)
+```
+
+# The Pipe Operator {background-color="#3d3d40"}
+
+## Motivation
+
+- We've seen a bunch of ways to explore our data
+- Only using one function at a time
+
+::: {.fragment}
+
+- Perhaps we might like to subset (i.e. filter) our data, then sort it
+- How do we do that?
+
+:::
+
+::: {.notes}
+- Should we stick with DataExploration.R?
+:::
+
+## The Ugly (Old-School) Way
+
+- Let's say we only want information on the Adelie penguins
+- Then we want to sort this by body_mass
+
+```{r}
+#| output: false
+## First we can subset the dataset
+filter(penguins, species == "Adelie")
+```
+
+::: {.fragment}
+
+How do we then pass this to the `arrange()` function?
+
+:::
+::: {.fragment}
+
+1. We could save this as a new object and then call `arrange()` on that object
+2. We could place the output of `filter()` inside `arrange()`
+:::
+
+
+## The Ugly (Old-School) Way  {.slide-only .unlisted}
+
+
+```{r}
+#| output: false
+# Let's create an object first: 'adelie_penguins'
+adelie_penguins <- filter(penguins, species == "Adelie")
+
+# Now we can pass this to `arrange()`
+arrange(adelie_penguins, body_mass_g)
+```
+
+::: {.fragment}
+
+::: {.callout-note collapse="true"}
+## Is this any good?
+
+A complete analysis would lead to a workspace with multiple, similar objects, e.g.
+`adelie_penguins`, `penguins_2007`, `torgerson_penguins`, etc.
+
+This can become very messy and confusing
+:::
+:::
+
+## Another Ugly (Old-School) Way
+
+```{r}
+#| output: false
+# This time, we can wrap the output of one function inside the other
+arrange(
+  filter(penguins, species == "Adelie"), 
+  body_mass_g
+)
+```
+
+::: {.fragment}
+
+- We have first filtered our dataset $\implies$ becomes the `tibble` to be sorted
+
+:::
+
+::: {.fragment}
+
+::: {.callout-note collapse="true"}
+## Is this any good?
+
+Functions are executed in order from the inside-most function to the outer-most. First the filtering is done, and then this is passed to `arrange()`
+
+Can become very messy if calling 10 functions in a row
+:::
+:::
+
+## The Pipe Operator
+
+- R v.4.1 introduced the (base) *pipe operator*: `|>`
+- Exactly like sticking a pipe or a hose on the output of one function then placing the pipe as the input of the next 
+
+::: {.fragment}
+- This allows us to pass the output of one function to the next
+    + Can chain together multiple functions
+    + No need to create intermediate objects
+    + No need to wrap the output of one function inside another
+
+:::
+::: {.fragment}
+
+- The output of the first function is passed to the next
+    + By default, it will be the *first* argument
+    
+:::
+
+## The Pipe Operator {.slide-only .unlisted}
+
+```{r}
+#| output-location: fragment
+# This is conventionally how we've used filter
+filter(penguins, species == "Adelie") 
+```
+
+## The Pipe Operator {.slide-only .unlisted}
+
+```{r}
+#| output-location: fragment
+# Here, we're passing the object to filter using |>
+penguins |> filter(species == "Adelie")
+```
+
+::: {.fragment}
+- Calling an object by name simply returns the complete object
+:::
+
+## The Pipe Operator {.slide-only .unlisted}
+
+```{r}
+# Filter the object, then pass the filtered object to arrange using the pipe
+penguins |> filter(species == "Adelie") |> arrange(body_mass_g)
+```
+
+## Forming a Chain Across Multiple Lines
+
+- A common practice is to spread these chains across multiple lines
+- We can comment anywhere we please
+
+```{r}
+#| output: false
+penguins |> 
+  filter(species == "Adelie") |> # First filter the species
+  arrange(body_mass_g) # Now sort by body mass
+```
+
+::: {.fragment}
+
+- Makes long chains much easier to read
+- Can easily comment out a line when building/testing code
+:::
+
+## A Longer Example
+
+- Let's find the heaviest 5 Adelie penguins
+
+```{r}
+#| output: false
+penguins |> 
+  filter(species == "Adelie") |> # First filter the species
+  arrange(desc(body_mass_g)) |> # Now sort by body mass, descending
+  slice_head(n = 5) # Take the first 5 rows
+```
+
+# Revisiting `dplyr` {background-color="#3d3d40" background-image=https://dplyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
+## Additional Capabilities of `dplyr`
+
+- The function `distinct()` will remove duplicate rows across the provided columns
+
+```{r}
+#| output: false
+## Return the unique values in the species column
+penguins |> distinct(species)
+
+## Return the unique combinations of the species and island columns
+penguins |> distinct(species, island)
+```
+
+
+## Bringing Everything Together
+
+- The problem we want to address is a missing column from the `penguins` data
+- Check the object `penguins_raw`
+    + This is the master object which `penguins` was derived from
+    
+::: {.fragment}
+- We'd like to add the `studyName` column to `penguins` for formal reporting
+
+```{r}
+#| output: false
+penguins_raw |>
+  mutate(year = year(`Date Egg`)) |> # `year()` is from the package lubridate
+  distinct(studyName, year)
+```
+
+:::
+
+::: {.notes}
+How would we do this? I can think of two ways
+:::
+
+## Using `case_when()`
+
+- Now that we know our basic structure<br>$\implies$ use `case_when()`
+
+::: {.fragment}
+
+- This is like an `ifelse` statement with multiple conditions
+    
+```
+if (condition is true) 
+  do something
+else 
+  do something else
+endif
+```
+
+:::
+
+## Using `case_when()` {.slide-only .unlisted}
+
+- We can use this inside a `mutate` function
+- Logical tests are performed sequentially
+    + if `LHS is TRUE` [~ `Assign the RHS value`]{.fragment}
+
+```{r}
+#| output: false
+penguins |>
+  mutate(
+    studyName = case_when(
+      year == 2007 ~ "PAL0708",
+      year == 2008 ~ "PAL0809",
+      year == 2009 ~ "PAL0910",
+    )
+  )
+```
+
+## An Alternative Using Joins
+
+- Many coding problems have more than one viable solution
+- We could also use a `left/right_join()`
+
+```{r}
+#| output: false
+## Create a summary of the studyNames by year
+studies <- penguins_raw |>
+  mutate(year = year(`Date Egg`)) |> 
+  distinct(studyName, year)
+```
+
+## An Alternative Using Joins {.slide-only .unlisted}
+
+- We could now use `left_join()` to add this to `penguins`
+    + `penguins` will be taken as a scaffold to add values to
+    + Is on the LHS of the pipe $\therefore$ `left_join()`
+
+```{r}
+#| output: false
+## Use `left_join()` to join the two datasets on the `year` column
+penguins |> left_join(studies, by = "year") 
+```
+
+::: {.fragment}
+
+- Notice that the simple dataset `studies` was expanded
+    + Every time the `year` values matched $\implies$ `studyName` was added
+
+:::
+::: {.fragment}
+
+- The downside to this method is we created a new object (`studies`)
+:::
+
+## An Alternative Using Joins {.slide-only .unlisted}
+
+- We could "flip" this using `right_join()`
+    + The dataset on the RHS is taken as the scaffold
+    
+```{r}
+#| output: false
+# Create the summaries on the fly, then use `penguins` as the RHS scaffold
+penguins_raw |>
+  mutate(year = year(`Date Egg`)) |> 
+  distinct(studyName, year) |>
+  right_join(penguins)
+```
+
+::: {.fragment}
+- Only difference is the column order
+:::
+
+## Additional Joins
+
+- Multiple columns can be passed to the `by` argument
+
+::: {.fragment}
+
+- `inner_join()` produces the subset where all complete matches are present
+- `full_join()` produces the union of the two datasets
+    + All rows from both datasets are returned
+    + Missing values are filled with `NA`
+:::
+
+## Using Distinct Wisely
+
+- Setting the argument `.keep_all = TRUE` will return all columns
+    + Only the first unique appearance will be retained
+
+```{r}
+#| output: false
+## Sort by body mass, descending then use distinct to return the
+## first unique combination of species and island
+penguins |>
+  arrange(desc(body_mass_g)) |> 
+  distinct(species, island, .keep_all = TRUE)
+```
+
+
+# Challenges
+
+::: {style="font-size: 90%"}
+
+1. Find the lightest 5 Gentoo penguins
+    + Return the weights in `kg` instead of `g`
+2. Find the mean bill length for male penguins
+    + Sort your answer in descending order
+3. Find how many penguins were measured per year on each island
+    + Sort your answer by island, then by year
+4. Use `slice_max()` to return the same penguins as the final example, i.e. the heaviest from each species and island?    
+5. Recreate `penguins` from `penguins_raw`, but retaining `studyName` and the `Individual ID` as additional columns
+
+:::
+    
+## Closing Comments
+
+::: {style="font-size: 90%"}
+
+- The shell has had a pipe since 1973[^1]
+    + Originally `>` then changed to `|`
+- The `R` base pipe (`|>`) was introduced in v.4.1 (2021)
+
+::: {.fragment}
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+- An earlier pipe (`%>%`) was introduced in the package `magrittr` (~2014)
+    + Often referred to as "The Magrittr"
+    + Much internet code will use this pipe
+    + Very similar in behaviour [<br>**BUT** differences are non-trivial]{.fragment}
+
+:::
+
+::: {.column width="50%"}
+    
+![Rene Magritte, *The Treachery of Images*, 1929](https://uploads7.wikiart.org/images/rene-magritte/the-treachery-of-images-this-is-not-a-pipe-1948(2).jpg)
+
+:::
+
+:::
+
+:::
+
+:::
+
+[^1]: https://en.wikipedia.org/wiki/Pipeline_(Unix)
+
+::: {.notes}
+Interestingly, the shell was also developed at Bell Labs in the 1970s
+:::

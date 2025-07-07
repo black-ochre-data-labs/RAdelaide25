@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="intro_slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="intro_slides_files/libs/quarto-html/tabby.min.js"></script>
+<script src="intro_slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="intro_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="intro_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="intro_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="intro_slides_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
+
+  <meta name="author" content="Dr Stevie Pederson">
+  <meta name="dcterms.date" content="2025-07-08">
+  <title>Introduction To R and RStudio</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="intro_slides_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="intro_slides_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="intro_slides_files/libs/revealjs/dist/theme/quarto-30963254ca3fee1f61c50d8fd85c7cc4.css">
+  <link href="intro_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="intro_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="intro_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="intro_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#3d3d40" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
+  <h1 class="title">Introduction To R and RStudio</h1>
+  <p class="subtitle">RAdelaide 2025</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr Stevie Pederson 
+</div>
+        <p class="quarto-title-affiliation">
+            </p><div class="line-block">Black Ochre Data Labs<br>
+            The Kids Research Institute Australia</div>
+          <p></p>
+    </div>
+</div>
+
+  <p class="date">July 8, 2025</p>
+</section>
+<section>
+<section id="a-brief-introduction-to-r" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="80% 50%">
+<h1>A Brief Introduction to R</h1>
+
+</section>
+<section id="why-use-r" class="slide level2">
+<h2>Why use R?</h2>
+<ul>
+<li>Heavily used for analysis of biological data (along with Python)
+<ul>
+<li>Can handle extremely large datasets<br>
+</li>
+<li>Packages explicitly designed for complex analysis</li>
+<li>Huge user base <span class="math inline">\(\implies\)</span> internet resources</li>
+<li>(Can be) very fast</li>
+</ul></li>
+<li>Very easy to <em>dynamically interact</em> with large datasets
+<ul>
+<li>Can also run as static scripts on HPC clusters</li>
+<li>Low-level languages like <code>C</code>/<code>C++</code> don’t allow for interactive analysis</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>I regularly work with data containing millions of lines</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="how-do-we-use-r" class="slide level2">
+<h2>How do we use R?</h2>
+<ul>
+<li>Never use drop-down menus or buttons <span class="math inline">\(\implies\)</span> type every command
+<ul>
+<li>Complex processes are often implemented as ‘simple’ functions</li>
+</ul></li>
+<li>Considered a <em>high-level</em> language
+<ul>
+<li>Usually easy to read and understand then low-level languages (e.g.&nbsp;<code>C</code>)</li>
+<li>Trade-off in regard to speed &amp; memory management</li>
+</ul></li>
+</ul>
+</section>
+<section id="how-do-we-use-r-1" class="slide level2 slide-only unlisted">
+<h2>How do we use R?</h2>
+<aside class="notes">
+<ul>
+<li>Discuss column sorting with Simon although I believe it’s improved</li>
+<li>Mention paper claiming GLMs, but absolutely did not fit GLMs</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li><strong>Reproducible Research!!!</strong>
+<ul>
+<li>Keep records (i.e.&nbsp;scripts) of every step of every analysis</li>
+<li>Transparent methods for reviewers</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Avoids common Excel pitfalls <span class="fragment">(almost) never modify files on disk!</span><span class="fragment"><br><span class="math inline">\(\implies\)</span> load data from a file into R and work with it there</span></li>
+</ul>
+</div>
+<div class="fragment">
+<p>Experience is the best teacher <span class="math inline">\(\implies\)</span> please practice your skills</p>
+</div>
+</section>
+<section id="what-is-r" class="slide level2">
+<h2>What is R?</h2>
+<ul>
+<li>Derivative of <code>S</code> <span class="citation" data-cites="Chambers1977-ry">(Bell Labs, <a href="#/references" role="doc-biblioref" onclick="">Chambers 1977</a>)</span></li>
+</ul>
+<div class="fragment">
+<p><img data-src="assets/chambers.png"></p>
+</div>
+</section>
+<section id="what-is-r-1" class="slide level2 slide-only unlisted">
+<h2>What is R?</h2>
+<aside class="notes">
+<ul>
+<li>Ross Ihaka is of NZ Maori descent</li>
+<li>Last commercial release of S-Plus in 2007</li>
+<li>Some of the code for GLMs was written by Prof Bill Venables (Head of Maths, UofA)</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li>Derivative of <code>S</code> <span class="citation" data-cites="Chambers1977-ry">(Bell Labs, <a href="#/references" role="doc-biblioref" onclick="">Chambers 1977</a>)</span></li>
+<li><code>R</code> began to appear in 1996 <span class="citation" data-cites="Ihaka1996-zi">(<a href="#/references" role="doc-biblioref" onclick="">Ihaka and Gentleman 1996</a>)</span>
+<ul>
+<li><strong>R</strong>oss Ihaka and <strong>R</strong>obert Gentleman (U of Auckland)</li>
+<li>Disentangled some proprietary <code>S</code> code <span class="math inline">\(\implies\)</span> <em>open-source</em></li>
+</ul></li>
+<li>First official release (v1.0.0) in Feb 2000
+<ul>
+<li>Now estimated &gt;2 million users (2012)</li>
+<li>Nice history article <a href="https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf">here</a> <span class="citation" data-cites="Chambers2020-tc">(<a href="#/references" role="doc-biblioref" onclick="">Chambers 2020</a>)</span></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>My first exposure to R was 2002 (R v1.5)</li>
+</ul>
+</div>
+</section>
+<section id="what-is-r-2" class="slide level2 slide-only unlisted">
+<h2>What is R?</h2>
+<aside class="notes">
+<ul>
+<li>Being open source creates headaches for University &amp; Business IT departments</li>
+<li>There are identified security risks</li>
+<li>No guarantees of being virus free. Has inherent security flaws particularly using R data files (which are often part of packages)</li>
+<li>The community self-regulates</li>
+<li>Release Names are references to Peanuts cartoons</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="columns">
+<div class="column" style="width:75%;">
+<ul>
+<li>Open source language
+<ul>
+<li>No corporate ownership <span class="math inline">\(\implies\)</span> free software</li>
+<li>Code is managed by the community of users</li>
+</ul></li>
+<li><code>R</code> is formally run by volunteers <span class="math inline">\(\implies\)</span> <strong>R Core</strong>
+<ul>
+<li>Mostly academics</li>
+<li>John Chambers is <em>still</em> a member</li>
+</ul></li>
+<li>Annual release schedule + patches
+<ul>
+<li>Most recent is R 4.5.1 (Jun 14)</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:25%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://images.routledge.com/common/jackets/amazon/978149877/9781498775717.jpg" width="300"></p>
+<figcaption>Extending R, Chambers (2016)</figcaption>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="r-packages" class="slide level2">
+<h2>R Packages</h2>
+<ul>
+<li>Packages are the key to R’s flexibility and power
+<ul>
+<li>Collections (or libraries) of <em>related functions</em></li>
+<li><code>ggplot2</code> <span class="math inline">\(\implies\)</span> Create plots using the <em>grammar of graphics</em></li>
+<li><code>readr</code> <span class="math inline">\(\implies\)</span> Read files into <code>R</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="r-packages-1" class="slide level2 slide-only unlisted">
+<h2>R Packages</h2>
+<aside class="notes">
+<ul>
+<li>Loading a package is like the Matrix where Trinity installs the set of skills to fly a helicopter</li>
+<li>Crap packages are generally identified by the users and just not-used</li>
+<li>Scientific rigour is usually checked during review of the accompanying publication</li>
+<li>Robert Gentleman was also a founder of Bioconductor before moving to 23&amp;me</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li><span class="math inline">\(&gt;\)</span> 22,000 packages are stored on CRAN (https://cran.r-project.org)
+<ul>
+<li>Not curated for statistical quality or documentation</li>
+<li>Automated testing for successful installation</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Bioconductor is a secondary repository (https://www.bioconductor.org)
+<ul>
+<li><span class="math inline">\(&gt;\)</span> 3000 packages with a more biological/genomics focus</li>
+<li>Curated for language consistency &amp; documentation</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Some packages also live on github or bitbucket
+<ul>
+<li>Will include latest (unstable) development versions</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="r-packages-2" class="slide level2 slide-only unlisted">
+<h2>R Packages</h2>
+<ul>
+<li>Installation of a package can be done through a variety of methods:
+<ul>
+<li><code>install.packages("packageName")</code> will only install from CRAN</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Bioconductor also provide a CRAN package: <code>BiocManager</code>
+<ul>
+<li><code>BiocManager::install("packageName")</code> installs from CRAN, Bioconductor &amp; github</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>The CRAN package <code>pak</code> also installs from multiple locations</li>
+</ul>
+</div>
+<!-- ## Where is R used? {visibility="hidden"} -->
+<!-- ::: {.notes} -->
+<!-- - I was offered a position by the ABS in 2022 specifically for my R skills to use analysing the housing market. -->
+<!-- - BODL offered me a position the exact same day so I stayed in academia -->
+<!-- ::: -->
+<!-- - Google, ATO, ABS etc -->
+<!-- - Very large community of users in finance (Dirk Eddelbuettel - `Rcpp`) -->
+<!-- - Genomics, Ecological Research, Public Health, Politics... -->
+<!-- - Strong integration with HPC systems like Amazon, Hadoop -->
+<!-- - Growing Machine Learning capacity -->
+<!-- - Even has it's own peer-reviewed Journal (The R Journal) -->
+</section>
+</section>
+<section>
+<section id="using-r" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="70% 50%">
+<h1>Using R</h1>
+
+</section>
+<section id="the-r-console" class="slide level2">
+<h2>The R Console</h2>
+<aside class="notes">
+<ul>
+<li>This is the ‘ugly, old-school’ way of using R</li>
+<li>Still very useful, e.g.&nbsp;testing code on a HPC</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li>Let’s try using <code>R</code> as a standalone tool <span class="math inline">\(\implies\)</span> open <code>R</code> NOT <code>RStudio</code>
+<ul>
+<li>On <code>linux</code>: <br>Open a terminal then enter <code>R</code></li>
+<li>OSX: Click <img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png" width="40"> on your dock</li>
+<li>Windows: Click <img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png" width="40"> in your Start Menu</li>
+</ul></li>
+<li>Do not open <img data-src="assets/RStudio_icon.png" width="60"></li>
+<li>This is <code>R</code> at it’s ugliest (how I learned R)</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<p><img data-src="assets/RTerminal.png" class="absolute" style="right: 0px; width: 550px; "></p>
+</div></div>
+</section>
+<section id="the-r-console-1" class="slide level2 slide-only unlisted">
+<h2>The R Console</h2>
+<ul>
+<li>This is often referred to as the <code>R Console</code></li>
+<li>At it’s simplest <code>R</code> is just a calculator (Press Enter)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">^</span> <span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+</div>
+</section>
+<section id="the-r-console-2" class="slide level2 slide-only unlisted">
+<h2>The R Console</h2>
+<aside class="notes">
+<p>I never use a calculator program on my laptop, always R</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li><code>R</code> has many standard functions
+<ul>
+<li>place the value <em>inside</em> the brackets <em>after</em> the function name</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sqrt</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.414214</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">log10</span>(<span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+</section>
+<section id="the-r-console-3" class="slide level2 slide-only unlisted">
+<h2>The R Console</h2>
+<p>We can create objects with names</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>We have just created an object called <code>x</code></li>
+<li>The <code>&lt;-</code> symbol is like an arrow i.e.&nbsp;“put the value <code>5</code> into <code>x</code>”</li>
+</ul>
+<div class="quarto-figure quarto-figure-left">
+<figure>
+<p><img data-src="assets/APL-keybd2.png" style="width:60.0%"></p>
+<figcaption><em>An APL Keyboard from the 1970s showing the arrow as a single key</em></figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<p>Object names can be anything but should start with a letter not a number or special character</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-r-console-4" class="slide level2 slide-only unlisted">
+<h2>The R Console</h2>
+<ul>
+<li>View the contents of the object by entering it’s name in the <code>Console</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<ul>
+<li>The object <code>x</code> only exists in the <code>R Environment</code></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Imagine your R Environment to be like an Excel Workbook
+<ul>
+<li>Each object is named just like each spreadsheet is named<br><span class="math inline">\(\implies\)</span> objects <strong>don’t have to look like a spreadsheet</strong></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="the-r-console-5" class="slide level2 slide-only unlisted">
+<h2>The R Console</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Do R Objects Have Rules About Valid/Invalid Names</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li class="fragment">The only “special characters” which can be used are <code>.</code> and <code>_</code>
+<ul>
+<li class="fragment">This makes perfect sense when you realise <code>+</code>, <code>/</code>, <code>*</code>, <code>-</code> etc. are mathematical operators</li>
+<li class="fragment">Names cannot contain spaces <span class="math inline">\(\implies\)</span> <code>R</code> will think there are two objects</li>
+</ul></li>
+<li class="fragment">Object names must start with a letter, <code>.</code> or <code>_</code>.
+<ul>
+<li class="fragment">Objects starting with a <code>.</code> are often hidden from view</li>
+</ul></li>
+<li class="fragment">Common conventions are snake_case (<code>my_object</code>) or camelCase (<code>myObject</code>)</li>
+<li class="fragment">Numbers can follow the initial character but cannot start a name
+<ul>
+<li class="fragment">e.g.&nbsp;<code>x1</code> is a valid name whilst <code>1x</code> is not</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="the-r-console-6" class="slide level2 slide-only unlisted">
+<h2>The R Console</h2>
+<ul>
+<li>We can pass objects to functions and perform operations on them</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">sqrt</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.236068</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">^</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 25</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="sc">&gt;</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="the-r-console-7" class="slide level2 slide-only unlisted">
+<h2>The R Console</h2>
+<ul>
+<li>Everything we’ve just done is trivial</li>
+<li>Real analysis isn’t</li>
+<li>If we perform a series of steps
+<ul>
+<li>Should we keep a copy of what we’ve done?</li>
+<li>If so, how should we do that?</li>
+</ul></li>
+</ul>
+</section>
+<section id="recording-our-r-history" class="slide level2">
+<h2>Recording Our R History</h2>
+<ul>
+<li>Try using your up and down arrow keys in the <code>R Console</code></li>
+<li>This will scroll through the history of commands you’ve entered
+<ul>
+<li>Can re-execute or modify any of these</li>
+</ul></li>
+<li>Saved in a file called <code>.Rhistory</code> in your working directory</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>A common strategy is to record our code as an <em>R Script</em> as we write it
+<ul>
+<li>Just a plain text file with a record of our commands</li>
+</ul></li>
+<li><code>R Studio</code> makes that easy &amp; convenient</li>
+</ul>
+</div>
+</section>
+<section id="exiting-r" class="slide level2">
+<h2>Exiting R</h2>
+<ul>
+<li>To exit <code>R</code> type <code>q()</code></li>
+<li>You will then be asked: <code>Save workspace image? [y/n/c]:</code>
+<ul>
+<li>Type <code>n</code> then hit Enter</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>We can save our R environment with all of the objects we’ve created
+<ul>
+<li>By default this will be <code>.RData</code> in the folder we’ve been working in</li>
+</ul></li>
+<li>I personally never save <code>.RData</code> <span class="math inline">\(\implies\)</span> can lead to dodgy analysis
+<ul>
+<li>The code to create objects &amp; run analysis is the important part</li>
+</ul></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="r-studio" class="title-slide slide level1 center" data-background-color="#3d3d40" data-background-image="assets/RStudio_icon.png" data-background-size="25%" data-background-opacity="0.5" data-background-position="50% 50%">
+<h1>R Studio</h1>
+
+</section>
+<section id="introduction-to-rstudio" class="slide level2">
+<h2>Introduction to RStudio</h2>
+<p><code>R</code> and <code>RStudio</code> are <strong>two separate but connected things</strong></p>
+<ul>
+<li><code>R</code> is like the engine of your car</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>RStudio</code> is the ‘cabin’ we use to control the engine
+<ul>
+<li>Comes with extra features un-related to <code>R</code> that improve our ‘journey’</li>
+<li>Known as an IDE (Integrated Development Environment)</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><code>R</code> <em>does all the calculations, manages the data, generates plots</em>
+<ul>
+<li>i.e.&nbsp;gets us to our destination</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><code>RStudio</code> <em>helps manage our code, display the plots etc</em>
+<ul>
+<li>i.e.&nbsp;makes our journey easier to navigate</li>
+</ul></li>
+</ul>
+</div>
+</section>
+
+<section id="some-very-helpful-features-of-rstudio" class="slide level2">
+<h2>Some very helpful features of <code>RStudio</code></h2>
+<ul>
+<li>We can write scripts and <strong>execute code</strong> interactively</li>
+<li>We can see <strong>everything</strong> we need (directories, plots, code, history etc.)</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Predictive auto-completion</li>
+<li>Integration with Github Co-Pilot</li>
+<li>Integration with other languages
+<ul>
+<li>markdown, <span class="math inline">\(\LaTeX\)</span>, bash, python, C++, git etc.</li>
+</ul></li>
+<li>Numerous add-ons to simplify larger tasks</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Posit is now developing Positron to better enable a variety of languages</li>
+</ul>
+</div>
+</section>
+<section id="create-an-r-project" class="slide level2">
+<h2>Create an R Project</h2>
+<p>I use <code>R Projects</code> to manage each analysis</p>
+<div class="fragment">
+<ol type="1">
+<li>Create a directory on your computer for today’s material
+<ul>
+<li>We recommend <code>RAdelaide25</code> in your home directory</li>
+</ul></li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Now open <code>RStudio</code>
+<ul>
+<li><code>RStudio</code> will always open in a directory somewhere</li>
+<li>Look in the <code>Files</code> pane (bottom-right) to see where it’s looking<br>(Or type <code>getwd()</code> in the Console pane)</li>
+<li>This is the current working directory for <code>R</code></li>
+</ul></li>
+</ol>
+</div>
+</section>
+<section id="create-an-r-project-1" class="slide level2 slide-only unlisted">
+<h2>Create an R Project</h2>
+<!-- (Not needed for any using the Posit cloud) -->
+<p>We want RStudio to be looking in our new directory (<code>RAdelaide25</code>) <br><span class="math inline">\(\implies\)</span>R Projects make this easy</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><code>File</code> &gt; <code>New Project</code> &gt; <code>Existing Directory</code></li>
+<li>Browse to your <code>RAdelaide25</code> directory <span class="math inline">\(\implies\)</span> <code>Create Project</code></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="assets/RProject.png" class="absolute" style="bottom: 100px; right: 0px; "></p>
+</div></div>
+</div>
+</section>
+<section id="create-an-r-project-2" class="slide level2 slide-only unlisted">
+<h2>Create an R Project</h2>
+<aside class="notes">
+<ul>
+<li><code>R Projects</code> are simply a wrapper for keeping an analysis organised
+<ul>
+<li>Will always open in the R Project directory</li>
+<li>You can easily navigate to a directory with all scripts and data</li>
+<li>Makes managing file paths from your code <strong>very simple</strong></li>
+</ul></li>
+<li>R Projects can be particularly helpful when loading external files</li>
+<li>Also when saving/exporting lots of files as part of your analysis</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li>The <code>R Project</code> name is <strong>always</strong> the directory name</li>
+<li>Not essential, but <em>good practice</em> and <em>extremely useful</em></li>
+<li>The Project Menu is in the <strong>top-right</strong> of RStudio</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Enables us to work on multiple analyses/datasets</li>
+<li>Just open the relevant project <span class="math inline">\(\implies\)</span> you’re ready to go</li>
+</ul>
+</div>
+</section>
+<section id="create-an-empty-r-script" class="slide level2">
+<h2>Create An Empty R Script</h2>
+<ol type="1">
+<li><code>File</code> &gt; <code>New File</code> &gt; <code>R Script</code></li>
+<li>Save As <code>DataImport.R</code></li>
+</ol>
+</section>
+<section id="rstudio" class="slide level2">
+<h2>RStudio</h2>
+
+<img data-src="assets/RStudio.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"><p>This is the basic layout we often work with</p>
+<aside class="notes">
+<p>We’ll come back to the script window in the next section</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-r-console-8" class="slide level2">
+<h2>The R Console</h2>
+<ul>
+<li>This is the R Console <em>within</em> the RStudio IDE</li>
+<li>We’ve already explored this briefly</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>In the same pane we also have two other tabs
+<ul>
+<li><strong>Terminal</strong>: An approximation of a <code>bash</code> terminal (or PowerShell for Windows)</li>
+<li><strong>Background Jobs</strong> shows progress when compiling RMarkdown &amp; Quarto <span class="math inline">\(\implies\)</span> Not super relevant</li>
+</ul></li>
+</ul>
+</div>
+<!-- ## The R Console {.slide-only .unlisted} -->
+<!-- As well as performing simple calculations: -->
+<!-- - `R` has what we call an `Environment` (i.e. a Workspace) -->
+<!-- - We can define objects here or import data -->
+<!--    - Similar to a workbook in Excel with multiple worksheets -->
+<!--    - **Much more** flexible & powerful -->
+<!--    - Objects aren't forced to be spreadsheets -->
+<!-- ::: {.notes} -->
+<!-- - When we create a new sheet in Excel, we're actually creating an object. -->
+<!-- - Most commonly, it's named Sheet1 or something similar -->
+<!-- - Has fixed dimensions for memory management -->
+<!-- ::: -->
+</section>
+<section id="the-r-environment" class="slide level2">
+<h2>The R Environment</h2>
+<p>Like we did earlier, in the R Console type:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="dv">5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p><em><strong>Where have we created the object <code>x</code>?</strong></em></p>
+<ul>
+<li>Is it on your hard drive somewhere?</li>
+<li>Is it in a file somewhere?</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>We have placed <code>x</code> in our <code>R Environment</code></li>
+<li>Formally known as your <code>Global Environment</code></li>
+</ul>
+<p><img data-src="assets/EnvironmentTab.png"></p>
+</div>
+</section>
+<section id="the-r-environment-1" class="slide level2 slide-only unlisted">
+<h2>The R Environment</h2>
+<ul>
+<li>The <code>R Environment</code> is like your desktop</li>
+<li>We keep all our relevant objects here
+<ul>
+<li>Multiple objects are usually created during an analysis</li>
+<li>Can save all the objects in your environment as a single <code>.RData</code> object</li>
+<li><code>R</code> can be set to automatically save your environment on exit</li>
+<li>Unlike Excel: <em>We usually save our code not our environment</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="the-history-tab" class="slide level2">
+<h2>The <strong>History</strong> Tab</h2>
+<ul>
+<li>Next to the Environment Tab is the <strong>History</strong> Tab</li>
+<li>Keeps a record of the last ~200 lines of code
+<ul>
+<li>Very useful for remembering steps during exploration</li>
+<li>Best practice is to enter + execute code from the Script Window</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>We can generally ignore the <strong>Connections</strong> and any other tabs
+<ul>
+<li>A <code>git</code> tab will also appear for those who use git in their project</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="accessing-help" class="slide level2">
+<h2>Accessing Help</h2>
+<aside class="notes">
+<ul>
+<li>May be issues with <code>URL '/help/library/base/html/00Index.html' not found</code></li>
+<li>The examples in this help page are a bit rubbish…</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> ?sqrt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This will take you to the <code>Help</code> Tab for the <code>sqrt()</code> function
+<ul>
+<li>Contents may look confusing at this point but will become clearer</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Many inbuilt functions are organised into a package called <code>base</code>
+<ul>
+<li>Packages group similar/related functions together</li>
+<li><code>base</code> is always installed and loaded with <code>R</code></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="additional-sources-for-help" class="slide level2">
+<h2>Additional Sources For Help</h2>
+<aside class="notes">
+<p>As a package author, I’m always reading my own help pages. I simply can’t remember everything I’ve written</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<ul>
+<li>Help pages in <code>R</code> can be hit &amp; miss
+<ul>
+<li>Some are excellent and informative <span class="math inline">\(\implies\)</span> some aren’t</li>
+<li>I regularly read my own help pages</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Bioconductor has a support forum for Bioconductor packages
+<ul>
+<li>https://support.bioconductor.org</li>
+<li>All packages have a vignette (again varying quality)</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Google is your friend <span class="math inline">\(\implies\)</span> maybe ChatGPT?</li>
+</ul>
+</div>
+</section>
+<section id="the-plots-pane" class="slide level2">
+<h2>The <strong>Plots</strong> Pane</h2>
+<ul>
+<li>We’ve already seen the <strong>Files</strong> Tab</li>
+<li>Plots appear in the <strong>Plots</strong> Tab</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">plot</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="other-panes" class="slide level2">
+<h2>Other Panes</h2>
+<ul>
+<li>The <strong>Packages</strong> Tab is <em>a bad idea</em>
+<ul>
+<li>Can be disabled by popular request (I always do)</li>
+<li>Temptation to click is strong</li>
+<li>Very bad for <strong>reproducible research</strong>!!!</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><strong>Viewer</strong> Tab is used when compiling HTML documents from RMarkdown</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Every tab can be minimised/maximised using the buttons on the top right</li>
+<li>Window separators can be be moved to resize panes manually</li>
+</ul>
+</div>
+</section>
+<section id="cheatsheet-and-shortcuts" class="slide level2">
+<h2>Cheatsheet and Shortcuts</h2>
+<p><code>Help &gt; Cheatsheets &gt; RStudio IDE Cheat Sheet</code></p>
+<p>Page 2 has lots of hints:</p>
+<ul>
+<li><code>Ctrl + 1</code> places focus on the Script Window</li>
+<li><code>Ctrl + 2</code> places focus on the Console</li>
+<li><code>Ctrl + 3</code> places focus on the Help Tab</li>
+</ul>
+</section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+<ul>
+<li><code>R</code> is the engine, driving everything we do</li>
+<li>RStudio brings together multiple features for easy coding</li>
+<li>Can easily access Help, Plots, Scripts etc</li>
+<li>Integrated Development Environment (IDE)</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Other IDEs do exist (e.g.&nbsp;VSCode, Positron) <span class="math inline">\(\implies\)</span> beyond scope of course</li>
+</ul>
+</div>
+</section></section>
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Chambers1977-ry" class="csl-entry" role="listitem">
+Chambers, John M. 1977. <em>Computational Methods for Data Analysis</em>. New York: Wiley.
+</div>
+<div id="ref-Chambers2020-tc" class="csl-entry" role="listitem">
+———. 2020. <span>“S, r, and Data Science.”</span> <em>Proc. ACM Program. Lang.</em> 4 (HOPL): 1–17.
+</div>
+<div id="ref-Ihaka1996-zi" class="csl-entry" role="listitem">
+Ihaka, Ross, and Robert Gentleman. 1996. <span>“<span>R</span>: A Language for Data Analysis and Graphics.”</span> <em>J. Comput. Graph. Stat.</em> 5 (3): 299–314.
+</div>
+</div>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="intro_slides_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="intro_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="intro_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="intro_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="intro_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="intro_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="intro_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="intro_slides_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="intro_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="intro_slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    <script type="text/javascript">
+      Reveal.on('ready', event => {
+        if (event.indexh === 0) {
+          document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+        }
+      });
+      Reveal.addEventListener('slidechanged', (event) => {
+        if (event.indexh === 0) {
+          Reveal.configure({ slideNumber: null });
+          document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+        }
+        if (event.indexh === 1) {
+          Reveal.configure({ slideNumber: 'c' });
+          document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+        }
+      });
+    </script>
+    
+
+</body></html>

@@ -1,0 +1,734 @@
+---
+title: "Exploring Data In R"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    code-tools: true
+    logo: assets/bodl_logo_white_background.jpg
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: penguins.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, 
+  fig.align = "center"
+)
+```
+
+# The package `palmerpenguins` {background-color="#3d3d40" background-image=https://allisonhorst.github.io/palmerpenguins/logo.png background-size="30%" background-opacity="0.4" background-position='80% 50%'}
+
+## Introducing The Penguins
+
+- We'll be looking at the "Palmer Penguins" dataset
+    + Taken from https://allisonhorst.github.io/palmerpenguins/index.html
+    + 3 species of penguins from the Palmer Archipelago, Antarctica
+- Various physiological measurements
+
+## Exploring The Penguins
+
+- We won't be creating any objects in this section
+- Learning how to explore a dataset using `dplyr`
+    + For organising data 
+    + For creating summary tables
+    + To prepare for creating plots & figures
+    + Is a core `tidyverse` package
+
+::: {.fragment}
+
+- We'll cover a huge amount of ground
+    + Hopefully the exercises & challenges help
+
+:::
+
+## Starting An R Script
+
+- Best practice is to ALWAYS record your code
+- Today we'll use an R script
+    + Is a plain text file
+    + Is a combination of code and comments
+    + The filename should end with `.R`
+    
+::: {.fragment}
+    
+- Nothing we enter in the script is executed <br>$\implies$ **until we intentionally execute the code**
+:::
+
+## Starting An R Script {.slide-only .unlisted}
+
+- Create a new file `DataExploration.R` type the following
+
+```{r}
+## Load the palmerpenguins package
+library(palmerpenguins)
+```
+
+::: {.fragment}
+
+- The `#` symbol indicates a comment<br>$\implies$ ignored by R and nothing is executed
+    + Used to explain code to humans
+    
+:::
+::: {.fragment}
+
+- We write code for two primary reasons
+    1. To be executed by R, and
+    2. To be read  and understood by humans (usually us in a few months)
+
+:::
+
+## Executing Code
+
+- So far, no code has been executed from this script
+- Check your **Environment** Tab to see if there are any objects
+    + If there is an object (most likely `x`) $\implies$ click the broom icon 
+    + This will clear any existing objects from the environment
+    
+
+![](assets/broom.png){.absolute width='50px' right=200 bottom=450}
+
+
+::: {.fragment}
+1. Place the cursor on the line of code `library(palmerpenguins)`, or
+2. Use the keyboard shortcut `Ctrl + Enter` (Windows/Linux) or `Cmd + Enter` (Mac), or
+3. Click the `Run` button in the top right of the script editor
+
+:::
+
+## What have we done so far?
+
+- We have simply loaded the `palmerpenguins` package
+    + We called the function `library()`
+    + This loads all the functions and the data in a requested package
+    + The package name appears **inside** the parentheses `()`
+    + Very similar to calling `sqrt(5)` as we saw earlier
+    
+::: {.fragment}
+
+- For python users the equivalent would be `import palmerpenguins`
+
+:::
+
+## The `penguins` dataset
+
+::: {style="font-size: 95%;"}
+
+- The `palmerpenguins` package contains the `penguins` dataset already loaded
+    + Add the comment and code below, then execute
+
+```{r}
+#| output-location: fragment
+# Let's look at the penguins dataset
+penguins
+```
+
+:::
+
+::: {.notes}
+- Maybe get people to click on the Global Environment Tab  
+:::
+
+
+## The `penguins` dataset {.slide-only .unlisted}
+
+- The `penguins` dataset is a `tibble`
+- The number of rows and columns is shown at the top (`344 x 8`)
+    + Printed as a comment
+    
+::: {.fragment}
+- Next is the column names:
+    + `r pander::pander(colnames(penguins))`
+    + The last two columns may just be listed at the bottom
+    + Is a function of screen width, font size etc
+    
+:::
+
+::: {.notes}
+- Check to see if all columns have printed for everyone
+:::    
+
+
+## The `penguins` dataset {.slide-only .unlisted}
+
+- Underneath each column name is the *data type*
+    + Will explore data types in more detail
+    + Each column has the same type of data
+    + `<fct>` means 'factor' $\implies$ a categorical variable
+    + `<dbl>` means 'double' $\implies$ a numeric variable
+    + `<int>` means 'integer' $\implies$ a whole number
+    
+::: {.fragment}
+
+- Final lines show how many more rows & columns there are
+- Notice there are no rownames, just row numbers
+:::
+
+## Exploring Penguins
+
+- A common initial data exploration task is to get a summary of the data
+
+```{r}
+# The column names are:
+colnames(penguins)
+```
+
+Copy the column names after the code, then comment
+
+::: {.columns}
+
+::: {.column width="55%"}
+
+1. Highlight the output in the console
+2. Copy & paste into the script
+3. Make a comment by adding `#` at the start of each line
+
+:::
+
+::: {.column width="45%"}
+
+::: {.fragment}
+
+::: {.callout-tip}
+
+## Commenting Multiple Lines
+
+- Comments can be toggled on/off across multiple lines using:
+    + `Ctrl + Shift + C` (Win/Linux)
+    + `Cmd + Shift + C` (Mac)
+    
+:::
+
+:::
+
+:::
+
+:::
+
+## Calling Functions
+
+- Notice that we placed the object inside the parentheses `()` after the function
+
+::: {.fragment}
+
+- Let's continue checking the object
+
+```{r}
+#| output: false
+# Find out how big the dataset is
+nrow(penguins)
+ncol(penguins)
+dim(penguins)
+tail(penguins)
+```
+
+:::
+::: {.fragment}
+
+- Can you figure out what each of these functions does?
+:::
+
+# The package<br>`dplyr` {background-color="#3d3d40" background-image=https://dplyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
+## Exploring Penguins with `dplyr`
+
+- The package `dplyr` $\rightarrow$ functions for data exploration and manipulation
+- Let's load the package as part of the `tidyverse`
+    + I personally load all packages at the start of a script
+    + Add this underneath the `library(palmerpenguins)` line
+    + All functions in this section from `dplyr`
+
+```{r}
+library(tidyverse) # Load the complete tidyverse
+```
+
+::: {.fragment}
+
+- We'll use these functions to explore the `penguins` dataset
+- Then we can modify the dataset
+
+:::
+
+::: {.notes}
+- `dplyr` was written initially by Hadley Wickham
+- He's originally from NZ so he knows how to spell things correctly
+:::
+
+## Exploring Penguins with `dplyr` {.slide-only .unlisted}
+
+```{r}
+## The `glimpse()` function is provided by dplyr
+## Can be very helpful with large column numbers
+glimpse(penguins)
+```
+
+::: {.fragment}
+
+- So far we haven't actually saved any objects (using `<-`)
+- Functions `head()`, `tail()`, and `glimpse()` are all printing to the console
+
+:::
+
+## Sorting Penguins
+
+- `dplyr` provides some Excel-like functions:
+    + `arrange()` will sort the data
+    + `filter()` will filter the data
+    
+```{r}
+#| output: false
+# Sort the penguins by body mass in increasing order
+arrange(penguins, body_mass_g)
+
+# Sort the penguins by body mass in decreasing order
+arrange(penguins, desc(body_mass_g))
+```
+
+::: {.fragment}
+
+<br>
+
+```{r}
+#| output: false
+# Sort multiple columns in the order passed to the function
+arrange(penguins, species, body_mass_g)
+```
+
+:::
+
+## Filtering Penguins
+
+Filtering relies on *logical tests*
+
+::: {.fragment}
+
+| Symbol | Description |
+|:------ |:----------- |
+| `==`   | Is exactly Equal To |
+| `>` / `<` | Is Greater/Less Than |
+| `>=` / `<=` | Is Greater/Less Than or Equal To |
+| `!=`  | Is Not Equal To |
+| `is.na()` | Is Missing Value |
+| `%in% `   | Is in a set of possible values |
+
+:::
+::: {.fragment}
+
+- In most languages, `!` is interpreted as **NOT**
+
+:::
+
+## Filtering Penguins {.slide-only .unlisted}
+
+```{r}
+#| output: false
+## Subset the data to those from the Island of Dream
+filter(penguins, island == "Dream")
+
+## Subset the data to those NOT from the Island of Dream
+filter(penguins, island != "Dream")
+
+## Subset the penguins to those lighter than 4000g
+filter(penguins, body_mass_g < 4000)
+
+## Find the penguins from Dream that are heavier than 4000g
+filter(penguins, island == "Dream", body_mass_g > 4000)
+```
+
+
+## Slicing Penguins
+
+- `filter()` returns the rows that *match a given criteria*
+- `slice()` can be used to return rows *by position*
+
+```{r}
+#| output: false
+## Slice out the first 10 rows of the penguins dataset
+slice(penguins, 1:10)
+
+## Now slice out the 101st to 110th rows
+slice(penguins, 101:110)
+```
+
+## A Brief Diversion
+
+- In the two previous examples we used a sequence of consecutive values
+
+```{r}
+1:10
+101:110
+```
+
+::: {.fragment}
+
+- We refer to one or more values in `R` as a **vector**
+    + These are *integer* vectors
+    + Integers are often used to denote rows/columns etc
+:::
+
+## A Brief Diversion {.slide-only .unlisted}
+
+- In `R` we can form a vector by combining values with the function `c()`
+
+```{r}
+c(1, 3, 5, 7, 9)
+```
+
+::: {.fragment}
+
+```{r}
+#| output: false
+# Return the first few odd numbered rows using a vector of positions
+slice(penguins, c(1, 3, 5, 7, 9))
+```
+
+:::
+::: {.fragment}
+<br>
+
+```{r}
+#| output: false
+# Rows can be returned in any order
+slice(penguins, c(3, 7, 5, 1))
+```
+:::
+
+## Selecting Penguins
+
+- `filter()` and `slice()` can be used to return rows
+- `select()` can be used to return columns
+
+```{r}
+#| output: false
+# Columns can be 'selected' by passing the required column names
+select(penguins, species, island, body_mass_g)
+```
+
+::: {.fragment}
+
+<br>
+
+```{r}
+#| output: false
+# Columns can also be selected by position using a vector
+select(penguins, c(1, 2, 6))
+```
+
+:::
+::: {.fragment}
+
+::: {.callout-note collapse="true"}
+## Using Names Or Position
+
+1. Do the above lines give the same result?
+2. Would either one be preferable?
+:::
+
+:::
+
+## Helper Functions
+
+- `dplyr` provides some helper functions to make selecting columns easier
+- `starts_with()`, `ends_with()` and `contains()`, are very useful!
+- `everything()` is also surprisingly useful
+- `any_of()` and `all_of()` are a bit more advanced
+
+::: {.fragment}
+
+```{r}
+#| output: false
+# Select all columns that start with "bill", after the species and island columns
+select(penguins, species, island, starts_with("bill"))
+
+# Select all length-related columns, after the species and island columns
+select(penguins, species, island, contains("length"))
+```
+
+:::
+
+## Helper Functions {.slide-only .unlisted}
+
+
+```{r}
+#| output: false
+# Place all metadata first, followed by measured values
+# This line shows how useful 'everything()' can be
+select(penguins, species, island, sex, year, everything())
+```
+
+::: {.fragment}
+
+- To remove a column, we preface the selection with `-`
+
+```{r}
+#| output: false
+# Remove all columns that end with 'mm'
+select(penguins, -ends_with("mm"))
+```
+:::
+
+## Relocating Penguins
+
+```{r}
+#| output: false
+# Relocate is a newer addition to dplyr and can also be used to reorder columns
+# The arguments .before and .after can be used to specify where to place columns
+# Here we're moving columns with an underscore to after the year column
+relocate(penguins, contains("_"), .after = year)
+
+# This time, we're moving the sex and year columns to 'before' the bill columns
+relocate(penguins, sex, year, .before = starts_with("bill"))
+```
+
+
+## Renaming Penguins
+
+- When we call select, we can rename columns on the fly
+
+```{r}
+#| output: false
+## Rename the island column as 'location', leaving the order unchanged
+select(penguins, species, location = island, everything())
+```
+
+::: {.fragment}
+
+- Alternatively, we can just use `rename()`
+
+```{r}
+#| output: false
+## Or just rename the individual column
+rename(penguins, location = island)
+```
+
+:::
+
+
+## Modifying Columns With `mutate()`
+
+- So far, we've only subset our data using various methods
+- `mutate()` is used to modify existing columns or create new ones
+
+```{r}
+#| output: false
+# Create a column called `body_mass_kg` that is the body mass in kg
+mutate(penguins, body_mass_kg = body_mass_g / 1000)
+```
+
+
+## Exercises
+
+
+1. Use `filter()` to find all female penguins
+    + Then find all female penguins with a flipper length greater than 215mm
+2. Use `filter()` to find all penguins where `sex` is missing (`NA`)
+3. Sort the dataset by bill_length in descending order
+4. Use `select()` to return the species, island, and year columns
+    + Repeat trying an alternative approach to your first answer
+5. Place the `year` column after `island` and remove the `sex` column
+6. Create the column `bill_ratio` by dividing bill length by depth
+
+
+# Summarising The Dataset {background-color="#3d3d40"}
+
+## Obtaining Summaries
+
+- `dplyr` also provides functions to summarise data
+    + `count()` and `summarise()` are the most common
+    + We can tell these functions which columns to summarise by
+    
+```{r}
+#| output: false
+# Count the number of penguins by species
+count(penguins, species)
+
+# Count the number of penguins by species and island
+count(penguins, species, island)
+
+# If we change the order of the columns, we get a different order in our results
+count(penguins, island, species)
+
+# The argument `sort = TRUE` will sort the results
+count(penguins, species, island, sort = TRUE)
+```
+
+## Obtaining Summaries {.slide-only .unlisted}
+
+- More nuanced summaries can be obtained using `summarise()`
+    + We now pass the grouping variable to the argument `.by`
+    + The summary column should also be given a name
+
+
+```{r}
+#| output: false
+# Find the mean weight of each species
+summarise(penguins, mean_weight = mean(body_mass_g), .by = species)
+```
+
+::: {.fragment}
+
+- This is the first time those missing values have caused us grief
+    + The argument `na.rm = TRUE` will tell `mean()` to ignore `NA` values
+    
+```{r}
+#| output: false
+# Ignore the missing values when calculating the mean
+summarise(penguins, mean_weight = mean(body_mass_g, na.rm = TRUE), .by = species)
+```
+
+:::
+
+## Obtaining Summaries {.slide-only .unlisted}
+
+- We can also summarise using multiple columns
+    + We've combined groups using the function (`c()`)
+
+```{r}
+#| output: false
+# Summarise by both species and year
+summarise(
+  penguins, mean_weight = mean(body_mass_g, na.rm = TRUE), .by = c(species, year)
+)
+```
+
+
+## Obtaining Summaries {.slide-only .unlisted}
+
+- The previous code is split across multiple lines just to fit on the slide
+- We could split across multiple lines for greater readability
+
+```{r}
+#| output: false
+# Summarise by both species and year
+summarise(
+  penguins, 
+  mean_weight = mean(body_mass_g, na.rm = TRUE), 
+  .by = c(species, year)
+)
+```
+
+## Obtaining Summaries {.slide-only .unlisted}
+
+- This strategy can help when creating multiple summary columns
+- Instead of using `count()` we can call `n()` as part of `summarise()`
+
+```{r}
+#| output: false
+# Summarise by both species and year, counting the number of penguins
+summarise(
+  penguins, 
+  mean_weight = mean(body_mass_g, na.rm = TRUE), 
+  total = n(),
+  .by = c(species, year)
+)
+```
+
+## Grouping Arguments
+
+- The recent addition of `.by` has beefed up some earlier functions
+
+```{r}
+#| output: false
+# Grab the first 5 rows of each species
+slice(penguins, 1:5, .by = species)
+```
+
+::: {.fragment}
+
+- Some newer extensions of `slice()` are also useful for summarising data
+    + `slice_min()`, `slice_max()`
+    
+```{r}
+#| output: false
+# Return the heaviest penguin from each species
+slice_max(penguins, body_mass_g, n = 1, by = species)
+```
+
+:::
+::: {.fragment}
+- Confusingly, the argument `.by` has become `by` here &#129335;&#127995;
+    + The argument `n = 1` says return only one penguin per species
+
+:::
+
+## Conclusion
+
+- All functions so far have enabled exploration
+    + `arrange()`, `filter`
+    + `select()` + helper functions
+    + `slice()`, `slice_max()`, `slice_min()`
+    + `count()`, `summarise()`
+- Many others we didn't cover
+    + `slice_head()`, `slice_tail()`, `slice_sample()`
+    + Multiple join methods
+    
+## Conclusion {.slide-only .unlisted}
+
+- Have never over-written our original dataset
+- Have never created a new object
+- Real world applications:
+    + Preparing for plotting or regression
+    + Summarising data for tables
+
+::: {.fragment}
+
+- Already a huge amount to remember!
+- We'll be doing more exercises soon
+
+:::
+
+## A Word Of Caution
+
+- `dplyr` was written to parallel some SQL functions <br>$\implies$ Uses function names from SQL
+- Some other packages had the same idea much earlier
+    + e.g. multiple packages contain a `filter` or `select` function
+    
+::: {.fragment}
+    
+- If either function gives unexpected output<br>$\implies$ call directly from the package (aka namespace)
+- We can use `dplyr::select()` instead of `select()` 
+    + Ensures we use the `dplyr` version
+    + Same for `dplyr::filter()`
+    
+:::

@@ -1,0 +1,74 @@
+---
+title: "RAdelaide 2025"
+author: |
+  | Dr Stevie Pederson
+  | Black Ochre Data Labs
+  | Indigenous Genomics Group
+  | The Kids Research Institute Australia
+date: "July 8-10, 2025"
+output: github_document
+---
+
+```{r, echo=FALSE}
+getTiming <- function(f, by = 1, digits = -1){
+  if (!file.exists(f)) return(NULL)
+  # by estimates how many minutes/slide
+  ln <- readLines(here::here(f))
+  n <- sum(grepl("^#{2} ", ln))
+  paste0(round(n * by, digits), "min")
+}
+```
+
+## Course Details
+
+This will be a three day course to enable researchers to develop their capabilities using the language `R`.
+Beginners are welcome and intermediate users will also gain a great deal from attending.
+
+Data for the workshop is available as a zip file [here](data.zip)
+
+## Provisional Course Outline
+
+| Day 1 | Topic | Notes | Estimated Duration <br>(approx) |
+|:----- |:----- |:----- |:-------- |
+| 8:30  | Installation Help  |     | 30min    |
+| 9:00  | Welcome & Housekeeping | | `r getTiming("welcome.qmd", 1)`|
+| 9:15  | Welcome To Country |     | 15min    |
+| 9:30  | Introducing R & RStudio | [Introduction](intro.html) | `r getTiming("intro_slides.qmd", 1.2)`|
+|       | Importing Spreadsheet-Like Data   | [Importing Penguins](import.html)   | `r getTiming("import_slides.qmd", 1.2)`|
+| 10:30 | *Morning Tea* | | |
+| 11:00 | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | `r getTiming("penguin_slides.qmd", 1.2)`|
+| | Building Chains Of Code | [Piping Functions](piping_functions.html) | `r getTiming("piping_slides.qmd", 1.5)` |
+| 12:30 | *Lunch* | | |
+| 1:30 | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | `r getTiming("tidying_slides.qmd", 1.2)` |
+| | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.4)` |
+| 3:00  | *Afternoon Tea* | | |
+| | Visualising Your Data with `ggplot2` (continued) | |  |
+| 4:30 | Day 1 Challenges | [Day1](day1.html) | 30min|
+
+
+| Day 2 | Topic | Notes | Estimated Duration <br>(approx) |
+|:----- |:----- |:----- |:-------- |
+| 9:00  | Vectors and Data Structures in `R` | [Data Types](data_types.html) | `r getTiming("data_types_slides.qmd", 1.4)` |
+| 10:30 | *Morning Tea* | | |
+| 11:00 | Working With Text | [Working With Text](text.html) | `r getTiming("text_slides.qmd", 1.5)` |
+| 12:30 | *Lunch* | | |
+| 1:30 | Basic Statistical Analysis | [Basic Statistics](basic_stats.html) | `r getTiming("basic_stats_slides.qmd", 1.5)` |
+| 2:10 | Linear Regression | [Linear Regression](linear_regression.html) | `r getTiming("linear_regression_slides.qmd", 1.4)` |
+| 3:00  | *Afternoon Tea* | | |
+| 3:30 | Linear Regression (continued) | | |
+
+
+
+| Day 3 | Topic | Notes | Estimated Duration <br>(approx) |
+|:----- |:----- |:----- |:-------- |
+| 9:00 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.75)` |
+| 10:30 | *Morning Tea* | | |
+| 11:00 | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 1.4)` |
+| | Iteration | [Iteration](iteration.html) | `r getTiming("iteration_slides.qmd", 1.4)` |
+| 12:30 | *Lunch* | | |
+| 1:30 | Moving Beyond Linear Regression | [Extending Statistics](more_statistics.html) | `r getTiming("more_statistics_slides.qmd", 1.5)` |
+|  | Extending Visualisation | [Extending Visualisation](extended_visualisation.html) | `r getTiming("extended_visualisation_slides.qmd", 1.4)` |
+| 3:00  | *Afternoon Tea* | | |
+| 3:30 | Final Challenges | | 90min |
+
+

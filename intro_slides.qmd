@@ -1,0 +1,774 @@
+---
+title: "Introduction To R and RStudio"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    code-tools: true
+    logo: assets/bodl_logo_white_background.jpg
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: intro.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, 
+  fig.align = "center"
+)
+```
+
+
+# A Brief Introduction to R {background-color="#3d3d40" background-image=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png background-size="40%" background-opacity="0.5" background-position='80% 50%'}
+
+
+## Why use R?
+
+- Heavily used for analysis of biological data (along with Python)
+    - Can handle extremely large datasets  
+    - Packages explicitly designed for complex analysis
+    - Huge user base $\implies$ internet resources
+    - (Can be) very fast
+- Very easy to *dynamically interact* with large datasets
+    - Can also run as static scripts on HPC clusters
+    - Low-level languages like `C`/`C++` don't allow for interactive analysis
+    
+::: {.notes}
+I regularly work with data containing millions of lines
+:::
+
+## How do we use R?
+
+- Never use drop-down menus or buttons $\implies$ type every command
+    - Complex processes are often implemented as 'simple' functions
+- Considered a *high-level* language
+    - Usually easy to read and understand then low-level languages (e.g. `C`)
+    - Trade-off in regard to speed & memory management
+
+## How do we use R? {.slide-only .unlisted}
+
+::: {.notes}
+- Discuss column sorting with Simon although I believe it's improved
+- Mention paper claiming GLMs, but absolutely did not fit GLMs
+:::
+    
+- **Reproducible Research!!!**
+    - Keep records (i.e. scripts) of every step of every analysis
+    - Transparent methods for reviewers
+    
+::: {.fragment}
+
+- Avoids common Excel pitfalls [(almost) never modify files on disk!]{.fragment}[<br>$\implies$ load data from a file into R and work with it there]{.fragment}
+
+:::
+
+::: {.fragment}
+
+Experience is the best teacher $\implies$ please practice your skills
+
+:::
+
+## What is R?
+
+- Derivative of `S` [Bell Labs, @Chambers1977-ry]
+
+::: {.fragment}
+![](assets/chambers.png)
+:::
+
+    
+## What is R? {.slide-only .unlisted}
+
+::: {.notes}
+- Ross Ihaka is of NZ Maori descent
+- Last commercial release of S-Plus in 2007
+- Some of the code for GLMs was written by Prof Bill Venables (Head of Maths, UofA)
+:::    
+    
+- Derivative of `S` [Bell Labs, @Chambers1977-ry]
+- `R` began to appear in 1996 [@Ihaka1996-zi]
+    - **R**oss Ihaka and **R**obert Gentleman (U of Auckland)
+    - Disentangled some proprietary `S` code $\implies$ *open-source*
+- First official release (v1.0.0) in Feb 2000
+    - Now estimated >2 million users (2012)
+    - Nice history article [here](https://journal.r-project.org/archive/2020/RJ-2020-028/RJ-2020-028.pdf) [@Chambers2020-tc]
+
+::: {.fragment}
+
+- My first exposure to R was 2002 (R v1.5)
+
+:::
+
+## What is R? {.slide-only .unlisted}
+
+::: {.notes}
+- Being open source creates headaches for University & Business IT departments
+- There are identified security risks
+- No guarantees of being virus free. Has inherent security flaws particularly using R data files (which are often part of packages)
+- The community self-regulates
+- Release Names are references to Peanuts cartoons
+:::
+    
+::: {.columns}
+
+:::: {.column width='75%'}
+
+- Open source language
+    + No corporate ownership $\implies$ free software
+    + Code is managed by the community of users
+- `R` is formally run by volunteers $\implies$ **R Core**
+    + Mostly academics
+    + John Chambers is *still* a member
+- Annual release schedule + patches 
+    + Most recent is R 4.5.1 (Jun 14)
+::::
+
+:::: {.column width='25%'}
+
+![Extending R, Chambers (2016)](https://images.routledge.com/common/jackets/amazon/978149877/9781498775717.jpg){width="300px"}
+
+::::
+
+:::
+## R Packages
+
+- Packages are the key to R's flexibility and power
+    - Collections (or libraries) of *related functions*
+    - `ggplot2` $\implies$ Create plots using the *grammar of graphics*
+    - `readr` $\implies$ Read files into `R`
+    
+    
+## R Packages {.slide-only .unlisted}
+    
+::: {.notes}
+- Loading a package is like the Matrix where Trinity installs the set of skills to fly a helicopter
+- Crap packages are generally identified by the users and just not-used
+- Scientific rigour is usually checked during review of the accompanying publication
+- Robert Gentleman was also a founder of Bioconductor before moving to 23&me
+:::    
+    
+- $>$ 22,000 packages are stored on CRAN (https://cran.r-project.org)
+    - Not curated for statistical quality or documentation
+    - Automated testing for successful installation
+
+::: {.fragment}
+
+- Bioconductor is a secondary repository (https://www.bioconductor.org)
+    - $>$ 3000 packages with a more biological/genomics focus
+    - Curated for language consistency & documentation
+
+:::
+
+::: {.fragment}
+- Some packages also live on github or bitbucket
+    + Will include latest (unstable) development versions
+    
+:::
+
+## R Packages {.slide-only .unlisted}
+
+- Installation of a package can be done through a variety of methods:
+    + `install.packages("packageName")` will only install from CRAN
+
+::: {.fragment}
+- Bioconductor also provide a CRAN package: `BiocManager`
+    + `BiocManager::install("packageName")` installs from CRAN, Bioconductor & github
+
+:::
+
+::: {.fragment}
+- The CRAN package `pak` also installs from multiple locations
+:::
+
+
+   
+<!-- ## Where is R used? {visibility="hidden"} -->
+
+<!-- ::: {.notes} -->
+<!-- - I was offered a position by the ABS in 2022 specifically for my R skills to use analysing the housing market. -->
+<!-- - BODL offered me a position the exact same day so I stayed in academia -->
+<!-- ::: -->
+
+<!-- - Google, ATO, ABS etc -->
+<!-- - Very large community of users in finance (Dirk Eddelbuettel - `Rcpp`) -->
+<!-- - Genomics, Ecological Research, Public Health, Politics... -->
+<!-- - Strong integration with HPC systems like Amazon, Hadoop -->
+<!-- - Growing Machine Learning capacity -->
+<!-- - Even has it's own peer-reviewed Journal (The R Journal) -->
+
+
+
+## Helpful Resources {visibility="hidden"}
+
+::: {.notes}
+Much of today is inspired by a two-day developers workshop I attended with Hadley Wickham.
+Also gave me an opportunity to have some great conversations with Winston Chang
+:::
+
+<br>
+
+::: {.columns}
+
+::: {.column width="50%}
+
+
+![https://r4ds.had.co.nz/](https://m.media-amazon.com/images/I/51eTKL+SkeL.jpg){width="350px" height="495px" fig-align="left"}
+
+:::
+
+::: {.column width="50%}
+
+
+![https://r-graphics.org/](https://r-graphics.org/cover.jpg){width="350px" height="495px" fig-align="left"}
+
+
+:::
+
+:::
+
+
+# Using R {background-color="#3d3d40" background-image=https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png background-size="40%" background-opacity="0.5" background-position='70% 50%'}
+
+## The R Console
+
+::: {.notes}
+- This is the 'ugly, old-school' way of using R
+- Still very useful, e.g. testing code on a HPC
+:::
+
+
+:::: {.columns}
+::: {.column width="55%"}
+
+- Let's try using `R` as a standalone tool $\implies$ open `R` NOT `RStudio`
+    + On `linux`: <br>Open a terminal then enter `R`
+    + OSX: Click ![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png){width="40px"} on your dock
+    + Windows: Click ![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/512px-R_logo.svg.png){width="40px"} in your Start Menu
+    
+    
+- Do not open ![](assets/RStudio_icon.png){width="60px"} 
+- This is `R` at it's ugliest (how I learned R)
+
+:::
+::: {.column width="45%"}
+
+![](assets/RTerminal.png){.absolute right=0 width="550px"}
+
+:::
+
+::::
+
+## The R Console {.slide-only .unlisted}
+
+- This is often referred to as the `R Console` 
+- At it's simplest `R` is just a calculator (Press Enter)
+
+```{r}
+#| prompt: true
+1 + 1
+2 * 2
+2 ^ 3
+```
+
+## The R Console {.slide-only .unlisted}
+
+::: {.notes}
+I never use a calculator program on my laptop, always R
+:::
+
+- `R` has many standard functions
+    + place the value *inside* the brackets *after* the function name
+
+```{r}
+#| prompt: true
+sqrt(2)
+log10(1000)
+```
+
+
+## The R Console {.slide-only .unlisted}
+
+We can create objects with names
+
+```{r}
+#| prompt: true
+x <- 5
+```
+
+::: {.fragment}
+
+- We have just created an object called `x`
+- The `<-` symbol is like an arrow i.e. "put the value `5` into `x`"
+
+
+![*An APL Keyboard from the 1970s showing the arrow as a single key*](assets/APL-keybd2.png){width=60% fig-align="left"}
+
+:::
+
+::: {.notes}
+Object names can be anything but should start with a letter not a number or special character
+:::
+
+
+## The R Console {.slide-only .unlisted}
+
+- View the contents of the object by entering it's name in the `Console`
+
+```{r}
+#| prompt: true
+x
+```
+
+
+- The object `x` only exists in the `R Environment`
+
+::: {.fragment}
+
+- Imagine your R Environment to be like an Excel Workbook
+    + Each object is named just like each spreadsheet is named<br>$\implies$ objects **don't have to look like a spreadsheet**
+
+:::
+
+## The R Console {.slide-only .unlisted}
+
+::: {.callout-important collapse="true"}
+## Do R Objects Have Rules About Valid/Invalid Names
+
+::: {.incremental}
+- The only "special characters" which can be used are `.` and `_`
+    + This makes perfect sense when you realise `+`, `/`, `*`, `-` etc. are mathematical operators
+    + Names cannot contain spaces $\implies$ `R` will think there are two objects
+- Object names must start with a letter, `.` or `_`.
+    + Objects starting with a `.` are often hidden from view
+- Common conventions are snake_case (`my_object`) or camelCase (`myObject`)
+- Numbers can follow the initial character but cannot start a name
+    + e.g. `x1` is a valid name whilst `1x` is not
+
+:::
+:::
+
+## The R Console {.slide-only .unlisted}
+
+- We can pass objects to functions and perform operations on them
+
+```{r}
+#| prompt: true
+x + 1
+sqrt(x)
+x^2
+x > 1
+```
+
+## The R Console {.slide-only .unlisted}
+
+- Everything we've just done is trivial
+- Real analysis isn't
+- If we perform a series of steps
+    + Should we keep a copy of what we've done?
+    + If so, how should we do that?
+    
+
+## Recording Our R History
+
+
+- Try using your up and down arrow keys in the `R Console`
+- This will scroll through the history of commands you've entered
+    + Can re-execute or modify any of these
+- Saved in a file called `.Rhistory` in your working directory
+
+::: {.fragment}
+
+- A common strategy is to record our code as an *R Script* as we write it
+    + Just a plain text file with a record of our commands
+- `R Studio` makes that easy & convenient
+
+:::
+
+## Exiting R
+
+- To exit `R` type `q()`
+- You will then be asked: `Save workspace image? [y/n/c]:`
+    + Type `n` then hit Enter
+
+::: {.fragment}
+
+- We can save our R environment with all of the objects we've created
+    + By default this will be `.RData` in the folder we've been working in
+- I personally never save `.RData` $\implies$ can lead to dodgy analysis
+    + The code to create objects & run analysis is the important part
+
+:::  
+    
+
+# R Studio { background-color="#3d3d40" background-image="assets/RStudio_icon.png" background-size="25%" background-opacity="0.5" background-position="50% 50%"}
+
+## Introduction to RStudio
+
+`R` and `RStudio` are **two separate but connected things**
+
+- `R` is like the engine of your car
+    
+::: {.fragment}
+
+- `RStudio` is the 'cabin' we use to control the engine
+    + Comes with extra features un-related to `R` that improve our 'journey'
+    + Known as an IDE (Integrated Development Environment)
+    
+:::
+::: {.fragment}
+
+- `R` *does all the calculations, manages the data, generates plots*
+    + i.e. gets us to our destination
+    
+:::
+::: {.fragment}
+
+- `RStudio` *helps manage our code, display the plots etc*
+    + i.e. makes our journey easier to navigate
+
+:::
+
+## What is RStudio {visibility="hidden"}
+
+::: {.notes}
+- RStudio/Posit is a corporation whilst R is an academic-led volunteer community. So far relatively good relationship
+- Heard JJ Allaire present some of his latest work at a conference in 2023
+:::
+
+- RStudio is product of a **for profit** company (Posit)
+    + RStudio (Desktop) is free
+    + RStudio Server (Posit Workbench) has annual licence fee of \$'000s
+- Posit employs many of the best & brightest package developers
+    + e.g. `tidyverse`, `bookdown`, `reticulate`, `roxygen2` etc.
+    + The CEO (JJ Allaire) is still an active developer
+- Other IDEs also exist (e.g. emacs, VSCode, Cursor, Positron)
+
+
+## Some very helpful features of `RStudio`
+
+- We can write scripts and **execute code** interactively
+- We can see **everything** we need (directories, plots, code, history etc.)
+
+::: {.fragment}
+
+- Predictive auto-completion 
+- Integration with Github Co-Pilot
+- Integration with other languages
+    + markdown, $\LaTeX$, bash, python, C++, git etc.
+- Numerous add-ons to simplify larger tasks
+
+:::
+::: {.fragment}
+
+- Posit is now developing Positron to better enable a variety of languages
+:::
+
+## Create an R Project
+
+I use `R Projects` to manage each analysis
+
+::: {.fragment}
+1. Create a directory on your computer for today's material
+    + We recommend `RAdelaide25` in your home directory
+
+:::
+
+::: {.fragment}
+
+2. Now open `RStudio`
+    + `RStudio` will always open in a directory somewhere
+    + Look in the `Files` pane (bottom-right) to see where it's looking<br>(Or type `getwd()` in the Console pane)
+    + This is the current working directory for `R`
+
+:::
+
+
+## Create an R Project {.slide-only .unlisted}
+
+<!-- (Not needed for any using the Posit cloud) -->
+
+We want RStudio to be looking in our new directory (`RAdelaide25`) <br>$\implies$R Projects make this easy
+
+::: {.fragment}
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+- `File` > `New Project` > `Existing Directory` 
+- Browse to your `RAdelaide25` directory $\implies$ `Create Project`
+
+:::
+
+::: {.column width="50%"}
+
+![](assets/RProject.png){.absolute right=0 bottom=100}
+:::
+
+:::
+
+:::
+
+
+## Create an R Project {.slide-only .unlisted}
+
+::: {.notes}
+
+- `R Projects` are simply a wrapper for keeping an analysis organised
+    - Will always open in the R Project directory
+    - You can easily navigate to a directory with all scripts and data
+    - Makes managing file paths from your code **very simple**
+- R Projects can be particularly helpful when loading external files
+- Also when saving/exporting lots of files as part of your analysis
+
+:::
+
+- The `R Project` name is **always** the directory name
+- Not essential, but *good practice* and *extremely useful*
+- The Project Menu is in the **top-right** of RStudio
+
+::: {.fragment}
+- Enables us to work on multiple analyses/datasets
+- Just open the relevant project $\implies$ you're ready to go
+:::
+
+
+## Create An Empty R Script
+
+1. `File` > `New File` > `R Script`
+2. Save As `DataImport.R`
+
+## RStudio
+
+```{r, echo = FALSE, include=TRUE, results='asis', fig.show='asis', out.width="100%"}
+knitr::include_graphics("assets/RStudio.png")
+```
+
+This is the basic layout we often work with
+
+::: {.notes}
+We'll come back to the script window in the next section
+:::
+
+## The R Console
+
+- This is the R Console *within* the RStudio IDE
+- We've already explored this briefly
+
+::: {.fragment}
+
+- In the same pane we also have two other tabs
+    + **Terminal**: An approximation of a `bash` terminal (or PowerShell for Windows)
+    + **Background Jobs** shows progress when compiling RMarkdown & Quarto $\implies$ Not super relevant
+
+:::
+
+<!-- ## The R Console {.slide-only .unlisted} -->
+
+<!-- As well as performing simple calculations: -->
+
+<!-- - `R` has what we call an `Environment` (i.e. a Workspace) -->
+<!-- - We can define objects here or import data -->
+<!--    - Similar to a workbook in Excel with multiple worksheets -->
+<!--    - **Much more** flexible & powerful -->
+<!--    - Objects aren't forced to be spreadsheets -->
+
+<!-- ::: {.notes} -->
+<!-- - When we create a new sheet in Excel, we're actually creating an object. -->
+<!-- - Most commonly, it's named Sheet1 or something similar -->
+<!-- - Has fixed dimensions for memory management -->
+<!-- ::: -->
+
+
+
+## The R Environment 
+
+Like we did earlier, in the R Console type:
+
+```{r}
+#| prompt: true
+x <- 5
+```
+
+::: {.fragment}
+
+*__Where have we created the object `x`?__*
+
+- Is it on your hard drive somewhere?
+- Is it in a file somewhere?
+
+:::
+::: {.fragment}
+
+- We have placed `x` in our `R Environment`
+- Formally known as your `Global Environment`
+
+![](assets/EnvironmentTab.png)
+
+:::
+
+## The R Environment {.slide-only .unlisted}
+
+- The `R Environment` is like your desktop
+- We keep all our relevant objects here 
+    + Multiple objects are usually created during an analysis
+    + Can save all the objects in your environment as a single `.RData` object
+    + `R` can be set to automatically save your environment on exit
+    + Unlike Excel: *We usually save our code not our environment*
+
+## The **History** Tab
+
+- Next to the Environment Tab is the **History** Tab
+- Keeps a record of the last ~200 lines of code
+    + Very useful for remembering steps during exploration
+    + Best practice is to enter + execute code from the Script Window
+    
+::: {.fragment}
+
+- We can generally ignore the **Connections** and any other tabs
+    + A `git` tab will also appear for those who use git in their project
+:::
+
+## Accessing Help
+
+::: {.notes}
+- May be issues with `URL '/help/library/base/html/00Index.html' not found`
+- The examples in this help page are a bit rubbish...
+:::
+
+```{r, eval=FALSE}
+#| prompt: true
+?sqrt
+```
+
+- This will take you to the `Help` Tab for the `sqrt()` function
+    + Contents may look confusing at this point but will become clearer
+    
+::: {.fragment}
+    
+- Many inbuilt functions are organised into a package called `base`
+    - Packages group similar/related functions together
+    - `base` is always installed and loaded with `R`
+
+:::
+    
+
+
+## Additional Sources For Help 
+
+::: {.notes}
+As a package author, I'm always reading my own help pages.
+I simply can't remember everything I've written
+:::
+
+- Help pages in `R` can be hit & miss
+    + Some are excellent and informative $\implies$ some aren't
+    + I regularly read my own help pages
+    
+::: {.fragment}
+
+- Bioconductor has a support forum for Bioconductor packages
+  + https://support.bioconductor.org 
+  + All packages have a vignette (again varying quality)
+
+:::
+::: {.fragment}
+  
+- Google is your friend $\implies$ maybe ChatGPT?
+
+:::
+
+
+
+## The **Plots** Pane
+
+- We've already seen the **Files** Tab
+- Plots appear in the **Plots** Tab
+
+```{r, eval = FALSE}
+#| prompt: true
+plot(cars)
+```
+
+## Other Panes
+
+- The **Packages** Tab is *a bad idea*
+    + Can be disabled by popular request (I always do)
+    + Temptation to click is strong
+    + Very bad for **reproducible research**!!!
+
+::: {.fragment}
+
+- **Viewer** Tab is used when compiling HTML documents from RMarkdown
+
+:::
+::: {.fragment}
+
+- Every tab can be minimised/maximised using the buttons on the top right
+- Window separators can be be moved to resize panes manually
+
+:::
+
+
+## Cheatsheet and Shortcuts
+
+`Help > Cheatsheets > RStudio IDE Cheat Sheet`
+
+Page 2 has lots of hints:
+
+- `Ctrl + 1` places focus on the Script Window
+- `Ctrl + 2` places focus on the Console
+- `Ctrl + 3` places focus on the Help Tab
+    
+## Conclusion
+
+- `R` is the engine, driving everything we do
+- RStudio brings together multiple features for easy coding
+- Can easily access Help, Plots, Scripts etc
+- Integrated Development Environment (IDE)
+
+::: {.fragment}
+- Other IDEs do exist (e.g. VSCode, Positron) $\implies$ beyond scope of course
+:::
+
+# References

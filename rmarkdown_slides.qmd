@@ -1,0 +1,836 @@
+---
+title: "R Markdown"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-10"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: rmarkdown.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    results: hide
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+
+# R Markdown {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/rstudio/rmarkdown/main/man/figures/logo.png background-size="35%" background-opacity="0.4" background-position="70% 50%"}
+
+## Writing Reports Using `rmarkdown`
+
+* `rmarkdown` is a cohesive way to
+    + Load & wrangle data 
+    + Analyse data, including figures & tables
+    + Publish everything in a complete report/analysis
+* The package `knitr` is the engine behind this
+    + Replaced the `Sweave` package about 8-10 years ago
+    
+::: {.fragment}
+
+Extends the `markdown` language **to incorporate R code**
+
+:::
+
+## Writing Reports Using `rmarkdown`  {.slide-only .unlisted}
+
+* Everything is one document
+    + Our analysis code embedded alongside our explanatory text
+* The entire analysis is performed in a fresh R Environment
+    + Avoids issues with saving/re-saving Workspaces
+* Enforces code that *runs sequentially*
+
+# Starting With Markdown {background-color="#3c3c44"}
+
+## A Brief Primer on Markdown
+
+- Markdown is a simple and elegant way to create formatted HTML
+    + Text is entered as plain text
+    + Formatting usually doesn't appear on screen ([but **can**]{.underline})
+    + The parsing to HTML often occurs using `pandoc`
+- Often used for Project README files etc.
+- *Not R-specific* but is heavily-used across data-science
+
+::: {.fragment}
+
+1. Go to the File drop-down menu in RStudio
+2. New File -> Markdown File
+3. Save As `README.md`
+
+:::
+
+## Editing Markdown
+
+- Section Headers are denoted by one or more `#` symbols
+    + `#` is the highest level, `##` is next highest etc.
+
+::: {.incremental}
+
+- Italic text is set by enclosing text between a single asterisk (`*`) or underscore (`_`)
+- Bold text is set by using *two asterisks* (`**`) or *two underscores* (`__`)
+:::
+
+## Editing Markdown  {.slide-only .unlisted}
+
+- Dot-point Lists are started by prefixing each line with `-`
+    + Next level indents are formed by adding 2 or 4 spaces before the next `-`
+
+::: {.fragment}
+
+- Numeric Lists are formed by starting a line with `1.`
+    + Subsequent lines don't need to be numbered in order
+
+:::
+    
+## Editing Markdown  {.slide-only .unlisted}
+
+Let's quickly edit our file so there's something informative
+
+::: {.fragment}
+
+Enter this on the top line
+
+`# RAdelaide 2025`
+
+:::
+::: {.fragment}
+
+Two lines down add this
+
+`## Day 1`
+
+:::
+::: {.fragment}
+
+Leave another blank line then add
+
+`1. Introduction to R and R Studio`  
+`2. Importing Data`  
+`3. Data Exploration`  
+`4. Data Visualisation`  
+
+:::
+
+## Editing Markdown  {.slide-only .unlisted}
+
+Underneath the list enter:
+
+`**All material**` can be found at \[the couse homepage\]\(http://blackochrelabs.au/RAdelaide25/\)
+
+::: {.fragment}
+
+- Here we've set the first two words to appear in bold font
+- The section in the square brackets will appear as text with a hyperlink to the site in the round brackets
+
+:::
+::: {.fragment}
+
+- Click the `Preview Button` and an HTML document appears
+- Note that README.html has also been produced 
+    + Sites like github/gitlab render this automatically
+    + Obsidian also renders interactively
+:::
+
+# R Markdown {background-color="#3c3c44" background-image=https://raw.githubusercontent.com/rstudio/rmarkdown/main/man/figures/logo.png background-size="35%" background-opacity="0.4" background-position="70% 50%"}
+
+## Writing Reports Using `rmarkdown`
+
+::: {.notes}
+- This course was prepared using the next generation known as quarto
+- Extends RMarkdown across multiple languages
+- People have written entire PhD theses using Rmarkdown
+:::
+
+We can output our analysis directly as:
+
+* HTML
+* MS Word Documents
+* PDF Documents (If you have $\LaTeX$ installed)
+* Slidy, `ioslides` or PowerPoint presentations
+* Complete Books (using `bookdown`)
+
+We never need to use MS Word, Excel or PowerPoint again!
+
+## Writing Reports Using `rmarkdown`  {.slide-only .unlisted}
+
+- The file suffix is `.Rmd`
+- Include both markdown + *embedded `R` code.*
+- Create all of our figures & tables directly from the data
+- Discussions, data, experimental and analytic descriptions
+- Mathematical/Statistical equations
+- Nicely Formatted Results
+- Any other information: citations, hyperlinks etc.
+
+## Creating an *R* Markdown document
+
+Let's create our first `rmarkdown` document
+
+1. Go to the `File` drop-down menu in RStudio
+2. New File -> R Markdown...
+
+::: {.fragment}
+
+![](assets/NewRMarkdown.png)
+
+:::
+
+
+## Creating an *R* Markdown document  {.slide-only .unlisted}
+
+1. Change the Title to: My First Report
+2. Change the Author to *your preferred name*
+3. Leave everything else as it is & hit OK
+4. Save the file as `RMarkdownTutorial.Rmd`
+
+## Compiling The Report
+
+- The default format is an `html_document` & we can change this later.
+- Generate the default document by clicking `Knit`
+
+
+## Compiling The Report  {.slide-only .unlisted}
+
+The Viewer Pane will appear with the compiled report (probably)
+
+- Note the hyperlink to the RMarkdown website & the bold typeface for the word **Knit**
+- The *R* code and the results are printed for `summary(cars)`
+- The plot of `temperature` Vs. `pressure` has been embedded
+- The code for the plot was hidden using `echo = FALSE`
+
+## Compiling The Report  {.slide-only .unlisted}
+    
+- We could also export this as an MS Word document by clicking the small 'down' arrow next to the word Knit.
+- By default, this will be Read-Only, but can be helpful for sharing with collaborators.
+- Saving as a `.PDF` requires $\LaTeX$
+    + Beyond the scope of today
+
+## Looking At The File
+
+A *header section* is enclosed between the `---` lines at the top
+
+- __Nothing can be placed before this!__
+- Uses YAML (**Y**AML **A**in't **M**arkup **L**anguage)
+- Editing is beyond the scope of this course
+- Can set custom `.css` files, load LaTeX packages, set parameters etc.
+
+## Looking At The File  {.slide-only .unlisted}
+
+::: {.notes}
+- Leaving out the `{r}` will just return formatted code
+:::
+
+
+Lines 8 to 10 are a code `chunk`
+
+- Chunks always begin with ```{r}
+- Chunks always end with ```
+- Executed `R` code goes between these two delineation marks
+
+::: {.fragment}
+
+- Chunk names are optional and directly follow the letter `r`
+    + Chunks can also be other languages (`bash`, `python` etc.)
+    + Here the `r` tells RMarkdown the chunk is an `R` chunk
+    + If using other languages `quarto` may be best
+    
+:::
+
+## Looking At The File  {.slide-only .unlisted}
+
+::: {style="font-size:90%"}
+
+- Multiple parameters can be set in the chunk header as described [here](https://yihui.org/knitr/options/#chunk-options)
+
+| Chunk Argument | Default Value | What It Does |
+|:------ |:----- |:------------- |
+| `eval`    | `TRUE`   | Execute the code |
+| `echo`    | `TRUE`   | Show/Hide the code |
+| `include` | `TRUE`   | Show/Hide the output |
+| `results` | `markup` | How to format results |
+| `cache`   | `FALSE`   | Cache chunk output until the code changes |
+| `fig.cap` | `""` | Text for a figure caption |
+| `message` | `TRUE` | Show messages printed |
+
+Table: Some common chunk parameters
+
+:::
+
+## Looking At The File  {.slide-only .unlisted}
+
+Line 12 is a Subsection Heading, starting with `##`
+
+- Click the _Outline_ symbol in the top-right of the Script Window
+- Chunk names are shown in _italics_ (if set to be shown)
+    + `Tools` > `Global Options` > `R Markdown` 
+    + Show in document outline: Sections and All Chunks
+- Section Names in plain text
+- Chunks are indented within Sections
+- By default Sections start with `##`
+    + Usually the Document Title should be Level 1 `#`
+
+## Getting Help
+
+- Check the help for a guide to the syntax.
+  + `Help > Markdown Quick Reference`
+- Well established syntax $\implies$ ChatGPT or search engines
+
+::: {.fragment}
+- `quarto` allows chunk arguments to be set *inside* a chunk
+  + e.g. `#| echo: false`
+  + Not Rmarkdown syntax but should work if placed in the chunk header
+  
+:::
+
+
+
+
+
+# Creating Our Own Report {background-color="#3c3c44"}
+
+## Making Our Own Reports
+
+Now we can modify the code to create our own analysis.
+
+- Delete everything in your R Markdown file EXCEPT the header
+- We'll analyse the `pigs` dataset
+- Edit the title to be something suitable
+
+## Making Our Own Reports {.slide-only .unlisted}
+
+What do we need for our report?
+
+- Load and describe the data using clear text explanations
+    + Maybe include the questions being asked by the study
+- Create figures which show any patterns, trends or issues
+- Perform an analysis
+- State conclusions
+- Send to collaborators
+
+## Making Our Own Reports {.slide-only .unlisted}
+
+- My "first" real chunk always loads the packages we need
+- We'll also have to load our data $\implies$ need to understand file paths
+
+## Creating a Code Chunk
+
+```{r load-tidyverse, echo=FALSE}
+library(tidyverse)
+```
+
+
+- `Alt+Ctrl+I` creates a new chunk on Windows/Linux
+    + `Cmd+Option+I` on OSX
+
+::: {.fragment}
+
+- Type `load-packages` next to the  \`\`\`{r  
+    + This is the chunk name
+    + Really helpful habit to form
+    
+:::
+::: {.fragment}
+
+- Enter `library(tidyverse)` in the chunk body
+    + We'll add other packages as we go
+
+:::
+
+
+## Executing a Code Chunk
+
+::: {.notes}
+- Note that I prefer my Chunk Output in the Console
+- Some others prefer it inline. It's a personal preference
+:::
+
+- We write code chunks to be executed sequentially
+- Can also execute interactively as we develop code
+- Click the `Run Current Chunk` button (or use `Ctrl+Shift+Enter`)
+    + Clicking the arrow next to `Run` will show platform specific shortcuts
+- The output will appear in the Console
+    + If not, set `Chunk Output in Console` (the "cog" next to `Render`)
+
+
+## Dealing With Messages
+
+
+*Knit...*
+
+::: {.fragment}
+- The `tidyverse` is a little too helpful sometimes
+    + These messages look horrible in a final report
+    + Are telling us which packages/version `tidyverse` has loaded
+    + Also informing us of conflicts (e.g. `dplyr::filter` Vs. `stats::filter`)
+- Can be helpful when running an interactive session
+- We can hide these from our report
+:::
+
+## Dealing With Messages {.slide-only .unlisted}
+
+1. Go to the top of your file *directly below the YAML*
+2. Create a new chunk
+3. Name it `setup`
+4. Place a comma after `setup` and add `include = FALSE`
+    + This will hide the chunk from the report
+
+::: {.fragment}
+
+5. In the chunk body add `knitr::opts_chunk$set(message = FALSE)`
+    + This sets a global parameter for all chunks
+    + i.e. Don't print "helpful" messages
+
+:::
+::: {.fragment}
+
+*Knit...*
+:::
+
+## Other Chunk Options 
+
+- Here's my `setup` chunk for this presentation
+
+```r
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, 
+  results = 'hide',
+  fig.align = "center",  fig.show = "asis", fig.width = 6, fig.height = 8
+)
+```
+
+::: {.fragment}
+
+- When you've seen my results, I've set `results = 'asis'` in that chunk header
+:::
+
+
+
+## Structuring Our Own Reports  
+
+- I like to load all data straight after loading packages
+    + Keeps key setup steps cleanly organised in your file
+- We should describe our data after loading
+    + Can include any modifications we make during parsing
+    
+::: {.fragment}
+    
+- RMarkdown *always* compiles from the directory it is in
+    + File paths should be relative to this
+    
+:::
+
+::: {.fragment}
+    
+- The function `here()` from the package `here` looks for an `Rproj` file
+    + Sets this directory as the root directory
+    + Type `here::here()` in your `Console`
+    
+:::
+
+
+## Structuring Our Own Reports  {.slide-only .unlisted}
+
+Below the `load-packages` chunk:
+
+1. Create a new chunk
+2. Name it `load-data`
+3. In the chunk body load `pigs` using `read_csv()` as below
+
+::: {.fragment}
+```{r load-data}
+pigs <- here::here("data/pigs.csv") |> # Define the file location
+  read_csv() |> # Import the data
+    mutate(
+        ## Set the appropriate factor levels
+        dose = factor(dose, levels = c("Low", "Med", "High")),
+        supp = factor(supp, levels = c("VC", "OJ"))
+    )
+```
+:::
+
+::: {.notes}
+Chunks can be run interactively using `Ctrl+Shift+Enter`
+:::
+
+## Describing Data
+
+::: {style="font-size:95%"}
+
+Now let's add a section header for our analysis to start the report
+
+1. Type `## Data Description` after the header and after leaving a blank line
+2. Use your own words to describe the data
+    + Consider things like how many individuals, different methods, measures etc.
+
+::: {.fragment}
+
+
+> 60 guinea pigs were given vitamin C, either in their drinking water in via orange juice.
+> 3 dose levels were given representing low, medium and high doses.
+> This experimental design gave 6 groups with 10 guinea pigs in each.
+> Odontoblast length was measured in order to assess the impacts on tooth growth
+
+:::
+
+:::
+
+## Describing Data {.slide-only .unlisted}
+
+- In my version, I mentioned the study size<br>$\implies$ we can **take this directly from the data**
+    + Very useful as participants change
+    + Can sometimes re-use code for similar experiments
+    
+::: {.incremental}
+    
+- `nrow(pigs)` would give us the number of pigs
+- Replace the number 60 in your description with  \``r` `nrow(pigs)`\` 
+- Recompile (i.e. Knit)
+
+:::
+
+## Visualising The Data
+
+- The next step might be to visualise the data using a boxplot
+- Start a new chunk with \`\`\`{r boxplot-data}
+
+::: {.fragment}
+
+
+```{r boxplot-data}
+#| output-location: column-fragment
+pigs |> 
+    ggplot(aes(dose, len, fill = supp)) +
+    geom_boxplot() +
+    labs(
+        x = "Dose",
+        y = "Odontoblast Length (pm)", 
+        fill = "Method"
+    ) +
+    scale_fill_brewer(palette = "Set2") +
+    theme_bw()
+```
+
+:::
+
+## Visualising the Data {.slide-only .unlisted}
+
+<!-- - We can control the figure size using `fig.height` or `fig.width` -->
+- Type a description of the figure in the `fig.cap` section of the chunk header
+    + This will need to be placed inside quotation marks
+    
+::: {.fragment}
+
+My example text:
+
+> Odontoblast length shown by supplement method and dose level
+
+:::
+
+::: {.fragment}
+- If you're unhappy with the dimensions<br>$\implies$change `fig.width` or `fig.height` in the chunk header
+    + Default values are `fig.width = 8` & `fig.height = 6` (inches)
+    
+:::
+    
+## Summarising Data
+
+::: {style="font-size: 90%;"}
+
+- Next we might like to summarise the data as a table
+    + Show group means & standard deviations
+    
+::: {.fragment}
+
+- Add the following to a new chunk called `data-summary`
+    + I've used the HTML code for $\pm$ (\&#177;)
+
+    
+```{r}
+#| output-location: column
+#| results: markup
+pigs |>
+    summarise(
+        n = n(),
+        mn_len = mean(len), 
+        sd_len = sd(len),
+        .by = c(supp, dose)
+    ) |>
+    mutate(
+        mn_len = round(mn_len, 2),
+        sd_len = round(sd_len, 2),
+        len = paste0(mn_len, " &#177;", sd_len)
+    ) |>
+    dplyr::select(supp, dose, n, len)
+```
+
+:::
+
+:::
+
+## Summarising Data {.slide-only .unlisted}
+
+- This has given a tibble output
+- We can produce an HTML table using `pander`
+
+::: {.fragment}
+Add the following to your `load-packages` chunk
+
+
+```{r}
+library(pander)
+```
+
+:::
+
+## Producing Tables
+
+::: {style="font-size: 90%;"}
+
+```{r}
+#| results: asis
+#| output-location: slide
+pigs |>
+    summarise(
+        n = n(), 
+        mn_len = mean(len), 
+        sd_len = sd(len),
+        .by = c(supp, dose)
+    ) |>
+    mutate(
+        mn_len = round(mn_len, 2),
+        sd_len = round(sd_len, 2),
+        len = paste0(mn_len, " &#177;", sd_len)
+    ) |>
+    dplyr::select(supp, dose, n, len) |>
+    rename_with(str_to_title) |>
+    pander(
+        justify = "llrr",
+        caption = "Odontoblast length for each group shown as mean&#177;SD"
+    )
+```
+
+:::
+
+
+## Analysing Data
+
+
+- The default output from `lm()` doesn't look great
+    
+```{r}
+#| results: markup
+lm(len ~ supp + dose + supp:dose, data = pigs) |>
+    summary()
+```
+
+
+## Analysing Data {.slide-only .unlisted}
+
+
+- `pander` can again be used to 'tidy up' the output from `lm`
+
+```{r}
+#| eval: false
+lm(len ~ supp + dose + supp:dose, data = pigs) |>
+    summary() |>
+    pander(add.significance.stars = TRUE)
+```
+
+
+## Analysing Data {.slide-only .unlisted}
+
+::: {style="font-size:90%"}
+
+
+```{r}
+#| echo: false
+#| results: asis
+lm(len ~ supp + dose + supp:dose, data = pigs) |>
+    summary() |>
+    pander(add.significance.stars = TRUE)
+```
+
+:::
+
+::: {.notes}
+Interpretation:
+
+- At Low Dose, OJ increases length by 5.25 above VC
+- Both Med & High increase length for VC
+- The difference in length for OJ is the same for Med as for Low
+- The gains for length by OJ are completely lost at High Dose
+:::
+
+## Creating Summary Tables
+
+- Multiple other packages exist for table creation
+    + All do some things brilliantly, none does everything
+- `pander` is a good all-rounder
+    + Tables are very simplistic
+    + Also enables easy in-line results
+- `knitr::kable()` is another good  all-rounder
+    + Can be nicely tailored using `kableExtra`
+    
+    
+## Creating Summary Tables {.slide-only .unlisted}
+    
+- To use other packages, $\implies$ `broom::tidy()` 
+    + Will convert `lm()` output to a `tibble`
+    + This can be passed to other packages which make HTML / $\LaTeX$ tables
+
+```{r}
+#| results: markup
+lm(len ~ supp + dose + supp:dose, data = pigs) |>
+    broom::tidy()
+```
+
+
+## Creating Summary Tables {.slide-only .unlisted}
+
+- `reactable` creates amazing looking HTML tables
+    + Incredibly customisable
+- `DT` also creates fantastic HTML tables
+    + Less flexible with formatting
+    + Allows simple downloading to `csv`, `xls` etc.
+- `gt` is popular with some
+- `xtable` is excellent for $\LaTeX$ output
+
+## Creating Summary Tables  {.slide-only .unlisted}
+
+::: {.notes}
+- Many of us really care how the output looks
+- I spend huge amounts of time getting this just right
+:::
+
+::: {style="font-size:90%;"}
+
+```{r}
+#| results: asis
+#| output-location: slide
+library(reactable)
+lm(len ~ supp + dose + supp:dose, data = pigs) |>
+  broom::tidy() |>
+  mutate(
+    term = term |> 
+      str_replace_all("supp", "Supp = ") |> 
+      str_replace_all("dose", "Dose = ") |> 
+      str_replace_all(":", " & ") 
+  ) |>
+  rename_with(str_to_title) |>
+  reactable(
+    sortable = TRUE, filterable = TRUE,
+    defaultColDef = colDef(format = colFormat(digits = 3)),
+    theme = reactableTheme(style = list(fontSize = 16)),
+    columns = list(
+      P.value = colDef(
+        name = "P-value",
+        cell = \(value) {
+          fmt <- ifelse(value > 0.01, "%.3f", "%.2e")
+          sprintf(fmt, value)
+        }
+      )
+    )
+  )
+```
+
+:::
+
+## Complete the Analysis
+
+- After you're happy with the way your analysis looks
+  + A good habit is to finish with a section called `Session Info`
+  + Add a code chunk which calls the *R* command `sessionInfo()`
+  + Or even `sessionInfo() |> pander()`
+
+::: {.incremental}
+- So far we've been compiling everything as HTML, but let's switch to an MS Word document.
+We could email this to our collaborators, or upload to Google docs
+- NB: HTML tables don't work so well in MSWord $\implies$ stick with `pander`?
+:::
+
+
+# Closing Comments {background-color="#3c3c44"}
+
+## Summary
+
+This basic process is incredibly useful
+
+- We never need to cut & paste anything between R and other documents
+- Every piece of information comes directly from our *R* analysis
+- We can very easily incorporate new data as it arrives
+- Source data is **never modified**
+- Creates *reproducible research*
+- Highly compatible with collaborative analysis & version control (Git)
+
+::: {.notes}
+I learned using R scripts but now I only use these in formal packages, or if defining functions to use across multiple analyses
+:::
+
+<!-- ## Advanced Options {visibility="hidden"} -->
+
+<!-- - The `R` package `workflowr` is very helpful for larger workflows -->
+<!--     + Can include multiple HTML pages -->
+<!--     + Strong integration with `git` -->
+<!-- - Highly customisable output -->
+<!--     + Code folding -->
+<!--     + Bootstrap themes etc. -->
+<!--     + Can use custom `css` files  -->
+<!--     + Interactive plots using `plotly` -->
+
+<!-- ::: {.fragment} -->
+
+<!-- - An example of a larger analysis using all `Rmd` files is at<br>[https://smped.github.io/PRJNA509779/](https://smped.github.io/PRJNA509779/) -->
+
+<!-- ::: -->
+    
+## A Challenge
+
+Return to the `penguins` dataset and perform a complete RMarkdown analysis on any combination of variables you decide
+
+1. Choose how to describe the data
+2. Choose whether to include diagnostic plots
+3. Choose which figures to include

@@ -1,0 +1,484 @@
+---
+title: "Extended Statistics In R"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-10"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: linear_regression.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2    
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Beyond Linear Regression {background-color="#3d3d40"}
+
+## Beyond Linear Regression
+
+- Linear Regression relies on Normally Distributed residuals
+    + We can estimate points and data will be normally distributed around the estimates
+- This relies on the mean ($\mu$) and standard deviation ($\sigma$) being independent
+    + And on data being continuous
+    
+::: {.fragment}    
+    
+- Some data is not normally distributed
+    + Discrete data
+    + Probabilities and proportions
+
+:::
+
+## Generalised Linear Models
+
+::: {.notes}
+- The underlying theory is well beyond the scope
+:::
+
+- We often use a generalisation of linear modelling to fit these models
+    + Formally known as Generalised Linear Models (GLMs)
+- Cannot be fit using Least Squares
+    + Parameter estimates by maximising likelihood functions
+    + Use iterative solutions to converge
+- Always have an underlying distribution used for parameter estimation
+    + Poisson Distribution: Log-linear Model
+    + Binomial Distribution: Logistic Regression
+
+## Logistic Regression
+
+- Logistic regression estimates the probablity ($\pi$) of an event occurring
+    + A binary outcome $\implies$ Success Vs Failure
+- Can also be considered a classification problem 
+- Heavily used in machine learning
+
+::: {.fragment}
+- Probabilites are bound at [0, 1] 
+    + makes fitting challenging near boundary points
+- Probabilities are transformed using the logit transformation
+    + Transforms values on [0, 1] to $[-\infty, \infty]$
+:::
+
+## The Logit Transformation
+
+$$
+\text{logit}(\pi) = \log \frac{\pi}{1-\pi}
+$$
+
+::: {.incremental}
+
+- $\pi = 0.5$ $\rightarrow$ logit $(\pi) = \log \frac{0.5}{0.5} = 0$
+- $\pi = 0$ $\rightarrow$ logit $(\pi) = \log \frac{0}{1} = -\infty$
+- $\pi = 1$ $\rightarrow$ logit $(\pi) = \log \frac{1}{0} = \infty$
+
+:::
+
+## The Logit Transformation {.slide-only .unlisted}
+
+- Parameters from logistic regression estimate $\text{logit}(\pi)$
+
+::: {.incremental}
+
+- Estimates near zero $\implies \pi = 0.5$
+- Estimates above zero $\implies \pi > 0.5$
+- Estimates below zero $\implies \pi < 0.5$
+
+:::
+
+## An Example Of Logistic Regression
+
+- A perfect example for logistic regression $\implies$ survivors of the Titanic!
+- Available in the package `carData`
+    + If you don't have this installed: `install.packages(c("car", "carData"))`
+    + The package `car` is the *Companion to Applied Regression* (not broom brooms)
+
+::: {.fragment}
+- Start a new R session and new R script
+
+```{r}
+library(tidyverse)
+library(carData)
+theme_set(theme_bw())
+```
+
+:::
+
+## The Titanic Survivors
+
+- Let's tidy up the data first
+
+```{r}
+titanic_tbl <- TitanicSurvival |>
+  as_tibble(rownames = "name") |> # Tibbles are nice. Keep the passenger names
+  dplyr::filter(if_all(everything(), \(x) !is.na(x))) # Discard incomplete records
+```
+
+## The Titanic Survivors {.slide-only .unlisted}
+
+- And a quick preview using only the categorical variables
+
+```{r}
+titanic_tbl |>
+  count(survived, sex, passengerClass) |>
+  pivot_wider(names_from = survived, values_from = n) |>
+  mutate(
+    prob = yes / (no + yes)
+  )
+```
+
+- It looks rather like sex and class might play a role
+
+## The Titanic Survivors {.slide-only .unlisted}
+
+- For logistic regression, we need to specify the underlying distribution<br>$\implies$ `family = binomial`
+- This tells `glm` we are fitting binomial probabilities
+
+```{r}
+#| results: hide
+## Fit a model using sex, age and passengerClass to predict survival probability
+titanic_glm <- glm(
+  survived ~ sex + age + passengerClass, data = TitanicSurvival, family = binomial
+)
+```
+
+## The Titanic Survivors {.slide-only .unlisted}
+
+```{r}
+summary(titanic_glm)
+```
+
+
+- How would we interpret these coefficients?
+- What does the Intercept represent?
+
+## The Titanic Survivors {.slide-only .unlisted}
+
+- For a 50yo woman in 1st Class
+
+```{r}
+x <- c(1, 0, 50, 0, 0)
+logit_pi <- sum(x * coef(titanic_glm))
+logit_pi
+```
+
+::: {.fragment}
+- This is > 0 $\implies$ >50% chance of survival
+:::
+
+::: {.fragment}
+
+```{r}
+inv_logit <- \(x) {exp(x) / (1 + exp(x))} # Convert back to probabilities
+inv_logit(logit_pi) # The actual probability of survival
+```
+
+:::
+
+## Making Predictions
+
+::: {style="font-size:95%"}
+
+- We could obtain a probability for each passenger
+    + Might be considered to be training a model
+    
+```{r}
+titanic_tbl |>
+  ## Setting type = "response" will transform back to [0,1]
+  mutate(prob_survival = predict(titanic_glm, type = "response")) |>
+  arrange(desc(prob_survival))
+```
+
+:::
+
+## Checking Predictions
+
+- If building a predictive model we often use an ROC curve to check accuracy
+  + Order by probability then plot the True/False Positive Rates
+
+```{r}
+#| output-location: slide
+titanic_tbl |>
+  mutate(prob_survival = predict(titanic_glm, type = "response")) |>
+  arrange(desc(prob_survival)) |>
+  mutate(
+    ## Calculate the True Positive Rate as we step through the predictions
+    TPR = cumsum(survived == "yes") / sum(survived == "yes"),
+    ## And the False Positive Rate as we step through in order
+    FPR = cumsum(survived == "no") / sum(survived == "no")
+  ) |>
+  ggplot(aes(FPR, TPR)) +
+  geom_line() +
+  geom_abline(slope = 1)
+```
+
+## Testing Multiple Models
+
+::: {style="font-size:90%"}
+
+```{r}
+#| output-location: slide
+list(
+  base_model = glm(
+    survived ~ sex + age + passengerClass, data = titanic_tbl, family = binomial
+  ),
+  interactions = glm(
+    survived ~ (sex + age + passengerClass)^2, data = titanic_tbl, family = binomial 
+  )
+) |>
+  lapply(\(x) mutate(titanic_tbl, pi = predict(x, type = "response"))) |>
+  bind_rows(.id = "model") |>
+  arrange(model, desc(pi)) |>
+  mutate(
+    TPR = cumsum(survived == "yes") / sum(survived == "yes"),
+    FPR = cumsum(survived == "no") / sum(survived == "no"),
+    .by = model
+  ) |>
+  ggplot(aes(FPR, TPR, colour = model)) +
+  geom_line() +
+  geom_abline(slope = 1)
+```
+
+:::
+
+## A Brief Comment
+
+- If using logistic regression in this context:
+    + Usually break data into a training & test set
+    + Assess the performance on the test set after training
+- This forms the basis of some Machine Learning techniques    
+    
+## Poisson Regression
+
+::: {.notes}
+- Quasipoisson is another parameterisation for overdispersed data
+- NB has a strict quadratic relationship between mean and overdispersion
+- Not so strict for Quasipoisson
+:::
+
+- Another common type of GLM is Poisson regression
+- Fitting the rate of an event occurring ($\lambda$)
+    + e.g. cars at an intersection per hour
+    + Rates are always > 0 $\implies$ estimated on the log scale
+    
+::: {.fragment}
+- Poisson distributions have a variance that strictly equals the rate
+- Overdispersed distributions allow for an inflated variance
+    + Simply add an overdispersion term to allow for this
+    + Very common in bioinformatics, e.g. RNA-Seq
+    
+:::
+   
+## Poisson Regression {.slide-only .unlisted}
+
+- `InsectSprays` provides counts of insects after applying insecticides `A-F`
+- The units used for counting were an equal size (but are undefined)
+    + We can assume fewer insects is better
+
+```{r}
+#| output-location: column
+InsectSprays |> 
+  summarise(
+    ave = mean(count), .by = spray
+  )
+```
+
+## Poisson Regression {.slide-only .unlisted}
+
+```{r}
+insect_glm <- glm(count ~ spray, data = InsectSprays, family = poisson)
+summary(insect_glm)
+```
+
+- How do we interpret these coefficients?
+
+## Poisson Regression {.slide-only .unlisted}
+
+- Model checking for Poisson models
+    + Do residuals appear consistently distributed?
+
+```{r}
+#| output-location: column
+plot(
+  fitted(insect_glm), 
+  residuals(insect_glm, type = "pearson")
+)
+abline(h = 0, col = "red")
+```
+
+## Poisson Regression {.slide-only .unlisted}
+
+- Model checking for Poisson models
+    + Is there evidence of overdispersion?
+
+```{r}
+deviance(insect_glm) / df.residual(insect_glm)
+```
+
+::: {.fragment}
+- If this value is >>1 $\implies$ overdispersion
+- Maybe try a quasipoisson instead of poisson?
+    + `family = quasipoisson`
+    + Will probably be more conservative
+    
+:::
+
+## A Brief Comment
+
+- Early RNA-Seq analysis used Poisson models $\implies$ counts / gene
+- May also be appropriate for matching sequence motifs across a set of DNA sequences
+
+::: {.fragment}
+
+- If units of counting unequal size $\implies$ use an `offset`
+    + Counting trees in unevenly sized forests?
+    + Number of crimes in cities of different sized populations
+
+:::
+
+# Mixed-Effects Models {background-color="#3d3d40"}
+
+## Mixed-Effects Models
+
+- Mixed-effects models are very common within ecological research
+    + Need to understand the difference between fixed and random effects
+- Linear Regression fits fixed effects
+    + Assumes the estimated effect is effectively the same across experiments
+    + Reproducible
+    
+::: {.fragment}
+    
+    
+- Random effects are the effects of a variable that is *not fixed*
+    + e.g. the effect of a particular site on a response variable
+    + The effect of a site is not fixed, it varies across sites
+    + We can model this variation using random effects
+    
+:::
+
+## Mixed-Effects Models {.slide-only .unlisted}
+
+- How do we model random effects?
+
+::: {.incremental}
+
+- I learned these as *nested models* fitting within distinct groups defined by random variables
+- Could be the date of a delivery<br>$\implies$ can be observed and modelled but not reproduced
+    + The Intercept term for each group ($i$) is $\mu_i \sim \mathcal{N}(\mu, \sigma_{\mu})$
+    + Response terms follow standard regression assumptions e.g. $e_{ij} \sim \mathcal{N}(0, \sigma)$
+- We have two components to the variance
+:::
+
+
+## Mixed-Effects Models {.slide-only .unlisted}
+
+- The syntax in `R` is super-clumsy
+- Most commonly, people use the package `lme4` and the function `lmer()`
+    + Early mixed-effects models used `nlme` $\implies$ no longer supported
+
+```{r}
+library(lme4)
+data(Machines, package = "nlme")
+```
+
+::: {.fragment}
+- We are measuring productivity using machines A, B or C (fixed)
+    + Nested within each of 6 factory workers 
+    + Each individual will have different productivity<br>$\implies$ measurable & modellable but random across the population
+
+:::
+
+## Mixed-Effects Models {.slide-only .unlisted}
+
+- To denote the nesting or random effect `(1 | Worker)`
+    + `Machine` is specified as per usual for fixed effects
+
+```{r}
+machines_lmer <- lmer(score ~ Machine + (1 | Worker) , data = Machines) 
+summary(machines_lmer)
+```
+
+
+## Mixed-Effects Models {.slide-only .unlisted}
+
+- This output looks very different
+- We have Random effects and Fixed Effects
+- No $p$-values!!!
+
+::: {.fragment}
+- The intercept gives the average score for Machine A
+- The random effects indicate how these scores vary across workers
+- We have an estimate and a standard error $\implies t$-statistic
+    + Degrees of freedom are controversial for mixed-effects models
+    + Can't determine the $t$-distribution to use for $p$-values
+:::
+
+## Mixed-Effects Models {.slide-only .unlisted}
+
+- A compromise is to use `lmerTest` before fitting
+- Provides $p$-values
+- Discussion is beyond the scope of this course (& my knowledge)
+
+```{r}
+library(lmerTest)
+machines_lmer <- lmer(score ~ Machine + (1 | Worker) , data = Machines) 
+summary(machines_lmer) |> coef()
+```
+
+## Generalised Mixed-Effects Models
+
+- GLMMs are also heavily used in ecology $\implies$ require genuine understanding
+    + Very heavy on linear algebra
+- Ben Bolker is the undisputed GLMM heavyweight
+    + Has a [comprehensive page describing these](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html)
+- `lme4` has implemented `glmer()`
+- Additional GLMM fitting in the packages `glmmADMB` and `glmmTMB`
+    + Useful for challenging datasets
+- Doug Bates (`nlme`) was a member of R Core but has left the `R` community
+
+

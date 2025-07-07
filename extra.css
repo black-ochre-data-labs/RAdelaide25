@@ -1,0 +1,14 @@
+.notes {
+  display: none;
+}
+
+/* Hide headers marked with slide-only class */
+h1.slide-only,
+h2.slide-only,
+h3.slide-only,
+h4.slide-only,
+h5.slide-only,
+h6.slide-only {
+  display: none;
+}
+

@@ -1,0 +1,337 @@
+---
+title: "Reshaping And Tidying Data"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format:
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    code-tools: true
+    logo: assets/bodl_logo_white_background.jpg
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+  html:
+    css: [bodl.scss, extra.css]
+    output-file: tidying.html
+    embed-resources: true
+    toc: true
+    toc-depth: 2
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) {
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE,
+  fig.align = "center"
+)
+library(palmerpenguins)
+library(dplyr)
+library(tidyr)
+```
+
+# Manipulating Tibbles with `tidyr` {background-color="#3d3d40" background-image=https://tidyr.tidyverse.org/logo.png background-size="30%" background-opacity="0.4" background-position='70% 50%'}
+
+## Motivation
+
+- In Excel many people use pivot tables
+- Sometimes we need similar operations in R
+- Data may need to be in different 'shapes' for plotting/tables/analysis
+
+::: {.fragment}
+
+- Often we refer to data as being in *long* form or in *wide* form
+- In wide form our response variable may be spread across *multiple columns*
+    + Often multiple measures for one individual
+- In long form, the response variable is in a *single column*
+
+:::
+
+## The package `tidyr`
+
+- We'll look at some key functions from `tidyr`
+    - `pivot_longer()` and `pivot_wider()`
+    - `separate()` and `unite()`
+    - Many more beyond the scope of today
+
+::: {.incremental}
+
+- Add `library(tidyr)` to the beginning of the script
+- `penguins` has each measurement in long form<br>$\implies$ has multiple columns of measurement
+    
+:::
+    
+## From Long To Wide
+
+- We'll first create some summaries by sex
+
+```{r}
+#| output: false
+penguins |>
+  filter(
+    !is.na(sex) # Exclude those where sex is missing
+  ) |> 
+  count(species, sex)
+```
+
+
+## From Long To Wide {.slide-only .unlisted}
+
+- Let's try and create separate columns for male & female penguins
+- This is where `pivot_wider()` can be helpful
+
+```{r}
+#| output: false
+penguins |>
+  filter(
+    !is.na(sex) # Exclude those where sex is missing
+  ) |> 
+  count(species, sex) |>
+  pivot_wider(
+    # Specify the column we wish to take the new names from
+    # And the column with the values
+    names_from = sex, values_from = n
+  )
+```
+
+
+## From Long To Wide {.slide-only .unlisted}
+
+```{r}
+#| output: false
+penguins |>
+  filter(
+    !is.na(sex) # Exclude those where sex is missing
+  ) |> 
+  count(species, year, sex) |>
+  pivot_wider(
+    # Multiple columns can also be chosen
+    # The default separator will be "_"
+    names_from = c(sex, year), values_from = n
+  )
+```
+
+
+## From Wide To Long 
+
+- The reverse operation is `pivot_longer()`
+- This time we move values from multiple columns into a single column
+    + Notice that the new column names ned to be quoted here
+
+```{r}
+#| output: false
+penguins |>
+  # Place all the length and depth measurements into a single column
+  pivot_longer(
+    cols = ends_with("mm"),
+    names_to = "measurement",
+    values_to = "mm"
+  )
+```
+
+## From Wide To Long {.slide-only .unlisted}
+
+- Again, summarisation shows this to be very helpful
+
+```{r}
+#| output: false
+penguins |>
+  pivot_longer(
+    cols = ends_with("mm"),
+    names_to = "measurement",
+    values_to = "mm"
+  ) |>
+  filter(!is.na(mm)) |>
+  summarise(
+    # Find the mean of each measurement type by year
+    mean_mm = mean(mm), .by = c(year, measurement)
+  ) 
+```
+
+## Using Both Together
+
+```{r}
+#| output: false
+penguins |>
+  pivot_longer(
+    cols = ends_with("mm"),
+    names_to = "measurement",
+    values_to = "mm"
+  ) |>
+  filter(!is.na(mm)) |>
+  summarise(
+    mean_mm = mean(mm), .by = c(year, measurement)
+  ) |>
+  # Now form separate columns for each year
+  pivot_wider(names_from = year, values_from = mean_mm)
+```
+
+
+## Combining Columns
+
+```{r}
+#| output: false
+## We can combine multiple columns using unite
+## By default, the separator will be '_'
+penguins |>
+  unite(new_column, species, sex)
+```
+
+::: {.fragment}
+<br>
+```{r}
+#| output: false
+## Original columns can be left if preferred
+## An alternative separator can also be provided
+penguins |>
+  unite(new_column, species, sex, remove = FALSE, sep = ":")
+```
+
+:::
+
+## Splitting Columns
+
+- The reverse operation is `separate()`
+- We'll create our own tibble on the fly for this example
+
+```{r}
+tibble(merged = c("A.1", "B.1", "C.2")) 
+```
+
+## Splitting Columns {.slide-only .unlisted}
+
+- We can now use the dot to separate
+- Number of expected columns is set by the `into` argument
+
+```{r}
+tibble(merged = c("A.1", "B.1", "C.2"))  |>
+  separate(merged, into = c("letter", "number"))
+```
+
+## Splitting Columns {.slide-only .unlisted}
+
+::: {.callout-note collapse="true"}
+## Setting The Wrong Number of Columns 
+- Try adding an additional expected column called "none"
+- This is a common error you may see
+- Also try setting "letter" as the only column
+:::
+
+## Splitting Columns {.slide-only .unlisted}
+
+- Check the help page `?separate`
+
+::: {.fragment}
+
+- `sep = "[^[:alnum:]]+"` is a *regular expression*
+- Common syntax for working with flexible text strings
+- Easy to write $\rightarrow$ horrible to read back
+    + Explore tomorrow $\implies$ essential for handling text/categorical data
+
+:::
+
+## Summary
+
+- Covered quite some turf
+- Switch from wide to long
+- Splitting/Merging Columns
+- Selecting/Renaming Columns
+- Adding Columns
+- Summarising Columns
+- Filtering/Slicing Rows
+
+![](assets/doge.jpg){.absolute top=100 right=0 width='700px'}
+
+## Summary {.slide-only .unlisted}
+
+- All important preparatory skills for:
+    + Cleaning your data
+    + Summary tables
+    + Plotting Data
+    + Running Statistical Tests
+
+::: {.fragment}
+
+- Still need:
+    + Basic R Data Structures
+    + Text manipulation (a key skill)
+    
+:::
+
+# Challenges
+
+## Initial Challenges {.slide-only .unlisted}
+
+::: {style="font-size: 80%"}
+
+1. Count the number of penguins from each species on each island for each year. Try and make it look like the output below
+    + Hint: use `values_fill = 0` to get rid of missing values in the output
+
+```{r}
+#| echo: false
+penguins |>
+  count(species, island, year) |>
+  pivot_wider(
+    names_from = species, values_from = n, values_fill = 0
+  )
+```
+
+2. Add a column called `total` which adds the values for all species columns
+3. Subset the table to only show values from 2009
+4. Combine the island and year to be a column in the form `island:year`
+
+:::
+
+## More Challenges {.slide-only .unlisted}
+
+::: {style="font-size: 90%"}
+
+- Create the following table showing the mean `bill_length_mm`
+    + Decide how to handle missing values
+
+```{r}
+#| echo: false
+penguins |>
+  summarise(
+    mean = mean(bill_length_mm, na.rm = TRUE), .by = c(species, island, year)
+  ) |>
+  pivot_wider(
+    names_from = year, values_from = mean, values_fill = 0
+  )
+```
+
+- Add a column called `overall_mean` which averages the values for all years
+    + *Hint: The mean is the sum divided by the number of values*
+
+:::

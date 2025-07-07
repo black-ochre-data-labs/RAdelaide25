@@ -1,0 +1,459 @@
+---
+title: "Iteration And Lists"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-10"
+date-format: long
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: iteration.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    results: markup
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Iteration {background-color="#3d3d40"}
+
+##
+
+
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(ggpmisc)
+theme_set(theme_bw())
+```
+
+## Introducing Iteration
+
+- `R` is explicitly designed to work with vectors
+- Where it's elegance, power and speed comes from
+- We can avoid stepping through each value like many other languages
+
+**BUT**
+
+::: {.incremental}
+- If we have a vector of file paths, how would we load them all?
+- If we have a list of linear models, how do we deal with this?
+- If we have multiple cell types subjected to the same experimental treatment, how do we combine and compare results?
+:::
+
+## Introducing Iteration {.slide-only .unlisted}
+
+::: {style="font-size:95%"}
+
+- What if we fitted a linear model within each penguin species?
+    + Aiming to make a barplot comparing slopes including standard errors
+- We can do this kind of thing with `summarise`
+
+::: {.fragment}
+
+```{r}
+#| output-location: column
+penguins |>
+  summarise(
+    lm = list(
+      lm(bill_length_mm ~ body_mass_g)
+    ),
+    .by = c(species)
+  )
+```
+
+:::
+
+::: {.fragment}
+- By wrapping the function `lm` as a `list` $\implies$ a list column
+- Each column of a data.frame is just a vector $\implies$ can also be a list
+:::
+
+:::
+
+::: {.fragment}
+*But how do we get the slopes & standard errors now?*
+:::
+
+
+## Introducing Iteration {.slide-only .unlisted}
+
+- The obvious answer is we do one at a time, then move to the next<br>$\implies$This is *iteration*
+- `R` has special tricks for this which speed things up profoundly
+- Lists become the absolute workhorse for this type of approach
+
+::: {.fragment}
+- Let's start the slow way and speed things up
+:::
+
+## Stepping Through A Vector
+
+::: {style="font-size:95%"}
+
+- In the directory `data/benchmarks` are 6 very similar files
+- Running a parameter sweep on `phoenix` (UofA HPC)
+    + Simulated DNA sequences with AHR motifs
+    + Fitting a poisson model to test for enrichment relative to control
+    + Changing the size of the control dataset (n = 10, 50, 100, 250, 500, 100)
+    + Reporting the resource usage $\implies$ a simple 2-line file
+
+```{r}
+f <- here::here("data", "benchmarks") |> 
+  list.files(pattern = "tsv$", full.names = TRUE)
+f
+```
+
+:::
+
+## Stepping Through A Vector {.slide-only .unlisted}
+
+- Looking at the first file
+
+```{r}
+read_tsv(f[[1]])
+```
+
+::: {.fragment}
+- Columns represent time taken, various RAM measures, I/O etc
+- Is standard output from `snakemake` when you benchmark a rule
+:::
+
+## Stepping Through A Vector {.slide-only .unlisted}
+
+::: {style="font-size:95%"}
+
+- The simplest way would be to use a `for` loop
+    + `seq_along()` will create a sequence of integers along a vector
+    + Using `for (i in seq_along(f))` will step through the vector one at a time
+
+```{r}
+#| message: true
+seq_along(f)
+for (i in seq_along(f)) {
+    message("For i = ", i, ", open ", f[[i]])
+}
+```
+
+:::
+
+## Stepping Through A Vector {.slide-only .unlisted}
+
+- Now we know how a `for` loop works<br>$\implies$ What kind of object should we place each file into
+
+::: {.fragment}
+- My suggestion would be a `list`
+- We can create an empty list using `list()`
+    + Then we can just add elements
+
+:::
+
+::: {.fragment}
+
+```{r}
+df_list <- list()
+for (i in seq_along(f)) {
+  ## Step through the vector, loading each file one at a time
+  df_list[[i]] <- read_tsv(f[[i]])
+}
+
+```
+
+:::
+    
+## Stepping Through A Vector {.slide-only .unlisted}
+
+- It might be useful to add names to this $\implies$ identify which file is which
+
+```{r}
+## Give each list element a name, dropping the bulk of the file path
+names(df_list) <- basename(f)
+df_list
+```
+
+## Working With Lists
+
+- We can use `bind_rows()` to form a single `tibble`
+    + Including the `.id` argument will add list names to a column
+
+```{r}
+df_list |> bind_rows(.id = "file")
+```
+
+::: {.fragment}
+- From here, use `mutate()` to extract n = 10, 50, ...
+- Make a lovely plot
+:::
+
+## Using an `R`-Style Approach
+
+- `R` offers an approach using `lapply()`
+    + Stands for *list-apply*
+    + We *apply* a function to each element of a vector
+    + Will always return a *list*
+
+```{r}
+lapply(f, read_tsv)
+```
+
+## Using an `R`-Style Approach {.slide-only .unlisted}
+
+- If the input vector has names $\implies$ output will have names
+- Let's repeat including names
+
+```{r}
+f |>
+  setNames(basename(f)) |> # Add names here to ensure the list has names
+  lapply(read_tsv) |>
+  bind_rows(.id = "file")
+```
+
+
+## Using an `R`-Style Approach {.slide-only .unlisted}
+
+- The complete process could look like this
+
+```{r}
+f |>
+  setNames(basename(f)) |> # Add names here to ensure the list has names
+  lapply(read_tsv) |>
+  bind_rows(.id = "file") |>
+  mutate(bg_size = str_extract(file, "[0-9]+") |> as.integer())
+```
+
+## Using an `R`-Style Approach {.slide-only .unlisted}
+
+::: {style="font-size:95%"}
+
+- And now make the figure we need
+
+```{r}
+#| output-location: column
+f |>
+  setNames(basename(f)) |>
+  lapply(read_tsv) |>
+  bind_rows(.id = "file") |>
+  mutate(
+    bg_size = file |>
+      str_extract("[0-9]+") |>
+      as.integer()
+  ) |>
+  ggplot(aes(bg_size, s)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm") +
+  stat_poly_eq(use_label("eq")) +
+  labs(
+    x = "BG Size", 
+    y = "Time Taken (sec)"
+  ) 
+```
+
+:::
+
+# Beyond `lapply()` {background-color="#3d3d40"}
+
+## Using `apply()`
+
+- A common scenario is to perform an operation on a matrix
+    + Can summarise by row or column
+- For this we use `apply()` including the `MARGIN` argument
+    + For rows: `MARGIN = 1`
+    + For columns: `MARGIN = 2`
+- Can even be applied to 3D arrays using `MARGIN=3`
+
+## Using `apply()` {.slide-only .unlisted}
+
+::: {style="font-size:95%"}
+
+- `AirPassengers` is a time-series object
+    + Just a vector dressed up to look like a matrix
+    + We can coerce to a matrix as below
+
+```{r}
+## Coerce the time-series object to be an actual matrix
+AirPassengers |>
+  matrix(ncol = 12, byrow = TRUE, dimnames = list(1949:1960, month.abb)) 
+```
+
+:::
+
+## Using `apply()` {.slide-only .unlisted}
+
+- We could summarise by year or by month
+
+```{r}
+## Start by finding the mean in every month
+AirPassengers |>
+  matrix(ncol = 12, byrow = TRUE, dimnames = list(1949:1960, month.abb)) |>
+  apply(MARGIN = 2, FUN = mean)
+```
+
+::: {.fragment}
+- Now find the total number of passengers each year
+    + use `apply()` with `MARGIN = 1`
+
+:::
+
+::: {.fragment}
+- This is a pretty common operation<br>$\implies$ `rowSums()`, `colSums()`, `rowMeans()` and `colMeans()` all exist
+:::
+
+## Alternatives to `lapply()`
+
+::: {.notes}
+- Can be a little unpredictable as seen here
+:::
+
+- A common alternative to `lapply()` is `sapply()`
+    + Tries to simplify by default
+    + Automatically uses the elements of `x` as names
+    
+```{r}
+#| results: hide
+sapply(f, read_tsv)
+sapply(f, read_tsv, simplify = FALSE)
+```
+
+## Alternatives to `lapply()`  {.slide-only .unlisted}
+
+- `vapply()` is for when you need a vector as output
+    + Output type must be strictly defined
+    
+```{r}
+f |>
+  lapply(read_tsv) |>
+  setNames(basename(f)) |>
+  # Apply the function `nrow` knowing we will return an integer with length(1)
+  vapply(nrow, integer(1))
+```
+
+## The Package `purrr` 
+
+- The `tidyverse` package `purrr` reimplements these using `map()`
+- The idea is we *map* an input to an *output*
+    + `map()` mostly replicates `lapply()`
+
+```{r}
+f |> 
+  setNames(basename(f)) |>
+  map(read_tsv)
+```
+
+## The Package `purrr` {.slide-only .unlisted}
+
+- `map_int()` is like `vapply()` setting `integer(1)` as the output
+- Same for `map_dbl()`, `map_chr()`, `map_lgl()`
+- `map_dfr()` is a little different $\implies$ will perform the `bind_rows()` operation
+
+```{r}
+f |> 
+  setNames(basename(f)) |>
+  map_dfr(read_tsv, .id = "file")
+```
+
+# List Columns Within Data Frames
+
+## Back To The Penguins
+
+```{r}
+#| output-location: column
+penguins |>
+  summarise(
+    lm = list(
+      lm(bill_length_mm ~ body_mass_g)
+    ),
+    .by = c(species)
+  ) 
+```
+
+- We might now have some ideas about this
+- There are multiple ways to get where we're going
+
+## Back To The Penguins {.slide-only .unlisted}
+
+```{r}
+penguins |>
+  summarise(
+    lm = list(lm(bill_length_mm ~ body_mass_g)),
+    .by = c(species)
+  ) |>
+  mutate(
+    ## Create a summary object for each linear model
+    summary = lapply(lm, summary),
+    ## Extract the body mass coefficient from each linear model
+    slope = map_dbl(lm, \(x) coef(x)["body_mass_g"]),
+    ## Extract the std.error for body mass
+    se = map_dbl(
+      summary, 
+      \(x) coefficients(x)["body_mass_g", "Std. Error"]
+    )
+  )
+```
+
+
+## Back To The Penguins {.slide-only .unlisted}
+
+- An alternative might be to split the original data.frame
+
+```{r}
+#| results: hide
+penguins |>
+  ## Split by the factor levels in the species column
+  split(f = penguins$species) |>
+  ## Fit the linear model on each of the split data frames
+  map(\(x) lm(bill_length_mm ~ body_mass_g, data = x)) |>
+  ## Use broom::tidy as a convenience function
+  map(broom::tidy, conf.int = TRUE)
+```
+
+
+## A Challenge
+
+- From here we'd need `bind_rows()` then `dplyr::filter()`
+    + See if you can figure it out
+    + Make a barplot with standard error bars
+    + Make an alterative figure, showing the confidence intervals<br>$\implies$ show the slope as a point and use `geom_errorbar_h()`

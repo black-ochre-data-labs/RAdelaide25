@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="text_slides_files/libs/clipboard/clipboard.min.js"></script>
+<script src="text_slides_files/libs/quarto-html/tabby.min.js"></script>
+<script src="text_slides_files/libs/quarto-html/popper.min.js"></script>
+<script src="text_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="text_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="text_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="text_slides_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
+
+  <meta name="author" content="Dr Stevie Pederson">
+  <meta name="dcterms.date" content="2025-07-09">
+  <title>Working With Text</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="text_slides_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="text_slides_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="text_slides_files/libs/revealjs/dist/theme/quarto-30963254ca3fee1f61c50d8fd85c7cc4.css">
+  <link href="text_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="text_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="text_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="text_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#3c3c44" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
+  <h1 class="title">Working With Text</h1>
+  <p class="subtitle">RAdelaide 2025</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr Stevie Pederson 
+</div>
+        <p class="quarto-title-affiliation">
+            </p><div class="line-block">Black Ochre Data Labs<br>
+            The Kids Research Institute Australia</div>
+          <p></p>
+    </div>
+</div>
+
+  <p class="date">July 9, 2025</p>
+</section>
+<section>
+<section id="text-strings" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://stringr.tidyverse.org/logo.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="75% 30%">
+<h1>Text Strings</h1>
+
+</section>
+<section id="text-manipulation" class="slide level2">
+<h2>Text Manipulation</h2>
+<ul>
+<li>Start a new R script: <code>text.R</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Next, create the vector we’ll mess around with</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Create a character vector for this session</span></span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Hi Mum"</span>, <span class="st">"Hi Mother"</span>, <span class="st">"Hello Maternal Parent"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="text-manipulation-1" class="slide level2 slide-only unlisted">
+<h2>Text Manipulation</h2>
+<ul>
+<li>Working with <code>character</code> vectors</li>
+<li>One of the most common and regular tasks
+<ul>
+<li>Cleaning up column names</li>
+<li>Cleaning up data</li>
+<li>Tidying up text on plots</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Particularly relevant when working with IDs
+<ul>
+<li>May appear as <code>Run 1</code> in one file and <code>Run_001</code> in another</li>
+</ul></li>
+<li>Data providers often have their ID formats and edit the ones provided
+<ul>
+<li>Need to identify &amp; extract/modify</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="regular-expressions" class="slide level2">
+<h2>Regular Expressions</h2>
+<ul>
+<li>We’re mostly familiar with words
+<ul>
+<li>Regular Expressions (<code>regexp</code>) are incredibly powerful tools in this space</li>
+<li><code>regexp</code> syntax is not unique to <code>R</code></li>
+<li><code>R</code> does have a few unique “quirks” though</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Will progress to categorical data <span class="math inline">\(\implies\)</span> <em>factors</em></li>
+</ul>
+</div>
+</section>
+<section id="text-manipulation-2" class="slide level2">
+<h2>Text Manipulation</h2>
+<ul>
+<li>The package <code>stringr</code> contains functions for text manipulation</li>
+<li>Key Functions:
+<ul>
+<li><code>str_detect()</code></li>
+<li><code>str_remove()</code></li>
+<li><code>str_extract()</code></li>
+<li><code>str_replace()</code></li>
+</ul></li>
+<li>Alternatives to <code>grepl()</code>, <code>grep()</code>, <code>gsub()</code> etc. from <code>base</code></li>
+</ul>
+</section>
+<section id="stringrstr_detect" class="slide level2">
+<h2><code>stringr::str_detect()</code></h2>
+<ul>
+<li><code>str_detect()</code> returns a logical vector
+<ul>
+<li>Same length as the input vector</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Return a logical vector where 'x' matches the pattern 'Mat'</span></span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="at">string =</span> x, <span class="at">pattern =</span> <span class="st">"Mat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>When using <em>regular expressions</em> <code>.</code> functions as a wildcard
+<ul>
+<li><code>*</code> has a different meaning</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Return a logical vector where 'x' matches the pattern 'M?t'</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_detect</span>(<span class="at">string =</span> x, <span class="at">pattern =</span> <span class="st">"M.t"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="stringrstr_remove" class="slide level2">
+<h2><code>stringr::str_remove()</code></h2>
+<ul>
+<li>To remove words or patterns</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove</span>(x, <span class="st">"M"</span>)</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove</span>(x, <span class="st">"Hi "</span>)</span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove</span>(x, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Why did that last one only remove the first space?</li>
+</ul>
+</div>
+</section>
+<section id="stringrstr_remove_all" class="slide level2">
+<h2><code>stringr::str_remove_all()</code></h2>
+<ul>
+<li><code>str_remove()</code> will only remove the first match</li>
+<li><code>str_remove_all()</code> will remove <em>all</em> matches</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove_all</span>(x, <span class="st">" "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Using <code>regex</code> syntax <span class="math inline">\(\implies\)</span> pass sets of letters using <code>[]</code> syntax</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove all vowels</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove_all</span>(x, <span class="st">"[aeiou]"</span>)</span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Remove only the first vowel</span></span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove</span>(x, <span class="st">"[aeiou]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="stringrstr_remove_all-1" class="slide level2 slide-only unlisted">
+<h2><code>stringr::str_remove_all()</code></h2>
+<ul>
+<li>These allow us to specify wild cards more carefully</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove_all</span>(x, <span class="st">"M[aeiou]t"</span>)</span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_remove_all</span>(x, <span class="st">"[ae]r"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="stringrstr_extract" class="slide level2">
+<h2><code>stringr::str_extract()</code></h2>
+<ul>
+<li>Removing strings has limited use <span class="math inline">\(\implies\)</span> extracting more useful</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"H[aeiou]"</span>)</span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"H[a-z]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>These look very similar <span class="math inline">\(\implies\)</span> second opens possibilities</li>
+</ul>
+</div>
+</section>
+<section id="stringrstr_extract-1" class="slide level2 slide-only unlisted">
+<h2><code>stringr::str_extract()</code></h2>
+<ul>
+<li>In <em>regular expressions</em> we can extend a match using <code>+</code><br><span class="math inline">\(\implies\)</span> match one or more characters</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"H[a-z]+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This will match the first <code>H</code> and then all following lower-case letters
+<ul>
+<li>The match stops at the whitespace <span class="math inline">\(\implies\)</span> not in the set of characters <code>[a-z]</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="stringrstr_extract-2" class="slide level2 slide-only unlisted">
+<h2><code>stringr::str_extract()</code></h2>
+<ul>
+<li>Repeat the match starting with “M”</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"M[a-z]+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>If we change the lower-case set to a <code>.</code> <span class="math inline">\(\implies\)</span> match anything</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"M.+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="stringrstr_extract-3" class="slide level2 slide-only unlisted">
+<h2><code>stringr::str_extract()</code></h2>
+<ul>
+<li>We can also specify the exact number of times for a match</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"H.+ M[a-z]{2}"</span>)</span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"H.+ M[a-z]{3}"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>The second pattern expects a 4 letter word starting with M
+<ul>
+<li>Returns <code>NA</code> if no match</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="stringrstr_extract_all" class="slide level2">
+<h2><code>stringr::str_extract_all()</code></h2>
+<ul>
+<li><code>str_extract()</code> will only return the first match</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"[Hh]."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li><code>str_extract_all()</code> returns <strong>all matches</strong></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract_all</span>(x, <span class="st">"[Hh]."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Note that now we have a list of the same length as <code>x</code>
+<ul>
+<li>Each element contains all matches within the initial string</li>
+</ul></li>
+</ul>
+</div>
+<aside class="notes">
+<p>Will talk in detail about lists tomorrow</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="regular-expressions-1" class="title-slide slide level1 center" data-background-color="#3c3c44">
+<h1>Regular Expressions</h1>
+
+</section>
+<section id="regular-expressions-2" class="slide level2">
+<h2>Regular Expressions</h2>
+<ul>
+<li>We’re mostly familiar with matching words
+<ul>
+<li><code>regex</code> allows more powerful matching</li>
+</ul></li>
+<li>Can include wildcards (<code>.</code>)</li>
+<li>Can specify sets of values (<code>[a-z]</code>)
+<ul>
+<li><code>[A-Z]</code> for upper-case</li>
+<li><code>[0-9]</code> for numbers</li>
+<li><code>[:alnum:]</code> represents all alpha-numeric characters</li>
+</ul></li>
+<li>Can extend matches using <code>+</code> for one or more
+<ul>
+<li>None or more can be specified using <code>*</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="regular-expressions-3" class="slide level2 slide-only unlisted">
+<h2>Regular Expressions</h2>
+<ul>
+<li>In logical testing, the symbol <code>|</code> means <code>OR</code></li>
+<li>Can also be incorporated into patterns</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the pattern 'Hi' or 'Hello'</span></span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"Hi|Hello"</span>)</span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the pattern 'Mum', 'Mother' or 'Maternal'</span></span>
+<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"Mum|Mother|Maternal"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="regular-expressions-4" class="slide level2 slide-only unlisted">
+<h2>Regular Expressions</h2>
+<ul>
+<li>Also allows for patterns to be anchored
+<ul>
+<li><code>^</code> anchors a match to the start</li>
+<li><code>$</code> anchors a match to the end</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the first word</span></span>
+<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"^[:alnum:]+"</span>)</span>
+<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Or the last word</span></span>
+<span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"[:alnum:]+$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="regular-expressions-5" class="slide level2 slide-only unlisted">
+<h2>Regular Expressions</h2>
+<ul>
+<li>To thoroughly confuse everyone: <code>^</code> has a second meaning
+<ul>
+<li>Inside <code>[]</code> it means <em>not</em></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Match a pattern at the end which doesn't contain a space</span></span>
+<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_extract</span>(x, <span class="st">"[^ ]+$"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Regular expressions are fun to write <span class="framgent"><br><span class="math inline">\(\implies\)</span><em>horrible to read back</em>!</span></li>
+</ul>
+</div>
+</section>
+<section id="stringrstr_view" class="slide level2">
+<h2><code>stringr::str_view()</code></h2>
+<ul>
+<li>We can check our matches in detail using <code>str_view()</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"r"</span>)</span>
+<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"r$"</span>)</span>
+<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"M[aeiou]t"</span>)</span>
+<span id="cb19-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">"^[^ ]+"</span>, <span class="at">match =</span> <span class="cn">NA</span>, <span class="at">html =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="stringrstr_replace" class="slide level2">
+<h2><code>stringr::str_replace()</code></h2>
+<ul>
+<li><code>str_replace()</code> is used for extracting/modifying text strings
+<ul>
+<li>Even more powerful than <code>str_extract()</code></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(x, <span class="at">pattern =</span> <span class="st">"Mum"</span>, <span class="at">replacement =</span> <span class="st">"Dad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Searching the <code>string</code> “Hi Mum” for the <code>pattern</code> “Mum”, and</li>
+<li>Replacing the first instance of “Mum” with “Dad”</li>
+</ol>
+</section>
+<section id="stringrstr_replace-1" class="slide level2 slide-only unlisted">
+<h2><code>stringr::str_replace()</code></h2>
+<ul>
+<li>Wildcards and character sets work in the exact same manner</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(x, <span class="st">"M[a-z]"</span>, <span class="st">"Da"</span>)</span>
+<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(x, <span class="st">"[M].{2}"</span>, <span class="st">"Dad"</span>)</span>
+<span id="cb21-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(x, <span class="st">"[M].+"</span>, <span class="st">"Dad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="stringrstr_replace-2" class="slide level2 slide-only unlisted">
+<h2><code>stringr::str_replace()</code></h2>
+<ul>
+<li>The use of <em>capturing patterns</em> makes this extremely flexible</li>
+<li>We can capture words/phrases/patterns using <code>(pattern)</code> inside braces
+<ul>
+<li>Captured patterns are able to be returned in numeric order of capture</li>
+<li>In the following, we capture only one pattern</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(x, <span class="st">"H.+ (.+)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Now let’s capture two patterns</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(x, <span class="st">"(H.+) (M.+)"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">2! </span><span class="sc">\\</span><span class="st">1!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="stringrstr_replace-3" class="slide level2 slide-only unlisted">
+<h2><code>stringr::str_replace()</code></h2>
+<ul>
+<li><code>str_replace()</code> only replaces the first match in a string</li>
+<li><code>str_replace_all()</code> replaces <strong>all</strong> matches</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace</span>(x, <span class="st">"[Mm]"</span>, <span class="st">"b"</span>)</span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(x, <span class="st">"[Mm]"</span>, <span class="st">"b"</span>)</span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_replace_all</span>(x, <span class="st">"[a-z]"</span>, <span class="st">"*"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="brief-summary" class="slide level2">
+<h2>Brief Summary</h2>
+<ul>
+<li><code>str_detect()</code> <span class="math inline">\(\implies\)</span> logical vector</li>
+<li><code>str_remove()</code> / <code>str_remove_all()</code> <span class="math inline">\(\implies\)</span> remove matching patterns</li>
+<li><code>str_extract()</code> <span class="math inline">\(\implies\)</span> extract matching patterns</li>
+<li><code>str_replace()</code> / <code>str_replace_all()</code> <span class="math inline">\(\implies\)</span> modify a character vector</li>
+</ul>
+</section>
+<section id="brief-summary-1" class="slide level2 slide-only unlisted">
+<h2>Brief Summary</h2>
+<ul>
+<li>All <code>regex</code> based operations</li>
+<li>Can all be piped</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"MAle"</span>, <span class="st">"Female"</span>) <span class="sc">|&gt;</span> <span class="fu">str_extract</span>(<span class="st">"^[MF]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li><em>Regular Expressions</em> are very powerful</li>
+<li>Horrible to read</li>
+<li>Exist in all languages <span class="math inline">\(\implies\)</span> not specific to R</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="additional-functions" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://stringr.tidyverse.org/logo.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="75% 30%">
+<h1>Additional Functions</h1>
+
+</section>
+<section id="more-helpful-functions" class="slide level2">
+<h2>More Helpful Functions</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_count</span>(x, <span class="st">"[Mm]"</span>)</span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_length</span>(x)</span>
+<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_lower</span>(x)</span>
+<span id="cb26-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_upper</span>(x)</span>
+<span id="cb26-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_split_fixed</span>(x, <span class="at">pattern =</span> <span class="st">" "</span>, <span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb26-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_wrap</span>(x, <span class="at">width =</span> <span class="dv">8</span>)</span>
+<span id="cb26-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_starts</span>(x, <span class="st">"Hi"</span>)</span>
+<span id="cb26-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_ends</span>(x, <span class="st">"[rt]"</span>)</span>
+<span id="cb26-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_flatten</span>(x, <span class="at">collapse =</span> <span class="st">"; "</span>)</span>
+<span id="cb26-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_trunc</span>(x, <span class="at">width =</span> <span class="dv">7</span>)</span>
+<span id="cb26-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_to_title</span>(<span class="st">"a bad example"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="more-helpful-functions-1" class="slide level2 slide-only unlisted">
+<h2>More Helpful Functions</h2>
+<ul>
+<li>Pseudo-numeric strings are also handled well</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_pad</span>(<span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"10"</span>, <span class="st">"100"</span>), <span class="at">width =</span> <span class="dv">3</span>, <span class="at">pad =</span> <span class="st">"0"</span>)</span>
+<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sort</span>(<span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"10"</span>, <span class="st">"2"</span>))</span>
+<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str_sort</span>(<span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"10"</span>, <span class="st">"2"</span>), <span class="at">numeric =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="additional-tools-and-tricks" class="slide level2">
+<h2>Additional Tools and Tricks</h2>
+<ul>
+<li>The function <code>paste()</code> is a very useful one
+<ul>
+<li>The default separator is <code>" "</code></li>
+<li><code>paste0()</code> has the default separator as <code>""</code></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(x, <span class="st">"How are you?"</span>)</span>
+<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(x, <span class="st">"How are you?"</span>, <span class="at">sep =</span> <span class="st">". "</span>)</span>
+<span id="cb28-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(x, <span class="st">"!"</span>)</span>
+<span id="cb28-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(x, <span class="at">collapse =</span> <span class="st">"! "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="additional-tools-and-tricks-1" class="slide level2 slide-only unlisted">
+<h2>Additional Tools and Tricks</h2>
+<ul>
+<li>The package <code>glue</code> has revolutionised text manipulation
+<ul>
+<li>We can pass R objects or function calls to the middle of a text string</li>
+<li>We do need to be careful with quotation marks here</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glue</span>(<span class="st">"When they answered, I said '{x}!'"</span>)</span>
+<span id="cb29-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glue</span>(<span class="st">"I call them {str_remove(x, 'H.+ ')}"</span>)</span>
+<span id="cb29-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glue_collapse</span>(letters, <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">last =</span> <span class="st">" &amp; "</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Output is of class <code>glue</code>
+<ul>
+<li>Coerces back to <code>character</code></li>
+<li>Plays very well with advanced <code>tidyverse</code> syntax (e.g.&nbsp;<code>rlang</code>)</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="working-with-strings" class="slide level2">
+<h2>Working With Strings</h2>
+<ul>
+<li>Is an incredibly common and important part of working with R</li>
+<li>Extract sample IDs from file names</li>
+<li>Pull key information from columns</li>
+<li>Remove prefixes/suffixes</li>
+<li>Correct data entry errors</li>
+<li>Format for pretty plotting</li>
+</ul>
+</section>
+<section id="challenges-slide-1" class="slide level2">
+<h2>Challenges: Slide 1</h2>
+<ol type="1">
+<li>Given a vector of Transcript IDs with versions, remove the version number?</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ENST00000376207.10"</span>, <span class="st">"ENST00000376199.7"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Add the ‘chr’ prefix to these chromosomes</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a>chr <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>, <span class="st">"X"</span>, <span class="st">"Y"</span>, <span class="st">"M"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>Pull the chromosome out of these cytogenetic bands</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>cyto <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Xp11.23"</span>, <span class="st">"11q2.3"</span>, <span class="st">"2p7.1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li>Change these phone numbers to start with <code>+61</code> instead of <code>0</code></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a>phones <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0499123456"</span>, <span class="st">"0498760432"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="challenges-slide-2" class="slide level2">
+<h2>Challenges: Slide 2</h2>
+<ol start="5" type="1">
+<li>Remove the suffix “.bam” from these filenames</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a>bams <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"rna_bamboo1.bam"</span>, <span class="st">"rna_rice1.bam"</span>, <span class="st">"rna_wheat1.bam"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="6" type="1">
+<li>Correct the responses to be consistent (choose the format)</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"yes"</span>, <span class="st">"No"</span>, <span class="st">"no"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="7" type="1">
+<li>Correct these recorded values to be consistently <code>M/F</code> or <code>Male/Female</code></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"male"</span>, <span class="st">"femal"</span>, <span class="st">"Female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section>
+<section>
+<section id="factors" class="title-slide slide level1 center" data-background-color="#3c3c44" data-background-image="https://forcats.tidyverse.org/logo.png" data-background-size="40%" data-background-opacity="0.5" data-background-position="75% 30%">
+<h1>Factors</h1>
+
+</section>
+<section id="factors-1" class="slide level2">
+<h2>Factors</h2>
+<p>A common data type in statistics is a <em>categorical variable</em> (i.e.&nbsp;a <code>factor</code>)</p>
+<ul>
+<li>Can appear to be a <code>character</code> vector/column
+<ul>
+<li>Can easily trip an unsuspecting data scientist up</li>
+</ul></li>
+<li>Data will be a set of common groups/categories</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="" aria-hidden="true" tabindex="-1"></a>pet_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dog"</span>, <span class="st">"Dog"</span>, <span class="st">"Cat"</span>, <span class="st">"Dog"</span>, <span class="st">"Bird"</span>, <span class="st">"Bird"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>This is a <code>character</code> vector</li>
+</ul>
+</section>
+<section id="factors-2" class="slide level2 slide-only unlisted">
+<h2>Factors</h2>
+<ul>
+<li>We can simply coerce this to a vector of factors</li>
+<li>Categories will automatically be assigned alphabetically using <code>as.factor()</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="" aria-hidden="true" tabindex="-1"></a>pet_factors <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(pet_vec)</span>
+<span id="cb38-2"><a href="" aria-hidden="true" tabindex="-1"></a>pet_factors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can manually set these categories as <code>levels</code> using <code>factor()</code></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a>pet_factors <span class="ot">&lt;-</span> <span class="fu">factor</span>(pet_vec, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Dog"</span>, <span class="st">"Cat"</span>, <span class="st">"Bird"</span>))</span>
+<span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a>pet_factors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="factors-3" class="slide level2 slide-only unlisted">
+<h2>Factors</h2>
+<ul>
+<li>These are actually stored as integers</li>
+<li>Each integer corresponds to a <code>level</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pet_factors)</span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">as.integer</span>(pet_factors)</span>
+<span id="cb40-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(pet_factors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+<section id="the-package-forcats" class="slide level2">
+<h2>The package <code>forcats</code></h2>
+<ul>
+<li><code>forcats</code> is a part of the core <code>tidyverse</code>
+<ul>
+<li>Specifically for wrangling <code>factors</code></li>
+<li>Also plays very nicely with <code>stringr</code></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>as.factor()</code> and <code>factor(levels = ...)</code> are <code>base</code> functions</li>
+<li>Most <code>forcats</code> functions start with <code>fct_</code> or use <code>_</code></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><code>as_factor()</code> parallels <code>as.factor()</code>
+<ul>
+<li>But uses the order of appearance, not alpha-numeric sorting</li>
+</ul></li>
+<li><code>fct()</code> replicates <code>factor()</code> with stricter error handling</li>
+</ul>
+</div>
+</section>
+<section id="some-handy-tricks" class="slide level2">
+<h2>Some Handy Tricks</h2>
+<ul>
+<li><code>fct_inorder()</code> sets categories in the order they appear
+<ul>
+<li>Sort your <code>data.frame</code> then apply <code>fct_inorder()</code> for nice structured plots</li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fct_inorder</span>(pet_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li><code>fct_infreq()</code> sets categories by their frequency</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fct_infreq</span>(pet_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="some-handy-tricks-1" class="slide level2 slide-only unlisted">
+<h2>Some Handy Tricks</h2>
+<ul>
+<li>Collapse categories with fewer than <code>n</code> entries</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fct_lump_min</span>(pet_vec, <span class="at">min =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>Collapse categories with fewer than <code>p</code> entries</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fct_lump_prop</span>(pet_vec, <span class="at">prop =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Reverse the order (will automatically coerce to a factor)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fct_rev</span>(pet_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="some-handy-tricks-2" class="slide level2 slide-only unlisted">
+<h2>Some Handy Tricks</h2>
+<ul>
+<li>Relabelling factors can take advantage of <code>stringr</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>pet_vec <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_factor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fct_relabel</span>(<span class="at">.fun =</span> str_to_lower)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<ul>
+<li>We’ll learn more about tailoring the functions (i.e.&nbsp;inline functions) soon</li>
+</ul>
+</div>
+</section>
+<section id="some-handy-tricks-3" class="slide level2 slide-only unlisted">
+<h2>Some Handy Tricks</h2>
+<ul>
+<li>We can combine multiple factors using <code>fct_cross()</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a>sz <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"big"</span>, <span class="st">"small"</span>, <span class="st">"small"</span>, <span class="st">"big"</span>, <span class="st">"small"</span>, <span class="st">"tiny"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">factor</span>(<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"tiny"</span>, <span class="st">"small"</span>, <span class="st">"big"</span>))</span>
+<span id="cb48-3"><a href="" aria-hidden="true" tabindex="-1"></a>pet_vec <span class="sc">|&gt;</span></span>
+<span id="cb48-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_factor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb48-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fct_cross</span>(sz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="assets/bodl_logo_white_background.jpg" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="text_slides_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="text_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="text_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="text_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="text_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="text_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="text_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="text_slides_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="text_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="text_slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    <script type="text/javascript">
+      Reveal.on('ready', event => {
+        if (event.indexh === 0) {
+          document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+        }
+      });
+      Reveal.addEventListener('slidechanged', (event) => {
+        if (event.indexh === 0) {
+          Reveal.configure({ slideNumber: null });
+          document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+        }
+        if (event.indexh === 1) {
+          Reveal.configure({ slideNumber: 'c' });
+          document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+        }
+      });
+    </script>
+    
+
+</body></html>

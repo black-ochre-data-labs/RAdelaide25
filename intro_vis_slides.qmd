@@ -1,0 +1,1243 @@
+---
+title: "Introductory Visualisation"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+    self-contained: true
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: intro_vis.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2  
+    self-contained: true
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Visualisation in R
+
+## Start a New R Script
+
+- Call the new script: `IntroVisualisation.R`
+- Load our favourite packages at the top of the script
+
+```{r}
+library(palmerpenguins)
+library(ggplot2)
+library(dplyr)
+```
+
+
+## Base Plotting in R
+
+- `R` comes with some very powerful plotting capabilities
+    + Provided in the base package `graphics`
+    + Always loaded with every session
+- Examples are often extremely helpful
+- People used happily for decades
+    + The release of `ggplot2` changed everything
+- Let's quickly explore base plotting before moving to the good stuff
+
+## Base Plotting In R {.slide-only .unlisted}
+
+- Simple plots are usually easy
+    + Complex figures can get really messy
+- Using the `cars` dataset
+    + `speed` (mph)
+    + `dist` (ft) each car takes to stop
+    
+```{r}
+#| fig-show: hide
+plot(cars)
+```
+
+## Base Plotting In R {.slide-only .unlisted}
+
+- The first two columns were automatically placed on the x & y axis
+- We could set values for x & y manually
+    + Switching back to the penguins here
+- Automatically decided to plot using points
+
+```{r}
+#| fig-show: hide
+## Plot calling individual columns from penguins using `$`
+plot(x = penguins$bill_depth_mm, y = penguins$bill_length_mm)
+```
+
+## Base Plotting In R {.slide-only .unlisted}
+
+- The function `boxplot()` can also create simple figures easily
+- For categorical variables (i.e. factors) we can use the formula notation
+    + `y ~ x` $\implies$ `y` *depends on* `x`
+
+```{r}
+#| fig-show: hide
+## Make a simple boxplot showing the weights by species
+boxplot(body_mass_g ~ species, data = penguins)
+```
+
+::: {.fragment}
+
+- The dependent variable will always appear on the y-axis
+- The predictor will always appear on the x-axis
+
+:::
+
+## Base Plotting In R {.slide-only .unlisted}
+
+- We can also use combinations of predictor variables
+
+```{r}
+#| fig-show: hide
+## Separate by species and sex
+boxplot(body_mass_g ~ sex + species, data = penguins)
+```
+
+
+
+## Base Plotting In R {.slide-only .unlisted}
+
+- Histograms can be produced on an individual column
+    + The number of breaks can be set manually
+- The default is pretty useful here
+    + Generally simple figures without complexity
+
+```{r}
+#| fig-show: hide
+hist(penguins$body_mass_g, breaks = 20, xlab = "Body Mass (g)")
+```
+
+## Base Plotting In R {.slide-only .unlisted}
+
+- Large datasets can be quickly explored using `pairs()`
+- Shows all pairwise combinations of columns
+    + Categorical columns can be less informative
+    
+```{r}
+#| fig-show: hide
+pairs(penguins)
+```
+
+::: {.notes}
+- When we called plot on cars, this was actually called under the hood
+- Only two columns to show in a pairwise manner
+:::
+
+
+# Visualisation With `ggplot2` {background-color="#3d3d40" background-image=https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/ggplot2.png background-size="25%" background-opacity="0.4" background-position='80% 20%'}
+
+```{r load-pigs, echo=FALSE}
+library(ggplot2)
+```
+
+## The Grammar of Graphics
+
+- `ggplot2` has become the industry standard for visualisation [@wickham2016-gg]
+- Core & essential part of the `tidyverse`
+- Developed by Hadley Wickham as his PhD thesis
+- An implementation of *The Grammar of Graphics* [@Wilkinson2005-ku]
+    + Breaks visualisation into *layers*
+
+
+## The Grammar of Graphics {.slide-only .unlisted}
+
+:::: {.columns}
+
+::: {.column}
+
+![](assets/gg_cover.png){.absolute left=0 width="375"}
+
+:::
+
+::: {.column}
+
+![](https://r.qcbs.ca/workshop03/book-en/images/gglayers.png){.absolute right=0 top=150 width="630"}
+
+::: {style="font-size: 60%;"}
+Taken from https://r.qcbs.ca/workshop03/book-en/grammar-of-graphics-gg-basics.html
+:::
+
+:::
+
+::::
+
+## The Grammar of Graphics  {.slide-only .unlisted}
+
+::: {style="font-size: 85%;"}
+
+Everything is added in layers
+
+:::: {.columns}
+
+
+::: {.column width="52%"}
+
+
+
+::: {.fragment}
+
+1. Data
+    + Usually a data.frame (or `tibble`)
+    + Can be *piped in* $\implies$ modify *on the fly*
+    
+:::
+    
+::: {.fragment}
+
+2. Aesthetics
+    + `x` & `y` co-ordinates 
+    + `colour`, `fill`, `shape`, `size`, `linetype`
+    + grouping & transparency (`alpha`)
+    
+:::
+
+::: {.fragment}
+
+3. Geometric Objects
+    + points, lines, boxplot, histogram, bars etc
+    
+:::
+
+:::
+
+
+::: {.column width="48%"}
+
+
+::: {.fragment}
+    
+4. Facets: Panels within plots
+
+:::
+
+::: {.fragment}
+    
+5. Statistics: Computed summaries
+
+:::
+
+::: {.fragment}
+    
+6. Coordinates
+    + polar, map, cartesian etc
+    + defaults to cartesian
+
+:::
+
+::: {.fragment}
+    
+7. Themes: overall layout
+    + default themes automatically applied
+
+:::
+
+:::
+
+:::
+
+::::
+
+
+
+## An Initial Example
+
+- Using the example dataset `cars`
+- Two columns:
+    + `speed` (mph)
+    + `distance` each car takes to stop
+- We can make a classic `x` vs `y` plot using points
+
+::: {.fragment}
+
+- The *predictor* (x) would be `speed`
+- The *response* (y) would be `distance`
+:::
+
+## An Initial Example {.slide-only .unlisted}
+
+- We may as well start by piping our data in
+
+```{r}
+#| fig-show: hide
+cars |>
+  ggplot(aes(x = speed, y = dist))
+```
+
+::: {.fragment}
+
+- We have defined the plotting *aesthetics*
+    + `x` & `y`
+    + Don't need to name if passing *in order*
+- Axis limits match the data
+
+:::
+::: {.fragment}
+- No geometry has been specified $\implies$ nothing was drawn
+:::
+
+::: {.notes}
+- The package is `ggplot2` but the function is `ggplot()`
+:::
+
+## An Initial Example {.slide-only .unlisted}
+
+- To add points, we add `geom_point()` *after calling* `ggplot()`
+- Adding `+` after `ggplot()` says "But wait! There's more..."
+
+```{r}
+#| fig-show: hide
+cars |>
+  ggplot(aes(x = speed, y = dist)) + 
+  geom_point() 
+```
+
+::: {.fragment}
+
+- When `ggplot2` was created neither pipe had been developed yet
+
+:::
+
+## An Initial Example {.slide-only .unlisted}
+
+- To add points, we add `geom_point()` *after calling* `ggplot()`
+    + Adding `+` after `ggplot()` says "But wait! There's more..."
+
+```{r}
+#| fig-show: hide
+cars |> # Layer 1: Data
+  ggplot(aes(x = speed, y = dist)) + # Layer 2: Aesthetics
+  geom_point() # Layer 3: Geometry
+```
+
+::: {.fragment}
+
+- By default:
+    + Layer 4: No facets
+    + Layer 5: No summary statistics
+    + Layer 6: Cartesian co-ordinate system
+    + Layer 7: Crappy theme with grey background &#129326;
+
+:::
+
+::: {.notes}
+Axis limits are automatically determined
+:::
+
+## An Initial Example {.slide-only .unlisted}
+
+- A simple summary statistic to add might be `stat_smooth()`
+- Automatically chooses the smoother
+    + Usually a loess curve or regression line
+    + The standard error region is shown by default
+
+
+```{r}
+#| fig-show: hide
+cars |> # Layer 1: Data
+  ggplot(aes(x = speed, y = dist)) + # Layer 2: Aesthetics
+  geom_point() + # Layer 3: Geometry
+  stat_smooth() # Layer 5: Statistics
+```
+
+
+## Visualising Our Penguins
+
+<br>
+What visualisations could we produce to inspect `penguins`?
+
+::: {.notes}
+- Boxplots & Points
+:::
+
+## Creating Our First Plot
+
+```{r}
+#| fig-show: hide
+## Compare the two bill measurements
+penguins |> # Layer 1: Data
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm)) + # Layer 2: Aesthetics
+  geom_point()  # Layer 3: Geometry
+```
+
+## Creating Our First Plot {.slide-only .unlisted}
+
+- There seem to be groups. Are these based on species? $\implies$ Add colour
+
+```{r}
+#| fig-show: hide
+## Compare the two bill measurements
+penguins |> 
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point()
+```
+
+## Creating Our First Plot {.slide-only .unlisted}
+
+- We can also add regression lines
+    + We'll add equations later
+    + Try without the `se = FALSE` and see what happens
+
+```{r}
+#| fig-show: hide
+## Add regression lines as a new geom
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) # Layer 5: Statistics
+```
+
+
+## Understanding Aesthetics
+
+- Setting the colour in the call to `ggplot()` $\implies$ all layers will use this
+- If we shift `colour = species` to `geom_point()` $\implies$ ???
+
+```{r}
+#| fig-show: hide
+## Only use colour for the points
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(aes(colour = species)) +
+  stat_smooth(method = "lm", se = FALSE)
+```
+
+## Understanding Aesthetics {.slide-only .unlisted}
+
+- We could set this again if we choose
+
+```{r}
+#| fig-show: hide
+## Set colour for the points and regression lines separately
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(aes(colour = species)) +
+  stat_smooth(aes(colour = species), method = "lm", se = FALSE)
+```
+
+- It's clunky here, but can give fine control for complex plots
+
+## Using Facets
+
+- Alternatively, we could plot each species in it's own panel (or facet)
+- Using `~` notation to say all facets *depend on* `species`
+
+```{r}
+#| fig-show: hide
+## Plot each species in a separate panel
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(aes(colour = species)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~species) # Layer 4: Facets
+```
+
+
+## Using Facets {.slide-only .unlisted}
+
+- We can allow x and y axes to scale separately for each panel
+    + Not always a helpful strategy
+
+```{r}
+#| fig-show: hide
+## Plot each species in a separate panel, allowing axes to be scaled freely
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm)) +
+  geom_point(aes(colour = species)) +
+  stat_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~species, scales = "free") 
+```
+
+# Scales {background-color="#3d3d40"}
+
+## Setting Scales
+
+- By default, `ggplot2` will detect the most appropriate scale
+   + Has applied `scale_x_continuous()` and `scale_y_continuous()`
+   
+```{r}
+#| fig-show: hide
+# Explicitly set the scales. This will appear identical
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_x_continuous() +
+  scale_y_continuous()
+```
+
+::: {.fragment}
+
+- Multiple presets are available:
+    + `scale_x_log10()`, `scale_x_sqrt()`, `scale_x_reverse()`
+    + Also available for `y`
+
+:::    
+    
+## Setting Scales {.slide-only .unlisted}
+
+- For aesthetics like colour, we often want to tailor these
+    + Default is `scale_colour_discrete()` [(Meh...)]{.fragment}
+- Many defaults exist
+    + `scale_colour_brewer()`, `scale_colour_viridis_d()`
+
+```{r}
+#| fig-show: hide
+## Check the default palette for scale_colour_brewer
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_colour_brewer()
+```
+
+::: {.fragment}
+
+- Default palettes can be good sometimes
+    + To show options for `scale_colour_brewer()` $\implies$ `RColorBrewer::display.brewer.all()`
+
+:::
+
+## Setting Scales {.slide-only .unlisted}
+
+- I often use Set1, but try a few others
+- `scale_colour_viridis_d()` will give a colourblind-friendly palette
+    + Other palettes are provided by other packages
+
+```{r}
+#| fig-show: hide
+## Set the palette for scale_colour_brewer to be "Set1" or anything else
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_colour_brewer(palette = "Set1")
+```
+
+## Setting Scales {.slide-only .unlisted}
+
+- Standard 7-colour palette adapted for colourblindness is included in `ggthemes` [@Wong2011-xb]
+    + Many alternatives exist
+    + This one is written by Americans $\implies$ weird spelling of colourblind
+
+```{r}
+#| fig-show: hide
+library(ggthemes)
+## Use the colourblind friendly palette provided by ggthemes
+penguins |>
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_colour_colorblind()
+```
+
+::: {.notes}
+- The colourblind-friendly status can be checked using RGB Hex codes at https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40
+:::
+
+## What Else Can We Do?
+
+- What else might be informative?
+
+::: {.fragment}
+
+- Can we separate by island or sex?
+    + `sex` will have missing values
+    + Let's set the shape of the points
+    
+:::
+
+::: {.fragment}
+
+```{r}
+#| fig-show: hide
+## Try setting different point shapes based on the recorded sex
+penguins |>
+  filter(!is.na(sex)) |> # Remove the penguins with unrecorded sex
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point(aes(shape = sex)) + # Now we have a layer-specific aesthetic 
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_colour_colorblind()
+```
+
+:::
+
+## Modifying Points
+
+- We can change the size of these outside the aesthetic
+    + Fixed values only $\implies$ will **not** respond to change in data
+
+```{r}
+#| fig-show: hide
+## Try setting different point shapes based on the recorded sex
+penguins |>
+  filter(!is.na(sex)) |> # Remove the penguins with unrecorded sex
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point(aes(shape = sex), size = 3) + # Change the point size
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_colour_colorblind()
+```
+
+## Modifying Points {.slide-only .unlisted}
+
+- Points can be set manually using `scale_shape_manual()`
+    + Also `scale_colour_manual()`
+    
+```{r}
+#| fig-show: hide
+## Try setting different point shapes based on the recorded sex
+penguins |>
+  filter(!is.na(sex)) |> # Remove the penguins with unrecorded sex
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point(aes(shape = sex), size = 3) + 
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_colour_colorblind() +
+  scale_shape_manual(values = c(19, 1)) ## Manually choose the point shapes
+```
+
+## Modifying Points {.slide-only .unlisted}
+
+- How did I know to choose those two values?
+- Why do numbers represent different shapes
+
+::: {.fragment}
+
+- Enter `?pch` and scroll down a little
+    + 21-25 have both a colour (outline) and fill capability
+
+![](assets/pch.png){width="800px"}
+:::
+
+## Finishing Our Figure
+
+- The next step in making our figure look brilliant
+    + Axis & Scale labels
+    
+```{r}
+#| fig-show: hide
+## Try setting different point shapes based on the recorded sex
+penguins |>
+  filter(!is.na(sex)) |> # Remove the penguins with unrecorded sex
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point(aes(shape = sex), size = 3) + 
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_colour_colorblind() +
+  scale_shape_manual(values = c(19, 1)) +
+  labs(
+    # Manually add labels
+    x = "Bill Depth (mm)", y = "Bill Length (mm)", 
+    colour = "Species", shape = "Sex"
+  ) 
+```
+
+::: {.notes}
+- Note that this fundamentally breaks the automatic association between our data & figure
+- We can type literally anything for labels which can leave to door open to errors
+:::
+
+## Finishing Our Figure {.slide-only .unlisted}
+
+- The final layer in the Grammar of Graphics is the *Theme*
+- Controls the overall appearance not controlled elsewhere
+- The code can get long so let's save that figure as `p`
+    + Then I can modify on a single slide
+
+```{r}
+#| fig-show: hide
+## Save the figure for exploring theme attributes
+p <- penguins |>
+  filter(!is.na(sex)) |> # Remove the penguins with unrecorded sex
+  ggplot(aes(x = bill_depth_mm, y = bill_length_mm, colour = species)) +
+  geom_point(aes(shape = sex), size = 3) + 
+  stat_smooth(method = "lm", se = FALSE) +
+  scale_colour_colorblind() +
+  scale_shape_manual(values = c(19, 1)) +
+  labs(
+    x = "Bill Depth (mm)", y = "Bill Length (mm)", 
+    colour = "Species", shape = "Sex"
+  ) 
+```
+
+# Themes {background-color="#3d3d40"}
+
+## Using Themes
+
+- A default theme is applied: `theme_grey()`
+- I prefer `theme_bw()`
+    + Removes the grey background
+    + Gets most of the job done
+
+```{r}
+#| fig-show: hide
+p + theme_bw()
+```
+
+## Using Themes {.slide-only .unlisted}
+
+- Additional modifications:
+    + Setting the base font size for all annotations
+    + Can also set colour, alignment, font face, font family etc
+    + Vital for publishing figures
+
+```{r}
+#| fig-show: hide
+p + theme_bw() +
+  theme(text = element_text(size = 14, ))
+```
+
+
+## Using Themes {.slide-only .unlisted}
+
+- A key application is the placement of legends
+
+```{r}
+#| fig-show: hide
+p + theme_bw() +
+  theme(legend.position = "bottom")
+```
+
+## Using Themes {.slide-only .unlisted}
+
+- Legend can be placed inside using three steps
+    + Set `legend.position = "inside"`
+    + Set the position you want the legend
+    + Set which part of the legend aligns at those co-ordinates
+- Can be extremely finicky
+
+```{r}
+#| fig-show: hide
+p + theme_bw() +
+  theme(
+    legend.position = "inside", # Ensure the legend is inside the plotting region
+    legend.position.inside = c(0, 0), # Anchor to the bottom left
+    legend.justification.inside = c(0, 0) # Set the alignment to be bottom left
+  )
+```
+
+::: {.notes}
+- By default the legend will align the centre at the given co-ordinates
+:::
+
+## Using Themes {.slide-only .unlisted}
+
+- Any individual text element of a figure can be modified using `element_text()`
+
+```{r}
+#| fig-show: hide
+p + theme_bw() +
+  theme(
+    ## A slightly exaggerated modification of axis titles
+    axis.title = element_text(colour = "darkred", size = 16, face = "bold"),
+  )
+```
+
+## Using Themes {.slide-only .unlisted}
+
+::: {style="font-size: 85%;"}
+
+- Looking at the help page `?theme` $\implies$ 4 main types of 'element'
+
+:::: {.columns}
+
+::: {.column} 
+1. `element_text()`
+    + Control all text elements (axes, titles etc)
+    + Doesn't impact labels within figures
+    
+::: {.fragment}
+2. `element_line()`
+    + Control all lines (axes, gridlines, borders etc)
+    + Can set colour, size, linetype, linewidth
+:::
+
+:::
+
+::: {.column}
+
+::: {.fragment}
+3. `element_rect()`
+    + Control all rectangles (background, legends, panels etc)
+    + Can set colour, fill, size, linetype, linewidth
+:::
+
+::: {.fragment}
+4. `element_blank()`
+    + Hides an element
+:::
+
+:::
+
+::::
+
+::: {.fragment}
+- Other element types are a bit more nuanced
+:::
+
+:::
+
+## Using Themes {.slide-only .unlisted}
+
+```{r}
+#| fig-show: hide
+# Make the most horrible figure possible
+p + theme_bw() +
+  theme(
+    ## A slightly exaggerated modification of axis titles
+    axis.title = element_text(colour = "darkred", size = 16, face = "bold"),
+    ## Make axes thick, blue lines. Ewww
+    axis.line = element_line(colour = "darkblue", linewidth = 2),
+    ## Hide the underlying grid
+    panel.grid = element_blank(),
+    ## Make the area background a light grey
+    plot.background = element_rect(fill = "grey70")
+  )
+```
+
+## Using Themes {.slide-only .unlisted}
+
+- Plot titles align left by default
+
+```{r}
+p + theme_bw() + 
+  ggtitle("Penguin Bill Measurements")
+```
+
+::: {.fragment}
+
+- We can use `theme()` to align in the centre
+    + `hjust` is the horizontal adjustment
+
+```{r}
+p + theme_bw() + 
+  ggtitle("Penguin Bill Measurements") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+:::
+
+# Different Plot Types{background-color="#3d3d40"}
+
+## Different Plot Types
+
+::: {style="font-size: 85%;"}
+
+:::: {.columns}
+
+::: {.column}
+
+### Classic BarPlots
+
+- `geom_bar()` & `geom_col()`
+- `geom_errorbar()` & `geom_errorbarh()`
+
+::: {.fragment}
+
+### Classic Density plots
+
+- `geom_boxplot()` & `geom_violin()`
+- `geom_density()` & `geom_histogram()`
+    
+:::
+:::
+
+::: {.column}
+
+::: {.fragment}
+
+### Line-based Geometry
+
+- `geom_line()`, `geom_segment()`
+- `geom_abline()`, `geom_hline()` & `geom_vline()`
+
+:::
+
+::: {.fragment}
+
+### Heatmaps and Grids
+
+- `geom_raster()`, `geom_tile()` & `geom_rect()`
+
+:::
+:::
+
+::::
+
+:::
+
+## Creating A Boxplot
+
+- A starting point might be to choose `sex` as the predictor
+- `body_mass_g` may be a response variable
+
+```{r}
+#| fig-show: hide
+penguins |> 
+  ggplot(aes(island, body_mass_g)) +
+  geom_boxplot()
+```
+
+
+
+## Creating Our Boxplot {.slide-only .unlisted}
+
+- To incorporate the sex $\implies$ add a fill aesthetic
+    + `colour` is generally applied to shape outlines
+
+```{r}
+#| fig-show: hide
+## Fill the boxes by sex
+penguins |> 
+  ggplot(aes(island, body_mass_g, fill = sex)) +
+  geom_boxplot()
+```
+
+::: {.fragment}
+
+- `ggplot2` will always separate multiple values/category
+
+:::
+
+## Creating Our Boxplot {.slide-only .unlisted}
+
+
+```{r}
+#| fig-show: hide
+## Remove the penguins with no recorded sex
+penguins |> 
+  filter(!is.na(sex)) |>
+  ggplot(aes(island, body_mass_g, fill = sex)) +
+  geom_boxplot()
+```
+
+
+
+## Creating Our Boxplot {.slide-only .unlisted}
+
+- We could also separate by island using `facet_wrap()`
+
+```{r}
+#| fig-show: hide
+penguins |> 
+  filter(!is.na(sex)) |>
+  ggplot(aes(island, body_mass_g, fill = sex)) +
+  geom_boxplot() +
+  facet_wrap(~species, scales = "free_x")
+```
+
+
+## Creating Our Boxplot {.slide-only .unlisted}
+
+- A less-intuitive alternative (`facet_grid()`) will allow for unequal-sized facets
+
+
+```{r}
+#| fig-show: hide
+penguins |> 
+  filter(!is.na(sex)) |>
+  ggplot(aes(island, body_mass_g, fill = sex)) +
+  geom_boxplot() +
+  facet_grid(~species, scales = "free_x", space = "free_x")
+```
+
+## Overlaying Geoms
+
+- `geom_jitter()` will draw points but with noise in either direction
+- The `alpha` parameter will make the points partially transparent
+
+```{r}
+#| fig-show: hide
+penguins |> 
+  filter(!is.na(sex)) |>
+  ggplot(aes(sex, body_mass_g, fill = sex)) +
+  geom_boxplot(outliers = FALSE) + # Hide any outliers from the boxes
+  geom_jitter(width = 0.1, alpha = 0.5) + # Outliers will be shown here
+  facet_wrap(~species + island, nrow = 1)
+```
+
+## Trying a Violin Plot
+
+- Violin plots are similar to boxplots
+    + can estimate distibutions beyond the points (`trim = FALSE`)
+
+```{r}
+#| fig-show: hide
+penguins |> 
+  filter(!is.na(sex)) |>
+  ggplot(aes(sex, body_mass_g, fill = sex)) +
+  geom_violin(draw_quantiles = 0.5, trim = FALSE) +
+  geom_jitter(width = 0.1, alpha = 0.5) +
+  facet_wrap(~species + island, nrow = 1)
+```
+
+## Creating A Histogram
+
+- The default histogram in `ggplot2` is a bit ugly
+
+```{r}
+#| fig-show: hide
+penguins |>
+  filter(!is.na(sex)) |>
+  ggplot(aes(body_mass_g)) +
+  geom_histogram()
+```
+
+::: {.fragment}
+
+- This can be easily improved by setting `fill = "grey70"` and `colour = "black"`
+- `binwidth` is automatically set $implies$ try `binwidth = 100`
+:::
+
+## Creating A Histogram {.slide-only .unlisted}
+
+```{r}
+#| fig-show: hide
+## Now apply facet_grid to show by sex & species
+penguins |>
+  filter(!is.na(sex)) |>
+  ggplot(aes(body_mass_g)) +
+  geom_histogram(fill = "grey70", colour = "black", binwidth = 100) +
+  facet_grid(species ~ sex) +
+  theme_bw()
+```
+
+
+## Creating A Histogram {.slide-only .unlisted}
+
+- The above shows counts $\implies$ can also show frequency (i.e. density)
+- Unfortunately, the code is ugly but does make sense
+    + (The 'stat' is counting, so after counting convert to a frequency)
+
+```{r}
+#| fig-show: hide
+## Repeat but showing bars as frequencies
+penguins |>
+  filter(!is.na(sex)) |>
+  ggplot(aes(body_mass_g)) +
+  geom_histogram(
+    aes(y = after_stat(density)),
+    fill = "grey70", colour = "black", binwidth = 100
+  ) +
+  facet_grid(species ~ sex) +
+  theme_bw()
+```
+
+::: {.notes}
+- The first plot is informative if we have roughly the same number in each panel
+- The second option can be more informative for unbalanced data
+:::
+
+
+## Creating a Summary Barplot
+
+- Bar plots are pretty common in many fields of research
+- First we'll create a summary table with mean and sd
+    + Use the mean for bars
+    + sd for error bars
+
+```{r}
+#| output-location: column
+penguins |>
+  filter(!is.na(sex)) |>
+  summarise(
+    weight_mn = mean(body_mass_g, na.rm = TRUE),
+    weight_sd = sd(body_mass_g, na.rm = TRUE),
+    .by = c(species, sex)
+  ) 
+```
+
+## Creating a Summary Barplot {.slide-only .unlisted}
+
+- Now we can use `geom_col()`
+
+```{r}
+#| fig-show: hide
+## Begin creating a bar plot, with separate panels for each species
+penguins |>
+  filter(!is.na(sex)) |>
+  summarise(
+    weight_mn = mean(body_mass_g, na.rm = TRUE),
+    weight_sd = sd(body_mass_g, na.rm = TRUE),
+    .by = c(species, sex)
+  ) |>
+  ggplot(aes(sex, weight_mn, fill = sex)) +
+  geom_col() +
+  facet_wrap(~species, nrow = 1) 
+```
+
+
+
+## Creating a Summary Barplot {.slide-only .unlisted}
+
+```{r}
+#| fig-show: hide
+penguins |>
+  filter(!is.na(sex)) |>
+  summarise(
+    weight_mn = mean(body_mass_g, na.rm = TRUE),
+    weight_sd = sd(body_mass_g, na.rm = TRUE),
+    .by = c(species, sex)
+  ) |>
+  ggplot(aes(sex, weight_mn, fill = sex)) +
+  geom_col() +
+  ## Now add errorbars adding/subtracting from the mean 'on the fly'
+  geom_errorbar(
+    aes(ymin = weight_mn - weight_sd, ymax = weight_mn + weight_sd),
+    width = 0.2 # Set the width of tails on the error bars
+  ) +
+  facet_wrap(~species, nrow = 1) +
+  ## Some extra code to make the plot look great
+  scale_y_continuous(expand = expansion(c(0, 0.05))) +
+  scale_fill_brewer(palette = "Set1") +
+  theme_bw()
+```
+
+## Adding Labels To Points
+
+- The penguins dataset isn't well suited to adding labels
+    + Let's make a toy dataset
+
+```{r}
+tibble(
+  x = 1:4, y = x^2, label = c("a", "b", "c", "d")
+)
+```
+
+## Adding Labels To Points {.slide-only .unlisted}
+
+- We can easily plot points, but what about labels?
+
+```{r}
+#| fig-show: hide
+tibble(
+  x = 1:4, y = x^2, label = c("a", "b", "c", "d")
+) |> 
+  ggplot(aes(x, y)) +
+  geom_point()
+```
+
+## Adding Labels To Points {.slide-only .unlisted}
+
+- Using `geom_text()` will overlay labels exactly on the points
+
+```{r}
+#| fig-show: hide
+tibble(
+  x = 1:4, y = x^2, label = c("a", "b", "c", "d")
+) |> 
+  ggplot(aes(x, y)) +
+  geom_point() +
+  geom_text(aes(label = label), size = 4)
+```
+
+## Adding Labels To Points {.slide-only .unlisted}
+
+- Using `geom_text_repel()` will shift labels marginally away from the points
+
+```{r}
+#| fig-show: hide
+library(ggrepel)
+tibble(
+  x = 1:4, y = x^2, label = c("a", "b", "c", "d")
+) |> 
+  ggplot(aes(x, y)) +
+  geom_point() +
+  geom_text_repel(aes(label = label), size = 4)
+```
+
+::: {.fragment}
+- `geom_label()` and `geom_label_repel()` will add borders and fill to labels
+:::
+
+## Saving Images
+
+- The simple way is click `Export` in the `Plots` pane
+
+::: {.fragment}
+- The way to save using code is
+
+``` r
+ggsave("myplot.png", width = 7, height = 7, units = "in")
+```
+
+- This will always save the most recent plot by default
+- Output format is determined by the suffix
+- Try saving as a pdf...
+
+:::
+
+## Saving Images {.slide-only .unlisted}
+
+- I think saving using code is preferable
+- Modify an analysis or data $\implies$ saved figures will also update
+    + This saves time & ensures reproducibility
+    + Modifying font sizes etc for publication can take a while
+
+# Conclusion
+
+## Conclusion
+
+![](https://r-graphics.org/cover.jpg){width=400}
+
+A fabulous resource: https://r-graphics.org/
+
+## Challenges
+
+1. Create a barplot with error bars showing mean flipper length by species
+   + Colour (i.e. fill) however you choose
+2. Create a histogram of flipper length by species
+   + Facet by species
+3. Use boxplots to show the same (flipper length by species)
+   + Don't facet, but fill the boxes by sex
+4. Using points, compare flipper length to body mass
+    + Colour by species including a regression line
+    + Try adding `stat_ellipse()` to your plot
+
+
+## References
+

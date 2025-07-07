@@ -1,0 +1,300 @@
+---
+title: "Welcome"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-08"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    code-tools: true
+    logo: assets/bodl_logo_white_background.jpg
+    height: 720
+    width: 1280
+    sansfont: Times New Roman
+    slide-number: c
+    show-slide-number: all
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, 
+  fig.align = "center"
+)
+```
+
+
+<br><br><br>
+
+::: {.r-fit-text}
+http://blackochrelabs.au/RAdelaide25
+:::
+
+
+# Introduction {background-color="#3d3d40"}
+
+## Welcome to RAdelaide 25
+
+We wish to acknowledge the Kaurna people as the traditional custodians and owners of this beautiful country, and that the land was never ceded.
+
+::: {.fragment}
+
+We acknowledge the strong and ancient connections to country and pay our respects to Kaurna elders, past, present and emerging
+
+:::
+::: {.fragment}
+Especially in NAIDOC week, we also pay our respects to all Aboriginal Australians and acknowledge those who are with us today.
+
+:::
+
+## Who Is Black Ochre Data Labs
+
+::: {.notes}
+Formerly Telethon Kids
+:::
+
+- An Indigenous led Data Science & Bioinformatics group 
+    + Led by Prof Alex Brown 
+    + Chief Data Scientist A/Prof Jimmy Breen
+    + Based at The Kids Research Institute Australia (North Tce)
+- BODL team members are spread across Australia
+    + Majority in Adelaide or Perth
+
+. . .    
+    
+- Focus is on Genomics for Indigenous Australians $\implies$ Precision Health 
+- Help address some of the current inequities in health care
+- Also have a keen interest in training and capacity building
+
+## Who Am I? 
+
+**Stephen (Stevie) Pederson** (They/Them)
+
+- Adelaide, Kaurna Country, SA
+- Bioinformatician, Black Ochre Data Labs (2022-)
+
+::: {.fragment}
+
+- Bioinformatician, Dame Roma Mitchell Cancer Research Laboratories (2020-2022)
+- Co-ordinator, UofA Bioinformatics Hub (2014-2020)
+
+:::
+
+<!-- . . . -->
+
+<!-- - PhD (2008-2018) was a Bayesian Model for Transcript-Level Analysis -->
+<!--     + MCMC Engine written in C & R (No R Studio. No `Rcpp`) -->
+    
+
+
+## Who Am I? 
+
+::: {.notes}
+- I learned long before all the internet tutorials existed
+:::
+
+**Stephen (Stevie) Pederson** (They/Them)
+
+- R User for ~20 years $\implies$ learnt when R was difficult!
+- Senior Author of 7 Bioconductor Packages 
+    + `ngsReports`, `extraChIPs`, `motifTestR`, `transmogR`
+    + `strandCheckR`, `sSNAPPY`, `tadar`
+- Currently Co-Chair of Bioconductor Community Advisory Board
+
+
+![](https://smped.github.io/motifTestR/reference/figures/favicon.png){.absolute bottom=400 right=0 width='120px'}
+
+![](https://github.com/smped/ngsReports/blob/devel/man/figures/ngsReports.png?raw=true){.absolute bottom=300 right=90 width='120px'}
+
+![](https://github.com/smped/extraChIPs/blob/devel/man/figures/extraChIPs.png?raw=true){.absolute bottom=200 right=0 width='120px'}
+
+
+![](https://smped.github.io/transmogR/reference/figures/transmogR.png){.absolute bottom=100 right=90 width='120px'}
+
+::: {.fragment}
+
+*Made countless typos, horrible decisions and catastrophic errors*
+
+:::
+::: {.fragment}
+*I crash R at least once most weeks...*
+
+:::
+
+## Today's Tutors
+
+- Jimmy Breen, Holly Massacci & Liza Kretzschmar (Black Ochre Data Labs)
+- John Salamon & Simon Lee (SAGC)
+- Charlotte Sai (SAHMRI)
+
+## Who Are The Attendees
+
+::: {.notes}
+- We had 3 SPSS users & 2 Stata Users so please feel free to stop me and ask questions about processes yo may already be familiar with in other statistical languages
+- 5 python programmers end even some with LaTex/markdown
+- Very surprised to see someone with Perl experience. The language of old-school bioinformatics!
+:::
+
+- What are your areas of research and how are you intending to use R?
+
+::: {.incremental}
+- Who's never used R before?
+- Who's dabbled in R?
+- Some experience but aware of weaknesses
+- Who thinks they can run some sessions next year?
+- Has anyone run R scripts on an HPC?
+:::
+
+
+## Housekeeping
+
+- Toilets are back near the lifts
+- Catering will be across the lawn in Merantau
+    + Rose is in charge of all things catering!
+- Room 4.50 is considered a wet lab $\implies$ *no drinks (including water)*
+
+
+::: {.notes}
+Thanks to everyone for sending your information through regarding dietary needs and existing knowledge
+:::
+    
+## Homepage and Material
+
+::: {.notes}
+Please ask questions in the channel. 
+Tutors will be monitoring as well and can stop so we can address the question as a group
+:::
+
+- The workshop homepage is http://blackochrelabs.au/RAdelaide25
+    - Data and course material available here
+    + Will stay live *in perpetuity*
+- Links to notes available
+    + Slides are directly re-formatted as a simple webpage
+    + Slides are visible by clicking `RevealJS` below the TOC (top-right)
+- Group communication can be done through https://bioinformaticshubsa.slack.com/
+    + Join the #radelaide25 channel
+    
+
+
+## Course Aims
+
+- Provide a deep understanding of how to work with data in R
+    + Importing and Visualising Data
+    + Understanding R Data Structures
+    + Most common analytic methods and strategies
+    
+::: {.incremental}
+
+- Enable use of modern analytic approaches [$\implies$ reproducible research]{.fragment .fade-in}
+- Provide you with all the building blocks you need
+    + Not just *how* [$\implies$ a deep understanding of underlying structures]{.fragment .fade-in}
+- The more code you type the more you learn
+:::
+
+::: {.notes}
+The last point is key. 
+Please practice exactly like you're learning a new skill (driving, playing piano, speaking French etc)
+:::
+
+## Course Outline
+
+::: {.notes}
+- Day 1 may be hard & fast but please stop me & ask questions
+- Day 2 is more a "what the hell did we do yesterday" day
+- Day 3 should be a real joining the dots day
+- We'll cover about as much as is realistic in 3 days
+:::
+
+- Today we will explore spreadsheet-like data structures
+    + Will be a pretty exhausting day
+    + Basic data wrangling and visualisation
+    
+::: {.fragment}
+
+- Day 2: Developing a more careful, nuanced understanding
+    + How does R actually see data
+    + Learn the basics of statistical analysis in R
+
+:::
+::: {.fragment}
+    
+- Day 3: Bring everything together and run complete analyses 
+    + Preparing complete analytic reports with beautiful figures
+    + Analytic techniques beyond t-tests and linear regression
+
+:::
+
+## Future Courses
+
+- No true bioinformatics in this year's course $\implies$ the basics in R
+- Teaming up with Cathal King (SAGC) to present back-to-back transcriptomics workshops (September 23-24)
+    + Day1: Bulk transcriptomics
+    + Day2: Single Cell transcriptomics
+    
+::: {.incremental}
+- The bioinformaticshubsa slack workspace is the best place to stay in touch with upcoming events
+- Dr Jacqueline Rehn runs monthly drop-in sessions for new bioinformaticians
+:::
+
+## A Comment on AI
+
+- AI engines such as ChatGPT have changed the game completely
+- You can ask them to write code for you
+    + They will regularly get it wrong
+- If I ask ChatGPT to write code for me $\rightarrow$ mine is usually better[<br> and **correct**]{.fragment}
+
+. . .
+
+- Can be a helpful addition to your skill set
+    + Especially if your foundations in a language are strong
+    
+## A Comment on AI
+
+- I do use ChatGPT or Claude.ai to help me write code
+    + I ask for help in less familiar languages (e.g. C, python)
+    + I ask it to help me write documentation or comment code
+    + I often have it running as a "co-pilot"
+    + Some examples in RAdelaide25 were inspired by ideas from AI engines
+    
+::: {.fragment}
+
+- Github CoPilot is free for academic users
+    + Worth exploring but you will need a github account
+    
+:::
+    
+::: {.notes}
+- Running in Co-Pilot mode can be stupidly frustrating as it just keeps making suggestions relentlessly
+- I often asked things like "What's a great dataset for demonstrating logistic regression?"
+- Most of the tutors will have experience with AI so please chat to us in the breaks
+:::
+    

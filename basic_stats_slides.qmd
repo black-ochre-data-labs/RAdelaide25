@@ -1,0 +1,499 @@
+---
+title: "Basic Statistics in R"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-09"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: basic_stats.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2 
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Statistics in R {background-color="#3d3d40"}
+
+## Introduction
+
+```{r packages, echo=FALSE}
+library(tidyverse)
+library(pander)
+library(scales)
+theme_set(
+  theme_bw() + theme(plot.title = element_text(hjust = 0.5))
+)
+```
+
+
+- `R` has it's origins as a statistical analysis language (i.e. `S`)
+- Purpose of this session is NOT to teach statistical theory
+    - I am more of a bioinformatician than statistician
+    - I did tutor stats for 3 years
+- Perform simple analyses in R
+- Up to you to know what you're doing
+    - Or talk to your usual statisticians & collaborators
+    
+## Distributions
+
+- `R` comes with nearly every distribution
+- Standard syntax for accessing each
+
+## Distributions  {.slide-only .unlisted}
+
+| Distribution | Density   | Area Under Curve | Quantile  | Random    |
+|:------------ |:--------- |:---------------- |:--------- |:--------- |
+| Normal       | `dnorm()` | `pnorm()`        | `qnorm()` | `rnorm()` |
+| T            | `dt()`    | `pt()`           | `qt()`    | `rt()`    |
+| Uniform      | `dunif()` | `punif()`        | `qunif()` | `runif()` |
+| Exponential  | `dexp()`  | `pexp()`         | `qexp()`  | `rexp()`  |
+| $\chi^2$     | `dchisq()` | `pchisq()`      | `qchisq()` | `rchisq()` |
+| Binomial     | `dbinom()` | `pbinom()`      | `qbinom()` | `rbinom()` |
+| Poisson      | `dpois()` | `ppois()`        | `qpois()` | `rpois()` |
+
+## Distributions  {.slide-only .unlisted}
+
+- Also Beta, $\Gamma$, Log-Normal, F, Geometric, Cauchy, Hypergeometric etc...
+
+```{r, eval=FALSE}
+?Distributions
+```
+
+## Distributions  {.slide-only .unlisted}
+
+::: {.panel-tabset}
+
+### PDF
+
+```{r pdf-norm}
+#| output-location: column
+## dnorm gives the classic bell-curve
+tibble(
+  x = seq(-4, 4, length.out = 1e3)
+) %>% 
+  ggplot(aes(x, y = dnorm(x))) + 
+  geom_line(colour = "red")
+```
+
+### CDF
+
+```{r cdf-norm}
+#| output-location: column
+## pnorm gives the area under the 
+## bell-curve (which sums to 1)
+tibble(
+  x = seq(-4, 4, length.out = 1e3)
+) %>% 
+  ggplot(aes(x, y = pnorm(x))) + 
+  geom_line()
+```
+
+
+:::
+
+## The T Distribution
+
+::: {.notes}
+
+- A T distribution looks very much like a Standard normal N(0, 1) but has heavier tails
+- This allows for greater uncertainty in the tails
+
+:::
+
+```{r}
+#| echo: false
+#| fig-align: "left"
+tibble(
+  x = seq(-4, 4, length.out = 1e3),
+  z = dnorm(x),
+  t3 = dt(x, df = 3),
+  t10 = dt(x, df = 10)
+) %>% 
+  pivot_longer(
+    cols = all_of(c("z", "t3", "t10")), names_to = "dist", values_to = "y"
+  ) %>% 
+  mutate(
+    dist = case_when(
+      dist == "z" ~ "italic(N)(0,1)",
+      dist == "t3" ~ "italic(t)[3]",
+      dist == "t10" ~ "italic(t)[10]"
+    ) 
+  ) %>% 
+  ggplot(aes(x, y, colour = dist)) + 
+  geom_line() +
+  scale_color_brewer(
+    palette = "Set1", labels = parse_format(), name = "Distribution"
+  )  +
+  theme(text = element_text(size = 16))
+```
+
+
+
+# Tests For Continuous Data {background-color="#3d3d40"}
+
+## Data For This Session
+
+- We'll use the `pigs` dataset from earlier
+- Start a new session with new script: `BasicStatistics.R`
+
+```{r}
+library(tidyverse)
+library(scales)
+library(car)
+theme_set(
+  theme_bw() + theme(plot.title = element_text(hjust = 0.5))
+)
+pigs <- file.path("data", "pigs.csv") %>%
+	read_csv %>%
+	mutate(
+	  dose = fct(dose, levels = c("Low", "Med", "High")),
+	  supp = fct(supp)
+	)
+```
+
+## Data For This Session {.slide-only .unlisted}
+
+```{r boxplot-pigs, fig.width=8}
+#| output-location: column
+pigs %>% 
+  ggplot(
+    aes(x = dose, y = len, fill = supp)
+  ) +
+	geom_boxplot()
+```
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(results = 'hide')
+```
+
+## Pop Quiz
+
+::: {.callout-important collapse="true"}
+
+### Can anyone define a p-value?
+
+::: {.incremental}
+
+- A p-value is the probability of observing a test statistic **at least as extreme as the one observed**, assuming the null hypothesis is true.
+- In plain English, assuming there's nothing interesting to see here, how likely are we to observe our result, or one even more extreme
+- A p-value of 0.05 $\implies$ about 1 in 20 times we'll see something like this in a random sample
+
+:::
+
+:::
+
+## t-tests
+
+- Assumes normally distributed data
+- $t$-tests always test $H_0$ Vs $H_A$
+    + For data with exactly two groups
+
+::: {.fragment}
+
+- The simplest test is on a simple vector
+    + Not particularly meaningful for our data
+
+```{r, eval = FALSE}
+?t.test
+t.test(pigs$len)
+```
+
+:::
+
+::: {.fragment}
+
+::: {.callout-note collapse="true"}
+### What is $H_0$ in the above test?
+
+::: {.fragment}
+The true mean of the underlying distribution from which the vector is sampled, is zero: i.e. $\mu = 0$
+:::
+
+:::
+
+:::
+
+## t-tests {.slide-only .unlisted}
+
+When comparing the means of two vectors
+
+$$
+H_0: \mu_{1} = \mu_{2} \\
+H_A: \mu_{1} \neq \mu_{2}
+$$
+
+We could use two vectors (i.e. `x` & `y`)
+
+```{r}
+vc <- dplyr::filter(pigs, supp == "VC")$len
+oj <- dplyr::filter(pigs, supp == "OJ")$len
+t.test(x = vc, y = oj)
+```
+
+::: {.fragment}
+
+::: {.callout-note collapse="true"}
+## Is This a Paired Test?
+
+::: {.fragment}
+No
+:::
+
+:::
+:::
+
+## t-tests {.slide-only .unlisted}
+
+- An alternative is the `R` formula method: `len~supp`
+    + Length is a response variable
+    + Supplement is the predictor
+- Can *only use one predictor for a T-test*
+    + Otherwise it's linear regression
+
+```{r}
+t.test(len~supp, data = pigs)
+```
+
+**Did this give the same results?**
+
+## t-tests {.slide-only .unlisted}
+
+- Do we think the variance is equal between the two groups?
+
+```{r}
+#| results: markup
+pigs |> summarise(sd = sd(len), .by = supp)
+```
+
+::: {.fragment}
+- We can use Levene's Test to formalise this
+    + From the package `car`
+    + Bartlett's test is very similar (`bartlett.test()`)
+
+```{r}
+leveneTest(len~supp, data = pigs)
+```
+:::
+
+## t-tests {.slide-only .unlisted}
+
+- Now we can assume equal variances
+    + By default, variances are assumed to be unequal
+
+```{r}
+t.test(len~supp, data = pigs, var.equal = TRUE)
+```
+
+::: {.fragment}
+- If relevant, the confidence interval can also be adjusted
+:::
+
+## Wilcoxon Tests 
+
+- We assumed the above dataset was normally distributed:<br>**What if it's not?**
+
+::: {.fragment}
+- Non-parametric equivalent is the *Wilcoxon Rank-Sum* Test (aka *Mann-Whitney*)
+:::
+::: {.fragment}
+- This assigns ranks to each value based on their value
+    + The test is then performed on ranks **NOT** the values
+    + Tied values can be problematic
+- Test that the centre of each underlying distribution is the same
+
+```{r}
+wilcox.test(len~supp, data = pigs)
+```
+
+:::
+
+## A Brief Comment
+
+- Both of these are suitable *for comparing two groups*
+- T-tests assume Normally Distributed Data underlies the random sample
+    + Are robust to some deviation from normality
+    + Data can sometimes be transformed (e.g. `sqrt()`, `log()` etc)
+
+::: {.fragment}
+- The Wilcoxon Rank Sum Test assumes nothing about the underlying distribution
+    + Much less powerful will small sample sizes
+    + Highly comparable at n $\geq$ 30
+- The package `coin` implements a range on non-parametric tests
+:::
+
+# Tests For Categorical Data {background-color="#3d3d40"}
+
+## $\chi^2$ Test
+
+- Here we need counts and categories
+- Commonly used in *Observed Vs Expected*
+
+$$H_0: \text{No association between groups and outcome}$$
+$$H_A: \text{Association between groups and outcome}$$
+
+::: {.callout-note collapse="true"}
+### When we shouldn't use a $\chi^2$ test?
+
+::: {.fragment}
+When expected cell values are > 5 [@Cochran1954-rd]
+:::
+
+:::
+
+## $\chi^2$ Test {.slide-only .unlisted}
+
+
+```{r}
+#| output-location: column
+#| results: markup
+pass <- matrix(
+  c(25, 8, 6, 15), nrow = 2, 
+  dimnames = list(
+    c("Attended", "Skipped"), 
+    c("Pass", "Fail"))
+)
+pass
+```
+
+::: {.fragment}
+
+<br>
+
+```{r}
+#| output-location: column
+#| results: markup
+pass_chisq <- chisq.test(pass)
+pass_chisq
+```
+
+:::
+
+## Fisher's Exact Test
+
+- $\chi^2$ tests became popular in the days of the printed tables
+    - We now have computers
+- Fisher's Exact Test is preferable in the cases of low cell counts
+    + (Or any other time you feel like it...)
+- Same $H_0$ as the $\chi^2$ test
+- Uses the hypergeometric distribution
+
+```{r}
+fisher.test(pass)
+```
+
+## Summary of Tests
+
+- `t.test()`, `wilcox.test()`
+- `chisq.test()`, `fisher.test()`
+
+::: {.fragment}
+
+- `shapiro.test()`, `bartlett.test()`
+- `car::leveneTest()`
+    + Tests for normality or homogeneity of variance
+
+:::
+::: {.fragment}
+
+- `binomial.test()`, `poisson.test()`
+- `kruskal.test()`, `ks.test()`
+:::
+
+## `htest` Objects
+
+- All produce objects of class `htest`
+- Is really a `list`
+    + Use `names()` to see what other values are returned
+    
+```{r}
+names(pass_chisq)
+```
+    
+::: {.fragment}
+
+- Will vary slightly between tests
+- Can usually extract p-values using `test$p.value`
+
+```{r}
+pass_chisq$p.value
+```
+
+:::
+
+## `htest` Objects {.slide-only .unlisted}
+
+```{r}
+#| results: markup
+## Have a look at the list elements produced by fisher.test
+fisher.test(pass) |> names()
+```
+
+::: {.fragment}
+
+<br>
+
+```{r}
+#| results: markup
+## Are these similar to those produced by t.test?
+t.test(len~supp, data = pigs) |> names()
+```
+
+:::
+::: {.fragment}
+- There is a function `print.htest()` which organises the printout for us
+:::
+
+::: {.notes}
+- We'll come back to methods later, but this is a common way for output to be produced
+- The will be a print function for objects of each class, i.e. `print.class_of_object`
+:::
+
+
+## References
