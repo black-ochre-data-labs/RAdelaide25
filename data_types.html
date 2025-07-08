@@ -2404,6 +2404,7 @@ display: none;
   <li><a href="#subsetting-vectors-1" id="toc-subsetting-vectors-1" class="nav-link" data-scroll-target="#subsetting-vectors-1">Subsetting Vectors</a></li>
   <li><a href="#extracting-multiple-values" id="toc-extracting-multiple-values" class="nav-link" data-scroll-target="#extracting-multiple-values">Extracting Multiple Values</a></li>
   <li><a href="#vector-operations" id="toc-vector-operations" class="nav-link" data-scroll-target="#vector-operations">Vector Operations</a></li>
+  <li><a href="#special-values" id="toc-special-values" class="nav-link" data-scroll-target="#special-values">Special Values</a></li>
   </ul></li>
   <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices">Matrices</a>
   <ul class="collapse">
@@ -2875,6 +2876,58 @@ display: none;
 <p>NB: <code>int_vec</code> was coerced silently to a <code>double</code> vector</p>
 </div>
 </section>
+<section id="special-values" class="level2">
+<h2 class="anchored" data-anchor-id="special-values">Special Values</h2>
+<div style="font-size:95%">
+<ul>
+<li>We can create an empty vector of any type using <code>integer()</code>, <code>character()</code> etc</li>
+<li>These are zero length vectors <span class="math inline">\(\implies\)</span> still have a type</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>A special value which isn’t quite a vector is <code>NULL</code>
+<ul>
+<li>This is a zero length vector of type <code>NULL</code></li>
+<li>Used to represent the absence of a value</li>
+</ul></li>
+<li>We can also create using <code>c()</code></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>We can use <code>NULL</code> to return empty vectors</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>int_vec[<span class="cn">NULL</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>integer(0)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="special-values-1" class="level2 slide-only unlisted">
+<h2 class="slide-only unlisted anchored" data-anchor-id="special-values-1">Special Values</h2>
+<ul>
+<li>You will often see <code>NULL</code> as the default for function arguments</li>
+<li>Internally, there will often be a line <code>if (is.null(my_argument))</code>
+<ul>
+<li>Used to define the default behaviour</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>NULL</code> is very different to <code>NA</code></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">NULL</span>, <span class="cn">NULL</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="cn">NULL</span>, <span class="cn">NA</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>) <span class="sc">==</span> <span class="cn">NA</span> <span class="co"># Here the value on the RHS is actually missing...</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>) <span class="sc">==</span> <span class="cn">NULL</span> <span class="co"># Here there is no value on the RHS</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
 </section>
 <section id="matrices" class="level1" data-background-color="#3d3d40">
 <h1 data-background-color="#3d3d40">Matrices</h1>
@@ -2885,8 +2938,8 @@ display: none;
 <li>A <code>matrix</code> is the <strong>two dimensional</strong> equivalent</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>int_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(int_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>int_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(int_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="matrices-2" class="level2 slide-only unlisted">
@@ -2904,13 +2957,13 @@ display: none;
 <h2 class="slide-only unlisted anchored" data-anchor-id="matrices-3">Matrices</h2>
 <p><strong>Some commands to try:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(int_mat)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(int_mat)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(int_mat)</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(int_mat)</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(int_mat)</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(int_mat)</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(int_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(int_mat)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(int_mat)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(int_mat)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(int_mat)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(int_mat)</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(int_mat)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(int_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Ask questions if anything is confusing</strong></p>
 </section>
@@ -2922,8 +2975,8 @@ display: none;
 <li>Leaving either <code>row</code> or <code>col</code> blank selects the entire row/column</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>int_mat[<span class="dv">2</span>, <span class="dv">2</span>]</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>int_mat[<span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>int_mat[<span class="dv">2</span>, <span class="dv">2</span>]</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>int_mat[<span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>How would we just get the first column?</strong></p>
 </section>
@@ -2931,14 +2984,14 @@ display: none;
 <h2 class="slide-only unlisted anchored" data-anchor-id="matrices-5">Matrices</h2>
 <p><strong>NB: Forgetting the comma when subsetting will treat the matrix as a single vector running down the columns</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>int_mat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>int_mat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
 [1,]    1    4
 [2,]    2    5
 [3,]    3    6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>int_mat[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>int_mat[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
@@ -2948,13 +3001,13 @@ display: none;
 <h2 class="slide-only unlisted anchored" data-anchor-id="matrices-6">Matrices</h2>
 <p><strong>Requesting a row or column that doesn’t exist is the source of a very common error message</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(int_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(int_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3 2</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>int_mat[<span class="dv">5</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>int_mat[<span class="dv">5</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="red">
 <pre><code>Error in int_mat[5, ] : subscript out of bounds</code></pre>
@@ -2965,17 +3018,18 @@ display: none;
 <p>Arrays extend matrices to 3 or more dimensions</p>
 <p>Beyond the scope of today, but we just have more commas in the square brackets, e.g.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(iris3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(iris3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 50  4  3</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(iris3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(iris3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
+<p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>iris3[<span class="dv">1</span>,,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>iris3[<span class="dv">1</span>,,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Setosa Versicolor Virginica
 Sepal L.    5.1        7.0       6.3
@@ -2985,7 +3039,7 @@ Petal W.    0.2        1.4       2.5</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>iris3[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>iris3[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -3044,10 +3098,10 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="slide-only unlisted anchored" data-anchor-id="lists-1">Lists</h2>
 <p>Many <code>R</code> functions provide output as a list</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>testResults <span class="ot">&lt;-</span> <span class="fu">t.test</span>(dbl_vec)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(testResults)</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(testResults)</span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>testResults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>testResults <span class="ot">&lt;-</span> <span class="fu">t.test</span>(dbl_vec)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(testResults)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(testResults)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>testResults</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>NB: There is a function (<code>print.htest()</code>) that tells <code>R</code> how to print the results to the Console</p>
 <!-- ## Lists {visibility="hidden"} -->
@@ -3063,9 +3117,9 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="slide-only unlisted anchored" data-anchor-id="lists-2">Lists</h2>
 <p>We can call the individual components of a list using the <code>$</code> symbol followed by the name</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>testResults<span class="sc">$</span>statistic</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>testResults<span class="sc">$</span>conf.int</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>testResults<span class="sc">$</span>method</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>testResults<span class="sc">$</span>statistic</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>testResults<span class="sc">$</span>conf.int</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>testResults<span class="sc">$</span>method</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Note that each component is quite different to the others.</em></p>
 </section>
@@ -3073,8 +3127,8 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="anchored" data-anchor-id="subsetting-lists">Subsetting Lists</h2>
 <p>A <code>list</code> is a <code>vector</code> so we can also subset using the <code>[]</code> method</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>testResults[<span class="dv">1</span>]</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(testResults[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>testResults[<span class="dv">1</span>]</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(testResults[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Using single square brackets returns a <code>list</code>
@@ -3090,15 +3144,15 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <li>Returns the actual component as the underlying <code>R</code> object</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>testResults[[<span class="dv">1</span>]]</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(testResults[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>testResults[[<span class="dv">1</span>]]</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(testResults[[<span class="dv">1</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>When would we use either method?</em></p>
 <div class="fragment">
 <p><br> We can also use names instead of positions</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>testResults[<span class="fu">c</span>(<span class="st">&quot;statistic&quot;</span>, <span class="st">&quot;p.value&quot;</span>)]</span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>testResults[[<span class="st">&quot;statistic&quot;</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>testResults[<span class="fu">c</span>(<span class="st">&quot;statistic&quot;</span>, <span class="st">&quot;p.value&quot;</span>)]</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>testResults[[<span class="st">&quot;statistic&quot;</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <!-- ## Lists {visibility="hidden"} -->
@@ -3137,17 +3191,17 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="slide-only unlisted anchored" data-anchor-id="data-frames-3">Data Frames</h2>
 <p>Let’s load <code>pigs</code> again</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/pigs.csv&quot;</span>)</span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/pigs.csv&quot;</span>)</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><br></p>
 <p><strong>Try these commands</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pigs)</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pigs)</span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pigs)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(pigs)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -3155,12 +3209,12 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="slide-only unlisted anchored" data-anchor-id="data-frames-4">Data Frames</h2>
 <p>Individual entries can also be extracted using the square brackets</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>pigs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>pigs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>We can also refer to columns by name (same as matrices)</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>pigs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="st">&quot;len&quot;</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>pigs[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="st">&quot;len&quot;</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -3171,7 +3225,7 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <li>We can call each column vector of a <code>data.frame</code> using the <code>$</code> operator</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>pigs<span class="sc">$</span>len[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>pigs<span class="sc">$</span>len[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>This does NOT work for rows!!!</strong></p>
 </section>
@@ -3204,7 +3258,7 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="slide-only unlisted anchored" data-anchor-id="data-frames-lists-2">Data Frames &amp; Lists</h2>
 <p>Forgetting the comma, now gives a completely different result to a matrix!</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>pigs[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>pigs[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Was that what you expected?</strong></p>
 <p><strong>Try using the double bracket method</strong></p>
@@ -3213,7 +3267,7 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="anchored" data-anchor-id="common-data-frame-errors">Common Data Frame Errors</h2>
 <p><strong>What do you think will happen if we type:</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>pigs[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>pigs[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p><span style="color:red; font-family: &#39;Courier New&#39;, monospace; font-size: 60%">Error: Column index must be at most 3 if positive, not 5</span></p>
@@ -3226,12 +3280,12 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="anchored" data-anchor-id="name-attributes">Name Attributes</h2>
 <p><strong>How do we assign names?</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>named_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>named_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>OR we can name an existing vector</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(int_vec) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>, <span class="st">&quot;e&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(int_vec) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>, <span class="st">&quot;e&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -3240,15 +3294,15 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <p><strong>Can we remove names?</strong></p>
 <p>The <code>NULL</code>, or empty, vector in <code>R</code> is created using <code>c()</code></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>null_vec <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(null_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>null_vec <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(null_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="name-attributes-2" class="level2 slide-only unlisted">
 <h2 class="slide-only unlisted anchored" data-anchor-id="name-attributes-2">Name Attributes</h2>
 <p>We can also use this to remove names</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(named_vec) <span class="ot">&lt;-</span> <span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(named_vec) <span class="ot">&lt;-</span> <span class="fu">c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Don’t forget to put the names back…</em></p>
 </section>
@@ -3256,22 +3310,22 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="anchored" data-anchor-id="matrices-7">Matrices</h2>
 <p>We can convert vectors to matrices, as earlier</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>int_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>int_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>R</code> is column major so fills columns by default</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>row_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>row_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="matrices-8" class="level2 slide-only unlisted">
 <h2 class="slide-only unlisted anchored" data-anchor-id="matrices-8">Matrices</h2>
 <p>We can assign row names &amp; column names after creation</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(row_mat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;odds&quot;</span>, <span class="st">&quot;evens&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(row_mat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;odds&quot;</span>, <span class="st">&quot;evens&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Or using <code>dimnames()</code></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(row_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(row_mat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This a list of <code>length</code> 2 with <code>rownames</code> then <code>colnames</code> as the components.</p>
 <!-- ## A Word Of Caution -->
@@ -3285,19 +3339,19 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <section id="lists-3" class="level2">
 <h2 class="anchored" data-anchor-id="lists-3">Lists</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(int_vec, dbl_vec)</span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(my_list) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;integers&quot;</span>, <span class="st">&quot;doubles&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(int_vec, dbl_vec)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(my_list) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;integers&quot;</span>, <span class="st">&quot;doubles&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>OR</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">integers =</span> int_vec, <span class="at">doubles =</span> dbl_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">integers =</span> int_vec, <span class="at">doubles =</span> dbl_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="lists-4" class="level2 slide-only unlisted">
 <h2 class="slide-only unlisted anchored" data-anchor-id="lists-4">Lists</h2>
 <p><strong>What happens if we try this?</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>my_list<span class="sc">$</span>logical <span class="ot">&lt;-</span> logi_vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>my_list<span class="sc">$</span>logical <span class="ot">&lt;-</span> logi_vec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <!-- ## Lists -->
 <!-- We can coerce vectors to lists as well -->
@@ -3310,8 +3364,8 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <p>This is exactly the same as creating lists, but</p>
 <p><strong>The <code>names</code> attribute will also be the <code>colnames()</code></strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>my_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">doubles =</span> dbl_vec, <span class="at">logical =</span> logi_vec)</span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(my_df) <span class="sc">==</span> <span class="fu">colnames</span>(my_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>my_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">doubles =</span> dbl_vec, <span class="at">logical =</span> logi_vec)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(my_df) <span class="sc">==</span> <span class="fu">colnames</span>(my_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE TRUE</code></pre>
 </div>
@@ -3321,11 +3375,11 @@ Petal W.    0.2        1.4       2.5</code></pre>
 <h2 class="slide-only unlisted anchored" data-anchor-id="data-frames-8">Data Frames</h2>
 <p><strong>What happens if we try to combine components that aren’t the same length?</strong></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>my_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">integers =</span> int_vec, </span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubles =</span> dbl_vec, </span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">logical =</span> logi_vec</span>
-<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>my_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">integers =</span> int_vec, </span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">doubles =</span> dbl_vec, </span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">logical =</span> logi_vec</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="loading-data" class="level2">

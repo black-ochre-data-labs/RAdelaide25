@@ -431,6 +431,52 @@ NB: `int_vec` was coerced silently to a `double` vector
 
 :::
 
+## Special Values
+
+::: {style="font-size:95%"}
+
+- We can create an empty vector of any type using `integer()`, `character()` etc
+- These are zero length vectors $\implies$ still have a type
+
+::: {.fragment}
+- A special value which isn't quite a vector is `NULL`
+    + This is a zero length vector of type `NULL`
+    + Used to represent the absence of a value
+- We can also create using `c()`
+
+:::
+
+::: {.fragment}
+- We can use `NULL` to return empty vectors
+
+```{r}
+int_vec[NULL]
+```
+:::
+
+:::
+
+## Special Values {.slide-only .unlisted}
+
+- You will often see `NULL` as the default for function arguments
+- Internally, there will often be a line `if (is.null(my_argument))`
+    + Used to define the default behaviour
+    
+::: {.fragment}
+- `NULL` is very different to `NA`
+
+```{r}
+#| results: hide
+c(NULL, NULL)
+c(NULL, NA)
+c(1, NA) == NA # Here the value on the RHS is actually missing...
+c(1, NA) == NULL # Here there is no value on the RHS
+is.na(c(1, NA))
+```
+
+:::
+
+
 # Matrices {background-color="#3d3d40"}
 
 ## Matrices

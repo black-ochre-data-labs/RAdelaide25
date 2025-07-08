@@ -528,7 +528,7 @@ Lower down the page you'll see
 ## Function Arguments
 
 - `head()` prints the *first part* of an object
-- Useful for very large objects (e.g. if we had 1000 guinea penguins)
+- Useful for very large objects (e.g. if we had 1000 penguins)
 
 ::: {.fragment}
 - We can change the number of rows shown to us
