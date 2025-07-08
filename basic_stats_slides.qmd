@@ -81,12 +81,12 @@ theme_set(
 - Up to you to know what you're doing
     - Or talk to your usual statisticians & collaborators
     
-## Distributions
+## Distributions {visibility="hidden"}
 
 - `R` comes with nearly every distribution
 - Standard syntax for accessing each
 
-## Distributions  {.slide-only .unlisted}
+## Distributions  {visibility="hidden" .slide-only .unlisted}
 
 | Distribution | Density   | Area Under Curve | Quantile  | Random    |
 |:------------ |:--------- |:---------------- |:--------- |:--------- |
@@ -98,7 +98,7 @@ theme_set(
 | Binomial     | `dbinom()` | `pbinom()`      | `qbinom()` | `rbinom()` |
 | Poisson      | `dpois()` | `ppois()`        | `qpois()` | `rpois()` |
 
-## Distributions  {.slide-only .unlisted}
+## Distributions  {visibility="hidden" .slide-only .unlisted visibility="hidden"}
 
 - Also Beta, $\Gamma$, Log-Normal, F, Geometric, Cauchy, Hypergeometric etc...
 
@@ -106,7 +106,7 @@ theme_set(
 ?Distributions
 ```
 
-## Distributions  {.slide-only .unlisted}
+## Distributions  {visibility="hidden" .slide-only .unlisted visibility="hidden"}
 
 ::: {.panel-tabset}
 
@@ -117,7 +117,7 @@ theme_set(
 ## dnorm gives the classic bell-curve
 tibble(
   x = seq(-4, 4, length.out = 1e3)
-) %>% 
+) |> 
   ggplot(aes(x, y = dnorm(x))) + 
   geom_line(colour = "red")
 ```
@@ -130,7 +130,7 @@ tibble(
 ## bell-curve (which sums to 1)
 tibble(
   x = seq(-4, 4, length.out = 1e3)
-) %>% 
+) |> 
   ggplot(aes(x, y = pnorm(x))) + 
   geom_line()
 ```
@@ -138,7 +138,7 @@ tibble(
 
 :::
 
-## The T Distribution
+## The T Distribution {visibility="hidden"}
 
 ::: {.notes}
 
@@ -155,17 +155,17 @@ tibble(
   z = dnorm(x),
   t3 = dt(x, df = 3),
   t10 = dt(x, df = 10)
-) %>% 
+) |> 
   pivot_longer(
     cols = all_of(c("z", "t3", "t10")), names_to = "dist", values_to = "y"
-  ) %>% 
+  ) |> 
   mutate(
     dist = case_when(
       dist == "z" ~ "italic(N)(0,1)",
       dist == "t3" ~ "italic(t)[3]",
       dist == "t10" ~ "italic(t)[10]"
     ) 
-  ) %>% 
+  ) |> 
   ggplot(aes(x, y, colour = dist)) + 
   geom_line() +
   scale_color_brewer(
@@ -190,8 +190,8 @@ library(car)
 theme_set(
   theme_bw() + theme(plot.title = element_text(hjust = 0.5))
 )
-pigs <- file.path("data", "pigs.csv") %>%
-	read_csv %>%
+pigs <- file.path("data", "pigs.csv") |>
+	read_csv() |>
 	mutate(
 	  dose = fct(dose, levels = c("Low", "Med", "High")),
 	  supp = fct(supp)
@@ -202,7 +202,7 @@ pigs <- file.path("data", "pigs.csv") %>%
 
 ```{r boxplot-pigs, fig.width=8}
 #| output-location: column
-pigs %>% 
+pigs |> 
   ggplot(
     aes(x = dose, y = len, fill = supp)
   ) +
@@ -222,7 +222,7 @@ knitr::opts_chunk$set(results = 'hide')
 ::: {.incremental}
 
 - A p-value is the probability of observing a test statistic **at least as extreme as the one observed**, assuming the null hypothesis is true.
-- In plain English, assuming there's nothing interesting to see here, how likely are we to observe our result, or one even more extreme
+- In plain English: *If there's nothing really going on, how likely are we to observe our result, or one even more extreme?*
 - A p-value of 0.05 $\implies$ about 1 in 20 times we'll see something like this in a random sample
 
 :::
@@ -242,7 +242,7 @@ knitr::opts_chunk$set(results = 'hide')
 
 ```{r, eval = FALSE}
 ?t.test
-t.test(pigs$len)
+t.test(some_vector)
 ```
 
 :::
@@ -294,8 +294,7 @@ No
 - An alternative is the `R` formula method: `len~supp`
     + Length is a response variable
     + Supplement is the predictor
-- Can *only use one predictor for a T-test*
-    + Otherwise it's linear regression
+- Can *only use one predictor for a T-test* [$\implies$ otherwise it's linear regression]{.fragment}
 
 ```{r}
 t.test(len~supp, data = pigs)
@@ -363,9 +362,9 @@ wilcox.test(len~supp, data = pigs)
 
 ::: {.fragment}
 - The Wilcoxon Rank Sum Test assumes nothing about the underlying distribution
-    + Much less powerful will small sample sizes
+    + Much less powerful with small sample sizes
     + Highly comparable at n $\geq$ 30
-- The package `coin` implements a range on non-parametric tests
+- The package `coin` implements a range of non-parametric tests
 :::
 
 # Tests For Categorical Data {background-color="#3d3d40"}
@@ -453,6 +452,7 @@ fisher.test(pass)
     + Use `names()` to see what other values are returned
     
 ```{r}
+#| results: markup
 names(pass_chisq)
 ```
     
@@ -462,6 +462,7 @@ names(pass_chisq)
 - Can usually extract p-values using `test$p.value`
 
 ```{r}
+#| results: markup
 pass_chisq$p.value
 ```
 

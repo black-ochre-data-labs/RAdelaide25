@@ -252,161 +252,11 @@ Dr Stevie Pederson
 </ul></li>
 </ul>
 </section>
-<section id="distributions" class="slide level2">
-<h2>Distributions</h2>
-<ul>
-<li><code>R</code> comes with nearly every distribution</li>
-<li>Standard syntax for accessing each</li>
-</ul>
-</section>
-<section id="distributions-1" class="slide level2 slide-only unlisted">
-<h2>Distributions</h2>
-<table class="caption-top" style="width:100%;">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 16%">
-<col style="width: 28%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Distribution</th>
-<th style="text-align: left;">Density</th>
-<th style="text-align: left;">Area Under Curve</th>
-<th style="text-align: left;">Quantile</th>
-<th style="text-align: left;">Random</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Normal</td>
-<td style="text-align: left;"><code>dnorm()</code></td>
-<td style="text-align: left;"><code>pnorm()</code></td>
-<td style="text-align: left;"><code>qnorm()</code></td>
-<td style="text-align: left;"><code>rnorm()</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">T</td>
-<td style="text-align: left;"><code>dt()</code></td>
-<td style="text-align: left;"><code>pt()</code></td>
-<td style="text-align: left;"><code>qt()</code></td>
-<td style="text-align: left;"><code>rt()</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Uniform</td>
-<td style="text-align: left;"><code>dunif()</code></td>
-<td style="text-align: left;"><code>punif()</code></td>
-<td style="text-align: left;"><code>qunif()</code></td>
-<td style="text-align: left;"><code>runif()</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Exponential</td>
-<td style="text-align: left;"><code>dexp()</code></td>
-<td style="text-align: left;"><code>pexp()</code></td>
-<td style="text-align: left;"><code>qexp()</code></td>
-<td style="text-align: left;"><code>rexp()</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><span class="math inline">\(\chi^2\)</span></td>
-<td style="text-align: left;"><code>dchisq()</code></td>
-<td style="text-align: left;"><code>pchisq()</code></td>
-<td style="text-align: left;"><code>qchisq()</code></td>
-<td style="text-align: left;"><code>rchisq()</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Binomial</td>
-<td style="text-align: left;"><code>dbinom()</code></td>
-<td style="text-align: left;"><code>pbinom()</code></td>
-<td style="text-align: left;"><code>qbinom()</code></td>
-<td style="text-align: left;"><code>rbinom()</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Poisson</td>
-<td style="text-align: left;"><code>dpois()</code></td>
-<td style="text-align: left;"><code>ppois()</code></td>
-<td style="text-align: left;"><code>qpois()</code></td>
-<td style="text-align: left;"><code>rpois()</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="distributions-2" class="slide level2 slide-only unlisted">
-<h2>Distributions</h2>
-<ul>
-<li>Also Beta, <span class="math inline">\(\Gamma\)</span>, Log-Normal, F, Geometric, Cauchy, Hypergeometric etc…</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>?Distributions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="distributions-3" class="slide level2 slide-only unlisted">
-<h2>Distributions</h2>
-<div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">PDF</a></li><li><a href="#tabset-1-2">CDF</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1">
-<div class="cell columns column-output-location" data-layout-align="center">
-<div class="column">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## dnorm gives the classic bell-curve</span></span>
-<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="fl">1e3</span>)</span>
-<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, <span class="at">y =</span> <span class="fu">dnorm</span>(x))) <span class="sc">+</span> </span>
-<span id="cb2-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="basic_stats_slides_files/figure-revealjs/pdf-norm-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</div>
-<div id="tabset-1-2">
-<div class="cell columns column-output-location" data-layout-align="center">
-<div class="column">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## pnorm gives the area under the </span></span>
-<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## bell-curve (which sums to 1)</span></span>
-<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="fl">1e3</span>)</span>
-<span id="cb3-5"><a href="" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, <span class="at">y =</span> <span class="fu">pnorm</span>(x))) <span class="sc">+</span> </span>
-<span id="cb3-7"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="basic_stats_slides_files/figure-revealjs/cdf-norm-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</div>
-</div>
-</div>
-</section>
-<section id="the-t-distribution" class="slide level2">
-<h2>The T Distribution</h2>
-<aside class="notes">
-<ul>
-<li>A T distribution looks very much like a Standard normal N(0, 1) but has heavier tails</li>
-<li>This allows for greater uncertainty in the tails</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 
-<img data-src="basic_stats_slides_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-left r-stretch" width="768"></section></section>
+
+
+
+</section>
 <section>
 <section id="tests-for-continuous-data" class="title-slide slide level1 center" data-background-color="#3d3d40">
 <h1>Tests For Continuous Data</h1>
@@ -425,8 +275,8 @@ Dr Stevie Pederson
 <span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(</span>
 <span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
 <span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"data"</span>, <span class="st">"pigs.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-8"><a href="" aria-hidden="true" tabindex="-1"></a>    read_csv <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"data"</span>, <span class="st">"pigs.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_csv</span>() <span class="sc">|&gt;</span></span>
 <span id="cb4-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
 <span id="cb4-10"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">dose =</span> <span class="fu">fct</span>(dose, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"Med"</span>, <span class="st">"High"</span>)),</span>
 <span id="cb4-11"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="at">supp =</span> <span class="fu">fct</span>(supp)</span>
@@ -437,7 +287,7 @@ Dr Stevie Pederson
 <h2>Data For This Session</h2>
 <div class="cell columns column-output-location" data-layout-align="center">
 <div class="column">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>pigs <span class="sc">|&gt;</span> </span>
 <span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(</span>
 <span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> len, <span class="at">fill =</span> supp)</span>
 <span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
@@ -465,7 +315,7 @@ Dr Stevie Pederson
 <div class="callout-content">
 <ul>
 <li class="fragment">A p-value is the probability of observing a test statistic <strong>at least as extreme as the one observed</strong>, assuming the null hypothesis is true.</li>
-<li class="fragment">In plain English, assuming there’s nothing interesting to see here, how likely are we to observe our result, or one even more extreme</li>
+<li class="fragment">In plain English: <em>If there’s nothing really going on, how likely are we to observe our result, or one even more extreme?</em></li>
 <li class="fragment">A p-value of 0.05 <span class="math inline">\(\implies\)</span> about 1 in 20 times we’ll see something like this in a random sample</li>
 </ul>
 </div>
@@ -490,7 +340,7 @@ Dr Stevie Pederson
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>?t.test</span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(pigs<span class="sc">$</span>len)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(some_vector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -550,10 +400,7 @@ H_A: \mu_{1} \neq \mu_{2}
 <li>Length is a response variable</li>
 <li>Supplement is the predictor</li>
 </ul></li>
-<li>Can <em>only use one predictor for a T-test</em>
-<ul>
-<li>Otherwise it’s linear regression</li>
-</ul></li>
+<li>Can <em>only use one predictor for a T-test</em> <span class="fragment"><span class="math inline">\(\implies\)</span> otherwise it’s linear regression</span></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(len<span class="sc">~</span>supp, <span class="at">data =</span> pigs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -643,10 +490,10 @@ H_A: \mu_{1} \neq \mu_{2}
 <ul>
 <li>The Wilcoxon Rank Sum Test assumes nothing about the underlying distribution
 <ul>
-<li>Much less powerful will small sample sizes</li>
+<li>Much less powerful with small sample sizes</li>
 <li>Highly comparable at n <span class="math inline">\(\geq\)</span> 30</li>
 </ul></li>
-<li>The package <code>coin</code> implements a range on non-parametric tests</li>
+<li>The package <code>coin</code> implements a range of non-parametric tests</li>
 </ul>
 </div>
 </section></section>
@@ -764,6 +611,10 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pass_chisq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "statistic" "parameter" "p.value"   "method"    "data.name" "observed" 
+[7] "expected"  "residuals" "stdres"   </code></pre>
+</div>
 </div>
 <div class="fragment">
 <ul>
@@ -771,15 +622,18 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 <li>Can usually extract p-values using <code>test$p.value</code></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>pass_chisq<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a>pass_chisq<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.001711398</code></pre>
+</div>
 </div>
 </div>
 </section>
 <section id="htest-objects-1" class="slide level2 slide-only unlisted">
 <h2><code>htest</code> Objects</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Have a look at the list elements produced by fisher.test</span></span>
-<span id="cb21-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(pass) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Have a look at the list elements produced by fisher.test</span></span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(pass) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "p.value"     "conf.int"    "estimate"    "null.value"  "alternative"
 [6] "method"      "data.name"  </code></pre>
@@ -788,8 +642,8 @@ X-squared = 9.8359, df = 1, p-value = 0.001711</code></pre>
 <div class="fragment">
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Are these similar to those produced by t.test?</span></span>
-<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(len<span class="sc">~</span>supp, <span class="at">data =</span> pigs) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## Are these similar to those produced by t.test?</span></span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(len<span class="sc">~</span>supp, <span class="at">data =</span> pigs) <span class="sc">|&gt;</span> <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "statistic"   "parameter"   "p.value"     "conf.int"    "estimate"   
  [6] "null.value"  "stderr"      "alternative" "method"      "data.name"  </code></pre>

@@ -104,6 +104,28 @@ $$
 
 ## Linear Regression {.slide-only .unlisted}
 
+::: {.notes}
+- If we imagine the predictors in two dimensions and the response as the 3rd $\implies$ still a line...
+:::
+
+Can extend to multi-dimensional predictors
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2
+$$
+
+::: {.fragment}
+
+Or even
+
+$$
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \ldots + \beta_n x_n
+$$
+
+:::
+
+## Linear Regression {.slide-only .unlisted}
+
 Linear Regression always uses the `R` formula syntax
 
 - `y ~ x`: `y` depends on `x`
@@ -162,16 +184,20 @@ summary(bill_length_lm)
 
 ## Linear Regression {.slide-only .unlisted}
 
+
+::: {.incremental}
+
 1. The code used is returned as `Call:`
 2. A brief summary of the residuals are returned
 3. The fitted values are returned in the `Coefficients` element
     + We have the estimate of the intercept & slope
     + The standard error of the estimates
-    + A t-test testing $H_0: \beta_i = 0$
-    + The p-value for each t-test
+    + $t$-statistics testing $H_0: \beta_i = 0$ along with $p$-values
 4. Additional model summary information
     + $R^2$ is the proportion of variance explained by the model
-    
+
+:::
+
 ::: {.notes}
 - Adjusted R-squared is the R-squared adjusted for the number of predictors
 - Mostly relevant when comparing models where predictors vary
@@ -188,9 +214,12 @@ This is what the bill length would be if a penguin weighed exactly 0
 
 ::: {.fragment}
 
-- We'd probably expect this to be zero but they almost never are
-- The Intercept is almost always significant
+- We'd probably expect this to be zero but Intercepts almost never are
 - What does this really tell us about the relationship between bill length and weight?
+
+:::
+
+::: {.fragment}
 - Generally focussed on the relationship within the range of observed predictors
     + No guaranteed linear relationship outside of this range
     
@@ -229,8 +258,7 @@ $$
 
 - $\beta_0 + \beta_1 x_i$ is the exact line co-ordinate (Intercept + slope*predictor)
 - $\epsilon_i$ is the the vertical difference between the observed value and the fitted value
-    + Known as a *residual*
-    + Defined as $\epsilon_i \sim \mathcal{N}(0, \sigma)$
+    + Known as a *residual* [$\implies$ defined as $\epsilon_i \sim \mathcal{N}(0, \sigma)$]{.fragment}
 
 :::
 
@@ -496,6 +524,7 @@ summary(bill_length_sp_lm)
 ```{r}
 #| output-location: column
 #| fig-show: hold
+#| fig-height: 8
 ## Check the residuals after 
 ## including a separate intercept
 ## for species
@@ -557,6 +586,7 @@ summary(bill_length_sp_lm)$coef
     + `species:body_mass_g`
     
 ```{r}
+#| output-location: slide
 bill_length_int_lm <- lm(
   bill_length_mm ~ species + body_mass_g + species:body_mass_g, 
   data = penguins
@@ -577,7 +607,7 @@ summary(bill_length_int_lm)
 
 - The regression line for Adelie is y = `r  round(coef(bill_length_int_lm)[[1]], 2)` + `r round(coef(bill_length_int_lm)[[4]], 4)`*`body_mass_g`
 
-- For Chinstrap: y = (`r paste(round(coef(bill_length_int_lm)[1:2], 2), collapse = "+")`) + (`r paste(round(coef(bill_length_int_lm)[4:5], 4), collapse = "+")`)*body_mass_g`
+- For Chinstrap: y = (`r paste(round(coef(bill_length_int_lm)[1:2], 2), collapse = "+")`) + (`r paste(round(coef(bill_length_int_lm)[4:5], 4), collapse = "+")`)*`body_mass_g`
 :::
 
 ## Interpreting the Coefficients {.slide-only .unlisted}
@@ -640,6 +670,7 @@ cbind(beta_hat, coef(bill_length_int_lm))
 ```{r}
 #| output-location: column
 #| fig-show: hold
+#| fig-height: 7
 ## Check the residuals after 
 ## including a separate intercept
 ## and slope for species
@@ -656,6 +687,7 @@ par(mfrow = c(1, 1))
 - Classic ANOVA checks importance of each term within a model
 
 ```{r}
+#| results: hide
 ## Run a separate ANOVA on each model
 anova(bill_length_lm)
 anova(bill_length_sp_lm)
@@ -672,6 +704,7 @@ anova(bill_length_int_lm)
 - Can use ANOVA to compare suitability of each model
 
 ```{r}
+#| output-location: slide
 ## Compare the models using ANOVA
 ## If a model is a significant improvement, the p-value from the 
 ## F test will be clearly significant
@@ -696,6 +729,7 @@ anova(
 - The shorthand for an interaction term with separate intercepts is `*`
 
 ```{r}
+#| results: hide
 ## Refit the model with an interaction term using the shorthand code
 bill_length_int_lm <- lm(
   bill_length_mm ~ species * body_mass_g, data = penguins
@@ -722,8 +756,10 @@ summary(bill_length_int_lm)
     + Removes terms in a step-wise manner
     + Uses Akaike's Information Criterion (AIC) to determine optimal model
     + Finds model with lowest AIC
+    + AIC penalises the number of terms in a model<br>$\implies$ encourages simpler models
 
 ```{r}
+#| output-location: slide
 step(bill_length_int_lm)
 ```
 
@@ -756,6 +792,11 @@ summary(bill_length_sp_lm) |> class()
 summary(bill_length_sp_lm) |> is.list()
 ## See what attributes it has
 summary(bill_length_sp_lm) |> attributes()
+```
+
+## Objects of Class `summary.lm` {.slide-only .unlisted}
+
+```{r}
 ## Check the full details
 summary(bill_length_sp_lm) |> glimpse()
 ```
@@ -797,6 +838,7 @@ bill_length_sp_lm |>
 - Obviously no room for checking model diagnostics
 
 ```{r}
+#| output-location: slide
 penguins |>
   ## Piped data can be recalled using `_`
   lm( bill_length_mm ~ species * body_mass_g, data = _) |> 
@@ -837,11 +879,12 @@ penguins |>
 - If we only want a subset of figures
 
 ```{r}
+#| fig-width: 10
 par(mfrow = c(1, 2))
 plot(
   bill_length_sp_lm, which = c(1, 3),
   caption = list(
-    "Separate Intercepts: Residuals vs Fitted", NULL,
+    "Separate Intercepts: Residuals vs Fitted", "",
     "Separate Intercepts: Scale-Location"
   )
 )
