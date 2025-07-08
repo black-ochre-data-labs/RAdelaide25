@@ -40,7 +40,7 @@ Installation and package requirements are [here](setup.md)
 |       | Importing Spreadsheet-Like Data   | [Importing Penguins](import.html)   | `r getTiming("import_slides.qmd", 1.2)`|
 | 10:30 | *Morning Tea* | | |
 | 11:00 | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | `r getTiming("penguin_slides.qmd", 1.2)`|
-| | Building Chains Of Code | [Piping Functions](piping_functions.html) | `r getTiming("piping_slides.qmd", 1.5)` |
+| | Building Chains Of Code | [Piping Functions](piping.html) | `r getTiming("piping_slides.qmd", 1.5)` |
 | 12:30 | *Lunch* | | |
 | 1:30 | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | `r getTiming("tidying_slides.qmd", 1.2)` |
 | | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | `r getTiming("intro_vis_slides.qmd", 1.4)` |

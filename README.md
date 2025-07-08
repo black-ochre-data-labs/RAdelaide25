@@ -30,7 +30,7 @@ Installation and package requirements are [here](setup.md)
 |  | Importing Spreadsheet-Like Data | [Importing Penguins](import.html) | 60min |
 | 10:30 | *Morning Tea* |  |  |
 | 11:00 | Exploring Spreadsheet-Like Data | [Exploring Penguins](penguins.html) | 60min |
-|  | Building Chains Of Code | [Piping Functions](piping_functions.html) | 40min |
+|  | Building Chains Of Code | [Piping Functions](piping.html) | 40min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Reshaping Data With `tidyr` | [Reshaping Data](tidying.html) | 30min |
 |  | Visualising Your Data with `ggplot2` | [Introductory Visualisation](intro_vis.html) | 120min |
