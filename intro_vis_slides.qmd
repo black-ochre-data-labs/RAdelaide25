@@ -727,7 +727,7 @@ p + theme_bw()
 ```{r}
 #| fig-show: hide
 p + theme_bw() +
-  theme(text = element_text(size = 14, ))
+  theme(text = element_text(size = 14))
 ```
 
 
@@ -772,7 +772,7 @@ p + theme_bw() +
 p + theme_bw() +
   theme(
     ## A slightly exaggerated modification of axis titles
-    axis.title = element_text(colour = "darkred", size = 16, face = "bold"),
+    axis.title = element_text(colour = "darkred", size = 16, face = "bold")
   )
 ```
 
@@ -1029,7 +1029,7 @@ penguins |>
 ::: {.fragment}
 
 - This can be easily improved by setting `fill = "grey70"` and `colour = "black"`
-- `binwidth` is automatically set $implies$ try `binwidth = 100`
+- `binwidth` is automatically set $\implies$ try `binwidth = 100`
 :::
 
 ## Creating A Histogram {.slide-only .unlisted}

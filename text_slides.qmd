@@ -118,8 +118,7 @@ x <- c("Hi Mum", "Hi Mother", "Hello Maternal Parent")
 
 ## `stringr::str_detect()`
 
-- `str_detect()` returns a logical vector
-    + Same length as the input vector
+- `str_detect()` returns a logical vector $\implies$ same length as the input vector
 
 ```{r}
 ## Return a logical vector where 'x' matches the pattern 'Mat'
@@ -127,6 +126,18 @@ str_detect(string = x, pattern = "Mat")
 ```
 
 ::: {.fragment}
+
+- How would we search for either "Mat" or "Mot"?
+- We can pass alternative sets of letters in square brackets `[]`
+
+```{r}
+## Use the alternative letters a|o between the M & t
+str_detect(string = x, pattern = "M[ao]t")
+```
+
+:::
+
+## `stringr::str_detect()` {.slide-only .unlisted}
 
 - When using *regular expressions* `.` functions as a wildcard
     + `*` has a different meaning
@@ -136,7 +147,7 @@ str_detect(string = x, pattern = "Mat")
 str_detect(string = x, pattern = "M.t")
 ```
 
-:::
+
 
 ## `stringr::str_remove()`
 
@@ -182,20 +193,22 @@ str_remove_all(x, "M[aeiou]t")
 str_remove_all(x, "[ae]r")
 ```
 
-## `stringr::str_extract()`
-
-- Removing strings has limited use $\implies$ extracting more useful
+::: {.fragment}
+- Beyond removing prefixes/suffixes, removing strings has limited use 
+- `str_extract()` can be more useful
 
 ```{r}
 str_extract(x, "H[aeiou]")
 str_extract(x, "H[a-z]")
 ```
 
+:::
+
 ::: {.fragment}
 - These look very similar $\implies$ second opens possibilities
 :::
 
-## `stringr::str_extract()` {.slide-only .unlisted}
+## `stringr::str_extract()`
 
 - In *regular expressions* we can extend a match using `+`<br>$\implies$ match one or more characters
 
@@ -204,7 +217,7 @@ str_extract(x, "H[a-z]+")
 ```
 
 - This will match the first `H` and then all following lower-case letters
-    + The match stops at the whitespace $\implies$ not in the set of characters `[a-z]`
+    + The match stops at the whitespace $\implies$ not in the set `[a-z]`
 
 
 ## `stringr::str_extract()` {.slide-only .unlisted}
@@ -352,8 +365,8 @@ str_replace(x, pattern = "Mum", replacement = "Dad")
 
 ```{r}
 str_replace(x, "M[a-z]", "Da")
-str_replace(x, "[M].{2}", "Dad")
-str_replace(x, "[M].+", "Dad")
+str_replace(x, "M.{2}", "Dad")
+str_replace(x, "M.+", "Dad")
 ```
 
 ## `stringr::str_replace()` {.slide-only .unlisted}
