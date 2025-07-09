@@ -1,0 +1,115 @@
+\documentclass[16pt]{scrartcl}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{pdflscape,setspace,amsmath,amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{calligra}
+\usepackage{tgschola}
+%\usepackage{fourier-orns}
+\usepackage{graphicx}
+\usepackage{wallpaper}
+\usepackage[normalem]{ulem}
+\usepackage{charter}
+\usepackage{microtype}
+\hyphenpenalty 100000
+%=============================
+%\input Zallman.fd
+%\newcommand*\initfamily{\usefont{U}{Zallman}{xl}{n}}
+%=============================
+\usepackage{datatool}
+\DTLloaddb{names}{certNames.csv}
+%=============================
+\def\signature#1#2{\parbox[b]{1in}{\smash{#1}\vskip12pt}
+\hfill \parbox[t]{2.8in}{\shortstack{\vrule width 2.8in height 0.4pt\\\small#2}}}
+\def\sigskip{\vskip0.4in plus 0.1in}
+        \def\beginskip{\vskip0.5875in plus 0.1in}
+%=============================
+\definecolor{name}{RGB}{180,0,0}
+\definecolor{course}{RGB}{0,0,240}
+%=============================
+\begin{document}
+%\begin{landscape}
+\linespread{2}\selectfont
+\pagestyle{empty}
+\TileWallPaper{1\paperwidth}{1\paperheight}{./certBorder.jpg}
+%=============================
+\DTLforeach{names}{\name=Name, \pos=position, \inst=institution, \nbr=nbrOfDays}{
+%=============================
+~\\[-2mm]
+{\singlespacing
+\begin{minipage}[l]{0.5\textwidth}
+ \includegraphics[width=.4\linewidth]{../assets/bodl_logo_white_background.jpg}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.5\textwidth}
+\end{minipage}
+\hfill
+\begin{minipage}[r]{0.2\textwidth}
+\includegraphics[width=.8\linewidth]{Rlogo.png}
+\end{minipage}
+}
+%\vskip1em
+
+%=============================
+\begin{minipage}[c]{6.5in}
+{\centering
+{\onehalfspacing
+	~\\
+    %{\LARGE\bfseries {\color{other}{{ Pondicherry  Engineering College}}}}\\%\initfamily
+    {\LARGE\bfseries The Kids Research Institute Australia \\[6mm] Black Ochre Data Labs}
+    ~\\[1cm]
+    {\LARGE \bfseries \color{course} RAdelaide Training Event}
+    ~\\
+    {\large July 8\textsuperscript{th} - 10\textsuperscript{th}, 2025}
+%    {\Large\bfseries\color{phd}{NANO ENGINEERING MATERIALS}}
+    }\\
+    \par}
+\end{minipage}
+\hfill
+%=============================
+
+%=============================
+\begin{minipage}[l]{1.5in}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{6.5in}
+{\centering
+{\onehalfspacing
+	~\\[8mm]
+    {\LARGE\bfseries {\textit{Certificate of Participation}}}\par
+    \vskip0.5em
+    %{\color{pink}\Large\decofourleft\quad{\color{blue}\decoone}\quad\decofourright}
+    \par}}
+\end{minipage}
+\hfill
+\begin{minipage}[r]{1.5in}
+\end{minipage}
+\vskip1.8em
+
+{\centering
+	{\onehalfspacing
+	
+		This is to certify that\\[4mm]
+		\uuline{{\large\bfseries\color{name}{\MakeUppercase{\name}}}}\\[4mm]
+		{\pos}, {\inst}\\[3mm]
+		has attended {\nbr} of 3 days for RAdelaide, 2025.\\
+	}
+}
+
+
+\noindent
+%\beginskip
+{\singlespacing
+\vfil
+\begin{minipage}[l]{2.5in}
+ \hspace{2mm}
+ \includegraphics[width=.8\linewidth]{../../admin/Images/SP_Signature.png}
+%  \sigskip 
+ \signature{}{Stevie Pederson \\ Co-ordinator/Presenter }
+\end{minipage}
+}
+%=============================
+\pagebreak
+}
+%\end{landscape}
+\end{document} 
