@@ -829,8 +829,10 @@ I learned using R scripts but now I only use these in formal packages, or if def
     
 ## A Challenge
 
-Return to the `penguins` dataset and perform a complete RMarkdown analysis on any combination of variables you decide
+Return to the `penguins` dataset and perform a complete RMarkdown analysis.
+We'll perform a 'health-check' on the penguins and want to monitor their average weight every year.
+Hopefully our testing will reveal no changes in weight
 
-1. Choose how to describe the data
-2. Choose whether to include diagnostic plots
-3. Choose which figures to include
+1. Prepare a summary table of average penguin weights for each species & sex
+2. Visualise their weights by year and sex however you think is best
+3. Perform an analysis of their weights, including sex and species as you think is appropriate
