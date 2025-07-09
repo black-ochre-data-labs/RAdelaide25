@@ -64,7 +64,8 @@ Installation and package requirements are [here](setup.md)
 
 | Day 3 | Topic | Notes | Estimated Duration <br>(approx) |
 |:----- |:----- |:----- |:-------- |
-| 9:00 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.75)` |
+| 9:00 | Model Matrices Follow-Up| [Model Matrices](model_matrices.html) | `r getTiming("model_matrices_slides.qmd", 1.5)` |
+| 9:30 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | `r getTiming("rmarkdown_slides.qmd", 1.5)` |
 | 10:30 | *Morning Tea* | | |
 | 11:00 | Functions | [Functions](functions.html) | `r getTiming("functions_slides.qmd", 1.4)` |
 | | Iteration | [Iteration](iteration.html) | `r getTiming("iteration_slides.qmd", 1.4)` |
@@ -72,6 +73,6 @@ Installation and package requirements are [here](setup.md)
 | 1:30 | Moving Beyond Linear Regression | [Extending Statistics](more_statistics.html) | `r getTiming("more_statistics_slides.qmd", 1.5)` |
 |  | Extending Visualisation | [Extending Visualisation](extended_visualisation.html) | `r getTiming("extended_visualisation_slides.qmd", 1.4)` |
 | 3:00  | *Afternoon Tea* | | |
-| 3:30 | Final Challenges | | 90min |
+| 3:30 | Final Challenges & Worked Examples | | 90min |
 
 

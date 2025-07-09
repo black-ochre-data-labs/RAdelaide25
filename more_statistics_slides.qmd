@@ -293,93 +293,93 @@ list(
     + Assess the performance on the test set after training
 - This forms the basis of some Machine Learning techniques    
     
-## Poisson Regression
+<!-- ## Poisson Regression -->
 
-::: {.notes}
-- Quasipoisson is another parameterisation for overdispersed data
-- NB has a strict quadratic relationship between mean and overdispersion
-- Not so strict for Quasipoisson
-:::
+<!-- ::: {.notes} -->
+<!-- - Quasipoisson is another parameterisation for overdispersed data -->
+<!-- - NB has a strict quadratic relationship between mean and overdispersion -->
+<!-- - Not so strict for Quasipoisson -->
+<!-- ::: -->
 
-- Another common type of GLM is Poisson regression
-- Fitting the rate of an event occurring ($\lambda$)
-    + e.g. cars at an intersection per hour
-    + Rates are always > 0 $\implies$ estimated on the log scale
-    
-::: {.fragment}
-- Poisson distributions have a variance that strictly equals the rate
-- Overdispersed distributions allow for an inflated variance
-    + Simply add an overdispersion term to allow for this
-    + Very common in bioinformatics, e.g. RNA-Seq
-    
-:::
-   
-## Poisson Regression {.slide-only .unlisted}
+<!-- - Another common type of GLM is Poisson regression -->
+<!-- - Fitting the rate of an event occurring ($\lambda$) -->
+<!--     + e.g. cars at an intersection per hour -->
+<!--     + Rates are always > 0 $\implies$ estimated on the log scale -->
 
-- `InsectSprays` provides counts of insects after applying insecticides `A-F`
-- The units used for counting were an equal size (but are undefined)
-    + We can assume fewer insects is better
+<!-- ::: {.fragment} -->
+<!-- - Poisson distributions have a variance that strictly equals the rate -->
+<!-- - Overdispersed distributions allow for an inflated variance -->
+<!--     + Simply add an overdispersion term to allow for this -->
+<!--     + Very common in bioinformatics, e.g. RNA-Seq -->
 
-```{r}
-#| output-location: column
-InsectSprays |> 
-  summarise(
-    ave = mean(count), .by = spray
-  )
-```
+<!-- ::: -->
 
-## Poisson Regression {.slide-only .unlisted}
+<!-- ## Poisson Regression {.slide-only .unlisted} -->
 
-```{r}
-insect_glm <- glm(count ~ spray, data = InsectSprays, family = poisson)
-summary(insect_glm)
-```
+<!-- - `InsectSprays` provides counts of insects after applying insecticides `A-F` -->
+<!-- - The units used for counting were an equal size (but are undefined) -->
+<!--     + We can assume fewer insects is better -->
 
-- How do we interpret these coefficients?
+<!-- ```{r} -->
+<!-- #| output-location: column -->
+<!-- InsectSprays |>  -->
+<!--   summarise( -->
+<!--     ave = mean(count), .by = spray -->
+<!--   ) -->
+<!-- ``` -->
 
-## Poisson Regression {.slide-only .unlisted}
+<!-- ## Poisson Regression {.slide-only .unlisted} -->
 
-- Model checking for Poisson models
-    + Do residuals appear consistently distributed?
+<!-- ```{r} -->
+<!-- insect_glm <- glm(count ~ spray, data = InsectSprays, family = poisson) -->
+<!-- summary(insect_glm) -->
+<!-- ``` -->
 
-```{r}
-#| output-location: column
-plot(
-  fitted(insect_glm), 
-  residuals(insect_glm, type = "pearson")
-)
-abline(h = 0, col = "red")
-```
+<!-- - How do we interpret these coefficients? -->
 
-## Poisson Regression {.slide-only .unlisted}
+<!-- ## Poisson Regression {.slide-only .unlisted} -->
 
-- Model checking for Poisson models
-    + Is there evidence of overdispersion?
+<!-- - Model checking for Poisson models -->
+<!--     + Do residuals appear consistently distributed? -->
 
-```{r}
-deviance(insect_glm) / df.residual(insect_glm)
-```
+<!-- ```{r} -->
+<!-- #| output-location: column -->
+<!-- plot( -->
+<!--   fitted(insect_glm),  -->
+<!--   residuals(insect_glm, type = "pearson") -->
+<!-- ) -->
+<!-- abline(h = 0, col = "red") -->
+<!-- ``` -->
 
-::: {.fragment}
-- If this value is >>1 $\implies$ overdispersion
-- Maybe try a quasipoisson instead of poisson?
-    + `family = quasipoisson`
-    + Will probably be more conservative
-    
-:::
+<!-- ## Poisson Regression {.slide-only .unlisted} -->
 
-## A Brief Comment
+<!-- - Model checking for Poisson models -->
+<!--     + Is there evidence of overdispersion? -->
 
-- Early RNA-Seq analysis used Poisson models $\implies$ counts / gene
-- May also be appropriate for matching sequence motifs across a set of DNA sequences
+<!-- ```{r} -->
+<!-- deviance(insect_glm) / df.residual(insect_glm) -->
+<!-- ``` -->
 
-::: {.fragment}
+<!-- ::: {.fragment} -->
+<!-- - If this value is >>1 $\implies$ overdispersion -->
+<!-- - Maybe try a quasipoisson instead of poisson? -->
+<!--     + `family = quasipoisson` -->
+<!--     + Will probably be more conservative -->
 
-- If units of counting unequal size $\implies$ use an `offset`
-    + Counting trees in unevenly sized forests?
-    + Number of crimes in cities of different sized populations
+<!-- ::: -->
 
-:::
+<!-- ## A Brief Comment -->
+
+<!-- - Early RNA-Seq analysis used Poisson models $\implies$ counts / gene -->
+<!-- - May also be appropriate for matching sequence motifs across a set of DNA sequences -->
+
+<!-- ::: {.fragment} -->
+
+<!-- - If units of counting unequal size $\implies$ use an `offset` -->
+<!--     + Counting trees in unevenly sized forests? -->
+<!--     + Number of crimes in cities of different sized populations -->
+
+<!-- ::: -->
 
 # Mixed-Effects Models {background-color="#3d3d40"}
 

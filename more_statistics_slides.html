@@ -563,171 +563,70 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </ul></li>
 <li>This forms the basis of some Machine Learning techniques</li>
 </ul>
-</section>
-<section id="poisson-regression" class="slide level2">
-<h2>Poisson Regression</h2>
-<aside class="notes">
-<ul>
-<li>Quasipoisson is another parameterisation for overdispersed data</li>
-<li>NB has a strict quadratic relationship between mean and overdispersion</li>
-<li>Not so strict for Quasipoisson</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<ul>
-<li>Another common type of GLM is Poisson regression</li>
-<li>Fitting the rate of an event occurring (<span class="math inline">\(\lambda\)</span>)
-<ul>
-<li>e.g.&nbsp;cars at an intersection per hour</li>
-<li>Rates are always &gt; 0 <span class="math inline">\(\implies\)</span> estimated on the log scale</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<ul>
-<li>Poisson distributions have a variance that strictly equals the rate</li>
-<li>Overdispersed distributions allow for an inflated variance
-<ul>
-<li>Simply add an overdispersion term to allow for this</li>
-<li>Very common in bioinformatics, e.g.&nbsp;RNA-Seq</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="poisson-regression-1" class="slide level2 slide-only unlisted">
-<h2>Poisson Regression</h2>
-<ul>
-<li><code>InsectSprays</code> provides counts of insects after applying insecticides <code>A-F</code></li>
-<li>The units used for counting were an equal size (but are undefined)
-<ul>
-<li>We can assume fewer insects is better</li>
-</ul></li>
-</ul>
-<div class="cell columns column-output-location" data-layout-align="center">
-<div class="column">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a>InsectSprays <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">ave =</span> <span class="fu">mean</span>(count), <span class="at">.by =</span> spray</span>
-<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output cell-output-stdout">
-<pre><code>  spray       ave
-1     A 14.500000
-2     B 15.333333
-3     C  2.083333
-4     D  4.916667
-5     E  3.500000
-6     F 16.666667</code></pre>
-</div>
-</div></div>
-</section>
-<section id="poisson-regression-2" class="slide level2 slide-only unlisted">
-<h2>Poisson Regression</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>insect_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(count <span class="sc">~</span> spray, <span class="at">data =</span> InsectSprays, <span class="at">family =</span> poisson)</span>
-<span id="cb18-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(insect_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = count ~ spray, family = poisson, data = InsectSprays)
-
-Coefficients:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)  2.67415    0.07581  35.274  &lt; 2e-16 ***
-sprayB       0.05588    0.10574   0.528    0.597    
-sprayC      -1.94018    0.21389  -9.071  &lt; 2e-16 ***
-sprayD      -1.08152    0.15065  -7.179 7.03e-13 ***
-sprayE      -1.42139    0.17192  -8.268  &lt; 2e-16 ***
-sprayF       0.13926    0.10367   1.343    0.179    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for poisson family taken to be 1)
-
-    Null deviance: 409.041  on 71  degrees of freedom
-Residual deviance:  98.329  on 66  degrees of freedom
-AIC: 376.59
-
-Number of Fisher Scoring iterations: 5</code></pre>
-</div>
-</div>
-<ul>
-<li>How do we interpret these coefficients?</li>
-</ul>
-</section>
-<section id="poisson-regression-3" class="slide level2 slide-only unlisted">
-<h2>Poisson Regression</h2>
-<ul>
-<li>Model checking for Poisson models
-<ul>
-<li>Do residuals appear consistently distributed?</li>
-</ul></li>
-</ul>
-<div class="cell columns column-output-location" data-layout-align="center">
-<div class="column">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitted</span>(insect_glm), </span>
-<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">residuals</span>(insect_glm, <span class="at">type =</span> <span class="st">"pearson"</span>)</span>
-<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="more_statistics_slides_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
-</figure>
-</div>
-</div>
-</div></div>
-</section>
-<section id="poisson-regression-4" class="slide level2 slide-only unlisted">
-<h2>Poisson Regression</h2>
-<ul>
-<li>Model checking for Poisson models
-<ul>
-<li>Is there evidence of overdispersion?</li>
-</ul></li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(insect_glm) <span class="sc">/</span> <span class="fu">df.residual</span>(insect_glm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.489828</code></pre>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li>If this value is &gt;&gt;1 <span class="math inline">\(\implies\)</span> overdispersion</li>
-<li>Maybe try a quasipoisson instead of poisson?
-<ul>
-<li><code>family = quasipoisson</code></li>
-<li>Will probably be more conservative</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="a-brief-comment-1" class="slide level2">
-<h2>A Brief Comment</h2>
-<ul>
-<li>Early RNA-Seq analysis used Poisson models <span class="math inline">\(\implies\)</span> counts / gene</li>
-<li>May also be appropriate for matching sequence motifs across a set of DNA sequences</li>
-</ul>
-<div class="fragment">
-<ul>
-<li>If units of counting unequal size <span class="math inline">\(\implies\)</span> use an <code>offset</code>
-<ul>
-<li>Counting trees in unevenly sized forests?</li>
-<li>Number of crimes in cities of different sized populations</li>
-</ul></li>
-</ul>
-</div>
+<!-- ## Poisson Regression -->
+<!-- ::: {.notes} -->
+<!-- - Quasipoisson is another parameterisation for overdispersed data -->
+<!-- - NB has a strict quadratic relationship between mean and overdispersion -->
+<!-- - Not so strict for Quasipoisson -->
+<!-- ::: -->
+<!-- - Another common type of GLM is Poisson regression -->
+<!-- - Fitting the rate of an event occurring ($\lambda$) -->
+<!--     + e.g. cars at an intersection per hour -->
+<!--     + Rates are always > 0 $\implies$ estimated on the log scale -->
+<!-- ::: {.fragment} -->
+<!-- - Poisson distributions have a variance that strictly equals the rate -->
+<!-- - Overdispersed distributions allow for an inflated variance -->
+<!--     + Simply add an overdispersion term to allow for this -->
+<!--     + Very common in bioinformatics, e.g. RNA-Seq -->
+<!-- ::: -->
+<!-- ## Poisson Regression {.slide-only .unlisted} -->
+<!-- - `InsectSprays` provides counts of insects after applying insecticides `A-F` -->
+<!-- - The units used for counting were an equal size (but are undefined) -->
+<!--     + We can assume fewer insects is better -->
+<!-- ```{r} -->
+<!-- #| output-location: column -->
+<!-- InsectSprays |>  -->
+<!--   summarise( -->
+<!--     ave = mean(count), .by = spray -->
+<!--   ) -->
+<!-- ``` -->
+<!-- ## Poisson Regression {.slide-only .unlisted} -->
+<!-- ```{r} -->
+<!-- insect_glm <- glm(count ~ spray, data = InsectSprays, family = poisson) -->
+<!-- summary(insect_glm) -->
+<!-- ``` -->
+<!-- - How do we interpret these coefficients? -->
+<!-- ## Poisson Regression {.slide-only .unlisted} -->
+<!-- - Model checking for Poisson models -->
+<!--     + Do residuals appear consistently distributed? -->
+<!-- ```{r} -->
+<!-- #| output-location: column -->
+<!-- plot( -->
+<!--   fitted(insect_glm),  -->
+<!--   residuals(insect_glm, type = "pearson") -->
+<!-- ) -->
+<!-- abline(h = 0, col = "red") -->
+<!-- ``` -->
+<!-- ## Poisson Regression {.slide-only .unlisted} -->
+<!-- - Model checking for Poisson models -->
+<!--     + Is there evidence of overdispersion? -->
+<!-- ```{r} -->
+<!-- deviance(insect_glm) / df.residual(insect_glm) -->
+<!-- ``` -->
+<!-- ::: {.fragment} -->
+<!-- - If this value is >>1 $\implies$ overdispersion -->
+<!-- - Maybe try a quasipoisson instead of poisson? -->
+<!--     + `family = quasipoisson` -->
+<!--     + Will probably be more conservative -->
+<!-- ::: -->
+<!-- ## A Brief Comment -->
+<!-- - Early RNA-Seq analysis used Poisson models $\implies$ counts / gene -->
+<!-- - May also be appropriate for matching sequence motifs across a set of DNA sequences -->
+<!-- ::: {.fragment} -->
+<!-- - If units of counting unequal size $\implies$ use an `offset` -->
+<!--     + Counting trees in unevenly sized forests? -->
+<!--     + Number of crimes in cities of different sized populations -->
+<!-- ::: -->
 </section></section>
 <section>
 <section id="mixed-effects-models" class="title-slide slide level1 center" data-background-color="#3d3d40">
@@ -783,8 +682,8 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Machines, <span class="at">package =</span> <span class="st">"nlme"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Machines, <span class="at">package =</span> <span class="st">"nlme"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <ul>
@@ -805,8 +704,8 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </ul></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>machines_lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(score <span class="sc">~</span> Machine <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Worker) , <span class="at">data =</span> Machines) </span>
-<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(machines_lmer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a>machines_lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(score <span class="sc">~</span> Machine <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Worker) , <span class="at">data =</span> Machines) </span>
+<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(machines_lmer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by REML ['lmerMod']
 Formula: score ~ Machine + (1 | Worker)
@@ -864,9 +763,9 @@ MachineC -0.236  0.500</code></pre>
 <li>Discussion is beyond the scope of this course (&amp; my knowledge)</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
-<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a>machines_lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(score <span class="sc">~</span> Machine <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Worker) , <span class="at">data =</span> Machines) </span>
-<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(machines_lmer) <span class="sc">|&gt;</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a>machines_lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(score <span class="sc">~</span> Machine <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Worker) , <span class="at">data =</span> Machines) </span>
+<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(machines_lmer) <span class="sc">|&gt;</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate Std. Error        df  t value     Pr(&gt;|t|)
 (Intercept) 52.355556   2.229312  5.833185 23.48507 5.328296e-07

@@ -1,0 +1,278 @@
+---
+title: "Model Matrices"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-09"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  revealjs:
+    theme: [bodl.scss]
+    code-line-numbers: false
+    width: 1280
+    height: 720
+    sansfont: Times New Roman
+    logo: assets/bodl_logo_white_background.jpg
+    slide-number: c
+    show-slide-number: all
+  html: 
+    css: [bodl.scss, extra.css]
+    output-file: model_matrices.html
+    embed-resources: true    
+    toc: true
+    toc-depth: 2 
+include-after: |
+  <script type="text/javascript">
+    Reveal.on('ready', event => {
+      if (event.indexh === 0) {
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+    });
+    Reveal.addEventListener('slidechanged', (event) => {
+      if (event.indexh === 0) {
+        Reveal.configure({ slideNumber: null });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = "none";
+      }
+      if (event.indexh === 1) { 
+        Reveal.configure({ slideNumber: 'c' });
+        document.querySelector("div.has-logo > img.slide-logo").style.display = null;
+      }
+    });
+  </script>    
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+# Model Matrices
+
+## Model Matrices
+
+::: {style="font-size:95%"}
+
+```{r}
+library(tidyverse)
+pigs <- read_csv("data/pigs.csv") |>
+  mutate(
+    supp = fct(supp),
+    dose = fct(dose, levels = c("Low", "Med", "High"))
+  )
+rm_attributes <- function(x){
+  attributes(x) <- NULL
+  x
+}
+```
+
+:::: {.columns}
+
+
+::: {.column width="30%"}
+::: {.fragment}
+
+```{r}
+## Unique combinations 
+## of supp
+distinct(pigs, supp)
+```
+:::
+:::
+
+::: {.column width="30%"}
+::: {.fragment}
+
+```{r}
+## Unique combinations
+## of dose
+distinct(pigs, dose)
+```
+:::
+:::
+
+::: {.column width="40%"}
+::: {.fragment}
+
+```{r}
+## Unique combinations of 
+## supp + dose
+distinct(pigs, supp, dose)
+```
+:::
+:::
+
+::::
+:::
+
+## Model Matrices {.slide-only .unlisted}
+
+- A model (or design) matrix creates a column for every fitted predictor
+- Always an intercept column $\implies$ estimating a "baseline"
+- Other columns:
+    + Change from baseline for a different group
+    + Slope
+    
+## Model Matrices {.slide-only .unlisted}
+
+- When fitting a categorical variable with two categories (e.g. `supp`):
+    + one category is always baseline (intercept)
+    + the other is given a second columns with zeros and ones
+
+::: {.fragment}
+- When fitting a categorical variable with three categories (e.g. `dose`)
+    + one category is always baseline (intercept)
+    + the other levels are *each given a column* with zeroes & ones
+
+:::
+
+
+## Looking At `supp` only
+
+::: {style="font-size:90%"}
+
+:::: {.columns}
+::: {.column width="55%"}
+
+```{r}
+## The unique combinations of supp 
+distinct(pigs, supp) 
+```
+
+::: {.fragment}
+
+```{r}
+## Now fit the model
+lm(len ~ supp, data = pigs) |> broom::tidy()
+```
+
+:::
+:::
+::: {.column width="45%"}
+
+::: {.fragment}
+
+```{r}
+## The design matrix
+model.matrix(
+  ~supp, data = distinct(pigs, supp)
+) 
+```
+
+:::
+:::
+::::
+:::
+
+## Looking At `dose` only
+
+::: {style="font-size:90%"}
+
+:::: {.columns}
+::: {.column width="55%"}
+
+```{r}
+## The unique combinations of dose 
+distinct(pigs, dose) 
+```
+
+::: {.fragment}
+
+```{r}
+## Now fit the model
+lm(len ~ dose, data = pigs) |> broom::tidy()
+```
+
+:::
+:::
+::: {.column width="45%"}
+
+::: {.fragment}
+
+```{r}
+## The design matrix
+model.matrix(
+  ~dose, data = distinct(pigs, dose)
+)
+```
+
+:::
+:::
+::::
+:::
+
+## Looking At `supp` with `dose`
+
+::: {style="font-size:90%"}
+
+:::: {.columns}
+::: {.column width="55%"}
+
+```{r}
+## The unique combinations of supp 
+distinct(pigs, supp, dose) 
+```
+
+::: {.fragment}
+
+```{r}
+## Now fit the model
+lm(len ~ supp + dose, data = pigs) |> broom::tidy()
+```
+
+:::
+:::
+::: {.column width="45%"}
+
+::: {.fragment}
+
+```{r}
+model.matrix(
+  ~supp + dose, 
+  data = distinct(pigs, supp, dose)
+)
+```
+
+:::
+:::
+::::
+:::
+
+
+
+## Including an Interaction Term
+
+::: {style="font-size:90%"}
+
+```{r}
+model.matrix(~(supp + dose)^2, data = distinct(pigs, supp, dose))
+```
+
+:::
+
+## Including an Interaction Term {.slide-only .unlisted}
+
+::: {style="font-size:90%"}
+
+```{r}
+lm(len ~ supp * dose, data = pigs) |> broom::tidy()
+```
+
+:::
+
+## Fitting a Continuous Predictor
+
+- Very similar to all the above
+    + The continuous predictor column will have values (i.e not just 1)
