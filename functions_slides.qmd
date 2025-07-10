@@ -81,6 +81,7 @@ library(palmerpenguins)
 - Requires a function
 
 ```{r}
+#| results: hide
 penguins |> 
   rename_with(str_to_title)
 ```
@@ -88,6 +89,20 @@ penguins |>
 ::: {.fragment}
 - How could we replace the underscores with a space and return everything in Title Case?
 :::
+
+## Using `rename_with()`
+
+- We can write inline functions
+
+```{r}
+#| results: hide
+penguins |> 
+  rename_with(
+    \(x) x |> str_replace_all("_", " ") |> str_to_title()
+  )
+```
+
+
 
 ## Using `across()`
 

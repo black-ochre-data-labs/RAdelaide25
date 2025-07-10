@@ -11,7 +11,7 @@
 
   <meta name="author" content="Dr Stevie Pederson">
   <meta name="dcterms.date" content="2025-07-10">
-  <title>Functions and Iteration</title>
+  <title>Functions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -194,7 +194,7 @@
     <div class="slides">
 
 <section id="title-slide" data-background-color="#3d3d40" data-background-image="assets/bodl_logo_white_background.jpg" data-background-opacity="0.3" data-background-size="90%" class="quarto-title-block center">
-  <h1 class="title">Functions and Iteration</h1>
+  <h1 class="title">Functions</h1>
   <p class="subtitle">RAdelaide 2025</p>
 
 <div class="quarto-title-authors">
@@ -204,7 +204,7 @@ Dr Stevie Pederson
 </div>
         <p class="quarto-title-affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
     </div>
 </div>
@@ -242,28 +242,23 @@ Dr Stevie Pederson
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(str_to_title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 8
-   Species Island    Bill_length_mm Bill_depth_mm Flipper_length_mm Body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torgersen           39.1          18.7               181        3750
- 2 Adelie  Torgersen           39.5          17.4               186        3800
- 3 Adelie  Torgersen           40.3          18                 195        3250
- 4 Adelie  Torgersen           NA            NA                  NA          NA
- 5 Adelie  Torgersen           36.7          19.3               193        3450
- 6 Adelie  Torgersen           39.3          20.6               190        3650
- 7 Adelie  Torgersen           38.9          17.8               181        3625
- 8 Adelie  Torgersen           39.2          19.6               195        4675
- 9 Adelie  Torgersen           34.1          18.1               193        3475
-10 Adelie  Torgersen           42            20.2               190        4250
-# ℹ 334 more rows
-# ℹ 2 more variables: Sex &lt;fct&gt;, Year &lt;int&gt;</code></pre>
-</div>
 </div>
 <div class="fragment">
 <ul>
 <li>How could we replace the underscores with a space and return everything in Title Case?</li>
 </ul>
+</div>
+</section>
+<section id="using-rename_with-1" class="slide level2">
+<h2>Using <code>rename_with()</code></h2>
+<ul>
+<li>We can write inline functions</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(</span>
+<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a>    \(x) x <span class="sc">|&gt;</span> <span class="fu">str_replace_all</span>(<span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">|&gt;</span> <span class="fu">str_to_title</span>()</span>
+<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-across" class="slide level2">

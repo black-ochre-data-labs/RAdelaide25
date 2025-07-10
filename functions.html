@@ -9,7 +9,7 @@
 <meta name="author" content="Dr Stevie Pederson">
 <meta name="dcterms.date" content="2025-07-10">
 
-<title>Functions and Iteration</title>
+<title>Functions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -2386,6 +2386,7 @@ display: none;
   <ul class="collapse">
   <li><a href="#functions-1" id="toc-functions-1" class="nav-link" data-scroll-target="#functions-1">Functions</a></li>
   <li><a href="#using-rename_with" id="toc-using-rename_with" class="nav-link" data-scroll-target="#using-rename_with">Using <code>rename_with()</code></a></li>
+  <li><a href="#using-rename_with-1" id="toc-using-rename_with-1" class="nav-link" data-scroll-target="#using-rename_with-1">Using <code>rename_with()</code></a></li>
   <li><a href="#using-across" id="toc-using-across" class="nav-link" data-scroll-target="#using-across">Using <code>across()</code></a></li>
   <li><a href="#checking-missing-values" id="toc-checking-missing-values" class="nav-link" data-scroll-target="#checking-missing-values">Checking Missing Values</a></li>
   <li><a href="#trying-to-use-across-with-penguins" id="toc-trying-to-use-across-with-penguins" class="nav-link" data-scroll-target="#trying-to-use-across-with-penguins">Trying To Use <code>across()</code> With <code>penguins</code></a></li>
@@ -2411,7 +2412,7 @@ display: none;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Functions and Iteration</h1>
+<h1 class="title">Functions</h1>
 <p class="subtitle lead">RAdelaide 2025</p>
 </div>
 
@@ -2426,7 +2427,7 @@ display: none;
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
             </p><div class="line-block">Black Ochre Data Labs<br>
-            Telethon Kids Institute</div>
+            The Kids Research Institute Australia</div>
           <p></p>
       </div>
   </div>
@@ -2477,28 +2478,23 @@ display: none;
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(str_to_title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 344 × 8
-   Species Island    Bill_length_mm Bill_depth_mm Flipper_length_mm Body_mass_g
-   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
- 1 Adelie  Torgersen           39.1          18.7               181        3750
- 2 Adelie  Torgersen           39.5          17.4               186        3800
- 3 Adelie  Torgersen           40.3          18                 195        3250
- 4 Adelie  Torgersen           NA            NA                  NA          NA
- 5 Adelie  Torgersen           36.7          19.3               193        3450
- 6 Adelie  Torgersen           39.3          20.6               190        3650
- 7 Adelie  Torgersen           38.9          17.8               181        3625
- 8 Adelie  Torgersen           39.2          19.6               195        4675
- 9 Adelie  Torgersen           34.1          18.1               193        3475
-10 Adelie  Torgersen           42            20.2               190        4250
-# ℹ 334 more rows
-# ℹ 2 more variables: Sex &lt;fct&gt;, Year &lt;int&gt;</code></pre>
-</div>
 </div>
 <div class="fragment">
 <ul>
 <li>How could we replace the underscores with a space and return everything in Title Case?</li>
 </ul>
+</div>
+</section>
+<section id="using-rename_with-1" class="level2">
+<h2 class="anchored" data-anchor-id="using-rename_with-1">Using <code>rename_with()</code></h2>
+<ul>
+<li>We can write inline functions</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    \(x) x <span class="sc">|&gt;</span> <span class="fu">str_replace_all</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>) <span class="sc">|&gt;</span> <span class="fu">str_to_title</span>()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="using-across" class="level2">
