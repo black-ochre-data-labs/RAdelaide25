@@ -123,7 +123,7 @@ penguin_cor |>
     ## Hide the diagonal and show measurements in order of clustering
     diag = FALSE, order = "hclust",
     ## Add correlatiion coefficients as integers (cor * 100)
-    addCoef.col = "grey20", addCoefasPercent = TRUE,
+    addCoef.col = "grey20", addCoefasPercent = TRUE
   )
 ```
 

@@ -427,14 +427,14 @@ par(mfrow = c(2, 2))
 ## Plot the four regression diagnostic plots
 plot(bill_length_lm)
 ## Reset the grid layout to be the default 1x1
-par(mfrow = c(1, 1,))
+par(mfrow = c(1, 1))
 ```
 
 :::
 ::: {.notes}
 - `par()` is a function to set graphical parameters
 - `mfrow` means 'Multi-Figures By Row'
-- c(2, 2,) means plot in a 2x2 grid
+- c(2, 2) means plot in a 2x2 grid
 - I rarely show these so no need for ggplot versions
 :::
 
