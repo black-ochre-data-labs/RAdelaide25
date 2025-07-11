@@ -1,0 +1,115 @@
+---
+title: "Worked Challenges: Day 3"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-11"
+date-format: long
+bibliography: bibliography.bib
+editor: source
+format: 
+  html: 
+    css: [bodl.scss, extra.css]
+    embed-resources: true    
+    toc: true
+    toc-depth: 3
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+theme_set(theme_bw())
+```
+
+
+## Functions
+
+- Try creating an inline function to rename `penguins` in Title Case
+- You'll need to
+    1. remove underscores & replace with spaces
+    2. convert to title case
+    3. decide what to do with `mm` (or `Mm`)
+    
+```{r}
+penguins |>
+  rename_with(
+    \(x) {
+      x |>
+        str_replace_all("_", " ") |>
+        str_to_title() |>
+        str_replace_all("Mm", "(mm)") |>
+        str_replace_all("G$", "(g)")
+    }
+  )
+```
+    
+## Iteration
+
+```{r}
+#| results: hide
+penguins |>
+  ## Split by the factor levels in the species column
+  split(f = penguins$species) |>
+  ## Fit the linear model on each of the split data frames
+  map(\(x) lm(bill_length_mm ~ body_mass_g, data = x)) |>
+  ## Use broom::tidy as a convenience function
+  map(broom::tidy, conf.int = TRUE)
+```
+
+- From here we'd need `bind_rows()` then `dplyr::filter()`
+    + See if you can figure it out
+    + Make a barplot with standard error bars
+    + Make an alterative figure, showing the confidence intervals<br>$\implies$ show the slope as a point and use `geom_errorbarh()`
+
+
+
+```{r}
+penguins |>
+  ## Split by the factor levels in the species column
+  split(f = penguins$species) |>
+  ## Fit the linear model on each of the split data frames
+  map(\(x) lm(bill_length_mm ~ body_mass_g, data = x)) |>
+  ## Use broom::tidy as a convenience function
+  map(broom::tidy, conf.int = TRUE) |>
+  bind_rows(.id = "Species") |>
+  dplyr::filter(!str_detect(term, "Intercept")) |>
+  ggplot(aes(Species, estimate)) +
+  geom_col() +
+  geom_errorbar(
+    aes(ymin = estimate - std.error, ymax = estimate + std.error),
+    width = 0.2
+  ) +
+  labs(y = "Estimated Slope") +
+  scale_y_continuous(expand = expansion(c(0, 0.05)))
+```
+
+
+```{r}
+penguins |>
+  ## Split by the factor levels in the species column
+  split(f = penguins$species) |>
+  ## Fit the linear model on each of the split data frames
+  map(\(x) lm(bill_length_mm ~ body_mass_g, data = x)) |>
+  ## Use broom::tidy as a convenience function
+  map(broom::tidy, conf.int = TRUE) |>
+  bind_rows(.id = "Species") |>
+  dplyr::filter(!str_detect(term, "Intercept")) |>
+  ggplot(aes(estimate, Species)) +
+  geom_point(size = 3) +
+  geom_errorbarh(
+    aes(xmin = estimate - std.error, xmax = estimate + std.error),
+    height = 0.2, linetype = 2
+  ) +
+  labs(x = "Estimated Slope") 
+```

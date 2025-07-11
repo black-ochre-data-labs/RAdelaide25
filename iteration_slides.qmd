@@ -456,4 +456,4 @@ penguins |>
 - From here we'd need `bind_rows()` then `dplyr::filter()`
     + See if you can figure it out
     + Make a barplot with standard error bars
-    + Make an alterative figure, showing the confidence intervals<br>$\implies$ show the slope as a point and use `geom_errorbar_h()`
+    + Make an alterative figure, showing the confidence intervals<br>$\implies$ show the slope as a point and use `geom_errorbarh()`

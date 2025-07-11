@@ -1,0 +1,240 @@
+---
+title: "Worked Challenges: Day 2"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-11"
+date-format: long
+bibliography: bibliography.bib
+editor: source
+format: 
+  html: 
+    css: [bodl.scss, extra.css]
+    embed-resources: true    
+    toc: true
+    toc-depth: 3
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+## Working With Text
+
+```{r}
+library(tidyverse)
+```
+
+
+1. Given a vector of Transcript IDs with versions, remove the version number?
+
+```{r}
+ids <- c("ENST00000376207.10", "ENST00000376199.7")
+str_remove_all(ids, "\\.[0-9]+")
+str_extract(ids, "ENST[0-9]+")
+```
+
+2. Add the ‘chr’ prefix to these chromosomes
+
+```{r}
+chr <- c(1:22, "X", "Y", "M")
+paste0("chr", chr)
+str_replace_all(chr, "(.+)", "chr\\1")
+```
+
+3. Pull the chromosome out of these cytogenetic bands
+
+```{r}
+cyto <- c("Xp11.23", "11q2.3", "2p7.1")
+str_remove_all(cyto, "[pq].+")
+str_extract(cyto, "^[0-9XY]+")
+```
+
+4. Change these phone numbers to start with +61 instead of 0
+
+```{r}
+phones <- c("0499123456", "0498760432")
+str_replace_all(phones, "^0", "+61")
+```
+
+5. Remove the suffix “.bam” from these file names
+
+```{r}
+bams <- c("rna_bamboo1.bam", "rna_rice1.bam", "rna_wheat1.bam")
+str_remove_all(bams, "\\.bam$")
+str_extract(bams, "[a-z0-9_]+")
+```
+
+6. Correct the responses to be consistent (choose the format)
+
+```{r}
+response <- c("Y", "yes", "No", "no")
+response |> str_to_upper() |> str_extract("^[YN]")
+```
+
+7. Correct these recorded values to be consistently M/F or Male/Female
+
+```{r}
+sex <- c("M", "male", "femal", "Female")
+sex |> str_to_upper() |> str_extract("^[MF]")
+sex |> str_to_lower() |> str_replace_all("m.*", "male")
+```
+
+
+## Linear Regression
+
+1. How could we account for `sex` in the existing `penguins` model?
+2. Load the `pigs` dataset
+3. Make a boxplot:
+    + `len` will be the predictor ($y$)
+    + Place `dose` on the $x$-axis using `supp` to fill the boxes
+4. Find the best model for `len`, using `supp` and `dose` as the predictors
+5. Check the residuals and diagnostic plots
+6. Make sure you can interpret the model coefficients
+7. What is the 99% confidence interval for `supp = "VC"` & `dose = "High"`
+    + What does this mean?
+    
+### Challenge 1
+    
+```{r}
+library(palmerpenguins)
+library(pander)
+```
+
+
+```{r}
+bill_length_sp_lm <- lm(
+  ## Here I've subset the data to exclude those without sex annotations
+  ## This will ensure we fit the same data as when including this term
+  ## and will make comparisons using `anova()` possible
+  bill_length_mm ~ species + body_mass_g, data = penguins, subset = !is.na(sex)
+) 
+```
+
+The existing penguins model included a separate intercept for each species, but with a shared slope.
+In order to incorporate sex, we should first inspect the data
+
+```{r}
+penguins |>
+  dplyr::filter(!is.na(sex)) |>
+  ggplot(
+    aes(
+      body_mass_g, bill_length_mm, colour = species
+    )
+  ) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(~sex)
+```
+
+It appears plausible that slopes may differ between sex and that different intercepts may also be required.
+A key question might be "*Are the differences in slope & intercept due to sex consistent between species?*"
+
+We could fit interaction terms between sex & both existing terms, then allow `step()` to determine if:
+
+a. any interaction term improves the model
+b. if the inclusion of sex alone improves the fit
+
+If a term is retained y `step()`, we can assume it improves the model
+
+```{r}
+penguin_sex_lm <- lm(bill_length_mm ~ species*sex + body_mass_g*sex, data = penguins) |>
+  step()
+summary(penguin_sex_lm) |> pander(add.significance.stars = TRUE)
+```
+
+The interaction term between `body_mass_g` and `sex` was removed, indicating that there are no differences in the slope due to `sex`.
+However, the retention of the interaction term between `species` and `sex` suggests the both sex and species-based intercepts are an improvement to the model.
+
+We could also check this using ANOVA
+
+```{r}
+anova(bill_length_sp_lm, penguin_sex_lm) |>
+  pander(missing = "")
+```
+
+Including `sex` as an interaction with `species` appears to significantly improve the model.
+
+Making sure that this has not introduced any violations of the linear regression assumptions
+
+```{r}
+par(mfrow = c(2, 2))
+plot(penguin_sex_lm)
+par(mfrow = c(1, 1))
+```
+
+
+### Challenges 2-3
+
+```{r}
+pigs <- read_csv("data/pigs.csv") |>
+  mutate(
+    supp = fct(supp),
+    dose = fct(dose, levels = c("Low", "Med", "High"))
+  )
+```
+
+
+```{r}
+pigs |> 
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette = "Set2")
+```
+
+
+### Challenge 4
+
+```{r}
+pigs_lm <- lm(len ~ (supp + dose)^2, data = pigs) |>
+  step()
+```
+
+The initial model appears to be a good one, with removal of terms failing to improve the model.
+
+### Challenge 5
+
+```{r}
+par(mfrow = c(2, 2))
+plot(pigs_lm)
+par(mfrow = c(1, 1))
+```
+
+All diagnostic plots seem to support residuals which follow $\epsilon_i \sim \mathcal{N}(0, \sigma)$
+
+### Challenge 6
+
+```{r}
+pander(pigs_lm, add.significance.stars = TRUE)
+```
+
+- $\beta_0$: The Intercept represents the expected odontoblast length for VC at low dose
+- $\beta_1$: **suppOJ** represents the different in expected odontoblast length between OJ and VC with both at low dose
+- $\beta_2$: **doseMed** represents the different in expected odontoblast length between Med and Low dose for VC
+- $\beta_3$: **doseHigh** represents the different in expected odontoblast length between High and Low dose for VC
+- $\beta_4$: **suppOJ:doseMed** represents the difference in the expected odontoblast length at medium dose for OJ than the estimate obtained simply by summing the estimates $\beta_0 + \beta_1 + \beta_2$
+- $\beta_5$: **suppOJ:doseHigh** represents the difference in the expected odontoblast length at high dose for OJ than the estimate obtained simply by summing the estimates $\beta_0 + \beta_1 + \beta_3$
+
+### Challenge 7
+
+```{r}
+new_pigs <- tibble(dose = "High", supp = "VC")
+pred_pigs <- predict(
+  pigs_lm, newdata = new_pigs, interval = "confidence", level = 0.99
+)
+pred_pigs
+```
+
+- The expected odontoblast length for a guinea pig given high-dose vitamin C is the fitted value (`r round(pred_pigs[1, "fit"], 2)`)
+- The true average length for a guinea pig given high-dose vitamin C is 99% likely to be between the values named `lwr` and `upr`, i.e. [`r round(pred_pigs[1, "lwr"], 2)`, `r round(pred_pigs[1, "upr"], 2)`]
+
+
+
+

@@ -1,0 +1,402 @@
+---
+title: "Worked Challenges: Day 1"
+subtitle: "RAdelaide 2025"
+author: "Dr Stevie Pederson"
+institute: |
+  | Black Ochre Data Labs
+  | The Kids Research Institute Australia
+date: "2025-07-11"
+date-format: long
+bibliography: bibliography.bib
+title-slide-attributes:
+    data-background-color: "#3d3d40"
+    data-background-image: assets/bodl_logo_white_background.jpg
+    data-background-opacity: "0.3"
+    data-background-size: "90%"
+editor: source
+format: 
+  html: 
+    css: [bodl.scss, extra.css]
+    embed-resources: true    
+    toc: true
+    toc-depth: 3
+knitr: 
+  opts_chunk: 
+    echo: true
+    include: true
+    warning: false
+    message: false
+    fig.align: center  
+    fig.height: 6
+    fig.width: 8
+---
+
+## Piping Functions
+
+The challenges are:
+
+1. Find the lightest 5 Gentoo penguins
+    + Return the weights in `kg` instead of `g`
+2. Find the mean bill length for male penguins
+    + Sort your answer in descending order
+3. Find how many penguins were measured per year on each island
+    + Sort your answer by island, then by year
+4. Use `slice_max()` to return the same penguins as the final example, i.e. the heaviest from each species and island?    
+5. Recreate `penguins` from `penguins_raw`, but retaining `studyName` and the `Individual ID` as additional columns
+
+### Setup
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+theme_set(theme_bw()) # Optional but nice
+```
+
+
+### Challenge 1
+
+```{r}
+penguins |>
+  arrange(body_mass_g) |> # Sort by body_mass in increasing order
+  slice(1:5) |> # Grab the first 5
+  mutate(body_mass_kg = body_mass_g / 1000) # Convert from g to kg
+```
+
+**Comment**: I notice that using `slice_max(body_mass_g, n = 5)` will return 7 penguins due to ties
+
+### Challenge 2
+
+```{r}
+penguins |>
+  dplyr::filter(sex == "male") |> # Subset to male penguins
+  summarise(
+    mean_bill_length = mean(bill_length_mm), # Summarise
+    .by = species # Sorry. I left this out from the questino
+  ) |>
+  arrange(desc(mean_bill_length))
+```
+
+**Comment**: It looks like I left out the expectation for these to be summarised by species from the question.
+
+### Challenge 3 
+
+::: {.panel-tabset}
+
+#### Approach 1
+
+```{r}
+penguins |> count(island, year)
+```
+
+**Comment**: It appears that the answer is already sorted, but you cold add `arrange(island, year)` to ensure that any future modifications to the data were robust to change
+
+#### Approach 2
+
+```{r}
+penguins |>
+  summarise(n = n(), .by = c(island, year)) |>
+  arrange(island, year)
+```
+
+**Comment**: Under this approach, results do need to be sorted
+
+:::
+
+### Challenge 4
+
+
+```{r}
+penguins |>
+  slice_max(body_mass_g, n = 1, by = c(species, island)) |>
+  arrange(desc(body_mass_g))
+```
+
+### Challenge 5
+
+```{r}
+penguins_raw |>
+  mutate(
+    year = year(`Date Egg`),
+    Species = str_extract(Species, "^[:alpha:]+"),
+    Sex = str_to_lower(Sex)
+  ) |>
+  dplyr::select(
+    studyName, ends_with("ID"),
+    Species, Island, starts_with("Culmen"), starts_with("Flipper"),
+    starts_with("Body"), Sex, year
+  ) |>
+  rename_with(
+    \(x) {
+      x |> 
+        str_replace("Culmen", "beak") |> 
+        str_remove_all("[\\(\\)]") |> 
+        str_to_lower() |>
+        str_replace_all(" ", "_")
+    } 
+  )
+```
+
+**Comment**: String manipulation was probably slightly out of reach on Day 1, but the attempt would've still got you really close
+
+## Reshaping Data
+
+1. Count the number of penguins from each species on each island for each year. Try and make it look like the output below
+    + Hint: use `values_fill = 0` to get rid of missing values in the output
+    
+
+```{r}
+#| echo: false
+penguins |>
+  count(species, island, year) |>
+  pivot_wider(
+    names_from = species, values_from = n, values_fill = 0
+  )
+```
+
+    
+2. Add a column called `total` which adds the values for all species columns
+3. Subset the table to only show values from 2009
+4. Combine the island and year to be a column in the form `island:year`
+5. Create the following table showing the mean `bill_length_mm`
+    + Decide how to handle missing values
+    + Add a column called `overall_mean` which averages the values for all years (*Hint: The mean is the sum divided by the number of values*)
+
+```{r}
+#| echo: false
+penguins |>
+  summarise(
+    mean = mean(bill_length_mm, na.rm = TRUE), .by = c(species, island, year)
+  ) |>
+  pivot_wider(
+    names_from = year, values_from = mean, values_fill = 0
+  )
+```
+
+### Challenge 1 & 2
+
+```{r}
+penguins |>
+  count(species, island, year) |>
+  pivot_wider(
+    names_from = species, values_from = n, values_fill = 0
+  ) |> # Remove this pipe to return the answer to challenge 1
+  mutate(
+    ## Only required for the second challenge
+    total = Adelie + Chinstrap + Gentoo
+  )
+```
+
+### Challenge 3
+
+- This is the same as the above but inserting the line `dplyr::filter(year == 2009)` at some stage. The position within the code isn't important
+
+### Challenge 4
+
+```{r}
+penguins |> unite("island:year", island, year, sep = ":")
+```
+
+### Challenge 5
+
+```{r}
+penguins |>
+  summarise(
+    mean = mean(bill_length_mm, na.rm = TRUE), .by = c(species, island, year)
+  ) |>
+  pivot_wider(
+    names_from = year, values_from = mean, values_fill = 0
+  ) |>
+  mutate(
+    overall_mean = (`2007` + `2008` + `2009`) / 3
+  )
+```
+
+## Introductory Visualisation
+
+1. Create a barplot with error bars showing mean flipper length by species
+   + Colour (i.e. fill) however you choose
+2. Create a histogram of flipper length by species
+   + Facet by species
+3. Use boxplots to show the same (flipper length by species)
+   + Don't facet, but fill the boxes by sex
+4. Using points, compare flipper length to body mass
+    + Colour by species including a regression line
+    + Try adding `stat_ellipse()` to your plot
+
+### Challenge 1
+
+```{r}
+penguins |>
+  summarise(
+    ## I chose an ugly column name to make sure the axis label
+    ## was derived from the data
+    mean_flipper_length = mean(flipper_length_mm, na.rm = TRUE),
+    sd = sd(flipper_length_mm, na.rm = TRUE),
+    .by = species
+  ) |>
+  ggplot(aes(species, mean_flipper_length, fill = species)) +
+  geom_col() +
+  geom_errorbar(
+    aes(ymin = mean_flipper_length - sd, ymax = mean_flipper_length + sd),
+    width = 0.2
+  ) +
+  ## Optionally set the colour palette
+  scale_fill_brewer(palette = "Set1") +
+  ## Optionally set the top of the y-axis to expand by 5% past the range
+  ## whilst setting zero expansion at the bottom of the axis
+  scale_y_continuous(expand = expansion(c(0, 0.05)))
+```
+
+### Challenge 2
+
+```{r}
+penguins |>
+  ggplot(aes(flipper_length_mm, fill = species)) +
+  geom_histogram(colour = "grey20") +
+  facet_wrap(~species, ncol = 1) +
+  ## Optionally set the colour palette
+  scale_fill_brewer(palette = "Set1") 
+```
+
+### Challenge 3
+
+```{r}
+penguins |>
+  dplyr::filter(!is.na(sex)) |>
+  ggplot(aes(species, flipper_length_mm, fill = sex)) +
+  geom_boxplot() +
+  ## An optional setting of the fill palette
+  scale_fill_brewer(palette = "Paired")
+```
+
+### Challenge 4
+
+```{r}
+penguins |>
+  ggplot(aes(body_mass_g, flipper_length_mm, colour = species)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = FALSE) +
+  stat_ellipse()  +
+  ## Optionally set the colour palette
+  scale_colour_brewer(palette = "Set1") 
+```
+
+## Extra Challenges
+
+1. Load the Guinea Pigs dataset (`data/pigs.csv`)
+    + Contains odontoblast (tooth) length in guinea pigs
+    + Vitamin C via direct supplement or OJ
+    + Three doses (Low, Med, High)
+2. Create a boxplot of length separating groups by dose & supp
+3. Find the mean odontoblast length for each dose & supplement method
+4. Include the standard deviation alongside the mean
+5. Create a barplot showing mean length with error bars
+
+### Challenge 1
+
+```{r}
+pigs <- read_csv("data/pigs.csv") |>
+  mutate(
+    ## We didn't know how to do this at the time, but we do now
+    supp = fct(supp),
+    dose = fct(dose, levels = c("Low", "Med", "High"))
+  )
+glimpse(pigs)
+```
+
+### Challenge 2
+
+```{r}
+pigs |>
+  ggplot(aes(dose, len, fill = supp)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette = "Set2")
+```
+
+### Challenges 3-5
+
+```{r}
+pigs |>
+  summarise(
+    ## This step is challenge 3
+    mean_len = mean(len), 
+    ## This step is challenge 4
+    sd = sd(len),
+    .by = c(supp, dose)
+  ) |>
+  ## Maing the plot is challenge 5
+  ggplot(aes(supp, mean_len, fill = supp)) +
+  geom_col() + 
+  geom_errorbar(
+    aes(ymin = mean_len - sd, ymax = mean_len + sd),
+    width = 0.2
+  ) +
+  facet_wrap(~dose) +
+  scale_fill_brewer(palette = "Set2") +
+  scale_y_continuous(expand = expansion(c(0, 0.05)))
+```
+
+### Additional Challenge
+
+
+1. Find which sheets are in the file "data/NERP_Fauna_Survey_Protocols_Field_Trial_2015_Data_v1.xlsx" ^[Obtained from https://portal.tern.org.au/results?topicTerm=surveillance]
+2. Load the main data sheet from this file using `read_excel()` from `readxl`
+3. How would you compare measurements for the species across different sites
+    + Try using tables
+    + How can you visualise this?
+    
+A few ideas are given below
+
+```{r}
+library(readxl)
+library(ggrepel)
+f <- "data/NERP_Fauna_Survey_Protocols_Field_Trial_2015_Data_v1.xlsx"
+excel_sheets(f)
+nerp <- read_excel(f, sheet = "OUR DATA")
+nerp |>
+  summarise(
+    n = n(), .by = c(`Common Name`, `Species Full`, `AusPlots Site No.`)
+  ) |>
+  dplyr::filter(!is.na(`AusPlots Site No.`)) |>
+  pivot_wider(
+    names_from = `AusPlots Site No.`, values_from = n, values_fill = 0
+  )
+```
+
+```{r}
+nerp |>
+  dplyr::filter(!is.na(`AusPlots Site No.`)) |>
+  mutate(
+    `Common Name` = fct_infreq(`Common Name`) |> fct_lump_min(min = 2)
+  ) |>
+  ggplot(aes(`AusPlots Site No.`, fill = `Common Name`)) +
+  geom_bar() + # This will automatically tally any counts & create a stacked barplot
+  scale_fill_brewer(palette = "Set1") +
+  scale_y_continuous(expand = expansion(c(0, 0.05)))
+```
+
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+nerp  |>
+  dplyr::filter(
+    !if_any(
+      all_of(c("AusPlots Site No.", "Head-body OR Snout-vent", "Weight")),
+      is.na
+    )
+  ) |>
+  mutate(
+    `Common Name` = fct_infreq(`Common Name`)
+  ) |>
+  ggplot(aes(`Head-body OR Snout-vent`, Weight, colour = `AusPlots Site No.`)) +
+  geom_point() +
+  geom_text_repel(
+    aes(label = `AusPlots Site No.`), size = 4, show.legend = FALSE
+  ) +
+  facet_wrap(~`Common Name`) +
+  scale_x_log10() +
+  scale_y_log10() +
+  scale_colour_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
+```
+

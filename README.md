@@ -54,10 +54,18 @@ Installation and package requirements are [here](setup.md)
 | 9:00 | Model Matrices Follow-Up | [Model Matrices](model_matrices.html) | 30min |
 | 9:30 | Using Rmarkdown | [RMarkdown](rmarkdown.html) | 70min |
 | 10:30 | *Morning Tea* |  |  |
-| 11:00 | Functions | [Functions](functions.html) | 50min |
+| 11:00 | Functions | [Functions](functions.html) | 60min |
 |  | Iteration | [Iteration](iteration.html) | 40min |
 | 12:30 | *Lunch* |  |  |
 | 1:30 | Moving Beyond Linear Regression | [Extending Statistics](more_statistics.html) | 30min |
 |  | Extending Visualisation | [Extending Visualisation](extended_visualisation.html) | 60min |
 | 3:00 | *Afternoon Tea* |  |  |
 | 3:30 | Final Challenges & Worked Examples |  | 90min |
+
+## Solutions
+
+Sets of solutions were requested and these can be found at:
+
+- [Day 1 Solutions](worked_challenges_day1.html)
+- [Day 2 Solutions](worked_challenges_day2.html)
+- [Day 3 Solutions](worked_challenges_day3.html)

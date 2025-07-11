@@ -76,3 +76,10 @@ Installation and package requirements are [here](setup.md)
 | 3:30 | Final Challenges & Worked Examples | | 90min |
 
 
+## Solutions
+
+Sets of solutions were requested and these can be found at:
+
+- [Day 1 Solutions](worked_challenges_day1.html)
+- [Day 2 Solutions](worked_challenges_day2.html)
+- [Day 3 Solutions](worked_challenges_day3.html)
