@@ -90,7 +90,7 @@ penguins |>
 - How could we replace the underscores with a space and return everything in Title Case?
 :::
 
-## Using `rename_with()`
+## Using `rename_with()` {.slide-only .unlisted}
 
 - We can write inline functions
 
